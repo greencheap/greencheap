@@ -1,0 +1,30 @@
+<div class="uk-panel uk-form-stacked">
+
+    <div class="uk-margin">
+        <label for="form-status" class="uk-form-label">{{ 'Status' | trans }}</label>
+        <div class="uk-form-controls">
+            <select id="form-status" class="uk-width-1-1 uk-select" v-model="widget.status">
+                <option value="0">{{ 'Disabled' | trans }}</option>
+                <option value="1">{{ 'Enabled' | trans }}</option>
+            </select>
+        </div>
+    </div>
+    <div class="uk-margin">
+        <label for="form-position" class="uk-form-label">{{ 'Position' | trans }}</label>
+        <div class="uk-form-controls">
+            <select id="form-position" name="position" class="uk-width-1-1 uk-select" v-model="widget.position">
+                <option value="">{{ '- Assign -' | trans }}</option>
+                <option v-for="position in config.positions" :value="position.name">{{ position.label }}</option>
+            </select>
+        </div>
+    </div>
+    <div class="uk-margin">
+        <label class="uk-form-label">{{ 'Restrict Access' | trans }}</label>
+        <div class="uk-form-controls uk-form-controls-text">
+            <p v-for="role in config.roles" class="uk-margin-small">
+                <label><input class="uk-checkbox" type="checkbox" :value="role.id" v-model="widget.roles" number><span class="uk-margin-small-left">{{ role.name }}</span></label>
+            </p>
+        </div>
+    </div>
+
+</div>

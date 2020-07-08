@@ -1,0 +1,846 @@
+/* ========================================================================
+   Pagekit
+ ========================================================================== */
+
+[v-cloak] { display: none; }
+
+
+/* Sidebar
+========================================================================== */
+
+.pk-width-sidebar,
+.pk-width-content {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Tablet and bigger */
+@media (min-width: @breakpoint-medium) {
+
+    /*
+     * Width
+     */
+
+    .pk-width-sidebar { width: (200px + @global-gutter); }
+    .pk-width-content { width: ~'calc(100% - @{global-gutter} - 200px)'; }
+
+}
+
+/*
+ * Large Gutter
+ */
+
+/* Desktop and bigger */
+@media (min-width: @breakpoint-large) {
+
+    /*
+     * Gutter
+     */
+
+    /* Horizontal */
+    .pk-grid-large { margin-left: -40px; }
+    .pk-grid-large > * { padding-left: 40px; }
+
+    /* Vertical */
+    .pk-grid-large + .pk-grid-large,
+    .pk-grid-large > .uk-grid-margin,
+    .pk-grid-large > * > .uk-panel + .uk-panel { margin-top: 40px; }
+
+    /*
+     * Width
+     */
+
+    .pk-width-sidebar { width: (250px + 40px); }
+    .pk-width-content { width: ~'calc(100% - 290px)'; }
+
+}
+
+/* Large screen and bigger */
+@media (min-width: @breakpoint-xlarge) {
+
+    /*
+     * Gutter
+     */
+
+    /* Horizontal */
+    .pk-grid-large { margin-left: -50px; }
+    .pk-grid-large > * { padding-left: 50px; }
+
+    /* Vertical */
+    .pk-grid-large + .pk-grid-large,
+    .pk-grid-large > .uk-grid-margin,
+    .pk-grid-large > * > .uk-panel + .uk-panel { margin-top: 50px; }
+
+    /*
+     * Width
+     */
+
+    .pk-width-sidebar { width: (250px + 50px); }
+    .pk-width-content { width: ~'calc(100% - 300px)'; }
+
+    .pk-width-sidebar-large .pk-width-sidebar { width: (270px + 50px); }
+    .pk-width-sidebar-large .pk-width-content { width: ~'calc(100% - 320px)'; }
+
+}
+
+
+/* Modifier: Side Nav Large (System: Settings + Info, Site: Settings)
+========================================================================== */
+
+.pk-nav-large > li > a {
+    padding: 15px 20px;
+    // padding-bottom: 15px;
+}
+
+.pk-nav-large > li.uk-active > a {
+    background-color: @theme-background-menu-active-color;
+}
+
+
+/* Side Nav Sortable (Users: Roles)
+========================================================================== */
+
+.pk-sortable-dragged-list > * {
+    display: block;
+    padding: 8px 16px;
+    background: #fff;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+    color: @global-color;
+}
+
+
+/* Panel Sortable (Dashboard)
+========================================================================== */
+
+.pk-sortable {
+    padding: 0;
+    list-style: none;
+    // min-height: 300px;
+}
+
+.pk-sortable > li + li { margin-top: @grid-gutter-vertical; }
+
+.pk-sortable-dragged-panel > * { box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+
+.pk-sortable-dragged-panel .uk-hidden,
+.pk-sortable-dragged-panel .uk-invisible {
+    display: inline-block !important;
+    visibility: visible !important;
+}
+
+
+/* Modifier: Search
+========================================================================== */
+
+.pk-search {
+    // margin-left: 25px;
+    // padding-left: 15px;
+    border-left: 1px solid darken(@global-border, 5%);
+    /* 1 */
+    position: relative;
+    z-index: 0;
+    margin-left: 20px;
+}
+
+.pk-search .uk-search-input{
+  border: 0;
+  height: 40px;
+  background: transparent;
+  font-size: 18px;
+  margin-left: 15px;
+}
+
+.pk-search .uk-search-icon {
+  margin-left: 10px;
+  font-size: 18px;
+}
+
+.pk-search .uk-search-icon > svg {
+    width: 24px;
+}
+
+.pk-search .uk-search-icon:not(.uk-search-icon-flip) + .uk-search-input {
+  padding-left: 45px;
+}
+
+.storage .pk-search .uk-search-icon:not(.uk-search-icon-flip) + .uk-search-input {
+  padding-left: 40px;
+}
+
+.storage .uk-disabled {
+  filter: opacity(60%);
+}
+
+.storage .pk-search .uk-search-input{
+  height: 30px;
+}
+
+.storage .uk-modal-header .pk-search {
+  border-left-width: 0px;
+  margin-left: 0;
+}
+
+.storage .uk-modal-header .pk-search .uk-search-icon {
+  margin-left: 0;
+  width: 22px;
+}
+
+.storage .uk-modal-header .pk-search .uk-search-input {
+  margin-left: 0;
+}
+
+.storage .uk-modal-header div + .pk-search {
+  border-left-width: 1px;
+  margin-left: 20px;
+}
+
+.storage .uk-modal-header div + .pk-search .uk-search-icon {
+  margin-left: 20px;
+}
+
+.storage .uk-modal-header div + .pk-search .uk-search-input {
+  margin-left: 15px;
+}
+
+.storage .uk-modal-header .pk-search .uk-search-icon:not(.uk-search-icon-flip) + .uk-search-input {
+  padding-left: 32px;
+}
+
+.storage .uk-modal-header div + .pk-search .uk-search-icon:not(.uk-search-icon-flip) + .uk-search-input {
+  padding-left: 42px;
+}
+
+/* Modifier: Badge
+==========================================================================
+*/
+
+.pk-badge-justify {
+    text-align: center;
+    box-sizing: border-box;
+    width: 100px;
+}
+
+
+/* SVG Icons
+ ========================================================================== */
+
+[class*='pk-icon-'] {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    vertical-align: middle;
+}
+
+.pk-icon-contain { background-size: contain; }
+
+.pk-icon-delete { background-image: url("../images/icon-delete.svg"); }
+.pk-icon-block { background-image: url("../images/icon-block.svg"); }
+.pk-icon-check { background-image: url("../images/icon-check.svg"); }
+.pk-icon-copy { background-image: url("../images/icon-copy.svg"); }
+.pk-icon-warning { background-image: url("../images/icon-warning.svg"); }
+.pk-icon-edit { background-image: url("../images/icon-edit.svg"); }
+.pk-icon-comment { background-image: url("../images/icon-comment.svg"); }
+.pk-icon-schedule { background-image: url("../images/icon-schedule.svg"); }
+.pk-icon-spam { background-image: url("../images/icon-spam.svg"); }
+.pk-icon-thumbnails { background-image: url("../images/icon-thumbnails.svg"); }
+.pk-icon-table { background-image: url("../images/icon-table.svg"); }
+.pk-icon-reply { background-image: url("../images/icon-reply.svg"); }
+.pk-icon-calendar { background-image: url("../images/icon-calendar.svg"); }
+.pk-icon-time { background-image: url("../images/icon-time.svg"); }
+.pk-icon-info { background-image: url("../images/icon-info.svg"); }
+.pk-icon-permission { background-image: url("../images/icon-permission.svg"); }
+.pk-icon-select { background-image: url("../images/icon-select.svg"); }
+.pk-icon-home { background-image: url("../images/icon-home.svg"); }
+.pk-icon-home-active { background-image: url("../images/icon-home-active.svg"); }
+.pk-icon-settings { background-image: url("../images/icon-settings.svg"); }
+.pk-icon-refresh { background-image: url("../images/icon-refresh.svg"); }
+.pk-icon-star { background-image: url("../images/icon-star.svg"); }
+.pk-icon-share { background-image: url("../images/icon-share.svg"); }
+.pk-icon-move { background-image: url("../images/icon-move.svg"); }
+.pk-icon-pen { background-image: url("../images/icon-pen.svg"); }
+.pk-icon-link { background-image: url("../images/icon-link.svg"); }
+.pk-icon-bell { background-image: url("../images/icon-bell.svg"); }
+.pk-icon-handle { background-image: url("../images/icon-handle.svg"); }
+
+.pk-icon-folder-circle,
+.pk-icon-file-circle {
+    width: 30px;
+    height: 30px;
+    margin: -2px;
+}
+
+.pk-icon-folder-circle { background-image: url("../images/icon-folder-circle.svg"); }
+.pk-icon-file-circle { background-image: url("../images/icon-file-circle.svg"); }
+
+.pk-icon-arrow-up,
+.pk-icon-arrow-down {
+    width: 9px;
+    height: 11px;
+}
+
+.pk-icon-arrow-up { background-image: url("../images/icon-arrow-up.svg"); }
+.pk-icon-arrow-down { background-image: url("../images/icon-arrow-down.svg"); }
+
+[class*='pk-icon-circle'] {
+    width: 12px;
+    height: 12px;
+    border-radius: 50px;
+    background: @global-muted-color;
+}
+
+.pk-icon-circle-primary { background: @global-primary-background; }
+.pk-icon-circle-success { background: @theme-success-background; }
+.pk-icon-circle-danger { background: @global-danger-background; }
+.pk-icon-circle-warning { background: @global-warning-background; }
+
+.pk-icon-bell {
+    width: 35px;
+    height: 35px;
+    border-radius: 50px;
+    background-color: @global-danger-background;
+}
+
+/*
+ * Icon Hover
+ */
+
+.pk-icon-hover { opacity: 0.5; }
+
+.pk-icon-hover:hover,
+.uk-active > .pk-icon-hover { opacity: 1; }
+
+/*
+ * Icon Muted
+ */
+
+.pk-icon-muted { opacity: 0.3; }
+
+/*
+ * Icon Primary
+ */
+
+.pk-icon-primary.pk-icon-comment { background-image: url("../images/icon-comment-primary.svg"); }
+
+/*
+ * Icon Contrast
+ */
+
+.pk-icon-contrast.pk-icon-edit { background-image: url("../images/icon-edit-contrast.svg"); }
+.pk-icon-contrast.pk-icon-handle { background-image: url("../images/icon-handle-contrast.svg"); }
+
+/*
+ * Icon Large
+ */
+
+[class*='pk-icon-large-'] {
+    width: 25px;
+    height: 25px;
+}
+
+.pk-icon-large-settings { background-image: url("../images/icon-large-settings.svg"); }
+.pk-icon-large-pin { background-image: url("../images/icon-large-pin.svg"); }
+.pk-icon-large-mail { background-image: url("../images/icon-large-mail.svg"); }
+.pk-icon-large-bolt { background-image: url("../images/icon-large-bolt.svg"); }
+.pk-icon-large-server { background-image: url("../images/icon-large-server.svg"); }
+.pk-icon-large-code { background-image: url("../images/icon-large-code.svg"); }
+.pk-icon-large-database { background-image: url("../images/icon-large-database.svg"); }
+.pk-icon-large-lock-file { background-image: url("../images/icon-large-lock-file.svg"); }
+.pk-icon-large-comment { background-image: url("../images/icon-large-comment.svg"); }
+.pk-icon-large-brush { background-image: url("../images/icon-large-brush.svg"); }
+.pk-icon-large-cone { background-image: url("../images/icon-large-cone.svg"); }
+.pk-icon-large-meta { background-image: url("../images/icon-large-meta.svg"); }
+.pk-icon-large-cogwheel { background-image: url("../../modules/theme/images/icon-cogwheel.svg"); }
+
+
+
+/*
+ * Link Hover with Icon and Text (Link Picker + Blog)
+ */
+
+.pk-link-icon {
+    display: inline-block;
+    color: @global-muted-color;
+}
+
+.pk-link-icon:hover { color: @global-color; }
+
+.pk-link-icon [class*='pk-icon-'] { opacity: 0.3; }
+.pk-link-icon:hover [class*='pk-icon-'] { opacity: 1; }
+
+/*
+ * Form Icon (Blog: Post Edit)
+ */
+
+.uk-form-icon > [class*='pk-icon-'] {
+  &:extend(.uk-form-icon > [class*='uk-icon-']);
+}
+
+.uk-form-icon-flip > [class*='pk-icon-'] {
+  &:extend(.uk-form-icon-flip > [class*='uk-icon-']);
+}
+
+
+/* Modifier: Subnav Icon
+========================================================================== */
+
+/*
+ * 1. Needed if in table width minimum
+ * 2. Gutter
+ */
+
+.pk-subnav-icon {
+    /* 1 */
+    -ms-flex-wrap: nowrap;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    /* 2 */
+    margin-left: -10px;
+    margin-top: -10px !important;
+    margin-bottom: 0;
+}
+
+.pk-subnav-icon > * {
+    padding-left: 10px;
+    margin-top: 10px;
+}
+
+.uk-nav-side .pk-subnav-icon > * { padding-left: 5px; }
+
+.pk-subnav-icon > * > * { color: @global-muted-color; }
+
+.pk-subnav-icon > * > :hover,
+.pk-subnav-icon > * > :focus { color: @global-color; }
+
+
+/* Panel Badge Modifiers (Image Picker Fields + System: Themes)
+========================================================================== */
+
+/*
+ * Background Modifier
+ */
+
+.pk-panel-badge {
+    padding: 7px 10px;
+    background: #fff;
+    border-radius: 2px;
+}
+
+/*
+ * Position Modifier
+ */
+
+.pk-panel-badge-bottom-right {
+    position: absolute;
+    right: @global-gutter;
+    bottom: @global-gutter;
+}
+
+
+/* Text Large (Dashboard)
+========================================================================== */
+
+.pk-text-large {
+    font-family: @base-heading-font-family;
+    font-weight: 300;
+    font-size: @base-h2-font-size;
+    line-height: @base-h2-line-height;
+}
+
+.pk-text-xlarge {
+    font-family: @base-heading-font-family;
+    font-size: @global-xlarge-font-size * 1.6;
+    line-height: 1.4;
+    font-weight: 300;
+}
+
+
+/* Modifier Table Large` (Blog: Comments)
+========================================================================== */
+
+.pk-table-large td {
+    padding-top: 28px;
+    padding-bottom: 28px;
+}
+
+
+/* Modifier Table Collapse (Site: Pages: In Nestable)
+========================================================================== */
+
+.pk-table-collapse {
+    padding-left: 6px !important;
+    padding-right: 0 !important;
+}
+
+
+/* Table Modifiers
+========================================================================== */
+
+/*
+ * Make cell as small as possible
+ */
+
+.pk-table-width-minimum { width: 1px; }
+
+/*
+ * Useful width classes for table cells
+ * Text will wrap automatically, a long string will expand the cell
+ */
+
+.pk-table-width-100 {
+    width: 120px;
+    white-space: nowrap;
+    min-width: 120px;
+}
+
+.pk-table-width-150 { width: 150px; }
+.pk-table-width-200 { width: 200px; }
+
+/*
+ * Prevent a long string from expanding the cell
+ * `min-width` is needed to prevent cells from collapsing
+ */
+
+.pk-table-text-break { word-break: break-word; }
+
+.pk-table-min-width-100 {
+    min-width: 100px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+}
+.pk-table-min-width-150 {
+    min-width: 150px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+}
+.pk-table-min-width-200 { min-width: 200px; }
+.pk-table-min-width-300 { min-width: 300px; }
+
+/*
+ * Need when `uk-text-truncate` is used
+ */
+
+.pk-table-max-width-100 { max-width: 100px; }
+.pk-table-max-width-150 { max-width: 150px; }
+
+
+/* Modifier Table Order
+========================================================================== */
+
+.pk-table-order:hover { cursor: pointer; }
+
+.pk-table-order:hover,
+.pk-table-order.uk-active { color: #666; }
+
+/*
+ * Icon
+ */
+
+.pk-table-order [class*='pk-icon-'] { opacity: 0.3; }
+
+.pk-table-order:hover [class*='pk-icon-'],
+.pk-table-order.uk-active [class*='pk-icon-'] { opacity: 1; }
+
+
+/* Filter
+========================================================================== */
+
+.pk-filter:hover > * { color: #666; }
+
+.pk-filter.uk-active  > * {
+    color: #666;
+    font-weight: bold;
+}
+
+
+/* Table Fake (Site: Pages + Widgets)
+========================================================================== */
+
+.pk-table-fake {
+    display: table;
+    width: 100%;
+    padding: 0;
+}
+
+.pk-table-fake > div {
+    display: table-cell;
+    padding: 16px 12px;
+    vertical-align: middle;
+}
+
+/*
+ * Imitate table header
+ */
+
+.pk-table-fake-header > div {
+    font-size: round((@global-font-size * 0.85));
+    text-transform: uppercase;
+    font-weight: normal;
+    color: @global-muted-color;
+}
+
+.pk-table-fake-border { box-shadow: inset 0 -1px 0  @global-border; }
+
+.pk-table-fake-nestable-padding { padding-left: 28px !important; }
+
+/*
+ * Fix height
+ */
+
+.pk-table-fake .uk-form-select { vertical-align: top; }
+
+
+/* Overflow Container (Finder: Thumbnail View)
+ ========================================================================== */
+
+.tm-overflow-container {
+    margin: -5px;
+    padding: 5px;
+}
+
+
+/* Thumbnail Placeholder (Finder + Image Picker)
+ ========================================================================== */
+
+.pk-thumbnail-folder {
+    background-color: @global-primary-background;
+    background-image: url("../images/icon-folder-large.svg");
+    background-size: 80px 80px;
+}
+
+.pk-thumbnail-file {
+    background-color: #cfd2d8;
+    background-image: url("../images/icon-file-large.svg");
+    background-size: 80px 80px;
+}
+
+
+/* Background Contain (Finder: Thumbnail)
+ ========================================================================== */
+
+.pk-background-contain {
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+
+/* Panel Teaser (Dashboard)
+ ========================================================================== */
+
+.pk-panel-teaser {
+    padding: @global-gutter @global-gutter;
+}
+
+
+/* Panel Background (Dashboard)
+ ========================================================================== */
+
+.pk-panel-background {
+    // margin: -@global-gutter;
+    // padding: @global-gutter;
+    background: url("../images/dashboard-location.jpg") 0 0 no-repeat;//@global-primary-background url("../images/dashboard-location.jpg") 0 0 no-repeat;
+    background-size: cover;
+}
+
+
+/* Overlay Background (System: Themes + Marketplace)
+ ========================================================================== */
+
+.pk-overlay-background { background: rgba(255,255,255,0.2); }
+
+
+/* Modal with IFrame (Marketplace)
+ ========================================================================== */
+
+/*
+ * Position installer buttons
+ */
+
+.pk-modal-dialog-iframe { height: 600px; }
+
+@media (max-width: 767px) {
+
+    .pk-modal-dialog-iframe {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        height: auto;
+        margin: 10px;
+    }
+
+}
+
+.pk-modal-dialog-badge {
+    position: absolute;
+    // top: @modal-header-padding-vertical;
+    right: @modal-body-padding-horizontal - 10;
+}
+
+
+/* Image Preview (Image Picker)
+ ========================================================================== */
+
+.pk-image-max-height {
+    max-height: 200px;
+    overflow: hidden;
+}
+
+
+/* Form Link (Link Picker)
+ ========================================================================== */
+
+.pk-form-link {
+    display: inline-block;
+    position: relative;
+    max-width: 100%;
+}
+
+.pk-form-link-toggle {
+    display: -ms-flexbox !important;
+    display: -webkit-flex !important;
+    display: flex !important;
+    position: absolute;
+    top: 0;//10%;
+    bottom: 10%;
+    right: 10px;
+    font-size: 13px;
+    height: @form-height;
+}
+
+.pk-form-link > input { padding-right: 100px !important; }
+
+
+/* List Header (Widget Assignment)
+ ========================================================================== */
+
+.pk-list-header {
+    padding: 8px 0;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+
+/* Editor (Site: Settings)
+========================================================================== */
+
+.pk-editor {
+    // padding: @form-padding-vertical @form-padding-horizontal;
+    // border: @global-border-width solid @global-border;
+    // background: @form-background;
+    // border-radius: @global-border-radius;
+}
+
+.pk-editor > .uk-switcher {
+    background: @form-background;
+}
+
+.pk-editor.split .uk-switcher {
+    border: 1px solid #e5e5e5;
+}
+
+.pk-editor.split .uk-switcher > li {
+    margin: -1px;
+}
+
+/* Remove `box-shadow` from Drag'n Drop target
+ ========================================================================== */
+
+.uk-dragover { box-shadow: none; }
+
+
+/* SVG Loader
+ ========================================================================== */
+
+@radius: 13px;
+@size: 15px; // A little larger to prevent overflow clipping
+@offset: round(2 * 3.141 * @radius);
+@duration: 1.4s;
+
+.pk-loader {
+    vertical-align: middle;
+    -webkit-animation: pk-loader-rotate @duration linear infinite;
+    animation: pk-loader-rotate @duration linear infinite;
+}
+
+/*
+ * Group
+ * Only needed because `transform-origin: center` is not working in Firefox
+ */
+
+.pk-loader > * {
+    -webkit-transform: translate(@size, @size);
+    transform: translate(@size, @size);
+}
+
+/*
+ * Circle
+ */
+
+.pk-loader > * > * {
+    stroke-dasharray: @offset;
+    stroke-dashoffset: 0;
+    // transform-origin: center;
+    -webkit-animation: pk-loader-dash @duration ease-in-out infinite,
+                       pk-loader-color (@duration*4) ease-in-out infinite;
+    animation: pk-loader-dash @duration ease-in-out infinite,
+               pk-loader-color (@duration*4) ease-in-out infinite;
+    stroke-linecap: round;
+}
+
+@-webkit-keyframes pk-loader-rotate {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(270deg); }
+}
+
+@keyframes pk-loader-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(270deg); }
+}
+
+@-webkit-keyframes pk-loader-dash {
+    0% { stroke-dashoffset: @offset; }
+    50% {
+        stroke-dashoffset: @offset/4;
+        -webkit-transform:rotate(135deg);
+    }
+    100% {
+        stroke-dashoffset: @offset;
+        -webkit-transform:rotate(450deg);
+    }
+}
+
+@keyframes pk-loader-dash {
+    0% { stroke-dashoffset: @offset; }
+    50% {
+        stroke-dashoffset: @offset/4;
+        transform:rotate(135deg);
+    }
+    100% {
+        stroke-dashoffset: @offset;
+        transform:rotate(450deg);
+    }
+}
+
+@-webkit-keyframes pk-loader-color {
+    0% { stroke: @global-link-hover-color; }
+    50% { stroke: @global-link-hover-color; }
+    100% { stroke: @global-link-hover-color; }
+}
+
+@keyframes pk-loader-color {
+    0% { stroke: @global-link-hover-color; }
+    50% { stroke: @global-link-hover-color; }
+    100% { stroke: @global-link-hover-color; }
+}

@@ -1,0 +1,24 @@
+# Ignore assets
+/app/assets/*
+# Ignor bundles
+**/app/bundle/**/*.js
+# Ignor assets
+/app/assets/*
+/app/system/modules/editor/app/assets/*
+# Don't ignore editor assets
+!/app/system/modules/editor/app/assets/tinymce_skin
+# Ignore vendor folder
+/app/vendor/*
+# Ignor module assets
+/app/installer/assets/css/*
+/app/system/modules/theme/css/*
+/app/system/modules/theme/js/theme.js
+/packages/*
+/greencheap*.zip
+/greencheap.db
+/config.php
+/config-dev.php
+node_modules
+.DS_Store
+.idea
+*.zip

@@ -1,0 +1,9 @@
+/.git
+/.vscode
+/node_modules/*
+/bower_components/*
+**/assets/**
+**/vendor/**
+**/bundle/**
+**/modules/editor/**
+**/theme.js

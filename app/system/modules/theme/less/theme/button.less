@@ -1,0 +1,249 @@
+//
+// Component: Button
+//
+// ========================================================================
+
+
+// Variables
+// ========================================================================
+
+@button-line-height:                            @global-control-height - (@button-border-width * 2);
+@button-small-line-height:                      @global-control-small-height - (@button-border-width * 2);
+@button-large-line-height:                      @global-control-large-height - (@button-border-width * 2);
+
+@button-font-size:                              0.875rem;//@global-small-font-size;
+@button-large-font-size:                        @global-small-font-size;
+
+@button-default-background:                     transparent;
+@button-default-hover-background:               transparent;
+@button-default-active-background:              transparent;
+
+@button-disabled-background:                    transparent;
+
+@button-text-color:                             @theme-link-color; //lighten(@global-emphasis-color, 10%);
+@button-text-hover-color:                       darken(@button-text-color, 20%);//@global-emphasis-color;
+
+//
+// New
+//
+
+@button-text-transform:                         none;
+
+@button-border-width:                           @global-border-width;
+
+@button-default-border:                         @global-border;
+@button-default-hover-border:                   darken(@global-border, 20%);
+@button-default-active-border:                  darken(@global-border, 30%);
+
+@button-disabled-border:                        @global-border;
+
+@button-text-border-width:                      0;//@global-border-width;
+@button-text-border:                            @button-text-hover-color;
+
+// Component
+// ========================================================================
+
+.hook-button() {
+    padding: 5px 15px;
+    line-height: 26px;
+    text-transform: @button-text-transform;
+    transition: 0.1s ease-in-out;
+    transition-property: color, background-color, border-color;
+    letter-spacing: -.3px;
+    border: none;
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.hook-button-hover() {}
+
+.hook-button-focus() {}
+
+.hook-button-active() {}
+
+
+// Style modifiers
+// ========================================================================
+
+.hook-button-default() {}
+
+.hook-button-default-hover() {}
+
+.hook-button-default-active() {}
+
+//
+// Primary
+//
+
+.hook-button-primary() {}
+
+.hook-button-primary-hover() {}
+
+.hook-button-primary-active() {}
+
+//
+// Secondary
+//
+
+.hook-button-secondary() { border: @button-border-width solid transparent; }
+
+.hook-button-secondary-hover() {}
+
+.hook-button-secondary-active() {}
+
+//
+// Danger
+//
+
+.hook-button-danger() { border: @button-border-width solid transparent; }
+
+.hook-button-danger-hover() {}
+
+.hook-button-danger-active() {}
+
+
+// Disabled
+// ========================================================================
+
+.hook-button-disabled() { border-color: @button-disabled-border; }
+
+
+// Size modifiers
+// ========================================================================
+
+.hook-button-small() {}
+
+.hook-button-large() {}
+
+
+// Text modifier
+// ========================================================================
+
+.hook-button-text() {
+
+    position: relative;
+
+    &::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 100%;
+        border-bottom: @button-text-border-width solid @button-text-border;
+        transition: right 0.3s ease-out;
+    }
+
+}
+
+.hook-button-text-hover() {
+
+    &::before { right: 0; }
+
+}
+
+.hook-button-text-disabled() {
+
+    &::before { display: none; }
+
+}
+
+
+// Link modifier
+// ========================================================================
+
+.hook-button-link() {}
+
+
+// Miscellaneous
+// ========================================================================
+
+.hook-button-misc() {
+
+    /* Group
+     ========================================================================== */
+
+    /*
+     * Collapse border
+     */
+
+    .uk-button-group > .uk-button:nth-child(n+2),
+    .uk-button-group > div:nth-child(n+2) .uk-button { margin-left: -@button-border-width; }
+
+    /*
+     * Create position context to superimpose the successor elements border
+     * Known issue: If you use an `a` element as button and an icon inside,
+     * the active state will not work if you click the icon inside the button
+     * Workaround: Just use a `button` or `input` element as button
+     */
+
+    .uk-button-group .uk-button:hover,
+    .uk-button-group .uk-button:focus,
+    .uk-button-group .uk-button:active,
+    .uk-button-group .uk-button.uk-active {
+        position: relative;
+        z-index: 1;
+    }
+
+}
+
+
+// Inverse
+// ========================================================================
+
+@inverse-button-default-background:            transparent;
+@inverse-button-default-color:                 @inverse-global-emphasis-color;
+@inverse-button-default-hover-background:      transparent;
+@inverse-button-default-hover-color:           @inverse-global-emphasis-color;
+@inverse-button-default-active-background:     transparent;
+@inverse-button-default-active-color:          @inverse-global-emphasis-color;
+
+@inverse-button-text-color:                    @inverse-global-emphasis-color;
+@inverse-button-text-hover-color:              @inverse-global-emphasis-color;
+
+.hook-inverse-button-default() { border-color: @inverse-global-color; }
+.hook-inverse-button-default-hover() { border-color: @inverse-global-emphasis-color; }
+.hook-inverse-button-default-active() { border-color: @inverse-global-emphasis-color; }
+
+.hook-inverse-button-primary() {}
+.hook-inverse-button-primary-hover() {}
+.hook-inverse-button-primary-active() {}
+
+.hook-inverse-button-secondary() {}
+.hook-inverse-button-secondary-hover() {}
+.hook-inverse-button-secondary-active() {}
+
+.hook-inverse-button-text() {
+    &::before { border-bottom-color: @inverse-global-emphasis-color; }
+}
+.hook-inverse-button-text-hover() {}
+.hook-inverse-button-text-disabled() {}
+
+.hook-inverse-button-link() {}
+
+/*
+ * Success button
+ */
+
+.tm-button-success {
+    display: inline-flex;
+    background-color: @button-success-background;
+    color: @button-primary-color;
+    border: @button-border-width solid transparent;
+    // .hook-button-primary;
+}
+
+/* Hover + Focus */
+.tm-button-success:hover,
+.tm-button-success:focus {
+    background-color: darken(@button-success-background, 5%);
+    color: @button-primary-hover-color;
+    // .hook-button-primary-hover;
+}
+
+/* OnClick + Active */
+.tm-button-success:active,
+.tm-button-success.uk-active {
+    background-color: darken(@button-success-background, 5%);
+    color: @button-primary-active-color;
+    // .hook-button-primary-active;
+}

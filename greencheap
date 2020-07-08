@@ -1,0 +1,8 @@
+#!/usr/bin/env php
+<?php
+
+if (PHP_SAPI != 'cli') {
+	exit('Script needs to be run from Command Line Interface (cli)');
+}
+
+require_once __DIR__.'/index.php';

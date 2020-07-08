@@ -1,0 +1,57 @@
+{
+    "name": "greencheap/greencheap",
+    "type": "project",
+    "description": "The GreenCheap CMS",
+    "keywords": ["cms", "greencheap" , "symfony" , "vue" , "uikit"],
+    "homepage": "http://greencheap.net",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "GreenCheap",
+            "email": "me@greencheap.net"
+        }
+    ],
+    "require": {
+        "php": ">=7.4.1",
+        "composer/composer": "^1.9.2",
+        "doctrine/annotations": "^1.8.0",
+        "doctrine/dbal": "^2.10.1",
+        "paragonie/random-lib": "^2.0.1",
+        "maximebf/debugbar": "^1.16",
+        "monolog/monolog": "^2.0.2",
+        "nikic/php-parser": "~4.2",
+        "psr/log": "~1.1",
+        "swiftmailer/swiftmailer": "~6.2",
+        "symfony/debug": "~4.4",
+        "symfony/finder": "~4.4",
+        "symfony/http-foundation": "~4.4",
+        "symfony/routing": "~4.4",
+        "symfony/stopwatch": "~4.4",
+        "symfony/templating": "~4.4",
+        "symfony/translation": "~4.4",
+        "twig/twig": "^2.12",
+        "php-curl-class/php-curl-class": "^8.7"
+    },
+    "require-dev": {
+        "ext-dom": "*",
+        "ext-json": "*",
+        "ext-libxml": "*",
+        "ext-mbstring": "*",
+        "ext-xml": "*",
+        "ext-xmlwriter": "*",
+        "phpunit/phpunit": "~8.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "GreenCheap\\": "app/modules/application/src",
+            "GreenCheap\\Installer\\": "app/installer/src",
+            "GreenCheap\\System\\": "app/system/src",
+            "GreenCheap\\Config\\": "app/modules/config/src",
+            "GreenCheap\\Console\\": "app/console/src",
+            "GreenCheap\\Migration\\": "app/modules/migration/src"
+        }
+    },
+    "config": {
+        "vendor-dir": "app/vendor"
+    }
+}

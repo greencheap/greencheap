@@ -1,0 +1,1418 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: GreenCheap 2.0.0 (system, messages)\n"
+"POT-Creation-Date: 2020-07-07 17:42+0000\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Ok"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid "Show"
+msgstr ""
+
+msgid "Extensions"
+msgstr ""
+
+msgid "Meta Title"
+msgstr ""
+
+msgid "Meta Description"
+msgstr ""
+
+msgid "Meta Keyword"
+msgstr ""
+
+msgid "Add Image"
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "URL"
+msgstr ""
+
+msgid "Alt"
+msgstr ""
+
+msgid "Update"
+msgstr ""
+
+msgid "Select Video"
+msgstr ""
+
+msgid "Select"
+msgstr ""
+
+msgid "1"
+msgstr ""
+
+msgid "2"
+msgstr ""
+
+msgid "3"
+msgstr ""
+
+msgid "4"
+msgstr ""
+
+msgid "5"
+msgstr ""
+
+msgid "6"
+msgstr ""
+
+msgid "7"
+msgstr ""
+
+msgid "8"
+msgstr ""
+
+msgid "9"
+msgstr ""
+
+msgid "10"
+msgstr ""
+
+msgid "15"
+msgstr ""
+
+msgid "20"
+msgstr ""
+
+msgid "25"
+msgstr ""
+
+msgid "30"
+msgstr ""
+
+msgid "33"
+msgstr ""
+
+msgid "40"
+msgstr ""
+
+msgid "50"
+msgstr ""
+
+msgid "100"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Widgets"
+msgstr ""
+
+msgid "Menus"
+msgstr ""
+
+msgid "Users"
+msgstr ""
+
+msgid "Permissions"
+msgstr ""
+
+msgid "Roles"
+msgstr ""
+
+msgid "Access"
+msgstr ""
+
+msgid "Manage media files"
+msgstr ""
+
+msgid "Manage menus"
+msgstr ""
+
+msgid "Manage widgets"
+msgstr ""
+
+msgid "Manage themes"
+msgstr ""
+
+msgid "Manage extensions"
+msgstr ""
+
+msgid "Apply system updates"
+msgstr ""
+
+msgid "Access admin area"
+msgstr ""
+
+msgid "Access system settings"
+msgstr ""
+
+msgid "Manage user permissions"
+msgstr ""
+
+msgid "Manage users"
+msgstr ""
+
+msgid "Use the site in maintenance mode"
+msgstr ""
+
+msgid "Warning: Give to trusted roles only; this permission has security implications."
+msgstr ""
+
+msgid "System"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Storage"
+msgstr ""
+
+msgid "File Extensions"
+msgstr ""
+
+msgid "Allowed file extensions for the storage upload."
+msgstr ""
+
+msgid "Google reCAPTCHA"
+msgstr ""
+
+msgid "Enable for user registration and comments"
+msgstr ""
+
+msgid "Only key pairs for Google reRECAPTCHA V2 Invisible are supported."
+msgstr ""
+
+msgid "Developer"
+msgstr ""
+
+msgid "Enable debug mode"
+msgstr ""
+
+msgid "Enable debug toolbar"
+msgstr ""
+
+msgid "Please enable the SQLite database extension."
+msgstr ""
+
+msgid "Please note that enabling debug mode or toolbar has serious security implications."
+msgstr ""
+
+msgid "Localization"
+msgstr ""
+
+msgid "Site Locale"
+msgstr ""
+
+msgid "Admin Locale"
+msgstr ""
+
+msgid "Is your language not available? Please help out by translating GreenCheap into your own language on %link%."
+msgstr ""
+
+msgid "Misc"
+msgstr ""
+
+msgid "Editor Settings"
+msgstr ""
+
+msgid "Default editor"
+msgstr ""
+
+msgid "Display mode"
+msgstr ""
+
+msgid "Default"
+msgstr ""
+
+msgid "Spliting visual and code editor"
+msgstr ""
+
+msgid "By default, only one editor is displayed; in split mode, visual and code editors are displayed at the same time."
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Unassigned"
+msgstr ""
+
+msgid "{1} %count% Widget moved|]1,Inf[ %count% Widgets moved"
+msgstr ""
+
+msgid "All"
+msgstr ""
+
+msgid "Selected"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Pages"
+msgstr ""
+
+msgid "Disabled"
+msgstr ""
+
+msgid "Enabled"
+msgstr ""
+
+msgid "Position"
+msgstr ""
+
+msgid "- Assign -"
+msgstr ""
+
+msgid "Restrict Access"
+msgstr ""
+
+msgid "Positions"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "No widgets found."
+msgstr ""
+
+msgid "Edit Widget"
+msgstr ""
+
+msgid "Add Widget"
+msgstr ""
+
+msgid "Copy"
+msgstr ""
+
+msgid "Cache cleared."
+msgstr ""
+
+msgid "Cache"
+msgstr ""
+
+msgid "Disable cache"
+msgstr ""
+
+msgid "Clear Cache"
+msgstr ""
+
+msgid "Select Cache to Clear"
+msgstr ""
+
+msgid "System Cache"
+msgstr ""
+
+msgid "Temporary Files"
+msgstr ""
+
+msgid "Clear"
+msgstr ""
+
+msgid "Mail"
+msgstr ""
+
+msgid "From Email"
+msgstr ""
+
+msgid "From Name"
+msgstr ""
+
+msgid "Mailer"
+msgstr ""
+
+msgid "PHP Mailer"
+msgstr ""
+
+msgid "SMTP Mailer"
+msgstr ""
+
+msgid "SMTP Port"
+msgstr ""
+
+msgid "SMTP Host"
+msgstr ""
+
+msgid "SMTP User"
+msgstr ""
+
+msgid "SMTP Password"
+msgstr ""
+
+msgid "SMTP Encryption"
+msgstr ""
+
+msgid "None"
+msgstr ""
+
+msgid "SSL"
+msgstr ""
+
+msgid "TLS"
+msgstr ""
+
+msgid "Please enable the PHP Open SSL extension."
+msgstr ""
+
+msgid "Check Connection"
+msgstr ""
+
+msgid "Send Test Email"
+msgstr ""
+
+msgid "Connection established!"
+msgstr ""
+
+msgid "Connection not established! (%s)"
+msgstr ""
+
+msgid "Test email!"
+msgstr ""
+
+msgid "Testemail"
+msgstr ""
+
+msgid "Mail successfully sent!"
+msgstr ""
+
+msgid "Mail delivery failed!"
+msgstr ""
+
+msgid "Mail delivery failed! (%s)"
+msgstr ""
+
+msgid "Profile Updated"
+msgstr ""
+
+msgid "New"
+msgstr ""
+
+msgid "Filter by"
+msgstr ""
+
+msgid "Username"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Change password"
+msgstr ""
+
+msgid "Last login"
+msgstr ""
+
+msgid "Registered since"
+msgstr ""
+
+msgid "%date%"
+msgstr ""
+
+msgid "Never"
+msgstr ""
+
+msgid "Autorization"
+msgstr ""
+
+msgid "Session expired. Please log in again."
+msgstr ""
+
+msgid "Sign in"
+msgstr ""
+
+msgid "Remember Me"
+msgstr ""
+
+msgid "User Type"
+msgstr ""
+
+msgid "Logged in"
+msgstr ""
+
+msgid "Last registered"
+msgstr ""
+
+msgid "Display"
+msgstr ""
+
+msgid "Thumbnail"
+msgstr ""
+
+msgid "List"
+msgstr ""
+
+msgid "Total Users"
+msgstr ""
+
+msgid "Hide"
+msgstr ""
+
+msgid "Number of Users"
+msgstr ""
+
+msgid "Latest registered Users"
+msgstr ""
+
+msgid "Latest logged in Users"
+msgstr ""
+
+msgid "Login Redirect"
+msgstr ""
+
+msgid "Logout Redirect"
+msgstr ""
+
+msgid "View"
+msgstr ""
+
+msgid "User Login"
+msgstr ""
+
+msgid "User Logout"
+msgstr ""
+
+msgid "User Registration"
+msgstr ""
+
+msgid "User Profile"
+msgstr ""
+
+msgid "User Password Reset"
+msgstr ""
+
+msgid "Hi %name%!"
+msgstr ""
+
+msgid "Thank you for signing up for %site%. Just one more step! Please click the button below to activate your account."
+msgstr ""
+
+msgid "Activate Account"
+msgstr ""
+
+msgid "Hello!"
+msgstr ""
+
+msgid "A new user signed up for %site% with the username %username%. Please click the button below to approve the account."
+msgstr ""
+
+msgid "Approve Account"
+msgstr ""
+
+msgid "We got a request to reset your %site% password for %username%. If you ignore this message, your password won't be changed."
+msgstr ""
+
+msgid "Reset Password"
+msgstr ""
+
+msgid "Welcome to %site%!"
+msgstr ""
+
+msgid "We're really happy to have you, %name%! Just login with the username %username%."
+msgstr ""
+
+msgid "Login Now"
+msgstr ""
+
+msgid "Sign in to your account"
+msgstr ""
+
+msgid "Request Password"
+msgstr ""
+
+msgid "No account yet?"
+msgstr ""
+
+msgid "Sign up now"
+msgstr ""
+
+msgid "Registration"
+msgstr ""
+
+msgid "Enabled, but approval is required."
+msgstr ""
+
+msgid "Users per page"
+msgstr ""
+
+msgid "Verification"
+msgstr ""
+
+msgid "Require e-mail verification when a guest creates an account."
+msgstr ""
+
+msgid "Add User"
+msgstr ""
+
+msgid "User"
+msgstr ""
+
+msgid "No user found."
+msgstr ""
+
+msgid "Add Role"
+msgstr ""
+
+msgid "Edit User"
+msgstr ""
+
+msgid "Forgot Password"
+msgstr ""
+
+msgid "Please enter your email address. You will receive a link to create a new password via email."
+msgstr ""
+
+msgid "Request password"
+msgstr ""
+
+msgid "Password Confirmation"
+msgstr ""
+
+msgid "New Password"
+msgstr ""
+
+msgid "Confirm"
+msgstr ""
+
+msgid "Your Profile"
+msgstr ""
+
+msgid "Current Password"
+msgstr ""
+
+msgid "Create an account"
+msgstr ""
+
+msgid "Sign up"
+msgstr ""
+
+msgid "Already have an account?"
+msgstr ""
+
+msgid "Login!"
+msgstr ""
+
+msgid "Hi %username%"
+msgstr ""
+
+msgid "Logout"
+msgstr ""
+
+msgid "username"
+msgstr ""
+
+msgid "password"
+msgstr ""
+
+msgid "Login"
+msgstr ""
+
+msgid "Forgot Password?"
+msgstr ""
+
+msgid "User Settings"
+msgstr ""
+
+msgid "Role not found."
+msgstr ""
+
+msgid "User not found."
+msgstr ""
+
+msgid "Password required."
+msgstr ""
+
+msgid "Unable to edit administrator."
+msgstr ""
+
+msgid "Unable to block yourself."
+msgstr ""
+
+msgid "Invalid Password."
+msgstr ""
+
+msgid "Unable to delete yourself."
+msgstr ""
+
+msgid "Unable to delete administrator."
+msgstr ""
+
+msgid "Invalid token. Please try again."
+msgstr ""
+
+msgid "Invalid username or password."
+msgstr ""
+
+msgid "Password must be 6 characters or longer."
+msgstr ""
+
+msgid "Complete your registration by clicking the link provided in the mail that has been sent to you."
+msgstr ""
+
+msgid "Your user account has been created and is pending approval by the site administrator."
+msgstr ""
+
+msgid "Your user account has been created."
+msgstr ""
+
+msgid "Invalid key."
+msgstr ""
+
+msgid "Your email has been verified. Once an administrator approves your account, you will be notified by email."
+msgstr ""
+
+msgid "Your account has been activated."
+msgstr ""
+
+msgid "The user's account has been activated and the user has been notified about it."
+msgstr ""
+
+msgid "Activate your %site% account."
+msgstr ""
+
+msgid "Unable to send verification link."
+msgstr ""
+
+msgid "Approve an account at %site%."
+msgstr ""
+
+msgid "Profile"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+msgid "Enter a valid email address."
+msgstr ""
+
+msgid "Unknown email address."
+msgstr ""
+
+msgid "Your account has not been activated or is blocked."
+msgstr ""
+
+msgid "Reset password for %site%."
+msgstr ""
+
+msgid "Unable to send confirmation link."
+msgstr ""
+
+msgid "Check your email for the confirmation link."
+msgstr ""
+
+msgid "Enter password."
+msgstr ""
+
+msgid "Invalid password."
+msgstr ""
+
+msgid "Your password has been reset."
+msgstr ""
+
+msgid "Reset Confirm"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Blocked"
+msgstr ""
+
+msgid "Name required."
+msgstr ""
+
+msgid "Username is invalid."
+msgstr ""
+
+msgid "Email is invalid."
+msgstr ""
+
+msgid "Username not available."
+msgstr ""
+
+msgid "Email not available."
+msgstr ""
+
+msgid "You do not have access to the administration area of this site."
+msgstr ""
+
+msgid "Unauthorized"
+msgstr ""
+
+msgid "Insufficient User Rights."
+msgstr ""
+
+msgid "Slow down a bit."
+msgstr ""
+
+msgid "Your account is blocked."
+msgstr ""
+
+msgid "Your account has not been activated."
+msgstr ""
+
+msgid "Invalid reCaptcha."
+msgstr ""
+
+msgid "reCaptcha not probably configured."
+msgstr ""
+
+msgid "PHP"
+msgstr ""
+
+msgid "Database"
+msgstr ""
+
+msgid "Setting"
+msgstr ""
+
+msgid "Value"
+msgstr ""
+
+msgid "GreenCheap Version"
+msgstr ""
+
+msgid "UIkit Version"
+msgstr ""
+
+msgid "Vue Version"
+msgstr ""
+
+msgid "Web Server"
+msgstr ""
+
+msgid "User Agent"
+msgstr ""
+
+msgid "Version"
+msgstr ""
+
+msgid "Handler"
+msgstr ""
+
+msgid "Built On"
+msgstr ""
+
+msgid "Driver"
+msgstr ""
+
+msgid "Client"
+msgstr ""
+
+msgid "Permission"
+msgstr ""
+
+msgid "Path"
+msgstr ""
+
+msgid "Writable"
+msgstr ""
+
+msgid "Unwritable"
+msgstr ""
+
+msgid "Info"
+msgstr ""
+
+msgid "No location found."
+msgstr ""
+
+msgid "Location"
+msgstr ""
+
+msgid "Unit"
+msgstr ""
+
+msgid "Metric"
+msgstr ""
+
+msgid "Imperial"
+msgstr ""
+
+msgid "Number of Posts"
+msgstr ""
+
+msgid "Post Content"
+msgstr ""
+
+msgid "Don't show"
+msgstr ""
+
+msgid "Show on all posts"
+msgstr ""
+
+msgid "Only show on first post."
+msgstr ""
+
+msgid "Unable to retrieve feed data."
+msgstr ""
+
+msgid "No URL given."
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "Widget deleted."
+msgstr ""
+
+msgid "Widgets reordered."
+msgstr ""
+
+msgid "Finish Update"
+msgstr ""
+
+msgid "Whoops, something went wrong."
+msgstr ""
+
+msgid "New Version Installed"
+msgstr ""
+
+msgid "Uploaded file extension is invalid. Only ZIP extensions are allowed."
+msgstr ""
+
+msgid "Try Again!"
+msgstr ""
+
+msgid "Saved"
+msgstr ""
+
+msgid "_subset"
+msgstr ""
+
+msgid "We are currently under construction"
+msgstr ""
+
+msgid "Error"
+msgstr ""
+
+msgid "Update GreenCheap"
+msgstr ""
+
+msgid "GreenCheap has been updated! Before we send you on your way, we have to update your database to the newest version."
+msgstr ""
+
+msgid "Folder Name"
+msgstr ""
+
+msgid "Rename"
+msgstr ""
+
+msgid "No files found."
+msgstr ""
+
+msgid "File"
+msgstr ""
+
+msgid "Size"
+msgstr ""
+
+msgid "Modified"
+msgstr ""
+
+msgid "Invalid path."
+msgstr ""
+
+msgid "Permission denied."
+msgstr ""
+
+msgid "Invalid file name."
+msgstr ""
+
+msgid "Folder already exists."
+msgstr ""
+
+msgid "Directory created."
+msgstr ""
+
+msgid "Unable to create directory."
+msgstr ""
+
+msgid "Unable to rename."
+msgstr ""
+
+msgid "Renamed."
+msgstr ""
+
+msgid "Unable to remove."
+msgstr ""
+
+msgid "Removed selected."
+msgstr ""
+
+msgid "No files uploaded."
+msgstr ""
+
+msgid "Uploaded file invalid. (%s)"
+msgstr ""
+
+msgid "Upload complete."
+msgstr ""
+
+msgid "Unable to upload."
+msgstr ""
+
+msgid "n/a"
+msgstr ""
+
+msgid "%d Bytes"
+msgstr ""
+
+msgid "%d  KB"
+msgstr ""
+
+msgid "%d  MB"
+msgstr ""
+
+msgid "%d  GB"
+msgstr ""
+
+msgid "%d TB"
+msgstr ""
+
+msgid "%d PB"
+msgstr ""
+
+msgid "%d EB"
+msgstr ""
+
+msgid "%d ZB"
+msgstr ""
+
+msgid "%d YB"
+msgstr ""
+
+msgid "Menu Title"
+msgstr ""
+
+msgid "%type% saved."
+msgstr ""
+
+msgid "Pages moved to %menu%."
+msgstr ""
+
+msgid "Trash"
+msgstr ""
+
+msgid "(Currently set to: %menu%)"
+msgstr ""
+
+msgid "General"
+msgstr ""
+
+msgid "Logo"
+msgstr ""
+
+msgid "Favicon"
+msgstr ""
+
+msgid "Appicon"
+msgstr ""
+
+msgid "All Pages"
+msgstr ""
+
+msgid "Url"
+msgstr ""
+
+msgid "Link"
+msgstr ""
+
+msgid "URL Alias"
+msgstr ""
+
+msgid "Redirect"
+msgstr ""
+
+msgid "Content"
+msgstr ""
+
+msgid "Enable Markdown"
+msgstr ""
+
+msgid "Menu"
+msgstr ""
+
+msgid "- Menu -"
+msgstr ""
+
+msgid "Start Level"
+msgstr ""
+
+msgid "Depth"
+msgstr ""
+
+msgid "No Limit"
+msgstr ""
+
+msgid "Sub Items"
+msgstr ""
+
+msgid "Show all"
+msgstr ""
+
+msgid "Show only for active item"
+msgstr ""
+
+msgid "Extension"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Maintenance"
+msgstr ""
+
+msgid "Offline"
+msgstr ""
+
+msgid "Put the site offline and show the offline message."
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "Meta"
+msgstr ""
+
+msgid "Select Link"
+msgstr ""
+
+msgid "Slug"
+msgstr ""
+
+msgid "Hide in menu"
+msgstr ""
+
+msgid "Code"
+msgstr ""
+
+msgid "Insert code in the header and footer of your theme. This is useful for tracking codes and meta tags."
+msgstr ""
+
+msgid "Header"
+msgstr ""
+
+msgid "Footer"
+msgstr ""
+
+msgid "Add Menu"
+msgstr ""
+
+msgid "Hidden"
+msgstr ""
+
+msgid "No pages found."
+msgstr ""
+
+msgid "Menu Positions"
+msgstr ""
+
+msgid "Not Linked"
+msgstr ""
+
+msgid "Node not found."
+msgstr ""
+
+msgid "Invalid slug."
+msgstr ""
+
+msgid "Invalid type."
+msgstr ""
+
+msgid "Invalid node type."
+msgstr ""
+
+msgid "Invalid id."
+msgstr ""
+
+msgid "Duplicate Menu Id."
+msgstr ""
+
+msgid "Page not found."
+msgstr ""
+
+msgid "We make updates at the back. That's why you can't access our website right now. If you have any questions, you can contact us through social networks."
+msgstr ""
+
+msgid "No Frontpage assigned."
+msgstr ""
+
+msgid "We have not found any notifications"
+msgstr ""
+
+msgid "Not Found Notification"
+msgstr ""
+
+msgid "Preview"
+msgstr ""
+
+msgid "Markdown"
+msgstr ""
+
+msgid "Add Video"
+msgstr ""
+
+msgid "Width"
+msgstr ""
+
+msgid "Height"
+msgstr ""
+
+msgid "Autoplay"
+msgstr ""
+
+msgid "Controls"
+msgstr ""
+
+msgid "Loop"
+msgstr ""
+
+msgid "Muted"
+msgstr ""
+
+msgid "Poster Image"
+msgstr ""
+
+msgid "Add Link"
+msgstr ""
+
+msgid "Missing order data."
+msgstr ""
+
+msgid "Order saved."
+msgstr ""
+
+msgid "Page not found"
+msgstr ""
+
+msgid "Whoops, looks like something went wrong."
+msgstr ""
+
+msgid "Your GreenCheap database has been updated successfully."
+msgstr ""
+
+msgid "Your database is up to date."
+msgstr ""
+
+msgid "Draft"
+msgstr ""
+
+msgid "UnPublished"
+msgstr ""
+
+msgid "Published"
+msgstr ""
+
+msgid "Failed to withdraw from version client. Contact Us"
+msgstr ""
+
+msgid "\\"%title%\\" enabled."
+msgstr ""
+
+msgid "\\"%title%\\" disabled."
+msgstr ""
+
+msgid "Upload"
+msgstr ""
+
+msgid "Install"
+msgstr ""
+
+msgid "The checksum of the uploaded package does not match the one from the marketplace. The file might be manipulated."
+msgstr ""
+
+msgid "There is an update available for the package."
+msgstr ""
+
+msgid "License:"
+msgstr ""
+
+msgid "Homepage:"
+msgstr ""
+
+msgid "Email:"
+msgstr ""
+
+msgid "Successfully installed."
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Enable"
+msgstr ""
+
+msgid "Prepare"
+msgstr ""
+
+msgid "Successfully updated."
+msgstr ""
+
+msgid "\"%title%\" enabled."
+msgstr ""
+
+msgid "\"%title%\" disabled."
+msgstr ""
+
+msgid "Successfully removed."
+msgstr ""
+
+msgid "Choose language"
+msgstr ""
+
+msgid "Select your site language."
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "Connect database"
+msgstr ""
+
+msgid "Enter your database connection details."
+msgstr ""
+
+msgid "Soon"
+msgstr ""
+
+msgid "Hostname"
+msgstr ""
+
+msgid "Database Name"
+msgstr ""
+
+msgid "Table Prefix"
+msgstr ""
+
+msgid "Setup your site"
+msgstr ""
+
+msgid "Choose a title and create the administrator account."
+msgstr ""
+
+msgid "Site Title"
+msgstr ""
+
+msgid "Installation failed!"
+msgstr ""
+
+msgid "Retry"
+msgstr ""
+
+msgid "Update Now"
+msgstr ""
+
+msgid "Themes"
+msgstr ""
+
+msgid "Customize"
+msgstr ""
+
+msgid "No theme found."
+msgstr ""
+
+msgid "Folder"
+msgstr ""
+
+msgid "No extension found."
+msgstr ""
+
+msgid "GreenCheap Installer"
+msgstr ""
+
+msgid "You may not call this step directly."
+msgstr ""
+
+msgid "Marketplace"
+msgstr ""
+
+msgid "Problem"
+msgstr ""
+
+msgid "Not Open Zip File"
+msgstr ""
+
+msgid "Constraint Problem"
+msgstr ""
+
+msgid "Error: System version, New package new_version"
+msgstr ""
+
+msgid "Unable to find \"%name%\"."
+msgstr ""
+
+msgid "Unable to enable \"%name%\"."
+msgstr ""
+
+msgid "The Package Is Not Suitable For Green Cheap Version."
+msgstr ""
+
+msgid "To activate this module, the %package% module must be installed."
+msgstr ""
+
+msgid "The version of the %package% module that needs to be installed does not match or is outdated."
+msgstr ""
+
+msgid "\"%name%\" has not been loaded."
+msgstr ""
+
+msgid "No file uploaded."
+msgstr ""
+
+msgid "\"composer.json\" file not valid."
+msgstr ""
+
+msgid "No GreenCheap %type%"
+msgstr ""
+
+msgid "Can't load json file from package."
+msgstr ""
+
+msgid "Unable to activate \"%name%\".<br>A fatal error occured."
+msgstr ""
+
+msgid "Existing GreenCheap installation detected. Choose different table prefix?"
+msgstr ""
+
+msgid "Database connection failed!"
+msgstr ""
+
+msgid "Database access denied!"
+msgstr ""
+
+msgid "No database connection."
+msgstr ""
+
+msgid "Can't write config."
+msgstr ""
+
+msgid "Database error: %error%"
+msgstr ""
+
+msgid "Package path is missing."
+msgstr ""
+
+msgid "Removing package folder."
+msgstr ""
+
+msgid "'composer.json' is missing."
+msgstr ""
+

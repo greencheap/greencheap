@@ -1,0 +1,34 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "parserOptions": {
+      "parser": "babel-eslint",
+      "ecmaVersion": 6,
+    },
+    "extends": [
+        "airbnb-base",
+        "plugin:vue/recommended",
+    ],
+    "rules": {
+        "max-len": 0,
+        "no-undef": 0,
+        "indent": ["error", 4],
+        "vue/html-indent": ["error", 4, {
+          "attribute": 1,
+          "baseIndent": 1,
+          "closeBracket": 0,
+          "alignAttributesVertically": true,
+          "ignores": []
+        }],
+        "vue/max-attributes-per-line": ["error", {
+          "singleline": 5,
+          "multiline": {
+            "max": 1,
+            "allowFirstLine": false
+          }
+        }]
+    }
+}
