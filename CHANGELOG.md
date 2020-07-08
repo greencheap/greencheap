@@ -1,19 +1,21 @@
-# 1.0.19.9-dev 
-## Fixed
-- Debugging kaldırıldı.
-- Storage upload ve new folder düzeltildi.
-- Cache-Control denendi ve htaccess'e ekledi.
 
-# 1.0.19.7-dev
-## Added
-- App::device() eklendi bu sayede giriş yapılan cihazı tespit edebiliriz.
-
-# Changelog 1.0.19.6-dev
-
-## Added
-- Gravatar yerine kendi avatar kütüphanemizi ekledik. `$app['view']->avatar('isim' , ['size' => 100 , 'fontSize' => 1])`
-- `User` kullanıcılarını çekmeden önce *Avatarları* için filtreleme yapabilirsiniz. Query çalıştırmadan önce `User::SetImageFilter(['size' , 'fontSize'])` parametlerini doldurmanız yeterli. Sonrasında ise `getAvatar()`'dan gelen tüm veriler verdiğiniz filtreye göre çevrilecektir.
-
-## Fixed
-- Eğer User'ın data sınıfında avatar yoksa kütüphane çalışır. `$app['user']->getAvatar()`
-- Dashboard User Widget'daki resimler düzenlendi.
+# Change Log
+All notable changes to this project will be documented in this file.
+ 
+The format is based on [Keep a Changelog](http://keepachangelog.com/)
+and this project adheres to [Semantic Versioning](http://semver.org/).
+ 
+## [Unreleased] - yyyy-mm-dd
+ 
+Here we write upgrading notes for brands. It's a team effort to make them as
+straightforward as possible.
+ 
+### Added
+- [PROJECTNAME-XXXX](http://tickets.projectname.com/browse/PROJECTNAME-XXXX)
+  MINOR Ticket title goes here.
+- [PROJECTNAME-YYYY](http://tickets.projectname.com/browse/PROJECTNAME-YYYY)
+  PATCH Ticket title goes here.
+ 
+### Changed
+ 
+### Fixed
