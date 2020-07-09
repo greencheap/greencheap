@@ -58,7 +58,8 @@ class SystemMenu implements \IteratorAggregate, \JsonSerializable
             'id' => $id,
             'label' => $id,
             'parent' => 'root',
-            'priority' => 0
+            'priority' => 0,
+            'layout' => 'navbar'
         ]);
 
         if (!App::user()->hasAccess($item['access'])) {

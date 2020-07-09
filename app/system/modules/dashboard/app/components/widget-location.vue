@@ -51,7 +51,7 @@
             </form>
         </div>
 
-        <div v-if="status !== 'loading'" class="uk-inline-clip pk-panel-background uk-light">
+        <div v-if="status !== 'loading'" class="uk-inline-clip uk-card uk-card-secondary uk-light">
             <canvas class="" width="550" height="350"></canvas>
             <div class="uk-position-cover uk-width-1-1">
                 <div class="uk-flex uk-flex-center uk-flex-column uk-height-1-1">

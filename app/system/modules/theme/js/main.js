@@ -39,8 +39,10 @@ const navbar = {
 
     created() {
         const menu = _(this.menu).groupBy('layout').value();
-        const item = _(menu.root).sortBy('priority').groupBy('parent').value();
-        this.$set(this, 'navs', item.root);
+        const item = _(menu.navbar).sortBy('priority').groupBy('parent').value();
+        if (item.root) {
+            this.$set(this, 'navs', item.root);
+        }
         const allMenu = _(this.menu).sortBy('priority').groupBy('parent').value();
         const findActive = _.find(allMenu.root, 'active');
         this.title = findActive.label;

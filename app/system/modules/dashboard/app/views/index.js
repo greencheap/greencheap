@@ -3,7 +3,6 @@ import {$, on, css, append, addClass, removeClass, hasClass, attr, toNodes, each
 import Panel from '../components/widget-panel.vue';
 import Feed from '../components/widget-feed.vue';
 import Location from '../components/widget-location.vue';
-import Weather from '../components/widget-weather.vue';
 
 window.Dashboard = {
 
@@ -152,7 +151,6 @@ window.Dashboard = {
         panel: Panel,
         feed: Feed,
         location: Location,
-        weather: Weather,
     },
 
 };
