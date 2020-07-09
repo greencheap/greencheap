@@ -8,6 +8,7 @@ import Autocomplete from './components/autocomplete';
 import Pagination from './components/pagination';
 import HTMLEditor from './components/htmleditor';
 import Notifications from '../../notifications/app/components/notifications.vue';
+import Update from './components/update.vue';
 
 const sidebar = {
     el: '#sidebar',
@@ -54,6 +55,7 @@ const navbar = {
 
     components: {
         Notifications,
+        Update,
     },
 };
 

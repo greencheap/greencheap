@@ -1,87 +1,62 @@
 module.exports = {
 
-    data(){
+    data() {
         return _.merge({
-            errorTemplate:{
-                isActive:false,
-                message:'',
-                title:''
-            }
-        } , window.$client)
+            errorTemplate: {
+                isActive: false,
+                message: '',
+                title: '',
+            },
+        }, window.$client);
     },
 
-    computed:{
-        isError(){
-            if( this.errorTemplate.isActive ){
+    computed: {
+        isError() {
+            if (this.errorTemplate.isActive) {
                 return true;
             }
             return false;
         },
 
-        getTitle(){
+        getTitle() {
             return this.errorTemplate.title;
         },
 
-        getMessage(){
+        getMessage() {
             return this.errorTemplate.message;
-        }
+        },
     },
 
-    methods:{
-        getAccessToken(){
-            this.clientResource('api/oauth2/resource-owner/client' , {
-                secret_client:this.system.config.oauth2.secret_client,
-                secret_key:this.system.config.oauth2.secret_key,
-            }).then((res)=>{
-                this.client.access_token = res.data.access_token;
-                if(this.isError){
-                    this.abort(false);
-                }
-                return res;
-            }).catch((err)=>{
-                this.$notify(err.bodyText , 'danger');
-                console.log(err)
-                this.abort(true  , err.bodyText);
-                return err;
-            })
-        },
-
-        clientResource(url , parameter){
-            let urlParam = `${this.client.system_api}/${url}`;
-
-            if(!parameter){
-                parameter = {}
+    methods: {
+        clientResource(url, parameter) {
+            const urlParam = `${this.system_api}/${url}`;
+            if (!parameter) {
+                // eslint-disable-next-line no-param-reassign
+                parameter = {};
             }
-            
-            if(this.client.access_token){
-                parameter = _.merge({access_token:this.client.access_token} , parameter)
-            }else{
-                parameter = parameter
-            }
-
-            let http = this.$http.get(urlParam , 
-                {
-                    params:parameter
-                }
-            )
+            const http = this.$http.get(urlParam, {
+                params: parameter,
+            });
             return http;
         },
 
-        abort(active = false, message = '', title = 'Error'){
+        abort(active = false, message = '', title = 'Error') {
             this.errorTemplate.isActive = active;
-            this.errorTemplate.message  = message;
-            this.errorTemplate.title  = title;
+            this.errorTemplate.message = message;
+            this.errorTemplate.title = title;
         },
 
         changelog(md) {
             const renderer = new marked.Renderer();
             let section;
 
+            // eslint-disable-next-line func-names
             renderer.heading = function (text) {
                 section = text;
                 return '';
             };
 
+            // eslint-disable-next-line func-names
             renderer.listitem = function (text) {
                 switch (section) {
                 case 'Added':
@@ -99,11 +74,12 @@ module.exports = {
                 }
             };
 
+            // eslint-disable-next-line func-names
             renderer.list = function (text) {
                 return text;
             };
 
             return marked(md, { renderer });
-        }
-    }
-}
+        },
+    },
+};

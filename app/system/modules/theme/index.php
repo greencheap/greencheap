@@ -49,7 +49,12 @@ return [
                     'avatar' => $user->getAvatar()
                 ],
                 'menu' => array_values($app['system']->getMenu()->getItems()),
-                'version' => $app->version()
+                
+            ]);
+
+            $view->data('$client' , [
+                'version' => $app->version(),
+                'system_api' => $app->get('system.api')
             ]);
 
             $subsets = 'latin,latin-ext';

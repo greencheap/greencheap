@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div v-if="system.isClientSuitable && hasUpdate">
-            <a class="update tm-text-small update-hover" @click.prevent="openModal">
-                <i class="hasupdateanimation" />
+        <div v-if="hasUpdate">
+            <button class="uk-button uk-button-default uk-button-large" @click.prevent="openModal">
+                <i uk-icon="git-fork" />
                 <span>{{ 'Update Released' | trans }}</span>
-            </a>
+            </button>
         </div>
 
         <div id="versionStableModal" class="uk-flex-top" uk-modal="bg-close:false;esc-close:false">
@@ -31,10 +31,10 @@
 
                             <ul class="uk-list uk-list-divider">
                                 <li class="uk-text-capitalize uk-text-small" style="letter-spacing: 2px;">
-                                    <span class="uk-margin-small-right">{{ 'YOUR VERSION' | trans }}</span> <strong>{{ system.version.full }}</strong>
+                                    <span class="uk-margin-small-right">{{ 'YOUR VERSION' | trans }}</span> <strong>{{ version }}</strong>
                                 </li>
                                 <li class="uk-text-capitalize uk-text-small" style="letter-spacing: 2px;">
-                                    <span class="uk-margin-small-right">{{ 'NEW VERSION' | trans }}</span> <strong>{{ hasUpdate.full }}</strong>
+                                    <span class="uk-margin-small-right">{{ 'NEW VERSION' | trans }}</span> <strong>{{ hasUpdate.version }}</strong>
                                 </li>
                             </ul>
                         </div>
@@ -65,11 +65,6 @@
 import Version from '../../../../../installer/app/lib/version';
 
 export default {
-    section: {
-        label: 'Update Stable',
-        priority: -999,
-    },
-
     data() {
         return {
             hasUpdate: false,
@@ -97,12 +92,6 @@ export default {
         };
     },
 
-    // eslint-disable-next-line vue/order-in-components
-    mixins: [
-        // eslint-disable-next-line global-require
-        require('../../../../app/lib/client'),
-    ],
-
     watch: {
         'modal.isLoader': {
             handler(newValue) {
@@ -115,10 +104,14 @@ export default {
         },
     },
 
+    // eslint-disable-next-line vue/order-in-components
+    mixins: [
+        // eslint-disable-next-line global-require
+        require('../../../../app/lib/client'),
+    ],
+
     created() {
-        if (this.system.isClientSuitable && !this.system.isDeveloper) {
-            this.getVersion();
-        }
+        this.getVersion();
     },
 
     mounted() {
@@ -131,58 +124,27 @@ export default {
         },
 
         getVersion() {
-            this.clientResource('api/client/versions/get', { constraint: this.system.version.constraint }).then((res) => {
+            this.clientResource('api/client/versions/get').then((res) => {
                 const data = res.data.version;
-                if (Version.compare(this.system.version.version, data.version, '<=')) {
-                    this.hasUpdate = res.data.version;
+                if (Version.compare(this.version, data.version, '<=')) {
+                    this.hasUpdate = data;
                     return;
                 }
                 this.hasUpdate = false;
-            }).catch(() => {
-                // Geliştirilecek
             });
-        },
-
-        tryGetAccess() {
-            this.getAccessToken();
-            const ref = this;
-            setTimeout(() => {
-                ref.getVersion();
-            }, 2000);
         },
 
         doDownload() {
             this.output = '';
             this.output += 'Server Side Connecting..\n';
             setTimeout(() => {
-                this.output += `<span class="uk-label uk-text-capitalize">Your Client</span> ${this.system.config.oauth2.client}\n`;
-                this.output += `<span class="uk-label uk-text-capitalize">Server Side</span> ${this.client.system_api}...\n\n`;
-                this.modal.progressbar = 10;
-            }, 3000);
-            setTimeout(() => {
-                this.output += '<span class="uk-text-success">Server Side Connect</span>\n';
-                this.output += `<span class="uk-text-warning">Secret Client</span> ${this.system.config.oauth2.secret_client}\n`;
-                this.output += `<span class="uk-text-warning">Secret Key</span> ${this.system.config.oauth2.secret_key}\n`;
-                this.output += '<span class="uk-text-success">Get Access Token</span>...\n\n';
-                this.modal.progressbar = 20;
-            }, 5000);
-            setTimeout(() => {
-                this.output += `<span class="uk-text-success">Access Token:</span> ${this.client.access_token}...\n\n`;
-                this.modal.progressbar = 30;
-            }, 7000);
-            setTimeout(() => {
-                this.output += '<span class="uk-text-danger">A secure connection with <strong>Access Token</strong> is complete and deleted.</span>\n';
                 this.output += 'New version downloading\n';
                 this.modal.progressbar = 40;
-            }, 9000);
+            }, 2000);
             const ref = this;
             this.modal.isLoader = true;
             this.modal.progressbar = 1;
             this.$http.get('admin/system/update/api/download-release', {
-                params: {
-                    constraint: this.system.version.constraint,
-                },
-            }, {
                 progress(e) {
                     if (e.lengthComputable) {
                         ref.modal.progressbar = (e.loaded / e.total) * 50;
@@ -213,7 +175,7 @@ export default {
         doMigration() {
             this.modal.progressbar = 100;
             if (this.status === 'success') {
-                this.$http.get('admin/system/migration/migrate').then(function (res) {
+                this.$http.get('admin/system/migration/migrate').then((res) => {
                     const { data } = res;
                     this.output += `\n\n${data.status}`;
                     this.finished = true;
@@ -266,44 +228,3 @@ export default {
     },
 };
 </script>
-
-<style>
-    .update-hover:hover > * {
-        color:#fff;
-        opacity: 1;
-    }
-    .version-dev{
-        background: #fb256a !important;
-        color: white !important;
-        font-size: 10px;
-        padding: 5px 10px;
-        margin-left: 10px;
-        font-weight: bold;
-        text-transform: capitalize;
-    }
-    .tm-text-small{
-        font-size:11px;
-    }
-    .update{
-        position:relative;
-    }
-    .hasupdateanimation{
-        display: -webkit-inline-box;
-        position: absolute;
-        top: -2px;
-        width: 17px;
-        left: -20px;
-        height: 17px;
-        border-radius: 100px;
-        -webkit-animation: alert 0.8s infinite; /* Safari 4+ */
-        -moz-animation:    alert 0.8s infinite; /* Fx 5+ */
-        -o-animation:      alert 0.8s infinite; /* Opera 12+ */
-        animation:         alert 0.8s infinite; /* IE 10+, Fx 29+ */
-    }
-
-    @keyframes alert {
-        0%   { background: #22af49; }
-        50%   { background: #5aea93; }
-        100% { background: #22af49; }
-    }
-</style>

@@ -84,7 +84,6 @@ return [
                 if (!$event->isMasterRequest()) {
                     return;
                 }
-
                 $app['isAdmin'] = $admin = (bool) preg_match('#^/admin(/?$|/.+)#', $request->getPathInfo());
                 $app->module('system/intl')->setLocale($this->config($admin ? 'admin.locale' : 'site.locale'));
 
