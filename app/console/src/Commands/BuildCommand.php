@@ -47,8 +47,8 @@ class BuildCommand extends Command
 
         $filter = '/' . implode('|', $this->excludes) . '/i';
         $packages = [
-            //'greencheap/blog' => '*',
-            //'greencheap/theme-one' => '*'
+            'greencheap/blog' => '*',
+            'greencheap/theme-one' => '*'
         ];
 
         $config = [];
@@ -72,7 +72,7 @@ class BuildCommand extends Command
         $zip = new \ZipArchive;
 
         if (true !== $zip->open($zipFile = "{$path}/greencheap-{$version}.zip", \ZipArchive::CREATE | \ZipArchive::OVERWRITE)) {
-            //$this->abort("Can't open ZIP extension in '{$zipFile}'");
+            $this->abort("Can't open ZIP extension in '{$zipFile}'");
         }
 
         foreach ($finder as $file) {
