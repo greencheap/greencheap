@@ -28,8 +28,7 @@ $config = array(
     'path.vendor'   => $path.'/vendor',
     'path.artifact' => $path.'/tmp/packages',
     'config.file'   => realpath($path.'/config.php'),
-    'system.api'    => 'https://localhost:8000'
-    //'system.api'    => 'https://greencheap.net'
+    'system.api'    => 'https://greencheap.net'
 );
 
 if (!$config['config.file']) {
