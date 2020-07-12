@@ -47,8 +47,8 @@ class BuildCommand extends Command
 
         $filter = '/' . implode('|', $this->excludes) . '/i';
         $packages = [
-            'greencheap/blog' => '*',
-            'greencheap/theme-one' => '*'
+            //'greencheap/blog' => '*',
+            //'greencheap/theme-one' => '*'
         ];
 
         $config = [];
