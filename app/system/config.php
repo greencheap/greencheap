@@ -1,8 +1,12 @@
 <?php
 
+$composerFile = file_get_contents('./composer.json');
+
+$version = json_decode($composerFile , true)['version'];
+
 return [
     'application' => [
-        'version' => '2.0.1'
+        'version' => $version
     ],
 
     'auth' => [

@@ -19,6 +19,7 @@ return [
         'system/view',
         'system/widget',
         'system/cache',
+        'system/categories',
         'system/comment',
         'system/content',
         'system/dashboard',

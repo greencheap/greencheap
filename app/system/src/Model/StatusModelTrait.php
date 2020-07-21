@@ -26,9 +26,9 @@ trait StatusModelTrait
     public static function getStatuses():array
     {
         return [
-            self::getStatus('STATUS_TRASH') => __('Trash'),
+            self::getStatus('STATUS_TRASH') => __('Pending Review'),
             self::getStatus('STATUS_DRAFT') => __('Draft'),
-            self::getStatus('STATUS_UNPUBLISHED') => __('UnPublished'),
+            self::getStatus('STATUS_UNPUBLISHED') => __('Unpublished'),
             self::getStatus('STATUS_PUBLISHED') => __('Published')
         ];
     }
