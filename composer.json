@@ -31,11 +31,11 @@
         "symfony/templating": "~4.4",
         "symfony/translation": "~4.4",
         "twig/twig": "^2.12",
-        "php-curl-class/php-curl-class": "^8.7"
+        "php-curl-class/php-curl-class": "^8.7",
+        "ext-json": "*"
     },
     "require-dev": {
         "ext-dom": "*",
-        "ext-json": "*",
         "ext-libxml": "*",
         "ext-mbstring": "*",
         "ext-xml": "*",

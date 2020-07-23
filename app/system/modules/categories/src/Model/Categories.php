@@ -8,7 +8,7 @@ use GreenCheap\System\Model\StatusModelTrait;
 /**
  * @Entity(tableClass="@system_categories")
  */
-class Categories implements \JSONSerializable
+class Categories implements \JsonSerializable
 {
     use DataModelTrait, ModelTrait, StatusModelTrait;
 
@@ -39,7 +39,12 @@ class Categories implements \JSONSerializable
     public $sub_category;
 
     /**
-     * @Column(type="datatime")
+     * @Column(type="string")
+     */
+    public $type;
+
+    /**
+     * @Column(type="datetime")
      */
     public $date;
 
@@ -61,8 +66,11 @@ class Categories implements \JSONSerializable
     /**
      * @var array
      */
-    protected static array $properties = [
-        'author' => 'getAuthor'
+    protected static $properties = [
+        'author' => 'getAuthor',
+        'published' => 'isPublished',
+        'accessible' => 'isAccessible',
+        'has_subcategory' => 'hasSubCategory'
     ];
 
     /**
@@ -72,9 +80,37 @@ class Categories implements \JSONSerializable
     {
         if($this->user){
             return [
-                'username' => $this->username,
-                'email'    => $this->email
+                'username' => $this->user->username,
+                'email'    => $this->user->email
             ];
+        }
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPublished()
+    {
+        return $this->status === self::getStatus('STATUS_PUBLISHED') && $this->date < new \DateTime;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAccessible()
+    {
+        return $this->isPublished();
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasSubCategory()
+    {
+        $query = $this->where('sub_category = ?' , [$this->id])->get();
+        if($query){
+            return true;
         }
         return false;
     }
@@ -109,11 +145,13 @@ class Categories implements \JSONSerializable
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function jsonSerialize()
     {
-        return $this->toArray();
+        $data = [];
+        return $this->toArray($data);
     }
+
 }
 ?>

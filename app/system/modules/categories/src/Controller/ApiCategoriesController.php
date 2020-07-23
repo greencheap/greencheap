@@ -21,17 +21,23 @@ class ApiCategoriesController
     public function getAction( array $filters = [] , int $page = 1 )
     {
         $query = Categories::query();
-        $filters = array_merge(array_fill_keys(['status', 'type' , 'search', 'author', 'order', 'limit'], ''), $filters);
+        $filters = array_merge(array_fill_keys(['status', 'type' , 'search', 'author', 'order', 'limit' , 'sub_category'], ''), $filters);
         extract($filters, EXTR_SKIP);
 
         if(!App::user()->hasAccess('categories: manage categories')) {
             $author = App::user()->id;
         }
 
-        $query->where(['type' => (string) $type]);
+        if($type){
+            $query->where(['type' => (string) $type]);
+        }
 
         if (is_numeric($status)) {
             $query->where(['status' => (int) $status]);
+        }
+
+        if(is_numeric($sub_category)){
+            $query->where('sub_category = :sub_category' , ['sub_category' => $sub_category]);
         }
 
         if ($search) {
@@ -58,5 +64,57 @@ class ApiCategoriesController
         $categories = array_values($query->offset($page * $limit)->related('user')->limit($limit)->orderBy($order[1], $order[2])->get());
 
         return compact('categories', 'pages', 'count');
+    }
+
+    /**
+     * @Route("/save" , methods="POST")
+     * @Request({"id":"integer","data":"array"} , csrf=true)
+     * @param int $id
+     * @param array $data
+     * @return string
+     */
+    public function saveAction( int $id = 0 , array $data = [] )
+    {
+        if (!$query = Categories::where('id')->first()) {
+            if ($id) {
+                return App::abort(404, __('Not Found %name%', ['%name%' => __('Category')]));
+            }
+            $query = Categories::create();
+        }
+        if(empty($data['slug'])){
+            $data['slug'] = App::filter( !empty($data['slug']) ? $data['slug']:$data['title'] , 'slugify');
+        }
+        $query->save($data);
+        return compact('query');
+    }
+
+    /**
+     * @Route("/bulk", methods="DELETE")
+     * @Request({"ids": "array"}, csrf=true)
+     * @param array $ids
+     * @return string[]
+     */
+    public function bulkDeleteAction($ids = [])
+    {
+        foreach (array_filter($ids) as $id) {
+            $this->deleteAction($id);
+        }
+
+        return ['message' => 'success'];
+    }
+
+    /**
+     * @Route("/{id}", methods="DELETE", requirements={"id"="\d+"})
+     * @Request({"id": "int"}, csrf=true)
+     * @param $id
+     * @return string[]
+     */
+    public function deleteAction($id)
+    {
+        if ($category = Categories::find($id)) {
+            $category->delete();
+        }
+
+        return ['message' => 'success'];
     }
 }

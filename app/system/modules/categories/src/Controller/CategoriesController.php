@@ -20,6 +20,9 @@ class CategoriesController
      */
     public function indexAction(array $filters = [] , int $page = 1)
     {
+
+        $util = App::db();
+        $categories_type = $util->createQueryBuilder()->select('type')->from('@system_categories')->groupBy('type')->get();
         return [
             '$view' => [
                 'title' => __('Categories'),
@@ -33,7 +36,9 @@ class CategoriesController
                     'page' => $page,
                 ],
                 'statuses' => StatusModelTrait::getStatuses(),
-                'user' => App::user()
+                'user' => App::user(),
+                'currentUrl' => App::url()->current(),
+                'types' => $categories_type
             ]
         ];
     }
@@ -48,18 +53,41 @@ class CategoriesController
      */
     public function editAction(int $id = 0, string $redirect = null, string $type = null)
     {
-        $category = '';
+        if(!$type){
+            return App::abort(404 , __('Can Not Find Type'));
+        }
+
+        $category = Categories::where(compact(['id' , 'type']))->first();
+        if(!$category){
+            if($id){
+                return App::abort(404 , __('Not Found Category'));
+            }
+
+            $category = Categories::create([
+                'type' => $type,
+                'sub_category' => 0,
+                'date' => new \DateTime(),
+                'user_id' => App::user()->id,
+                'status' => StatusModelTrait::getStatus('STATUS_PUBLISHED')
+            ]);
+        }
+
+        $datetime = new \DateTime();
 
         return [
             '$view' => [
-                'title' => 'Başlık',
+                'title' => $category->id ? __('Edit %category_name%' , ['category_name' => $category->title]) : __('New Category'),
                 'name' => 'system/categories:views/admin/edit.php'
             ],
             '$data' => [
-                'category' => $category,
-                'users' => User::findAll(),
-                'statuses' => StatusModelTrait::getStatuses(),
-                'categories' => Categories::findAll(),
+                'category' => (object) $category,
+                'data' => [
+                    'users' => User::findAll(),
+                    'statuses' => StatusModelTrait::getStatuses(),
+                    'categories' => Categories::findAll(),
+                    'date' => $datetime,
+                    'redirect' => $redirect
+                ]
             ]
         ];
     }

@@ -62,6 +62,7 @@
         "vue-event-manager": "^2.1.2",
         "vue-intl": "github:uatrend/vue-intl#master",
         "vue-nestable": "^2.4.4",
-        "vue-resource": "^1.5.1"
+        "vue-resource": "^1.5.1",
+        "vuedraggable": "^2.24.0"
     }
 }
