@@ -18,6 +18,7 @@
 /greencheap.db
 /config.php
 /config-dev.php
+storage/*
 node_modules
 .DS_Store
 .idea
