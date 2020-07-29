@@ -20,6 +20,7 @@ const common = {
     resolve: {
         alias: {
             SystemApp: path.resolve(__dirname, 'app/system/app'),
+            Categories: path.resolve(__dirname, 'app/system/modules/categories/app'),
         },
     },
     externals: {

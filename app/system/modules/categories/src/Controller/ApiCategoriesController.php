@@ -104,6 +104,19 @@ class ApiCategoriesController
     }
 
     /**
+     * @param string $type
+     * @param int $depth
+     * @return array
+     * @Route("/get-option")
+     * @Request({"type":"string", "depth":"integer"} , csrf=true)
+     */
+    public function getOptionAction(string $type = '' , int $depth = 0)
+    {
+        $categories = Categories::where(['type = ?' , 'sub_category = ?'] , [$type , $depth])->orderBy('title' , 'ASC')->get();
+        return compact('categories');
+    }
+
+    /**
      * @Route("/{id}", methods="DELETE", requirements={"id"="\d+"})
      * @Request({"id": "int"}, csrf=true)
      * @param $id
