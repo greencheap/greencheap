@@ -53,6 +53,9 @@
             <label class="uk-form-label">{{ 'Developer' | trans }}</label>
             <div class="uk-form-controls uk-form-controls-text">
                 <div class="uk-margin-small">
+                    <label><input v-model="$root.config.application.beta" class="uk-checkbox" type="checkbox" value="1"><span class="uk-margin-small-left">{{ 'Enable beta version mode' | trans }}</span></label>
+                </div>
+                <div class="uk-margin-small">
                     <label><input v-model="$root.config.application.debug" class="uk-checkbox" type="checkbox" value="1"><span class="uk-margin-small-left">{{ 'Enable debug mode' | trans }}</span></label>
                 </div>
                 <div class="uk-margin-small">
@@ -79,6 +82,7 @@ export default {
         priority: 10,
     },
 
+    // eslint-disable-next-line vue/require-prop-types
     props: ['config', 'options'],
 
     data() {

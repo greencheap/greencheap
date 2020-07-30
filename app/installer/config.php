@@ -3,27 +3,20 @@
 return [
 
     'installer' => [
-
         'enabled' => true
-
     ],
 
     'application' => [
-
-        'debug' => true
-
+        'debug' => true,
+        'beta' => false, 
     ],
 
     'session' => [
-
         'storage' => 'array'
-
     ],
 
     'system/cache' => [
-
         'storage' => 'array'
-
     ],
 
     'project' => [
