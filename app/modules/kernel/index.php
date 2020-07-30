@@ -42,11 +42,6 @@ return [
 
     'events' => [
 
-        'boot' => function($event, $app)
-        {
-            $app->subscribe();
-        },
-
         'request' => [function ($event, $request) use ($app) {
 
             if ($app->inConsole()) {

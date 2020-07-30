@@ -213,7 +213,7 @@ return [
             $dashboard->saveWidgets(array_intersect_key($widgets, array_flip($ids)));
         },
 
-        '2.0.5' => function ($app) {
+        '2.0.6' => function ($app) {
             $util = $app['db']->getUtility();
 
             if($util->tableExists('@system_categories') === false) {

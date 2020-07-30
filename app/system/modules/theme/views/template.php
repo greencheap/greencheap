@@ -72,7 +72,7 @@
                                     <div v-for="(nav , id) in navs" :key="id">
                                         <a :href="$url(nav.url)" :class="{'gc-navbar-menu-item-active':nav.active}" class="gc-navbar-menu-item uk-flex uk-flex-center">
                                             <div>
-                                                <img :src="nav.icon" width="60px">
+                                                <img :src="nav.icon">
                                                 <span class="uk-text-center uk-display-block uk-margin-small-top">{{nav.label}}</span>
                                             </div>
                                         </a>
