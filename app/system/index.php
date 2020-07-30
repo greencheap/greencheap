@@ -23,7 +23,6 @@ return [
         'system/comment',
         'system/content',
         'system/dashboard',
-        'system/dashpanel',
         'system/editor',
         'system/finder',
         'system/info',

@@ -1,6 +1,5 @@
 <template>
-
-    <div class="tm-background uk-height-viewport uk-flex uk-flex-center uk-flex-middle">
+    <div class="uk-flex uk-flex-center uk-flex-middle tm-background uk-height-viewport">
         <installer-steps :steps="steps" :current="step">
             <template v-slot:start="{ step }">
                 <div :step="step" class="uk-text-center">

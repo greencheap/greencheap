@@ -213,38 +213,15 @@ return [
             $dashboard->saveWidgets(array_intersect_key($widgets, array_flip($ids)));
         },
 
-        '2.0.4' => function ($app) {
+        '2.0.5' => function ($app) {
             $util = $app['db']->getUtility();
 
             if($util->tableExists('@system_categories') === false) {
-                $util->createTable('@system_categories' , function($table){
-                    $table->addColumn('id', 'integer', ['autoincrement' => true, 'unsigned' => true, 'length' => 10]);
-                    $table->addColumn('title', 'string');
-                    $table->addColumn('slug', 'string');
-                    $table->addColumn('user_id', 'integer');
-                    $table->addColumn('sub_category', 'integer');
-                    $table->addColumn('date', 'datetime');
-                    $table->addColumn('modified', 'datetime', ['notnull' => false]);
-                    $table->addColumn('status', 'integer');
-                    $table->addColumn('data', 'json_array');
-                    $table->setPrimaryKey(['id']);
-                    $table->addIndex(['title'], '@SYSTEM_CATEGORIES_TITLE');
-                    $table->addIndex(['slug'], '@SYSTEM_CATEGORIES_SLUG');
-                });
-            }
-
-            if ($util->tableExists('@system_comments') === false) {
-                $util->createTable('@system_comments', function ($table) {
-                    $table->addColumn('id', 'integer', ['unsigned' => true, 'length' => 10, 'autoincrement' => true]);
-                    $table->addColumn('parent_id', 'integer', ['unsigned' => true, 'length' => 10]);
-                    $table->addColumn('own_id', 'integer', ['unsigned' => true, 'length' => 10]);
-                    $table->addColumn('type' , 'string');
-                    $table->addColumn('user_id', 'string', ['length' => 255]);
-                    $table->addColumn('created', 'datetime');
-                    $table->addColumn('content', 'text');
-                    $table->addColumn('status', 'smallint');
-                    $table->setPrimaryKey(['id']);
-                });
+                $table =  $util->listTableDetails('@system_categories');
+				if (!$table->hasColumn('type')) {
+					$table->addColumn('type' , 'string');
+					$util->alterTable((new Comparator())->diffTable($util->listTableDetails('@system_categories'), $table));
+				}
             }
         }
     ]
