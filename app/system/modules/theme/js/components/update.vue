@@ -124,13 +124,17 @@ export default {
         },
 
         getVersion() {
-            this.clientResource('api/client/versions/get').then((res) => {
+            this.clientResource('version/get', {
+                constraint: this.settings.beta ? 'beta' : 'stable',
+            }).then((res) => {
                 const data = res.data.version;
-                if (Version.compare(this.version, data.version, '<=')) {
+                if (Version.compare(this.version, data.version, '<')) {
                     this.hasUpdate = data;
                     return;
                 }
                 this.hasUpdate = false;
+            }).catch((err) => {
+                this.$notify(err.body.error, 'danger');
             });
         },
 
@@ -145,6 +149,10 @@ export default {
             this.modal.isLoader = true;
             this.modal.progressbar = 1;
             this.$http.get('admin/system/update/api/download-release', {
+                params: {
+                    constraint: this.settings.beta ? 'beta' : 'stable',
+                },
+            }, {
                 progress(e) {
                     if (e.lengthComputable) {
                         ref.modal.progressbar = (e.loaded / e.total) * 50;

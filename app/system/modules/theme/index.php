@@ -54,7 +54,8 @@ return [
 
             $view->data('$client' , [
                 'version' => $app->version(),
-                'system_api' => $app->get('system.api')
+                'system_api' => $app->get('system.api'),
+                'settings' => $app['system']->config(['beta']),
             ]);
 
             $subsets = 'latin,latin-ext';

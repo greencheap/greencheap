@@ -18,7 +18,8 @@
 /greencheap.db
 /config.php
 /config-dev.php
-storage/*
+/storage/*
+!/storage/greencheap-hero.jpg
 node_modules
 .DS_Store
 .idea

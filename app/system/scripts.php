@@ -1,5 +1,4 @@
 <?php
-
 return [
 
     'install' => function ($app) {
@@ -213,14 +212,13 @@ return [
             $dashboard->saveWidgets(array_intersect_key($widgets, array_flip($ids)));
         },
 
-        '2.0.6' => function ($app) {
+        '2.0.7' => function ($app) {
             $util = $app['db']->getUtility();
 
             if($util->tableExists('@system_categories') === false) {
                 $table =  $util->listTableDetails('@system_categories');
 				if (!$table->hasColumn('type')) {
-					$table->addColumn('type' , 'string');
-					$util->alterTable((new Comparator())->diffTable($util->listTableDetails('@system_categories'), $table));
+                    $app['db']->executeQuery('ALTER TABLE @system_categories ADD "type" varchar(255) NULL DEFAULT NULL');
 				}
             }
         }

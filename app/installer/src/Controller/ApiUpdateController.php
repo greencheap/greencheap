@@ -14,11 +14,11 @@ class ApiUpdateController
 {
     /**
      * @Route("/download-release" , methods="GET")
-     * @Request({"constraint":"string" , "access_token":"string"} , csrf=true)
+     * @Request({"constraint":"string"} , csrf=true)
      */
-    public function getClientDownloadAction(string $constraint = 'stable' , string $access_token = '')
+    public function getClientDownloadAction(string $constraint = 'stable')
     {
-        $url = App::get('system.api').'/api/brain/download/download?';
+        $url = App::get('system.api').'/version/download/forced?';
 
         $parameters = http_build_query([
             'constraint' => $constraint
@@ -29,8 +29,8 @@ class ApiUpdateController
 
         $curl = new Curl();
         $curl->setOpt(CURLOPT_ENCODING , '');
-        $curl->setOpt(CURLOPT_TIMEOUT, 600);
-        $curl->setOpt(CURLOPT_CONNECTTIMEOUT, 600);
+        $curl->setOpt(CURLOPT_TIMEOUT, 1000);
+        $curl->setOpt(CURLOPT_CONNECTTIMEOUT, 1000);
         $curl->setOpt(CURLOPT_RETURNTRANSFER, true);
         $curl->setOpt( CURLOPT_SSL_VERIFYPEER, true);
         $curl->download($url.$parameters, $zip_name);

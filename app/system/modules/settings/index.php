@@ -63,7 +63,7 @@ return [
 
             $view->data('$settings', [
                 'options' => [
-                    'system' => $app['system']->config(['site.', 'admin.']),
+                    'system' => $app['system']->config(['site.', 'admin.', 'beta']),
                 ],
                 'config' => [
                     'application' => $app->module('application')->config(['debug']),
