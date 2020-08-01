@@ -13,19 +13,15 @@ return [
     'main' => 'GreenCheap\\Site\\SiteModule',
 
     'autoload' => [
-
         'GreenCheap\\Site\\' => 'src'
-
     ],
 
     'nodes' => [
-
         'page' => [
             'name' => '@page',
             'label' => 'Page',
             'controller' => 'GreenCheap\\Site\\Controller\\PageController::indexAction'
         ]
-
     ],
 
     'routes' => [
@@ -50,10 +46,8 @@ return [
     ],
 
     'widgets' => [
-
         'widgets/menu.php',
         'widgets/text.php'
-
     ],
 
     'resources' => [

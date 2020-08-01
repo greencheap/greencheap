@@ -62,6 +62,7 @@ class SiteModule extends Module
             }
 
             $this->registerType('link', ['label' => 'Link', 'frontpage' => false]);
+            $this->registerType('external', ['label' => 'External', 'frontpage' => false]);
 
             App::trigger('site.types', [$this]);
         }

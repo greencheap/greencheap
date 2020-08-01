@@ -39,7 +39,6 @@ var LinkPage = {
     },
 
     watch: {
-
         page(page) {
             this.$parent.link = `@page/${page}`;
         },

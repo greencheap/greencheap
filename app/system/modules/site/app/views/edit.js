@@ -1,5 +1,6 @@
 import NodeSettings from '../components/node-settings.vue';
 import NodeLink from '../components/node-link.vue';
+import NodeExternal from '../components/node-external.vue';
 import TemplateSettings from '../components/template-settings';
 
 import { ValidationObserver, VInput } from 'SystemApp/components/validation.vue';
@@ -7,9 +8,7 @@ import { ValidationObserver, VInput } from 'SystemApp/components/validation.vue'
 var Site = {
 
     name: 'page',
-
     el: '#site-edit',
-
     provide: {
         '$components': {
             'v-input': VInput,
@@ -41,24 +40,18 @@ var Site = {
             // active = section.name.match('(.+).(.+)');
             let name = section.name;
             active = (name.match(/\.[^.]/) && !name.match(/\s/)) ? name.match(/(.*(?=\.))\.(.*)/) : null;
-
             if (active === null) {
                 return !_.find(sections, { name: `${type}.${section.name}` });
             }
-
             return active[1] == type;
         }), 'priority');
-
         this.$set(this, 'sections', sections);
     },
 
     mounted() {
         const vm = this;
-
         this.Nodes = this.$resource('api/site/node{/id}');
-
         this.tab = UIkit.tab('#page-tab', { connect: '#page-content' });
-
         UIkit.util.on(this.tab.connects, 'show', (e, tab) => {
             if (tab != vm.tab) return false;
             for (const index in tab.toggles) {
@@ -68,20 +61,16 @@ var Site = {
                 }
             }
         });
-
         this.$watch('active', function (active) {
             this.tab.show(active);
         });
-
         this.$state('active');
     },
 
     computed: {
-
         path() {
             return `${this.node.path ? this.node.path.split('/').slice(0, -1).join('/') : ''}/${this.node.slug || ''}`;
         },
-
     },
 
     filers: {
@@ -125,7 +114,8 @@ var Site = {
     components: {
         'validation-observer': ValidationObserver,
         'settings': NodeSettings,
-        'link.settings': NodeLink
+        'link.settings': NodeLink,
+        'external.settings': NodeExternal,
     },
 
 };
