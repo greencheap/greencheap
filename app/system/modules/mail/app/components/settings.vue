@@ -131,41 +131,7 @@ var Mail = {
         }, window.$mail);
     },
 
-    theme: {
-        hiddenHtmlElements() {
-            return this.$el.querySelectorAll('.uk-button-default');
-        },
-        elements() {
-            var vm = this;
-            return {
-                'testsmtp': {
-                    scope: 'topmenu-left',
-                    type: 'button',
-                    caption: 'Check Connection',
-                    class: 'uk-button tm-button-success',
-                    spinner: () => vm.processing.smtp,
-                    on: {click: () => vm.test('smtp')},
-                    vif: () => vm.$theme.activeTab('leftTab', true) && 'smtp' === vm.options.driver,
-                    watch: () => vm.$theme.activeTab('leftTab'),
-                    priority: 0,
-                },
-                'testmail': {
-                    scope: 'topmenu-left',
-                    type: 'button',
-                    caption: 'Send Test Email',
-                    class: 'uk-button tm-button-success',
-                    spinner: () => vm.processing.email,
-                    on: {click: () => vm.test('email')},
-                    vif: () => vm.$theme.activeTab('leftTab', true),
-                    watch: () => vm.$theme.activeTab('leftTab'),
-                    priority: 1,
-                }
-            }
-        },
-    },
-
     methods: {
-
         test(driver) {
             this.processing[driver] = true;
             if (driver === 'email') this.processing.email = true;
