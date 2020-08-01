@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: GreenCheap 2.0.0 (system, messages)\n"
-"POT-Creation-Date: 2020-07-09 15:25+0000\n"
+"Project-Id-Version: GreenCheap 2.0.8-alpha (system, messages)\n"
+"POT-Creation-Date: 2020-08-01 10:35+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -193,6 +193,9 @@ msgid "Only key pairs for Google reRECAPTCHA V2 Invisible are supported."
 msgstr ""
 
 msgid "Developer"
+msgstr ""
+
+msgid "Enable beta version mode"
 msgstr ""
 
 msgid "Enable debug mode"
@@ -876,25 +879,28 @@ msgstr ""
 msgid "Widgets reordered."
 msgstr ""
 
-msgid "Finish Update"
+msgid "_subset"
 msgstr ""
 
 msgid "Whoops, something went wrong."
 msgstr ""
 
-msgid "New Version Installed"
+msgid "Update Released"
 msgstr ""
 
-msgid "Uploaded file extension is invalid. Only ZIP extensions are allowed."
+msgid "Changelog"
 msgstr ""
 
-msgid "Try Again!"
+msgid "YOUR VERSION"
 msgstr ""
 
-msgid "Saved"
+msgid "NEW VERSION"
 msgstr ""
 
-msgid "_subset"
+msgid "Wait"
+msgstr ""
+
+msgid "Finish Update"
 msgstr ""
 
 msgid "We are currently under construction"
@@ -1155,6 +1161,48 @@ msgstr ""
 msgid "No Frontpage assigned."
 msgstr ""
 
+msgid "Categories saved."
+msgstr ""
+
+msgid "Categories deleted."
+msgstr ""
+
+msgid "Saved"
+msgstr ""
+
+msgid "Sub Category"
+msgstr ""
+
+msgid "No Sub Category"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "No categories found."
+msgstr ""
+
+msgid "Not Found %name%"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Categories"
+msgstr ""
+
+msgid "Can Not Find Type"
+msgstr ""
+
+msgid "Not Found Category"
+msgstr ""
+
+msgid "Edit %category_name%"
+msgstr ""
+
+msgid "New Category"
+msgstr ""
+
 msgid "We have not found any notifications"
 msgstr ""
 
@@ -1212,10 +1260,13 @@ msgstr ""
 msgid "Your database is up to date."
 msgstr ""
 
+msgid "Pending Review"
+msgstr ""
+
 msgid "Draft"
 msgstr ""
 
-msgid "UnPublished"
+msgid "Unpublished"
 msgstr ""
 
 msgid "Published"
