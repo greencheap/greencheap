@@ -16,29 +16,6 @@ export default {
         }, window.$data);
     },
 
-    theme: {
-        //hiddenHtmlElements: ['#extensions > div:first-child','#themes > div:first-child'],
-        elements() {
-            var vm = this;
-            return {
-                search: {
-                    scope: 'navbar-right',
-                    type: 'search',
-                    class: 'uk-text-small',
-                    domProps: {
-                        value: () => vm.search || ''
-                    },
-                    on: {
-                        input: function(e) {
-                            !vm.search && vm.$set(vm, 'search', '');
-                            vm.search = e.target.value
-                        }
-                    }
-                }
-            }
-        }
-    },
-
     mounted() {
         // Marketplace tarafında API kontrol sağlıyor.
         //this.load();
@@ -90,17 +67,15 @@ export default {
                 return;
             }
 
-            let view; let
-                options;
+            let view;
+            let options;
 
             _.forIn(this.$options.components, (component, name) => {
                 options = component.options || {};
-
-                if (options.settings && pkg.settings === name) {
+                if (component.settings && pkg.settings === name) {
                     view = name;
                 }
             });
-
             if (view) {
                 this.$set(this, 'package', pkg);
                 this.$set(this, 'view', view);
@@ -118,7 +93,7 @@ export default {
 
     components: {
         'package-upload': PackageUpload,
-        'package-details': PackageDetails
+        'package-details': PackageDetails,
     },
 
 };

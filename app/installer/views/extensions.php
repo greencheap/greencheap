@@ -28,7 +28,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="uk-visible-toggle" v-for="pkg in filterBy(packages, search, 'title')">
+                <tr class="uk-visible-toggle" v-for="(pkg , id) in filterBy(packages, search, 'title')">
                     <td class="pk-table-width-minimum">
                         <div class="uk-position-relative">
                             <div class="uk-background-cover uk-position-cover" :style="{'background-image': 'url('+icon(pkg)+')'}"></div>
@@ -36,7 +36,7 @@
                         </div>
                     </td>
                     <td class="uk-text-nowrap">
-                        <a @click="settings(pkg)" v-if="pkg.enabled && pkg.settings">{{ pkg.title }}</a>
+                        <a @click.prevent="settings(pkg)" v-if="pkg.enabled && pkg.settings">{{ pkg.title }} He</a>
                         <span v-else>{{ pkg.title }}</span>
                         <div class="uk-text-muted">{{ pkg.authors[0].name }}</div>
                     </td>
