@@ -14,6 +14,9 @@ Beta sürümüne çıkabilmesi için gerekli bazı değişiklikler var. Bu sür�
 ### Added
 - Varsayılan Theme-one ve Blog eklentisi paketlere import edildi.
 - İlk yükleme esnasında widget, blog post ve nodelar varsayılan olarak eklendi.
+
+### Removed
+- `/storage/*` removed in `.gitignore` file
  
 ## [Unreleased] - yyyy-mm-dd
  
