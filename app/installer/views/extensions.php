@@ -36,7 +36,7 @@
                         </div>
                     </td>
                     <td class="uk-text-nowrap">
-                        <a @click.prevent="settings(pkg)" v-if="pkg.enabled && pkg.settings">{{ pkg.title }} He</a>
+                        <a @click.prevent="settings(pkg)" v-if="pkg.enabled && pkg.settings">{{ pkg.title }}</a>
                         <span v-else>{{ pkg.title }}</span>
                         <div class="uk-text-muted">{{ pkg.authors[0].name }}</div>
                     </td>

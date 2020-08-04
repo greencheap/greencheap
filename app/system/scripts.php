@@ -162,7 +162,7 @@ return [
 
         $app['config']->set('system/dashboard', [
             '55dda578e93b5' => ['type' => 'location', 'column' => 1, 'idx' => 0, 'units' => 'metric', 'id' => '55dda578e93b5', 'uid' => 323786, 'city' => 'Ankara', 'country' => 'TR', 'coords' => ['lon' => 32.8543, 'lat' => 39.9199]],
-            '55dda581d5781' => ['type' => 'feed', 'column' => 2, 'idx' => 0, 'count' => 5, 'content' => '1', 'id' => '55dda581d5781', 'title' => 'GreenCheap News', 'url' => 'http://greencheap.com/blog/feed'],
+            '55dda581d5781' => ['type' => 'feed', 'column' => 2, 'idx' => 0, 'count' => 5, 'content' => '1', 'id' => '55dda581d5781', 'title' => 'GreenCheap Haberler', 'url' => 'https://greencheap.net/blog/feed'],
             '55dda6e3dd661' => ['type' => 'user', 'column' => 0, 'idx' => 100, 'show' => 'registered', 'display' => 'thumbnail', 'total' => '1', 'count' => 12, 'id' => '55dda6e3dd661']
         ]);
 

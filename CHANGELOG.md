@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
  
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+## 2.0.8.4-alpha - 2020-08-04
+Beta sürümüne çıkabilmesi için gerekli bazı değişiklikler var. Bu sürümde bu paketlerin güncellemesi ile ilgili.
+
+### Change
+- Extensions listesinde `he` adında bir kelime hatası düzeltilmiştir.
+
+### Added
+- Varsayılan Theme-one ve Blog eklentisi paketlere import edildi.
+- İlk yükleme esnasında widget, blog post ve nodelar varsayılan olarak eklendi.
  
 ## [Unreleased] - yyyy-mm-dd
  
