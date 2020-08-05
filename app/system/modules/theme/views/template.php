@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <?php $view->style('theme', 'system/theme:css/theme.css') ?>
-    <?php $view->script('theme', 'system/theme:js/theme.js', ['vue' , 'marked']) ?>
+    <?php $view->script('theme', 'system/theme:js/theme.js', ['vue', 'marked']) ?>
     <?= $view->render('head') ?>
 </head>
 
@@ -14,7 +14,7 @@
     <div id="sidebar" class="gc-sidebar uk-section uk-padding-remove uk-section-muted">
         <div class="gc-sidebar-height-xsmall uk-flex uk-flex-middle uk-flex-center">
             <a :href="$url('admin/user/edit' , {id:user.id})" class="uk-flex">
-                <img :src="$url(user.avatar)" class="uk-border-circle" width="50" height="50">
+                <img :src="$url(user.avatar)" class="uk-border-circle" width="50px" height="50px">
                 <div class="uk-margin-small-left">
                     <h4 class="uk-margin-remove uk-h6 uk-text-bold">{{user.name}}</h4>
                     <span class="uk-display-block gc-font-small uk-text-muted">{{user.email}}</span>
@@ -55,12 +55,19 @@
         </div>
     </div>
     <div class="gc-wrapper">
+        <?php if (strpos($_SERVER['HTTP_USER_AGENT'], 'Safari')) : ?>
+            <div class="uk-section uk-section-secondary uk-section-small">
+                <div class="uk-container uk-container-large uk-text-center">
+                    <h4 class="uk-h5"><i uk-icon="icon:warning;ratio:1" class="uk-margin-right"></i><?= __('You are using the Safari browser. Safari does not support ECMAScript 8. GreenCheap Management Panel will cause inconsistency as it uses ES8. Therefore, we recommend using a different browser.') ?></h4>
+                </div>
+            </div>
+        <?php endif ?>
         <header id="navbar" class="uk-navbar-container" v-cloak>
             <nav style="padding:0px 10px" uk-navbar>
                 <div class="uk-navbar-left">
                     <div class="uk-navbar-item uk-inline">
                         <button class="uk-button uk-button-default uk-button-large gc-button-icon">
-                            <i class="uk-icon uk-icon-image" style="background-image:url(/app/system/modules/theme/images/icons/menu.svg);"></i>
+                            <i class="uk-icon uk-icon-image" :style="'background-image:url('+$url('/app/system/modules/theme/images/icons/menu.svg')+');'"></i>
                         </button>
                         <div uk-drop="mode: click;animation: uk-animation-slide-top-small; duration: 300">
                             <div v-if="!navs" class="gc-border-radius uk-text-center uk-width-expand uk-padding uk-box-shadow-medium uk-background uk-background-default">

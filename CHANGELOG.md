@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.8.6-alpha - 2020-08-04
+Son kullanıcıdan gelen bir kaç hata için hızlı güncelleme versiyonudur.
+
+### Fixed
+- Install tarafında, proje farklı bir klasöre yükleniyorsa. URL yapısı logoyu getirmiyordu. Bu durum admin panelde de yaşandı. Buna istinaden problemli olan bölgelere `$url()` ile düzeltilme yapıldı.
+- GreenCheap'i ilk defa yüklediğinizde requirements'ı karşılayamadığı zamanlar olabiliyor (.htaccess dosyasının eksik olması, yazma izni vb.) bu gibi durumlarda requirements uyarı sayfasına yönlendirir. Ancak tasarımsal problem vardı, bu sorun çözüldü.
+- Kategori sisteminde type olmamasına rağmen select box seçiliymiş gibi geliyor. Aynı zamanda eğer kategoriler sistemini kullanan bir eklenti yoksa. Bir kategori eklenemiyor. Bu işlem bilerek yapıldı. Kategori sistemi paketler için oluşturulmuştur. Type belirtilmediği sürece kategori açamazsınız.
+- Safari tarayıcısında Ecmascript 8'den dolayı bir kaç hatalar alıyoruz (_Sadece admin panelde_). Bu yüzden safari kullanan kullanıcılar için admin panelde bir uyarı ekledik.
+
 ## 2.0.8.4-alpha - 2020-08-04
 Beta sürümüne çıkabilmesi için gerekli bazı değişiklikler var. Bu sürümde bu paketlerin güncellemesi ile ilgili.
 
@@ -16,7 +25,7 @@ Beta sürümüne çıkabilmesi için gerekli bazı değişiklikler var. Bu sür�
 - İlk yükleme esnasında widget, blog post ve nodelar varsayılan olarak eklendi.
 
 ### Removed
-- `/storage/*` removed in `.gitignore` file
+- `/storage/*` silindi `.gitignore` dosyasından
  
 ## [Unreleased] - yyyy-mm-dd
  

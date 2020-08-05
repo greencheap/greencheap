@@ -5,7 +5,7 @@
                 <div :step="step" class="uk-text-center">
                     <div class="uk-panel uk-padding-small">
                         <a @click="gotoStep('language')">
-                            <img src="/app/system/assets/images/logo/fav-white.svg" width="100" alt="GreenCheap">
+                            <img src="$url('/app/system/assets/images/logo/fav-white.svg')" width="100" alt="GreenCheap">
                             <div class="uk-margin">
                                 <svg class="tm-arrow" width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
                                     <line fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" x1="2" y1="18" x2="36" y2="18"/>

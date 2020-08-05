@@ -28,7 +28,8 @@
         <div class="uk-text-right">
             <a v-if="config.filters.sub_category" @click.prevent="clearSubCategory" class="uk-button uk-button-default uk-margin-small-right">{{'Clear Sub Category' | trans}}</a>
 
-            <a :href="$url.route('admin/categories/edit' , {type: config.filters.type , redirect: currentUrl})" class="uk-button uk-button-primary">{{'Add' | trans}}</a>
+            <a v-if="config.filters.type && types.length" :href="$url.route('admin/categories/edit' , {type: config.filters.type , redirect: currentUrl})" class="uk-button uk-button-primary">{{'Add' | trans}}</a>
+            <button v-if="!config.filters.type && !types.length" class="uk-button uk-button-primary uk-button-disabled" disabled>{{'Add' | trans}}</button>
         </div>
     </div>
 
@@ -68,5 +69,8 @@
             </table>
         </div>
         <h3 class="uk-h1 uk-text-muted uk-text-center" v-show="categories && !categories.length">{{ 'No categories found.' | trans }}</h3>
+        <div v-if="!config.filters.type && !types.length" class="uk-flex uk-flex-middle uk-flex-center">
+            <p class="uk-text-center uk-width-xlarge uk-text-muted">{{'There is no package that can be integrated. So you cannot add categories. First, install a package that works with the category system, for example: Blog extension' | trans}}</p>
+        </div>
     </div>
 </section>

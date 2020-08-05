@@ -1,7 +1,7 @@
 <template>
     <div>
         <button class="uk-button uk-button-default uk-button-large gc-button-icon">
-            <i class="uk-icon uk-icon-image" style="background-image:url(/app/system/modules/theme/images/icons/bell.svg);" />
+            <i class="uk-icon uk-icon-image" :style="'background-image:url('+$url('/app/system/modules/theme/images/icons/bell.svg')+');'" />
             <span v-if="isRead" class="gc-button-icon-point" />
         </button>
         <div uk-drop="mode: click;animation: uk-animation-slide-top-small; duration: 300">

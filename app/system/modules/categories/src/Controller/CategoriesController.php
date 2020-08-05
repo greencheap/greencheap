@@ -1,4 +1,5 @@
 <?php
+
 namespace GreenCheap\Categories\Controller;
 
 use GreenCheap\Application as App;
@@ -18,7 +19,7 @@ class CategoriesController
      * @param int $page
      * @return array[]
      */
-    public function indexAction(array $filters = [] , int $page = 1)
+    public function indexAction(array $filters = [], int $page = 1)
     {
 
         $util = App::db();
@@ -30,9 +31,7 @@ class CategoriesController
             ],
             '$data' => [
                 'config' => [
-                    'filters' => (object) array_merge($filters , [
-                        'type' => 'blog'
-                    ]),
+                    'filters' => (object) array_merge($filters, []),
                     'page' => $page,
                 ],
                 'statuses' => StatusModelTrait::getStatuses(),
@@ -53,14 +52,14 @@ class CategoriesController
      */
     public function editAction(int $id = 0, string $redirect = null, string $type = null)
     {
-        if(!$type){
-            return App::abort(404 , __('Can Not Find Type'));
+        if (!$type) {
+            return App::abort(404, __('Can Not Find Type'));
         }
 
-        $category = Categories::where(compact(['id' , 'type']))->first();
-        if(!$category){
-            if($id){
-                return App::abort(404 , __('Not Found Category'));
+        $category = Categories::where(compact(['id', 'type']))->first();
+        if (!$category) {
+            if ($id) {
+                return App::abort(404, __('Not Found Category'));
             }
 
             $category = Categories::create([
@@ -76,7 +75,7 @@ class CategoriesController
 
         return [
             '$view' => [
-                'title' => $category->id ? __('Edit %category_name%' , ['category_name' => $category->title]) : __('New Category'),
+                'title' => $category->id ? __('Edit %category_name%', ['category_name' => $category->title]) : __('New Category'),
                 'name' => 'system/categories:views/admin/edit.php'
             ],
             '$data' => [
@@ -92,4 +91,3 @@ class CategoriesController
         ];
     }
 }
-?>
