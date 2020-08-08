@@ -4,7 +4,7 @@ use GreenCheap\Event\PrefixEventDispatcher;
 use GreenCheap\Twig\TwigEngine;
 use GreenCheap\View\Asset\AssetFactory;
 use GreenCheap\View\Asset\AssetManager;
-use GreenCheap\View\Device;
+use GreenCheap\View\Date;
 use GreenCheap\View\Helper\DataHelper;
 use GreenCheap\View\Helper\DeferredHelper;
 use GreenCheap\View\Helper\AvatarHelper;
@@ -38,6 +38,10 @@ return [
 
         $app['view'] = function ($app) {
             return new View(new PrefixEventDispatcher('view.', $app['events']));
+        };
+
+        $app['date'] = function ($app) {
+            return new Date();
         };
 
         $app['assets'] = function () {

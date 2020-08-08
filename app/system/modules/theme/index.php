@@ -56,6 +56,8 @@ return [
                 'version' => $app->version(),
                 'system_api' => $app->get('system.api'),
                 'settings' => $app['system']->config(['beta']),
+                'project_uri' => $app->url()->base(0),
+                'project_title' => $app->config('system/site')->get('title')
             ]);
 
             $subsets = 'latin,latin-ext';

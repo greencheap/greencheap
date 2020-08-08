@@ -55,13 +55,6 @@
         </div>
     </div>
     <div class="gc-wrapper">
-        <?php if (strpos($_SERVER['HTTP_USER_AGENT'], 'Safari')) : ?>
-            <div class="uk-section uk-section-secondary uk-section-small">
-                <div class="uk-container uk-container-large uk-text-center">
-                    <h4 class="uk-h5"><i uk-icon="icon:warning;ratio:1" class="uk-margin-right"></i><?= __('You are using the Safari browser. Safari does not support ECMAScript 8. GreenCheap Management Panel will cause inconsistency as it uses ES8. Therefore, we recommend using a different browser.') ?></h4>
-                </div>
-            </div>
-        <?php endif ?>
         <header id="navbar" class="uk-navbar-container" v-cloak>
             <nav style="padding:0px 10px" uk-navbar>
                 <div class="uk-navbar-left">

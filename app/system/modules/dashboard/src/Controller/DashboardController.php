@@ -1,5 +1,4 @@
 <?php
-
 namespace GreenCheap\Dashboard\Controller;
 
 use GreenCheap\Application as App;
