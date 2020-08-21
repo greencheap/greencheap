@@ -4,6 +4,7 @@ namespace GreenCheap\Installer\Controller;
 
 use GreenCheap\Application as App;
 use GreenCheap\Installer\Package\PackageManager;
+use \Curl\Curl;
 
 /**
  * @Access("system: manage packages", admin=true)
@@ -155,7 +156,7 @@ class PackageController
         if ($file === null || !$file->isValid()) {
             App::abort(400, __('No file uploaded.'));
         }
-
+        
         $package = $this->loadPackage($file->getPathname());
 
         if (!$package->getName() || !$package->get('title') || !$package->get('version')) {
@@ -169,6 +170,47 @@ class PackageController
         $filename = str_replace('/', '-', $package->getName()) . '-' . $package->get('version') . '.zip';
 
         $file->move(App::get('path') . '/tmp/packages', $filename);
+
+        return compact('package');
+    }
+
+    /**
+     * @Request({"id":"integer","type":"string"}, csrf=true)
+     */
+    public function downloadPackageAction(int $id = 0 , string $type)
+    {
+        if(!$id){
+            App::abort(404 , __('Not Found ID'));
+        }
+
+        $url = App::get('system.api')."/marketplace/download/".$id;
+
+        $file = App::file();
+
+        $zip_name = tempnam(App::get('path.temp'), 'package_');
+        $path = App::get('path.temp').'/';
+
+        $curl = new Curl();
+        $curl->setOpt(CURLOPT_ENCODING , '');
+        $curl->setOpt(CURLOPT_TIMEOUT, 1000);
+        $curl->setOpt(CURLOPT_CONNECTTIMEOUT, 1000);
+        $curl->setOpt(CURLOPT_RETURNTRANSFER, true);
+        $curl->setOpt( CURLOPT_SSL_VERIFYPEER, true);
+        $curl->download($url, $zip_name);
+
+        if ($curl->error) {
+            App::abort(500 , $curl->errorMessage);
+        }
+
+        $package = $this->loadPackage($zip_name);
+
+        if (!$package->getName() || !$package->get('title') || !$package->get('version')) {
+            App::abort(400, __('"composer.json" file not valid.'));
+        }
+
+        $filename = str_replace('/', '-', $package->getName()) . '-' . $package->get('version') . '.zip';
+
+        $file->copy($zip_name , App::get('path') . '/tmp/packages/'.$filename);
 
         return compact('package');
     }
@@ -192,7 +234,6 @@ class PackageController
         return App::response()->stream(function () use ($package, $packagist) {
 
             try {
-
                 $package = App::package()->load($package);
 
                 if (!$package) {

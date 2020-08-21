@@ -1,17 +1,13 @@
 <template>
-
     <v-modal ref="output" :options="options">
         <div class="uk-modal-header uk-flex uk-flex-middle">
             <h2>{{ 'Installing %title% %version%' | trans({title:pkg.title,version:pkg.version}) }}</h2>
         </div>
 
         <div class="uk-modal-body">
-
             <pre v-show="showOutput" class="pk-pre uk-text-break" v-html="output" uk-overflow-auto />
-
             <div v-show="status == 'success'" class="uk-alert uk-alert-success uk-margin-remove">{{ 'Successfully installed.' | trans }}</div>
             <div v-show="status == 'error'" class="uk-alert uk-alert-danger uk-margin-remove">{{ 'Error' | trans }}</div>
-
         </div>
 
         <div v-show="status == 'loading'" class="uk-modal-footer uk-text-left">
@@ -40,21 +36,19 @@ export default {
         install(pkg, packages, onClose, packagist) {
             this.$set(this, 'pkg', pkg);
             this.cb = onClose;
-
             self = this;
-           
-            return this.$http.post('admin/system/package/install', {package: pkg, packagist: Boolean(packagist)}, {
+            return this.$http.post('admin/system/package/install', { package: pkg, packagist: Boolean(packagist) }, {
                 progress(e) {
                     if (e.lengthComputable) {
-                        self.init(); 
+                        self.init();
                     }
-                }
+                },
             }).then((res) => {
                 this.scrollToEnd();
-                
-                const patt = new RegExp('^status=(.+)' , 'gm');
+                const patt = new RegExp('^status=(.+)', 'gm');
                 this.setOutput(res.bodyText);
                 const getStatusTest = patt.exec(res.bodyText);
+                // eslint-disable-next-line prefer-destructuring
                 this.status = getStatusTest[1];
 
                 if (this.status === 'success' && packages) {
@@ -65,7 +59,7 @@ export default {
                         packages.push(pkg);
                     }
                 }
-            }).catch((err)=>{
+            }).catch((err) => {
                 this.$notify(err.data, 'danger');
                 this.close();
             });
@@ -75,7 +69,7 @@ export default {
             this.$parent.enable(this.pkg);
             this.close();
         },
-    }
+    },
 
 };
 

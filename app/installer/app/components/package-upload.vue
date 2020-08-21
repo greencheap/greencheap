@@ -48,34 +48,6 @@ export default {
         };
     },
 
-    theme: {
-        elements() {
-            var vm = this;
-            return {
-                'upload': {
-                    scope: 'topmenu',
-                    type: 'button',
-                    caption: () => !vm.progress ? 'Upload' : vm.progress,
-                    class: 'uk-button uk-button-primary',
-                    icon: {
-                        attrs: {
-                            'uk-spinner': '',
-                            ratio: '.6'
-                        },
-                        class: 'uk-margin-small-right',
-                        vif: () => vm.progress
-                    },
-                    on: {
-                        click: () => {
-                            return UIkit.util.$('input', vm.$refs.input).click();
-                        },
-                    },
-                    priority: 0,
-                }
-            }
-        }
-    },
-
     mounted() {
         const { type } = this;
         const settings = {
@@ -139,7 +111,7 @@ export default {
         },
 
         doInstall() {
-            this.$refs.modal.close()
+            this.$refs.modal.close();
             this.install(this.upload.package, this.packages,
                 (output) => {
                     if (output.status === 'success') {
@@ -153,7 +125,7 @@ export default {
     },
 
     components: {
-        'package-details': PackageDetails
+        'package-details': PackageDetails,
     },
 };
 

@@ -10,7 +10,7 @@ return [
     'main' => function ($app) {
 
         $app['package'] = function ($app) {
-            return (new PackageFactory())->addPath($app['path'].'/packages/*/*/composer.json');
+            return (new PackageFactory())->addPath($app['path'] . '/packages/*/*/composer.json');
         };
 
         if ($this->config['enabled']) {
@@ -20,7 +20,6 @@ return [
                 $factory->setVersion($app['version']);
 
                 return $factory;
-
             });
 
             $app['routes']->add([
@@ -37,15 +36,12 @@ return [
                 if (isset($available[$locale])) {
                     $app->module('system/intl')->setLocale($locale);
                 }
-
             });
 
             $app->error(function (NotFoundException $e) use ($app) {
                 return $app['response']->redirect('@installer');
             });
-
         }
-
     },
 
     'require' => [
@@ -113,6 +109,15 @@ return [
             'url' => '@system/package/themes',
             'access' => 'system: manage packages',
             'priority' => 10
+        ],
+
+        'marketplace' => [
+            'label' => 'Marketplace',
+            'layout' => 'sidebar',
+            'icon' => 'installer:assets/images/marketplace.svg',
+            'url' => '@system/marketplace',
+            'active' => '@system/marketplace*',
+            'priority' => 120
         ]
 
     ],

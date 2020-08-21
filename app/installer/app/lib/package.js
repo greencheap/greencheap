@@ -53,8 +53,8 @@ export default {
 
         error(message) {
             this.$notify(message.data, 'danger');
-        }
+        },
 
-    }
+    },
 
 };

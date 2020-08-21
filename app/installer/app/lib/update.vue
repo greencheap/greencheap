@@ -1,5 +1,4 @@
 <template>
-
     <v-modal ref="output" :options="options">
         <div class="uk-modal-header uk-flex uk-flex-middle">
             <h2>{{ 'Updating %title% to %version%' | trans({title:pkg.title,version:updatePkg.version}) }}</h2>
@@ -40,9 +39,7 @@ export default {
         update(pkg, updates, onClose, packagist) {
             this.$set(this, 'pkg', pkg);
             this.$set(this, 'updatePkg', updates[pkg.name]);
-
             this.cb = onClose;
-
             self = this;
 
             return this.$http.get('admin/system/package/install', { params: { package: updates[pkg.name], packagist: Boolean(packagist) }, progress() { self.init(this); } }).then(function () {

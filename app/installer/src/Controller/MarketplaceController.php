@@ -22,8 +22,7 @@ class MarketplaceController
                     'filter' => (object) $filter,
                     'page'   => $page
                 ],
-                'installedTheme' => array_values(App::package()->all('greencheap-theme')),
-                'installedExtension' => array_values(App::package()->all('greencheap-extension')),
+                'installedPackages' => array_values(array_merge(App::package()->all('greencheap-theme') , App::package()->all('greencheap-extension'))),
             ]
         ];
     }

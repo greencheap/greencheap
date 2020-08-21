@@ -11,7 +11,7 @@ export default {
                 escClose: false,
             },
             showOutput: false,
-            filterPhrase: 'Dependency resolution completed'
+            filterPhrase: 'Dependency resolution completed',
         };
     },
 
@@ -27,7 +27,7 @@ export default {
 
         setOutput(output) {
             // Filtered output
-            this.showOutput = true
+            this.showOutput = true;
             const lines = output.split('\n');
             const match = lines[lines.length - 1].match(/^status=(success|error)$/);
 
@@ -64,6 +64,7 @@ export default {
 
         onClose() {
             if (this.cb) {
+                console.log(this)
                 this.cb(this);
             }
 
