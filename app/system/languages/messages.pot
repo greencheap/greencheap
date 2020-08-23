@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: GreenCheap 2.0.8-alpha (system, messages)\n"
-"POT-Creation-Date: 2020-08-01 10:35+0000\n"
+"Project-Id-Version: GreenCheap 2.0.9.2-beta (system, messages)\n"
+"POT-Creation-Date: 2020-08-23 23:06+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -909,6 +909,18 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
+msgid "Visit Site"
+msgstr ""
+
+msgid "Help"
+msgstr ""
+
+msgid "There are no installed applications. You can install the application you want from the market."
+msgstr ""
+
+msgid "Go To Marketplace"
+msgstr ""
+
 msgid "Update GreenCheap"
 msgstr ""
 
@@ -1374,6 +1386,39 @@ msgstr ""
 msgid "No theme found."
 msgstr ""
 
+msgid "Theme"
+msgstr ""
+
+msgid "Author"
+msgstr ""
+
+msgid "Created"
+msgstr ""
+
+msgid "Last Update"
+msgstr ""
+
+msgid "Repository"
+msgstr ""
+
+msgid "Support"
+msgstr ""
+
+msgid "Demo"
+msgstr ""
+
+msgid "Installed successfully."
+msgstr ""
+
+msgid "There was a problem installing."
+msgstr ""
+
+msgid "Enable Package"
+msgstr ""
+
+msgid "No packages found."
+msgstr ""
+
 msgid "Folder"
 msgstr ""
 
@@ -1426,6 +1471,9 @@ msgid "\"composer.json\" file not valid."
 msgstr ""
 
 msgid "No GreenCheap %type%"
+msgstr ""
+
+msgid "Not Found ID"
 msgstr ""
 
 msgid "Can't load json file from package."

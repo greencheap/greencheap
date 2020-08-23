@@ -1,5 +1,4 @@
 import Version from '../lib/version';
-import Package from '../lib/package';
 
 const marketplace = {
     el: '#marketplace',
@@ -14,12 +13,13 @@ const marketplace = {
             count: '',
             modalpkg: false,
             client: window.$client,
+            output: '',
+            isLoader: true,
+            status: '',
         }, window.$data);
     },
 
     mixins: [
-        Package,
-        Theme.Mixins.Helper,
         // eslint-disable-next-line global-require
         require('../../../system/app/lib/client'),
     ],
@@ -95,7 +95,8 @@ const marketplace = {
             return data.image.src;
         },
 
-        downloadPackage() {
+        downloadPackage(e) {
+            e.target.innerHTML = `<span class="uk-margin-right" uk-spinner></span>${e.target.text}`;
             this.$http.get('admin/system/package/downloadpackage', {
                 params: {
                     id: this.modalpkg.id,
@@ -109,16 +110,53 @@ const marketplace = {
             });
         },
 
-        doInstall(pkg) {
-            this.$refs.modalDeatil.close();
-            this.install(pkg,
-                (output) => {
-                    if (output.status === 'success') {
-                        setTimeout(() => {
-                            location.reload();
-                        }, 300);
+        doInstall(pkg, packages, onClose, packagist) {
+            const self = this;
+            return this.$http.post('admin/system/package/install', { package: pkg, packagist: Boolean(packagist) }, {
+                progress(e) {
+                    if (e.lengthComputable) {
+                        self.$refs.modalDeatil.close();
+                        self.$refs.installDetail.open();
+                        self.output += 'Starting\n\n';
                     }
-                }, true);
+                },
+            }).then((res) => {
+                const patt = new RegExp('^status=(.+)', 'gm');
+                this.setOutput(res.bodyText);
+                const getStatusTest = patt.exec(res.bodyText);
+                this.status = getStatusTest[1];
+                this.isLoader = false;
+                
+            }).catch((err) => {
+                this.$notify(err.data, 'danger');
+                this.close();
+            });
+        },
+
+        setOutput(output) {
+            const lines = output.split('\n');
+            const match = lines[lines.length - 1].match(/^status=(success|error)$/);
+            if (match) {
+                // eslint-disable-next-line prefer-destructuring
+                this.status = match[1];
+                delete lines[lines.length - 1];
+                this.output += lines.join('\n');
+            } else {
+                this.output += output;
+            }
+        },
+
+        cancelPkg() {
+            // eslint-disable-next-line no-restricted-globals
+            this.modalpkg = false;
+            location.reload();
+        },
+
+        enablePkg() {
+            return this.$http.post('admin/system/package/enable', { name: this.modalpkg.package_name }).then(() => {
+                this.$notify(this.$trans('"%title%" enabled.', { title: this.modalpkg.title }));
+                document.location.assign(this.$url(`admin/system/package/${this.modalpkg.type === 'greencheap-theme' ? 'themes' : 'extensions'}`));
+            }, this.error);
         },
     },
 };

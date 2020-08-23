@@ -2,13 +2,14 @@
     "name": "greencheap/greencheap",
     "type": "project",
     "description": "The GreenCheap CMS",
-    "version":"2.0.8.9-alpha",
+    "version":"2.0.9.2-beta",
     "keywords": ["cms", "greencheap" , "symfony" , "vue" , "uikit"],
     "homepage": "http://greencheap.net",
     "license": "MIT",
     "authors": [
         {
             "name": "GreenCheap",
+            "homepage": "https://greencheap.net",
             "email": "support@greencheap.net"
         }
     ],

@@ -26,7 +26,7 @@
                 <li v-for="(nav , id) in navs">
                     <a :href="nav.url" :class="{'gc-nav-active': nav.active }">
                         <i><img :src="nav.icon" width="20px" height="20px" uk-svg></i>
-                        <span>{{nav.label}}</span>
+                        <span>{{nav.label | trans}}</span>
                     </a>
                 </li>
             </ul>
@@ -36,19 +36,19 @@
                 <li>
                     <a :href="$url('/')" target="_blank">
                         <i><img :src="$url('app/system/modules/theme/images/icons/visit.svg')" width="20px" height="20px" uk-svg></i>
-                        <span>{{'Visit Site' | trans}}</span>
+                        <span>{{ 'Visit Site' | trans }}</span>
                     </a>
                 </li>
                 <li>
                     <a href="http://greencheap.net" target="_blank">
                         <i><img :src="$url('app/system/modules/theme/images/icons/help.svg')" width="20px" height="20px" uk-svg></i>
-                        <span>{{'Help' | trans}}</span>
+                        <span>{{ 'Help' | trans }}</span>
                     </a>
                 </li>
                 <li>
                     <a :href="$url('user/logout')">
                         <i><img :src="$url('app/system/modules/theme/images/icons/lock.svg')" width="20px" height="20px" uk-svg></i>
-                        <span>{{'Logout' | trans}}</span>
+                        <span>{{ 'Logout' | trans }}</span>
                     </a>
                 </li>
             </ul>
@@ -64,8 +64,8 @@
                         </button>
                         <div uk-drop="mode: click;animation: uk-animation-slide-top-small; duration: 300">
                             <div v-if="!navs" class="gc-border-radius uk-text-center uk-width-expand uk-padding uk-box-shadow-medium uk-background uk-background-default">
-                                <h3 class="uk-h5 uk-text-center">{{'There are no installed applications. You can install the application you want from the market.'}}</h3>
-                                <a class="uk-button uk-button-primary uk-button-small">{{'Go To Marketplace'}}</a>
+                                <h3 class="uk-h5 uk-text-center">{{ 'There are no installed applications. You can install the application you want from the market.' | trans }}</h3>
+                                <a :href="$url.route('admin/system/marketplace')" class="uk-button uk-button-primary uk-button-small">{{ 'Go To Marketplace' | trans }}</a>
                             </div>
                             <div v-else class="gc-border-radius uk-width-expand uk-padding-small uk-box-shadow-medium uk-background uk-background-default">
                                 <div class="uk-grid-collapse uk-child-width-1-3" uk-grid>
@@ -73,7 +73,7 @@
                                         <a :href="$url(nav.url)" :class="{'gc-navbar-menu-item-active':nav.active}" class="gc-navbar-menu-item uk-flex uk-flex-center">
                                             <div>
                                                 <img :src="nav.icon">
-                                                <span class="uk-text-center uk-display-block uk-margin-small-top">{{nav.label}}</span>
+                                                <span class="uk-text-center uk-display-block uk-margin-small-top">{{nav.label | trans}}</span>
                                             </div>
                                         </a>
                                     </div>
@@ -126,11 +126,11 @@
             <div class="uk-section uk-section-primary uk-margin uk-light" style="padding:20px 20px" v-if="subnav.length">
                 <div class="uk-grid-small" uk-grid>
                     <div class="uk-width-medium@s">
-                        <h1 class="uk-h3">{{title}}</h1>
+                        <h1 class="uk-h3">{{title | trans}}</h1>
                     </div>
                     <div class="uk-width-expand uk-flex uk-flex-right uk-flex-middle">
                         <ul class="uk-subnav">
-                            <li v-for="(sub , id) in subnav" :class="{'uk-active':sub.active}"><a class="uk-text-capitalize" :href="$url(sub.url)">{{sub.label}}</a></li>
+                            <li v-for="(sub , id) in subnav" :class="{'uk-active':sub.active}"><a class="uk-text-capitalize" :href="$url(sub.url)">{{sub.label | trans}}</a></li>
                         </ul>
                     </div>
                 </div>

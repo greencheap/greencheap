@@ -4,7 +4,7 @@ import PackageDetails from './package-details.vue';
 
 export default {
 
-    mixins: [Package,Theme.Mixins.Helper],
+    mixins: [Package, Theme.Mixins.Helper],
 
     data() {
         return _.extend({
@@ -17,7 +17,6 @@ export default {
     },
 
     mounted() {
-        // Marketplace tarafında API kontrol sağlıyor.
         //this.load();
     },
 
@@ -31,7 +30,7 @@ export default {
 
         load() {
             this.$set(this, 'status', 'loading');
-
+ 
             if (this.packages) {
                 this.queryUpdates(this.packages).then(function (res) {
                     const data = res;

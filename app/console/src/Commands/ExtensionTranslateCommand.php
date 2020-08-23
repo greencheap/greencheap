@@ -83,7 +83,7 @@ class ExtensionTranslateCommand extends Command
         // remove strings already present in system "messages"
         if ($extension != 'system') {
 
-            $messages = require($this->getPath('system').'/languages/en_US/messages.php');
+            $messages = require($this->getPath('system').'/languages/en_GB/messages.php');
 
             foreach ($result as $domain => $strings) {
 

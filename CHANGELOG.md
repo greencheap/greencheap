@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.9.3-beta - 2020-08-24
+Marketplace plugin has been developed. Users will be able to install new plugins and themes using the plugin store.
+
+### Added
+- Marketplace Node
+
+### Fixed
+- Turkish translate
+- Commands/Translate
+
+## Removed
+- Categories section has been removed and will be active again in future versions.
+
 ## 2.0.8.6-alpha - 2020-08-04
 Son kullanıcıdan gelen bir kaç hata için hızlı güncelleme versiyonudur.
 

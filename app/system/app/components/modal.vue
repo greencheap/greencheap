@@ -14,9 +14,9 @@ import { on } from 'uikit-util';
 export default {
 
     props: {
-        large     : Boolean,
-        lightbox  : Boolean,
-        modalFull : Boolean,
+        large: Boolean,
+        lightbox: Boolean,
+        modalFull: Boolean,
         modalSmall: Boolean,
         widthAuto : Boolean,
         center    : Boolean,
@@ -35,7 +35,7 @@ export default {
 
     data() {
         return {
-            opened: false
+            opened: false,
         };
     },
 
@@ -83,19 +83,16 @@ export default {
         const vm = this;
 
         this.modal = UIkit.modal(this.$el, _.extend({
-            bgClose  : !this.bgClose,
-            escClose : !this.escClose,
-            stack    : true,
+            bgClose: !this.bgClose,
+            escClose: !this.escClose,
+            stack: true,
         }, this.options));
 
-        on(this.modal.$el, 'hidden', (ref) => {
-
+        on(this.modal.$el, 'hidden', () => {
             vm.opened = false;
-
             if (this.closed) {
                 this.closed();
             }
-
         });
     },
 

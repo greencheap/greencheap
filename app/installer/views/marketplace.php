@@ -25,8 +25,8 @@
                     </div>
                     <div class="uk-card-body uk-card-small">
                         <div v-if="pkg.installed">
-                            <button v-show="!pkg.installed.update" class="uk-align-right uk-button uk-button-primary uk-button-small" disabled>{{'Installed' | trans}}</button>
-                            <button v-show="pkg.installed.update" class="uk-align-right uk-button uk-button-primary tm-button-update uk-button-small">{{'Update' | trans}}</button>
+                            <button v-show="!pkg.installed.update" class="uk-align-right uk-button uk-button-primary uk-button-small" disabled>{{ 'Installed'| trans }}</button>
+                            <button v-show="pkg.installed.update" class="uk-align-right uk-button uk-button-primary tm-button-update uk-button-small">{{ 'Update' | trans }}</button>
                         </div>
                         <div v-else>
                             <button class="uk-align-right uk-button uk-button-primary uk-button-small">{{'Install' | trans}}</button>
@@ -42,13 +42,13 @@
     </div>
 
     <v-modal ref="modalDeatil" :large="true" :center="true">
-        <div class="uk-modal-body uk-padding" v-if="modalpkg">
+        <div v-if="modalpkg" class="uk-modal-body uk-padding">
             <section class="uk-grid" uk-grid>
                 <div class="uk-width-expand@m uk-first-column">
                     <h1 class="uk-h2 uk-margin-remove">{{modalpkg.title}}</h1>
                     <ul class="tm-subnav uk-subnav uk-subnav-divider uk-margin-small-top">
                         <li><span class="uk-text-capitalize">{{modalpkg.author}}</span></li>
-                        <li><span class="uk-text-capitalize">{{'Version' | trans}} {{modalpkg.version}}</span></li>
+                        <li><span class="uk-text-capitalize">{{ 'Version' | trans }} {{modalpkg.version}}</span></li>
                     </ul>
                 </div>
             </section>
@@ -58,39 +58,39 @@
                         <img :src="getImage(modalpkg)" class="tm-modal-image">
                     </div>
                     <div v-if="modalpkg.content" class="uk-margin">
-                        <h2>{{'Description' | trans}}</h2>
+                        <h2>{{ 'Description' | trans }}</h2>
                         <div v-html="$options.filters.markdown(modalpkg.content)"></div>
                     </div>
                     <div v-if="modalpkg.data.content.changelog" class="uk-margin">
-                        <h2>{{'Changelog' | trans}}</h2>
+                        <h2>{{ 'Changelog' | trans }}</h2>
                         <div v-html="$options.filters.markdown(modalpkg.data.content.changelog)"></div>
                     </div>
                 </div>
                 <div class="uk-width-medium@m">
                     <div v-if="modalpkg.installed">
-                        <button v-show="!modalpkg.installed.update" class="uk-width-expand uk-button uk-button-primary uk-button-small uk-button-large" disabled>{{'Installed' | trans}}</button>
-                        <a v-show="modalpkg.installed.update" @click.prevent="downloadPackage" class="uk-width-expand uk-button uk-button-primary tm-button-update uk-button-small uk-button-large">{{'Update' | trans}}</a>
+                        <button v-show="!modalpkg.installed.update" class="uk-width-expand uk-button uk-button-primary uk-button-small uk-button-large" disabled>{{ 'Installed' | trans }}</button>
+                        <a v-show="modalpkg.installed.update" @click.prevent="downloadPackage" class="uk-width-expand uk-button uk-button-primary tm-button-update uk-button-small uk-button-large">{{ 'Update' | trans }}</a>
                     </div>
                     <div v-else>
-                        <a @click.prevent="downloadPackage" class="uk-width-expand uk-button uk-button-primary uk-button-small uk-button-large">{{'Install' | trans}}</a>
+                        <a @click.prevent="downloadPackage" class="uk-width-expand uk-button uk-button-primary uk-button-small uk-button-large">{{ 'Install' | trans }}</a>
                     </div>
                     <ul class="uk-list uk-list-large uk-list-divider uk-text-muted uk-text-small uk-margin-top">
                         <li>
                             <div class="uk-grid uk-child-width-1-2" uk-grid="">
                                 <div class="uk-text-left uk-first-column">
-                                    {{'Type' | trans}} </div>
+                                    {{ 'Type' | trans }} </div>
                                 <div v-if="modalpkg.type == 'greencheap-extension'" class="uk-text-right">
-                                    {{'Extension' | trans}}
+                                    {{ 'Extension' | trans }}
                                 </div>
                                 <div v-if="modalpkg.type == 'greencheap-theme'" class="uk-text-right">
-                                    {{'Theme' | trans}}
+                                    {{ 'Theme' | trans }}
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="uk-grid uk-child-width-1-2" uk-grid="">
                                 <div class="uk-text-left uk-first-column">
-                                    {{'Author' | trans}}
+                                    {{ 'Author' | trans }}
                                 </div>
                                 <div class="uk-text-right">
                                     {{modalpkg.author}}
@@ -100,7 +100,7 @@
                         <li>
                             <div class="uk-grid uk-child-width-1-2" uk-grid="">
                                 <div class="uk-text-left uk-first-column">
-                                    {{'Version' | trans}} </div>
+                                    {{ 'Version' | trans }} </div>
                                 <div class="uk-text-right">
                                     {{modalpkg.version}}
                                 </div>
@@ -109,7 +109,7 @@
                         <li>
                             <div class="uk-grid uk-child-width-1-2" uk-grid="">
                                 <div class="uk-text-left uk-first-column">
-                                    {{'Created' | trans}} </div>
+                                    {{ 'Created' | trans }} </div>
                                 <div class="uk-text-right">
                                     {{modalpkg.date | date}}
                                 </div>
@@ -118,7 +118,7 @@
                         <li>
                             <div class="uk-grid uk-child-width-1-2" uk-grid="">
                                 <div class="uk-text-left uk-first-column">
-                                    {{'Last Update' | trans}}
+                                    {{ 'Last Update' | trans }}
                                 </div>
                                 <div class="uk-text-right">
                                     {{modalpkg.modified | date}}
@@ -128,7 +128,7 @@
                         <li v-show="modalpkg.data.content.repository_url">
                             <div class="uk-grid" uk-grid="">
                                 <div class="uk-width-small uk-text-left uk-first-column">
-                                    {{'Repository' | trans}}
+                                    {{ 'Repository' | trans }}
                                 </div>
                                 <div class="uk-width-expand uk-text-right uk-text-truncate">
                                     <a class="uk-link-muted" :href="modalpkg.data.content.repository_url" target="_blank">{{modalpkg.data.content.repository_url}}</a>
@@ -138,7 +138,7 @@
                         <li v-show="modalpkg.data.content.support_url">
                             <div class="uk-grid" uk-grid="">
                                 <div class="uk-width-small uk-text-left uk-first-column">
-                                    {{'Support' | trans}}
+                                    {{ 'Support' | trans }}
                                 </div>
                                 <div class="uk-width-expand uk-text-right uk-text-truncate">
                                     <a class="uk-link-muted" :href="modalpkg.data.content.support_url" target="_blank">{{modalpkg.data.content.support_url}}</a>
@@ -146,9 +146,34 @@
                             </div>
                         </li>
                     </ul>
-                    <a v-show="modalpkg.data.content.demo_url" :href="modalpkg.data.content.demo_url" target="_blank" class="uk-button uk-button-default uk-button-large uk-width-expand uk-margin">{{'Demo' | trans}}</a>
+                    <a v-show="modalpkg.data.content.demo_url" :href="modalpkg.data.content.demo_url" target="_blank" class="uk-button uk-button-default uk-button-large uk-width-expand uk-margin">{{ 'Demo' | trans }}</a>
                 </div>
             </article>
+        </div>
+    </v-modal>
+
+    <v-modal v-if="modalpkg" ref="installDetail" :center="true" :options="{escClose:false , bgClose:false}">
+        <div class="uk-modal-header">
+            <h2 class="uk-modal-title">
+                {{modalpkg.title}} {{modalpkg.version}}
+            </h2>
+        </div>
+        <div class="uk-modal-body">
+            <pre v-show="output" class="uk-margin" v-html="output"></pre>
+            <div v-show="!isLoader && status === 'success'" class="uk-alert-success" uk-alert>
+                <p>{{ 'Installed successfully.' | trans }}</p>
+            </div>
+            <div v-show="!isLoader && status === 'error'" class="uk-alert-danger" uk-alert>
+                <p>{{ 'There was a problem installing.' | trans }}</p>
+            </div>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <div v-if="isLoader && modalpkg">
+                <i uk-spinner></i>
+                <span class="uk-margin-left">{{ 'Wait' | trans }}</span>
+            </div>
+            <button v-if="!isLoader" class="uk-button uk-button-default" type="button" @click.prevent="cancelPkg">{{ 'Cancel' | trans }}</button>
+            <button v-if="!isLoader && status === 'success'" class="uk-button uk-button-primary" @click.prevent="enablePkg" type="button">{{ 'Enable Package' | trans }}</button>
         </div>
     </v-modal>
 

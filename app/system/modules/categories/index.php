@@ -6,7 +6,8 @@ return [
         'GreenCheap\\Categories\\' => 'src'
     ],
 
-    'menu' => [
+    /**
+     * 'menu' => [
         'categories' => [
             'icon' => 'system/categories:icon.svg',
             'label' => 'Categories',
@@ -16,6 +17,7 @@ return [
             'priority' => 110
         ]
     ],
+     */
 
     'routes' => [
         'categories' => [
