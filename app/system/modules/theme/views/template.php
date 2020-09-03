@@ -40,7 +40,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="http://greencheap.net" target="_blank">
+                    <a href="https://greencheap.net" target="_blank">
                         <i><img :src="$url('app/system/modules/theme/images/icons/help.svg')" width="20px" height="20px" uk-svg></i>
                         <span>{{ 'Help' | trans }}</span>
                     </a>
@@ -117,18 +117,37 @@
                     </div>
 
                     <div class="uk-navbar-item uk-hidden@m">
-                        <a href="#mobilMenu" uk-toggle class="uk-button uk-button-secondary uk-button-large gc-button-icon">
+                        <a href="#mobilMenu" uk-toggle class="uk-button uk-button-default uk-button-large gc-button-icon">
                             <i class="uk-icon uk-icon-image" style="background-image:url(/app/system/modules/theme/images/icons/align.svg);"></i>
                         </a>
                     </div>
                 </div>
             </nav>
+
+            <div id="mobilMenu" class="uk-modal-full" uk-modal>
+                <div class="uk-modal-dialog uk-modal-body uk-height-viewport">
+                    <div class="uk-section">
+                        <div class="uk-container">
+                            <div class="uk-flex uk-flex-center">
+                                <a :href="$url('admin/user/edit' , {id:user.id})" class="uk-flex">
+                                    <img :src="$url(user.avatar)" class="uk-border-circle" width="50px" height="50px">
+                                    <div class="uk-margin-small-left">
+                                        <h4 class="uk-margin-remove uk-h6 uk-text-bold">{{user.name}}</h4>
+                                        <span class="uk-display-block gc-font-small uk-text-muted">{{user.email}}</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="uk-section uk-section-primary uk-margin uk-light" style="padding:20px 20px" v-if="subnav.length">
                 <div class="uk-grid-small" uk-grid>
-                    <div class="uk-width-medium@s">
+                    <div class="uk-width-medium@s uk-flex uk-flex-left@s uk-flex-center">
                         <h1 class="uk-h3">{{title | trans}}</h1>
                     </div>
-                    <div class="uk-width-expand uk-flex uk-flex-right uk-flex-middle">
+                    <div class="uk-width-expand@s uk-flex uk-flex-right@s uk-flex-center uk-flex-middle">
                         <ul class="uk-subnav">
                             <li v-for="(sub , id) in subnav" :class="{'uk-active':sub.active}"><a class="uk-text-capitalize" :href="$url(sub.url)">{{sub.label | trans}}</a></li>
                         </ul>

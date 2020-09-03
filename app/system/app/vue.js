@@ -16,7 +16,6 @@ import VModal from './components/modal.vue';
 import VMetaTag from './components/meta-tag.vue';
 import VPagination from './components/pagination';
 import InputFilter from './components/input-filter.vue';
-import VCategories from '../modules/categories/app/components/categories-selector.vue';
 
 import InputDate from './components/input-date.vue';
 import InputImage from './components/input-image.vue';
@@ -78,7 +77,6 @@ function Install(Vue) {
     Vue.component('v-pagination', VPagination);
     Vue.component('input-filter', InputFilter);
     Vue.component('v-input', VInput);
-    Vue.component('v-categories', VCategories);
 
     Vue.use(InputDate);
     Vue.use(InputImage);
