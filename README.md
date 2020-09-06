@@ -2,6 +2,8 @@
 
 A modular and lightweight CMS made with Symfony and Vuejs components 
 
+[Click here](https://greencheap.net/docs) to access the Turkish documentation.
+
 ## How To Install
 You have three options to run the project locally.
 
