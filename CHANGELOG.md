@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2.0.9.4-beta - 2020-09-03
 
+### Fixed
+- A description tag has been added next to og:description.
+
+### Edit
+- .gitignore added vscode
+
 ### Removed
 - Categories System Deleted
 

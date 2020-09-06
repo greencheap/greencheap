@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: GreenCheap 2.0.9.2-beta (system, messages)\n"
-"POT-Creation-Date: 2020-08-23 23:06+0000\n"
+"Project-Id-Version: GreenCheap 2.0.9.4-beta (system, messages)\n"
+"POT-Creation-Date: 2020-09-06 11:11+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -13,6 +13,9 @@ msgid "Ok"
 msgstr ""
 
 msgid "Cancel"
+msgstr ""
+
+msgid "Search"
 msgstr ""
 
 msgid "Show"
@@ -49,9 +52,6 @@ msgid "Select Video"
 msgstr ""
 
 msgid "Select"
-msgstr ""
-
-msgid "Search"
 msgstr ""
 
 msgid "1"
@@ -165,9 +165,6 @@ msgstr ""
 msgid "Warning: Give to trusted roles only; this permission has security implications."
 msgstr ""
 
-msgid "Is your language not available? Please help out by translating GreenCheap into your own language on %link%."
-msgstr ""
-
 msgid "System"
 msgstr ""
 
@@ -219,6 +216,9 @@ msgstr ""
 msgid "Admin Locale"
 msgstr ""
 
+msgid "Is your language not available? Please help out by translating GreenCheap into your own language on %link%."
+msgstr ""
+
 msgid "Misc"
 msgstr ""
 
@@ -240,25 +240,25 @@ msgstr ""
 msgid "By default, only one editor is displayed; in split mode, visual and code editors are displayed at the same time."
 msgstr ""
 
+msgid "Status"
+msgstr ""
+
 msgid "Unassigned"
 msgstr ""
 
 msgid "{1} %count% Widget moved|]1,Inf[ %count% Widgets moved"
 msgstr ""
 
-msgid "Selected"
+msgid "All"
 msgstr ""
 
-msgid "All"
+msgid "Selected"
 msgstr ""
 
 msgid "Title"
 msgstr ""
 
 msgid "Pages"
-msgstr ""
-
-msgid "Status"
 msgstr ""
 
 msgid "Disabled"
@@ -396,12 +396,6 @@ msgstr ""
 msgid "Profile Updated"
 msgstr ""
 
-msgid "%date%"
-msgstr ""
-
-msgid "Never"
-msgstr ""
-
 msgid "New"
 msgstr ""
 
@@ -427,6 +421,12 @@ msgid "Last login"
 msgstr ""
 
 msgid "Registered since"
+msgstr ""
+
+msgid "%date%"
+msgstr ""
+
+msgid "Never"
 msgstr ""
 
 msgid "Autorization"
@@ -1173,48 +1173,6 @@ msgstr ""
 msgid "No Frontpage assigned."
 msgstr ""
 
-msgid "Categories saved."
-msgstr ""
-
-msgid "Categories deleted."
-msgstr ""
-
-msgid "Saved"
-msgstr ""
-
-msgid "Sub Category"
-msgstr ""
-
-msgid "No Sub Category"
-msgstr ""
-
-msgid "Date"
-msgstr ""
-
-msgid "No categories found."
-msgstr ""
-
-msgid "Not Found %name%"
-msgstr ""
-
-msgid "Category"
-msgstr ""
-
-msgid "Categories"
-msgstr ""
-
-msgid "Can Not Find Type"
-msgstr ""
-
-msgid "Not Found Category"
-msgstr ""
-
-msgid "Edit %category_name%"
-msgstr ""
-
-msgid "New Category"
-msgstr ""
-
 msgid "We have not found any notifications"
 msgstr ""
 
@@ -1287,10 +1245,10 @@ msgstr ""
 msgid "Failed to withdraw from version client. Contact Us"
 msgstr ""
 
-msgid "\"%title%\" enabled."
+msgid "\\"%title%\\" enabled."
 msgstr ""
 
-msgid "\"%title%\" disabled."
+msgid "\\"%title%\\" disabled."
 msgstr ""
 
 msgid "Upload"
@@ -1327,6 +1285,12 @@ msgid "Prepare"
 msgstr ""
 
 msgid "Successfully updated."
+msgstr ""
+
+msgid "\"%title%\" enabled."
+msgstr ""
+
+msgid "\"%title%\" disabled."
 msgstr ""
 
 msgid "Successfully removed."

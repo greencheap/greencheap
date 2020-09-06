@@ -138,7 +138,7 @@ return [
         },
 
         'view.meta' => [function ($event, $meta) use ($app) {
-
+            //dump($meta);
             if ($meta->get('title')) {
                 $title[] = $meta->get('title');
             }
@@ -148,6 +148,12 @@ return [
             }
 
             $meta->add('title', implode(' | ', $title));
+
+            if(!$description = $meta->get('og:description')){
+                $description = $app->config('system/site')->get('meta.description');
+            }
+
+            $meta->add('description' , $description);
         }, -50]
 
         

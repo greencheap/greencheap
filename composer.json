@@ -6,6 +6,7 @@
     "keywords": ["cms", "greencheap" , "symfony" , "vue" , "uikit"],
     "homepage": "http://greencheap.net",
     "license": "MIT",
+    "minimum-stability": "dev",
     "authors": [
         {
             "name": "GreenCheap",
