@@ -158,6 +158,40 @@
     color:#5a5959;
 }
 
+.gc-offcanvas{
+    width:100%;
+}
+
+.gc-offcanvas > li > a {
+    display:flex;
+    width:100%;
+    padding:20px 0;
+}
+.gc-offcanvas > li > a > i{
+    margin-left: 20%;
+    margin-right: 30px;
+}
+.gc-offcanvas > li > a > i > svg{
+    width:20px;
+    height:20px;
+}
+.gc-offcanvas > li > a > span{
+    font-size:0.9rem;
+}
+
+.gc-offcanvas > li > a:hover,
+.gc-offcanvas-active{
+    background:#fff;
+}
+.gc-offcanvas > li > a:hover > i > svg,
+.gc-offcanvas-active > i > svg{
+    fill:@global-primary-background;
+}
+.gc-offcanvas > li > a:hover > span,
+.gc-offcanvas-active > span{
+    color:#5a5959;
+}
+
 .gc-button-icon{
     position:relative;
     padding: 5px 25px;

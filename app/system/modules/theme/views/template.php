@@ -84,63 +84,21 @@
                 </div>
 
                 <div class="uk-navbar-right">
-                    <!--
-                    <div class="uk-navbar-item uk-inline uk-visible@m">
-                        <button class="uk-button uk-button-default uk-button-large">
-                            <i class="uk-icon uk-icon-image uk-margin-small-right" style="background-image:url(/app/system/modules/theme/images/icons/sunset.svg);"></i>
-                            {{'Quick Actions' | trans}}
-                        </button>
-                        <div uk-drop="mode: click;animation: uk-animation-slide-top-small; duration: 300">
-                            <div class="uk-padding-small gc-border-radius uk-width-small uk-box-shadow-medium uk-background uk-background-default">
-                                <ul class="uk-nav uk-nav-default">
-                                    <li>
-                                        <a href="/admin/dashboard">
-                                            <span>New Page</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/admin/dashboard">
-                                            <span>Write A Blog</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>-->
-
                     <div class="uk-navbar-item uk-inline">
                         <update />
                     </div>
 
-                    <div class="uk-navbar-item uk-inline">
+                    <!--<div class="uk-navbar-item uk-inline">
                         <notifications />
-                    </div>
+                    </div>-->
 
                     <div class="uk-navbar-item uk-hidden@m">
-                        <a href="#mobilMenu" uk-toggle class="uk-button uk-button-default uk-button-large gc-button-icon">
+                        <a href="#mobile" uk-toggle class="uk-button uk-button-default uk-button-large gc-button-icon">
                             <i class="uk-icon uk-icon-image" style="background-image:url(/app/system/modules/theme/images/icons/align.svg);"></i>
                         </a>
                     </div>
                 </div>
             </nav>
-
-            <div id="mobilMenu" class="uk-modal-full" uk-modal>
-                <div class="uk-modal-dialog uk-modal-body uk-height-viewport">
-                    <div class="uk-section">
-                        <div class="uk-container">
-                            <div class="uk-flex uk-flex-center">
-                                <a :href="$url('admin/user/edit' , {id:user.id})" class="uk-flex">
-                                    <img :src="$url(user.avatar)" class="uk-border-circle" width="50px" height="50px">
-                                    <div class="uk-margin-small-left">
-                                        <h4 class="uk-margin-remove uk-h6 uk-text-bold">{{user.name}}</h4>
-                                        <span class="uk-display-block gc-font-small uk-text-muted">{{user.email}}</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="uk-section uk-section-primary uk-margin uk-light" style="padding:20px 20px" v-if="subnav.length">
                 <div class="uk-grid-small" uk-grid>
@@ -158,6 +116,51 @@
         <div class="uk-section uk-padding-remove" style="margin-top:10px">
             <div style="padding:0px 20px">
                 <?= $view->render('content') ?>
+            </div>
+        </div>
+    </div>
+    
+    <div id="mobile" uk-offcanvas>
+        <div class="uk-offcanvas-bar">
+            <button class="uk-offcanvas-close" type="button" uk-close></button>
+            <a :href="$url('admin/user/edit' , {id:user.id})" class="uk-flex">
+                <img :src="$url(user.avatar)" class="uk-border-circle" width="50px" height="50px">
+                <div class="uk-margin-small-left">
+                    <h4 class="uk-margin-remove uk-h6 uk-text-bold">{{user.name}}</h4>
+                    <span class="uk-display-block gc-font-small uk-text-muted">{{user.email}}</span>
+                </div>
+            </a>
+            <div class="uk-position-center-left uk-position-center-right">
+                <ul class="uk-nav uk-nav-default gc-offcanvas">
+                    <li v-for="(nav , id) in navs">
+                        <a :href="nav.url" :class="{'gc-nav-active': nav.active }">
+                            <i><img :src="nav.icon" width="20px" height="20px" uk-svg></i>
+                            <span>{{nav.label | trans}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="uk-position-bottom uk-flex uk-flex-middle uk-flex-center" v-cloak>
+                <ul class="uk-nav uk-nav-default gc-nav">
+                    <li>
+                        <a :href="$url('/')" target="_blank">
+                            <i><img :src="$url('app/system/modules/theme/images/icons/visit.svg')" width="20px" height="20px" uk-svg></i>
+                            <span>{{ 'Visit Site' | trans }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://greencheap.net" target="_blank">
+                            <i><img :src="$url('app/system/modules/theme/images/icons/help.svg')" width="20px" height="20px" uk-svg></i>
+                            <span>{{ 'Help' | trans }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a :href="$url('user/logout')">
+                            <i><img :src="$url('app/system/modules/theme/images/icons/lock.svg')" width="20px" height="20px" uk-svg></i>
+                            <span>{{ 'Logout' | trans }}</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

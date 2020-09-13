@@ -59,5 +59,22 @@ const navbar = {
     },
 };
 
+const mobile = {
+    el: '#mobile',
+    name: 'Mobile',
+    data() {
+        return _.merge({
+            navs: null,
+        }, window.$greencheap);
+    },
+
+    created() {
+        const menu = _(this.menu).groupBy('layout').value();
+        const item = _(menu.sidebar).sortBy('priority').groupBy('parent').value();
+        this.$set(this, 'navs', item.root);
+    }
+}
+
 Vue.ready(sidebar);
 Vue.ready(navbar);
+Vue.ready(mobile);

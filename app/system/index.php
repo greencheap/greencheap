@@ -138,7 +138,6 @@ return [
         },
 
         'view.meta' => [function ($event, $meta) use ($app) {
-            //dump($meta);
             if ($meta->get('title')) {
                 $title[] = $meta->get('title');
             }
@@ -155,9 +154,6 @@ return [
 
             $meta->add('description' , $description);
         }, -50]
-
-        
-
     ]
 
 ];
