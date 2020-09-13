@@ -1,26 +1,13 @@
-
-# Change Log
 All notable changes to this project will be documented in this file.
  
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 2.0.10 - 2020-09-13
+## 2.0.10-RC1 - 2020-09-13
 
 ### Edit
 - Mobile menu
 - Symfony's packages version upgrade from 4.* to 5.1
-
-## 2.0.9.4-beta - 2020-09-03
-
-### Fixed
-- A description tag has been added next to og:description.
-
-### Edit
-- .gitignore added vscode
-
-### Removed
-- Categories System Deleted
 
 ## 2.0.9.3-beta - 2020-08-24
 Marketplace plugin has been developed. Users will be able to install new plugins and themes using the plugin store.
@@ -56,18 +43,3 @@ Beta sürümüne çıkabilmesi için gerekli bazı değişiklikler var. Bu sür�
 
 ### Removed
 - `/storage/*` silindi `.gitignore` dosyasından
- 
-## [Unreleased] - yyyy-mm-dd
- 
-Here we write upgrading notes for brands. It's a team effort to make them as
-straightforward as possible.
- 
-### Added
-- [PROJECTNAME-XXXX](http://tickets.projectname.com/browse/PROJECTNAME-XXXX)
-  MINOR Ticket title goes here.
-- [PROJECTNAME-YYYY](http://tickets.projectname.com/browse/PROJECTNAME-YYYY)
-  PATCH Ticket title goes here.
- 
-### Changed
- 
-### Fixed

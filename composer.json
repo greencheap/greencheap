@@ -2,11 +2,11 @@
     "name": "greencheap/greencheap",
     "type": "project",
     "description": "The GreenCheap CMS",
-    "version":"2.0.10",
+    "version":"2.0.10-RC1",
     "keywords": ["cms", "greencheap" , "symfony" , "vue" , "uikit"],
     "homepage": "http://greencheap.net",
     "license": "MIT",
-    "minimum-stability": "stable",
+    "minimum-stability": "RC",
     "authors": [
         {
             "name": "GreenCheap",
