@@ -1,4 +1,4 @@
-var Info = {
+const Info = {
 
     name: 'info',
 

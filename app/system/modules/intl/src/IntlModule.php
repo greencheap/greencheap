@@ -10,7 +10,7 @@ use GreenCheap\Intl\Loader\PoFileLoader;
 use GreenCheap\Module\Module;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Translation\Translator;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class IntlModule extends Module
 {

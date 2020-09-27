@@ -566,12 +566,12 @@ class QueryBuilder
     public function aggregate($function, $column)
     {
         $select  = $this->getPart('select');
-        $results = $this->setPart('select', sprintf('%s(%s) aggregate', strtoupper($function), $column))->get();
+        $results = $this->setPart('select', sprintf('%s(%s) aggregates', strtoupper($function), $column))->get();
 
         $this->setPart('select', $select);
 
         if ($results) {
-            return $results[0]['aggregate'];
+            return $results[0]['aggregates'];
         }
     }
 

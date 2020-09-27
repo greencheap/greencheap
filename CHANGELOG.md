@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.10.3-RC1 - 2020-09-20
+
+### Change
+- Composer update
+
+### Remove
+- Twig_Filter_Simply remove deprecated 2.12
+
+### Added
+- PhpMatcherDumper.php for Symfony 5.1 depraceted 4.2
+- MobileDetect class for devices
+
 ## 2.0.10-RC1 - 2020-09-13
 
 ### Edit

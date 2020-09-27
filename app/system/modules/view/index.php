@@ -1,7 +1,9 @@
 <?php
 
+use Detection\MobileDetect;
 use GreenCheap\Util\ArrObject;
 use GreenCheap\View\Event\ResponseListener;
+use Twig\TwigFilter;
 
 return [
 
@@ -9,10 +11,12 @@ return [
 
     'main' => function ($app) {
 
+        $app['device'] = new MobileDetect();
+
         $app->extend('twig', function ($twig) use ($app) {
 
-            $twig->addFilter(new Twig_SimpleFilter('trans', '__'));
-            $twig->addFilter(new Twig_SimpleFilter('transChoice', '_c'));
+            $twig->addFilter(new TwigFilter('trans', '__'));
+            $twig->addFilter(new TwigFilter('transChoice', '_c'));
 
             return $twig;
 

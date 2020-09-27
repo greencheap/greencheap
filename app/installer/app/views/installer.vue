@@ -57,7 +57,7 @@
                                         MySQL
                                     </option>
                                     <option v-if="pgsql" value="pgsql" disabled>
-                                        PostgreSQL ({{ 'Soon' | trans }})
+                                        PostgreSQL
                                     </option>
                                 </select>
                             </div>

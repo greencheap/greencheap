@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: GreenCheap 2.0.9.4-beta (system, messages)\n"
-"POT-Creation-Date: 2020-09-13 17:13+0000\n"
+"Project-Id-Version: GreenCheap 2.0.10.3-RC1 (system, messages)\n"
+"POT-Creation-Date: 2020-09-27 21:33+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1303,9 +1303,6 @@ msgid "Connect database"
 msgstr ""
 
 msgid "Enter your database connection details."
-msgstr ""
-
-msgid "Soon"
 msgstr ""
 
 msgid "Hostname"
