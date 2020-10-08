@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.10.6-RC1 - 2020-10-09
+### Remove
+- Symfony Yaml
+
+## 2.0.10.4-RC1 - 2020-09-29
+
+### Added
+- Symfony/Mime , Symfony/Yaml install
+
 ## 2.0.10.3-RC1 - 2020-09-20
 
 ### Change
