@@ -14,7 +14,9 @@
     <div id="sidebar" class="gc-sidebar uk-section uk-padding-remove uk-section-muted">
         <div class="gc-sidebar-height-xsmall uk-flex uk-flex-middle uk-flex-center">
             <a :href="$url('admin/user/edit' , {id:user.id})" class="uk-flex">
-                <img :src="$url(user.avatar)" class="uk-border-circle" width="50px" height="50px">
+                <div>
+                  <img :src="$url(user.avatar)" class="uk-border-circle" width="50px" height="50px">
+                </div>
                 <div class="uk-margin-small-left">
                     <h4 class="uk-margin-remove uk-h6 uk-text-bold">{{user.name}}</h4>
                     <span class="uk-display-block gc-font-small uk-text-muted">{{user.email}}</span>
@@ -119,12 +121,14 @@
             </div>
         </div>
     </div>
-    
+
     <div id="mobile" uk-offcanvas>
         <div class="uk-offcanvas-bar">
             <button class="uk-offcanvas-close" type="button" uk-close></button>
             <a :href="$url('admin/user/edit' , {id:user.id})" class="uk-flex">
-                <img :src="$url(user.avatar)" class="uk-border-circle" width="50px" height="50px">
+                <div>
+                  <img :src="$url(user.avatar)" class="uk-border-circle" width="50px" height="50px">
+                </div>
                 <div class="uk-margin-small-left">
                     <h4 class="uk-margin-remove uk-h6 uk-text-bold">{{user.name}}</h4>
                     <span class="uk-display-block gc-font-small uk-text-muted">{{user.email}}</span>

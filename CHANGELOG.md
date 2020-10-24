@@ -3,8 +3,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.11-RC1 - 2020-10-25
+
+### Removed
+- app/console/src/Commands/SelfupdateCommand.php and app/console/src/Commands/InstallCommand.php command line on Greencheap CLI
+
+### Fixed
+- Avatar stretch issue in admin panel has been resolved.
+- Safari support
+- %site& to %site% on mail template
+
+### Updated
+- Language file update for tr_TR
+
 ## 2.0.10.6-RC1 - 2020-10-09
-### Remove
+### Removed
 - Symfony Yaml
 
 ## 2.0.10.4-RC1 - 2020-09-29
@@ -14,10 +27,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2.0.10.3-RC1 - 2020-09-20
 
-### Change
+### Fixed
 - Composer update
 
-### Remove
+### Removed
 - Twig_Filter_Simply remove deprecated 2.12
 
 ### Added

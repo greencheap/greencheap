@@ -56,9 +56,6 @@
                                     <option value="mysql">
                                         MySQL
                                     </option>
-                                    <option v-if="pgsql" value="pgsql" disabled>
-                                        PostgreSQL
-                                    </option>
                                 </select>
                             </div>
                         </div>
