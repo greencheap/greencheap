@@ -3,55 +3,70 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 2.0.11-RC1 - 2020-10-25
+## 2.1.0 - 2020-12-06
+
+### Added
+- New composer package added: `google/apiclient`.
+- Added .php-version file for some packages until updated to php 8.
+
+### Changed
+- PHP 8 Support.
+- Docker Compose file updated.
+
+### Updated
+- Composer packages updated: `composer/composer`, `doctrine/dbal`, `maximebf/debugbar`, `phpunit/phpunit`.
+- Vue and UIkit last version updated
+
+## 2.0.11.1-RC1 - 2.0.11-RC1 - 2020-10-25
 
 ### Removed
-- app/console/src/Commands/SelfupdateCommand.php and app/console/src/Commands/InstallCommand.php command line on Greencheap CLI
+- app/console/src/Commands/SelfupdateCommand.php and app/console/src/Commands/InstallCommand.php command line on Greencheap CLI.
 
 ### Fixed
 - Avatar stretch issue in admin panel has been resolved.
-- Safari support
-- %site& to %site% on mail template
+- Safari support.
+- %site& to %site% on mail template.
 
 ### Updated
-- Language file update for tr_TR
+- Language file update for tr_TR.
 
 ## 2.0.10.6-RC1 - 2020-10-09
+
 ### Removed
-- Symfony Yaml
+- Symfony Yaml.
 
 ## 2.0.10.4-RC1 - 2020-09-29
 
 ### Added
-- Symfony/Mime , Symfony/Yaml install
+- Symfony/Mime , Symfony/Yaml install.
 
 ## 2.0.10.3-RC1 - 2020-09-20
 
 ### Fixed
-- Composer update
+- Composer update.
 
 ### Removed
-- Twig_Filter_Simply remove deprecated 2.12
+- Twig_Filter_Simply remove deprecated 2.12.
 
 ### Added
-- PhpMatcherDumper.php for Symfony 5.1 depraceted 4.2
-- MobileDetect class for devices
+- PhpMatcherDumper.php for Symfony 5.1 depraceted 4.2.
+- MobileDetect class for devices.
 
 ## 2.0.10-RC1 - 2020-09-13
 
 ### Edit
-- Mobile menu
-- Symfony's packages version upgrade from 4.* to 5.1
+- Mobile menu.
+- Symfony's packages version upgrade from 4.* to 5.1.
 
 ## 2.0.9.3-beta - 2020-08-24
 Marketplace plugin has been developed. Users will be able to install new plugins and themes using the plugin store.
 
 ### Added
-- Marketplace Node
+- Marketplace Node.
 
 ### Fixed
-- Turkish translate
-- Commands/Translate
+- Turkish translate.
+- Commands/Translate.
 
 ## Removed
 - Categories section has been removed and will be active again in future versions.

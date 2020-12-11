@@ -18,3 +18,4 @@ node_modules
 *.zip
 robots.txt
 .vscode/
+/tmp/docker_volume

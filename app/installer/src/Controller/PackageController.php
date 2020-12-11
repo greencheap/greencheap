@@ -177,7 +177,7 @@ class PackageController
     /**
      * @Request({"id":"integer","type":"string"}, csrf=true)
      */
-    public function downloadPackageAction(int $id = 0 , string $type)
+    public function downloadPackageAction(int $id, string $type)
     {
         if(!$id){
             App::abort(404 , __('Not Found ID'));

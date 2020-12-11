@@ -6168,10 +6168,10 @@ uglify-to-browserify@~1.0.0:
   resolved "https://registry.yarnpkg.com/uglify-to-browserify/-/uglify-to-browserify-1.0.2.tgz#6e0924d6bda6b5afe349e39a6d632850a0f882b7"
   integrity sha1-bgkk1r2mta/jSeOabWMoUKD4grc=
 
-uikit@^3.2.0:
-  version "3.5.6"
-  resolved "https://registry.yarnpkg.com/uikit/-/uikit-3.5.6.tgz#227599121ff61b53d83708fea4c4513efb3eeb16"
-  integrity sha512-nAJ/HzfXvkpKhI43g0zUj0ObRIMnlxpGiFKuwnVY/CnVkOgCu3QfgDuOVBwjEDAlwBBTYinRFg2qiam68DIlqw==
+uikit@^3.5.10:
+  version "3.5.10"
+  resolved "https://registry.yarnpkg.com/uikit/-/uikit-3.5.10.tgz#d7165a5f045a5f5af4dc9c3c670fbb08c9ae8a6d"
+  integrity sha512-X+OUD02atmks1yYG9C3FSo1EcQ0xfV0+NCHspTShd2uMKYcC5LiMq6o/MyxBxx2bQSeKXh6Kh8TqQ/v4LWI4Tg==
 
 unc-path-regex@^0.1.2:
   version "0.1.2"
@@ -6512,7 +6512,7 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue@^2.6.10, vue@^2.6.11:
+vue@^2.6.11:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==

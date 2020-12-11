@@ -33,7 +33,7 @@ class SetupCommand extends Command
         $this->addOption('title', 't', InputOption::VALUE_OPTIONAL, 'Site title', 'GreenCheap');
         $this->addOption('mail', 'm', InputOption::VALUE_OPTIONAL, 'Admin account email', 'admin@example.com');
         $this->addOption('db-driver', 'd', InputOption::VALUE_REQUIRED, 'DB driver (\'sqlite\' or \'mysql\')', 'sqlite');
-        $this->addOption('db-prefix', null, InputOption::VALUE_OPTIONAL, 'DB prefix', 'pk_');
+        $this->addOption('db-prefix', null, InputOption::VALUE_OPTIONAL, 'DB prefix', 'gc_');
         $this->addOption('db-host', 'H', InputOption::VALUE_OPTIONAL, 'MySQL host');
         $this->addOption('db-name', 'N', InputOption::VALUE_OPTIONAL, 'MySQL database name');
         $this->addOption('db-user', 'U', InputOption::VALUE_OPTIONAL, 'MySQL user');

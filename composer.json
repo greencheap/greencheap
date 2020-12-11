@@ -2,7 +2,7 @@
     "name": "greencheap/greencheap",
     "type": "project",
     "description": "The GreenCheap CMS",
-    "version":"2.0.11-RC1",
+    "version":"2.1.0",
     "keywords": ["cms", "greencheap" , "symfony" , "vue" , "uikit"],
     "homepage": "http://greencheap.net",
     "license": "MIT",
@@ -15,11 +15,11 @@
     ],
     "require": {
         "php": ">=7.4.1",
-        "composer/composer": "^1.9.2",
+        "composer/composer": "^1.10.19",
         "doctrine/annotations": "^1.8.0",
-        "doctrine/dbal": "~2.10.4",
+        "doctrine/dbal": "~2.12.1",
         "paragonie/random-lib": "^2.0.1",
-        "maximebf/debugbar": "^1.16",
+        "maximebf/debugbar": "^1.16.3",
         "monolog/monolog": "^2.0.2",
         "nikic/php-parser": "~4.2",
         "psr/log": "~1.1",
@@ -35,7 +35,8 @@
         "php-curl-class/php-curl-class": "^8.7",
         "ext-json": "*",
         "mobiledetect/mobiledetectlib": "~2.8",
-        "symfony/mime": "^5.1"
+        "symfony/mime": "^5.1",
+        "google/apiclient": "^2.7"
     },
     "require-dev": {
         "ext-dom": "*",
@@ -43,7 +44,7 @@
         "ext-mbstring": "*",
         "ext-xml": "*",
         "ext-xmlwriter": "*",
-        "phpunit/phpunit": "~8.5"
+        "phpunit/phpunit": "~8.5.13"
     },
     "autoload": {
         "psr-4": {
