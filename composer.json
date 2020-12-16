@@ -2,7 +2,7 @@
     "name": "greencheap/greencheap",
     "type": "project",
     "description": "The GreenCheap CMS",
-    "version":"2.1.0",
+    "version":"3.0.0-BETA",
     "keywords": ["cms", "greencheap" , "symfony" , "vue" , "uikit"],
     "homepage": "http://greencheap.net",
     "license": "MIT",
@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "php": ">=7.4.1",
+        "php": ">=8.0.*",
         "composer/composer": "^1.10.19",
         "doctrine/annotations": "^1.8.0",
         "doctrine/dbal": "~2.12.1",
@@ -36,7 +36,7 @@
         "ext-json": "*",
         "mobiledetect/mobiledetectlib": "~2.8",
         "symfony/mime": "^5.1",
-        "google/apiclient": "^2.7"
+        "google/apiclient": "~2.8.3"
     },
     "require-dev": {
         "ext-dom": "*",

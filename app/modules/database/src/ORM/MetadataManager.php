@@ -143,7 +143,6 @@ class MetadataManager
 
             $this->subscribe($this->metadata[$name]);
         }
-
         return $this->metadata[$name];
     }
 

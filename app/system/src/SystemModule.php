@@ -70,7 +70,6 @@ class SystemModule extends Module
                 'layout' => 'views:system/blank.php'
             ]);
         }
-
     }
 
     /**

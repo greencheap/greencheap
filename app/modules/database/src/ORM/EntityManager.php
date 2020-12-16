@@ -32,11 +32,11 @@ class EntityManager
     /**
      * Creates a new Manager instance
      *
-     * @param  Connection               $connection
-     * @param  MetadataManager          $metadata
-     * @param  EventDispatcherInterface $events
+     * @param Connection $connection
+     * @param MetadataManager $metadata
+     * @param EventDispatcherInterface|null $events
      */
-    public function __construct(Connection $connection, MetadataManager $metadata, EventDispatcherInterface $events = null)
+    public function __construct(Connection $connection, MetadataManager $metadata, ?EventDispatcherInterface $events)
     {
         $this->connection = $connection;
         $this->metadata   = $metadata;
@@ -50,7 +50,7 @@ class EntityManager
      *
      * @return Connection
      */
-    public function getConnection()
+    public function getConnection(): Connection
     {
         return $this->connection;
     }
@@ -58,10 +58,10 @@ class EntityManager
     /**
      * Gets the metadata object of an entity class.
      *
-     * @param  mixed $class
+     * @param mixed $class
      * @return Metadata
      */
-    public function getMetadata($class)
+    public function getMetadata(mixed $class): Metadata
     {
         return $this->metadata->get($class);
     }
@@ -136,11 +136,11 @@ class EntityManager
 
     /**
      * Saves an entity.
-     *
      * @param object $entity
-     * @param array  $data
+     * @param array $data
+     * @throws \Doctrine\DBAL\Exception
      */
-    public function save($entity, array $data = [])
+    public function save(object $entity, array $data = [])
     {
         $metadata   = $this->getMetadata($entity);
         $identifier = $metadata->getIdentifier(true);

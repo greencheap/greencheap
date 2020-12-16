@@ -23,7 +23,7 @@ class UninstallCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure():void
     {
         $this->addArgument('packages', InputArgument::IS_ARRAY | InputArgument::REQUIRED, '[Package name]');
     }
@@ -31,7 +31,7 @@ class UninstallCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output):int
     {
         $updater = new PackageManager($output);
         $updater->uninstall((array) $this->argument('packages'));

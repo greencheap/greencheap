@@ -85,7 +85,7 @@ class PackageController
      * @param $name
      * @return string[]
      */
-    public function enableAction($name)
+    public function enableAction($name): array
     {
         $handler = $this->errorHandler($name);
 
@@ -101,8 +101,8 @@ class PackageController
 
         $module->runMarketplaceFile();
 
-        if( !$module->isCompatibleSystem(App::version() , $module->getCompatibleSystemVersion()) ){
-            App::abort(400 , __('The Package Is Not Suitable For Green Cheap Version.'));
+        if( !$module->isCompatibleSystem(App::version() , $module->getCompatibleSystemVersion() , '>') ){
+            App::abort(400 , __('The Package Is Not Suitable For GreenCheap Version.'));
         }
 
         foreach ($module->getRequirements() as $name => $version){
@@ -156,7 +156,7 @@ class PackageController
         if ($file === null || !$file->isValid()) {
             App::abort(400, __('No file uploaded.'));
         }
-        
+
         $package = $this->loadPackage($file->getPathname());
 
         if (!$package->getName() || !$package->get('title') || !$package->get('version')) {

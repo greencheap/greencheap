@@ -40,7 +40,7 @@ class BuildCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output):int
     {
         $path = $this->container->path();
         $version = $this->container->version();

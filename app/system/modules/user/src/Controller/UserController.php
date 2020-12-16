@@ -40,6 +40,8 @@ class UserController
     /**
      * @Access("user: manage users")
      * @Request({"id": "int"})
+     * @param int $id
+     * @return array[]
      */
     public function editAction($id = 0)
     {

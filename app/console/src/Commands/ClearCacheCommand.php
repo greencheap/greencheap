@@ -21,7 +21,7 @@ class ClearCacheCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output):int
     {
         foreach ((array) glob($this->container['path.cache'] . '/*.cache') as $file) {
             @unlink($file);

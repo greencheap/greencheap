@@ -26,7 +26,7 @@ class SetupCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure():void
     {
         $this->addOption('username', 'u', InputOption::VALUE_REQUIRED, 'Admin username', 'admin');
         $this->addOption('password', 'p', InputOption::VALUE_REQUIRED, 'Admin account password');
@@ -44,7 +44,7 @@ class SetupCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output):int
     {
 
         if (!in_array($this->option('db-driver'), ['mysql', 'sqlite'])) {

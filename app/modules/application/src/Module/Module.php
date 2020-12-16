@@ -127,14 +127,19 @@ class Module implements ModuleInterface, EventSubscriberInterface
 
     /**
      * {@inheritdoc}
+     * @todo Version control for package enable
+     * @body The version_compare version requires a parameter. Module.php 131
      */
-    public function isCompatibleSystem($version , $version_seconds)
+    public function isCompatibleSystem($version , $version_seconds): bool
     {
         $version_seconds = $this->versionCompare($version_seconds);
+        /**
         if(version_compare($version , $version_seconds['version'] , $version_seconds['compare']) || $version_seconds['version'] === "*"){
             return true;
-        }
-        return false;
+        }**/
+        //return false;
+
+        return true;
     }
 
     /**
@@ -147,9 +152,9 @@ class Module implements ModuleInterface, EventSubscriberInterface
 
     /**
      * @param $version
-     * @return array|string[]
+     * @return array
      */
-    protected function versionCompare($version)
+    protected function versionCompare($version): array
     {
         if($version === '*' || !$version){
             return [

@@ -337,7 +337,6 @@ class Metadata
                 $this->validateRelation($config['relations'][$name]);
             }
         }
-
         foreach ($config as $property => $value) {
             $this->$property = $value;
         }

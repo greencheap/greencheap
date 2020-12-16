@@ -68,24 +68,33 @@ class ControllerResolver
     {
         if (is_array($controller)) {
             $r = new \ReflectionMethod($controller[0], $controller[1]);
+            $reflactionClass = new \ReflectionClass($controller[0]);
         } elseif (is_object($controller) && !$controller instanceof \Closure) {
             $r = new \ReflectionObject($controller);
             $r = $r->getMethod('__invoke');
+            $reflactionClass = new \ReflectionClass($controller);
         } else {
             $r = new \ReflectionFunction($controller);
+            $reflactionClass = new \ReflectionClass($controller);
         }
-
-        return $this->doGetArguments($request, $controller, $r->getParameters());
+        return $this->doGetArguments($request, $controller, $r->getParameters() , $reflactionClass);
     }
 
-    protected function doGetArguments(Request $request, $controller, array $parameters)
+    /**
+     * @param Request $request
+     * @param $controller
+     * @param array $parameters
+     * @param $reflactionClass
+     * @return array
+     */
+    protected function doGetArguments(Request $request, $controller, array $parameters , $reflactionClass): array
     {
         $attributes = $request->attributes->all();
         $arguments = [];
         foreach ($parameters as $param) {
             if (array_key_exists($param->name, $attributes)) {
                 $arguments[] = $attributes[$param->name];
-            } elseif ($param->getClass() && $param->getClass()->isInstance($request)) {
+            } elseif ($param->getType() && $reflactionClass->isInstance($request)) {
                 $arguments[] = $request;
             } elseif ($param->isDefaultValueAvailable()) {
                 $arguments[] = $param->getDefaultValue();

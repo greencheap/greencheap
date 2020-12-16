@@ -21,11 +21,9 @@ $config = [
         $app['dbs'] = function () use ($default) {
 
             $dbs = [];
-
             foreach ($this->config['connections'] as $name => $params) {
                 $dbs[$name] = DriverManager::getConnection(array_replace($default, $params));
             }
-
             return $dbs;
         };
 

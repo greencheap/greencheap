@@ -145,6 +145,7 @@ class DatabaseHandler implements HandlerInterface
     /**
      * @deprecated to be removed in GreenCheap 1.0
      */
+    #[deprecated]
     protected function createTable()
     {
         $util = $this->connection->getUtility();

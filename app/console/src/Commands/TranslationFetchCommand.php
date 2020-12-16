@@ -21,7 +21,7 @@ class TranslationFetchCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output):void
     {
         parent::initialize($input, $output);
     }
@@ -29,7 +29,7 @@ class TranslationFetchCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output):int
     {
         $tmp  = '/tmp/greencheap-languages';
         $repo = 'git@github.com:greencheap/languages.git';
@@ -75,7 +75,7 @@ class TranslationFetchCommand extends Command
      * @param $resource
      * @return string|boolean
      */
-    protected function getPath($resource)
+    protected function getPath($resource):string|bool
     {
         $vendor = 'greencheap';
 

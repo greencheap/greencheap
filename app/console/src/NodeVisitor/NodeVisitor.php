@@ -18,20 +18,14 @@ abstract class NodeVisitor
      */
     public $results = [];
 
-    /**
-     * @var EngineInterface
-     */
-    public $engine;
-
-    public function __construct(EngineInterface $engine)
-    {
-        $this->engine = $engine;
-    }
+    public function __construct(
+        public EngineInterface $engine
+    ){}
 
     /**
      * @return EngineInterface
      */
-    public function getEngine()
+    public function getEngine() :EngineInterface
     {
         return $this->engine;
     }
@@ -48,7 +42,7 @@ abstract class NodeVisitor
      * @param  string $name
      * @return string
      */
-    protected function loadTemplate($name)
+    protected function loadTemplate($name) :string
     {
         return $this->file = $name;
     }

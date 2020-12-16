@@ -7,7 +7,11 @@ use GreenCheap\Site\Model\Page;
 
 class PageController
 {
-    public function indexAction($id = 0)
+    /**
+     * @param int $id
+     * @return array
+     */
+    public static function indexAction($id = 0): array
     {
         if (!$page = Page::find($id)) {
             App::abort(404, __('Page not found.'));

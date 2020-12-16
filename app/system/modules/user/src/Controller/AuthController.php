@@ -50,8 +50,12 @@ class AuthController
     /**
      * @Route(methods="POST", defaults={"_maintenance" = true})
      * @Request({"credentials": "array", "remember_me": "boolean", "redirect": "string"})
+     * @param $credentials
+     * @param bool $remember
+     * @param string $redirect
+     * @return mixed
      */
-    public function authenticateAction($credentials, $remember = false, $redirect = '')
+    public function authenticateAction($credentials, $remember = false, $redirect = ''): mixed
     {
         try {
 

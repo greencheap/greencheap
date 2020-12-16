@@ -22,7 +22,7 @@ class StartCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure():void
     {
         $this->addOption('server', 's', InputOption::VALUE_OPTIONAL, 'Server name and port', '127.0.0.1:8080');
     }
@@ -30,7 +30,7 @@ class StartCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output):int
     {
         $this->line(sprintf('GreenCheap %s Development Server started', $this->getApplication()->getVersion()));
         $this->line(sprintf('Listening on http://%s', $server = $this->option('server')));

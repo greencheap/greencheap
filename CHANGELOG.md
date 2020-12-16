@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 2.1.0 - 2020-12-06
+## 3.0.0 - 2020-12-06
 
 ### Added
 - New composer package added: `google/apiclient`.
@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - PHP 8 Support.
 - Docker Compose file updated.
+- ReflectionMethod `getClass` deprecated. Change `getClass` to `getType`
 
 ### Updated
 - Composer packages updated: `composer/composer`, `doctrine/dbal`, `maximebf/debugbar`, `phpunit/phpunit`.

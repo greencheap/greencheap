@@ -1,6 +1,6 @@
 <?php
 
-if (version_compare($ver = PHP_VERSION, $req = '7.4.1', '<')) {
+if (version_compare($ver = PHP_VERSION, $req = '8.0.0', '<')) {
     exit(sprintf('You are running PHP %s, but GreenCheap needs at least <strong>PHP %s</strong> to run.', $ver, $req));
 }
 

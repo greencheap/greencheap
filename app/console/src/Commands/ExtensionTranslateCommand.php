@@ -27,7 +27,7 @@ class ExtensionTranslateCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure():void
     {
         $this->addArgument('extension', InputArgument::OPTIONAL, 'Extension name');
     }
@@ -35,7 +35,7 @@ class ExtensionTranslateCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output):int
     {
         $extension = $this->argument('extension') ?: 'system';
         $files     = $this->getFiles($path = $this->getPath($extension), $extension);
@@ -111,7 +111,7 @@ class ExtensionTranslateCommand extends Command
      *               Example:
      *               ['messages' = ['Hello' => 'Hello', 'Apple' => 'Apple'], 'customdomain' => ['One' => 'One']]
      */
-    protected function extractStrings($file)
+    protected function extractStrings($file):array
     {
         $content = file_get_contents($file);
 
@@ -175,7 +175,7 @@ class ExtensionTranslateCommand extends Command
      * @param  string $path
      * @return array
      */
-    protected function getFiles($path, $extension)
+    protected function getFiles($path, $extension):array
     {
         $files = Finder::create()->files()->in($path);
 
@@ -193,7 +193,7 @@ class ExtensionTranslateCommand extends Command
      * @param  string $path
      * @return array
      */
-    protected function getPath($path)
+    protected function getPath($path):array
     {
         if ($path == 'system') {
             // system module
@@ -217,7 +217,7 @@ class ExtensionTranslateCommand extends Command
      * @param string $extension
      * @param string $path
      */
-    protected function writeTranslationFile($messages, $extension, $path)
+    protected function writeTranslationFile($messages, $extension, $path):void
     {
         foreach ($messages as $domain => $strings) {
 
@@ -244,7 +244,7 @@ class ExtensionTranslateCommand extends Command
      * @param  string $domain
      * @return string
      */
-    protected function getHeader($extension, $domain)
+    protected function getHeader($extension, $domain):string
     {
         $version = $this->getApplication()->getVersion();
         $date    = date("Y-m-d H:iO");
