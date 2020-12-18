@@ -1,0 +1,16 @@
+@navbar-background:                             @global-primary-background;
+@navbar-color-mode:                             light;
+
+@navbar-nav-item-height:                        60px;
+@navbar-nav-item-height-large:                 165px;
+@navbar-nav-item-padding-horizontal:            15px;
+
+@navbar-toggle-hover-color:                     lighten(@global-color , 20%);
+
+@media (min-height: 800px) and (min-width: 768px){
+  .uk-navbar-nav > li > a,    // Nav item
+  .uk-navbar-item,            // Content item
+  .uk-navbar-toggle {         // Clickable item
+      min-height: @navbar-nav-item-height-large;
+  }
+}

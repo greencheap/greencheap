@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Composer packages updated: `composer/composer`, `doctrine/dbal`, `maximebf/debugbar`, `phpunit/phpunit`.
 - Vue and UIkit last version updated
 
+### Removed
+- Gulp packages deprecated. 
+- Eslint and deprecated for new pattern
+
 ## 2.0.11.1-RC1 - 2.0.11-RC1 - 2020-10-25
 
 ### Removed
