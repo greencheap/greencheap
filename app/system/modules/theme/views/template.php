@@ -13,7 +13,14 @@
         <nav class="uk-navbar-container">
             <div class="uk-container uk-visible@s" uk-navbar>
                 <div class="uk-navbar-left">
-                    <a class="uk-navbar-toggle" uk-icon="icon:align-text-left;ratio:2"></a>
+                    <div class="uk-navbar-item uk-inline">
+                        <button class="uk-navbar-toggle" uk-icon="icon:align-text-left;ratio:2"></button>
+                        <div class="tm-drop" uk-drop="offset:-50;mode:click">
+                            <div class="uk-card uk-card-body uk-card-default">
+
+                            </div>
+                        </div>
+                    </div>
                     <div class="uk-navbar-item">
                         <span class="uk-text-lead">DASHBOARD</span>
                     </div>
@@ -48,6 +55,23 @@
     <section class="uk-section">
         <div class="uk-container">
             <button class="uk-button uk-button-primary">Merhaba Dünya</button>
+            <div class="uk-card uk-card-default uk-card-body">
+                hello World
+            </div>
+            <div class="uk-card uk-card-primary uk-card-body">
+                hello World
+            </div>
+            <div class="uk-card uk-card-secondary uk-card-body">
+                hello World
+            </div>
+            <div class="uk-card uk-card-muted uk-card-body">
+                hello World
+            </div>
+            <div class="uk-card uk-card-body">
+                hello World
+            </div>
+
+            Merhaba
         </div>
     </section>
 </body>
