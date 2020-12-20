@@ -17,12 +17,12 @@
                         <button class="uk-navbar-toggle" uk-icon="icon:align-text-left;ratio:2"></button>
                         <div class="tm-drop" uk-drop="offset:-50;mode:click">
                             <div class="uk-card uk-card-body uk-card-default">
-
+                                <Navbar :navs="navs" />
                             </div>
                         </div>
                     </div>
                     <div class="uk-navbar-item">
-                        <span class="uk-text-lead">DASHBOARD</span>
+                        <span class="uk-text-lead uk-text-uppercase">{{ title | trans }}</span>
                     </div>
                 </div>
                 <div class="uk-navbar-right">
@@ -38,11 +38,11 @@
 
             <div class="uk-container uk-hidden@s" uk-navbar>
                 <div class="uk-navbar-left">
-                    <a class="uk-navbar-toggle" uk-icon="icon:align-text-left;ratio:2"></a>
+                    <a class="uk-navbar-toggle" href="#modal-mobile-menu" uk-toggle uk-icon="icon:align-text-left;ratio:2"></a>
                 </div>
                 <div class="uk-navbar-center">
                     <div class="uk-navbar-item">
-                        <span class="uk-text-bold">DASHBOARD</span>
+                        <span class="uk-text-bold uk-text-uppercase">{{ title | trans }}</span>
                     </div>
                 </div>
                 <div class="uk-navbar-right">
@@ -50,28 +50,46 @@
                 </div>
             </div>
         </nav>
+        <aside v-if="subnav.length > 0" class="uk-section uk-section-primary tm-section-2xsmall uk-visible@s">
+            <div class="uk-container">
+                <ul uk-tab>
+                    <li v-for="(sub , id) in subnav" :key="id" :class="{'uk-active':sub.active}">
+                        <a :href="$url.route(sub.url)">{{sub.label}}</a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <div id="modal-mobile-menu" class="uk-modal-full" uk-modal>
+            <div class="uk-modal-dialog uk-height-viewport uk-padding-small">
+                <ul class="tm-mobile-items">
+                    <li><a @click="onDarkMode" :uk-icon="`icon:${darkMode ? 'sun':'moon'};ratio:1.6`" :uk-tooltip="`${darkMode ? 'Light Mode':'Dark Mode'}` | trans"></a></li>
+                    <li><a :href="$url('/')" uk-icon="icon:robot;ratio:1.6" :title="'Help'|trans" uk-tooltip></a></li>
+                    <li><a :href="$url('/')" uk-icon="icon:laptop;ratio:1.6" :title="'Visit Site'|trans" uk-tooltip></a></li>
+                    <li><a :href="$url('user/logout')" uk-icon="icon:logout;ratio:1.6" :title="'Logout'|trans" uk-tooltip></a></li>
+                    <li><a class="uk-modal-close-default" uk-icon="icon:close;ratio:1.6" :title="'Close'|trans" uk-tooltip></a></li>
+                </ul>
+                <div class="uk-margin">
+                    <h5 class="uk-text-bold uk-h6 uk-text-uppercase" style="letter-spacing: 2px;">{{'Sub Menus' | trans}}</h5>
+                    <ul class="uk-margin-top uk-nav-default" uk-nav>
+                        <li v-for="(sub , id) in subnav" :key="id" :class="{'uk-active':sub.active}">
+                            <a :href="$url.route(sub.url)">{{sub.label}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="uk-margin-large-top">
+                    <h5 class="uk-text-bold uk-h6 uk-text-uppercase" style="letter-spacing: 2px;">{{'Applications' | trans}}</h5>
+                    <div class="uk-margin-top">
+                        <Navbar :navs="navs" />
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
 
     <section class="uk-section">
         <div class="uk-container">
-            <button class="uk-button uk-button-primary">Merhaba Dünya</button>
-            <div class="uk-card uk-card-default uk-card-body">
-                hello World
-            </div>
-            <div class="uk-card uk-card-primary uk-card-body">
-                hello World
-            </div>
-            <div class="uk-card uk-card-secondary uk-card-body">
-                hello World
-            </div>
-            <div class="uk-card uk-card-muted uk-card-body">
-                hello World
-            </div>
-            <div class="uk-card uk-card-body">
-                hello World
-            </div>
-
-            Merhaba
+            <?= $view->render('content') ?>
         </div>
     </section>
 </body>

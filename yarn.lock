@@ -4553,10 +4553,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-uikit@^3.5.10:
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/uikit/-/uikit-3.6.1.tgz#05b9ff8e7c99ca2e38b654e7cdf66c0a7ac0f986"
-  integrity sha512-V3y/+Vc9Ouzm52RBOyD1SQ9/pUu6+c7B9PbV/4BK+BlIuCZDPlYa9Wr/sB0N93Y/ycL9SyctcAO5/+jcag/eIA==
+uikit@^3.6.*:
+  version "3.6.3"
+  resolved "https://registry.yarnpkg.com/uikit/-/uikit-3.6.3.tgz#e3eb2393a7c67bc312bcebb506babedc26a35e11"
+  integrity sha512-TeTIWtV9K/Q9ee7mdABAeGblxwggp9LSU4HehtqTyIkjNLVBSnKZwkrJTP5853PveJvQVvW5y+t+Gnfqj4gNwg==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"
@@ -4777,7 +4777,7 @@ vue@^2.6.11, vue@^2.6.12:
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
   integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==
 
-vuedraggable@^2.24.0:
+vuedraggable@^2.24.*:
   version "2.24.3"
   resolved "https://registry.yarnpkg.com/vuedraggable/-/vuedraggable-2.24.3.tgz#43c93849b746a24ce503e123d5b259c701ba0d19"
   integrity sha512-6/HDXi92GzB+Hcs9fC6PAAozK1RLt1ewPTLjK0anTYguXLAeySDmcnqE8IC0xa7shvSzRjQXq3/+dsZ7ETGF3g==

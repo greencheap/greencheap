@@ -1,57 +1,21 @@
-// Inverse
-// ========================================================================
-
-@inverse-button-default-background:            transparent;
-@inverse-button-default-color:                 @inverse-global-emphasis-color;
-@inverse-button-default-hover-background:      transparent;
-@inverse-button-default-hover-color:           @inverse-global-emphasis-color;
-@inverse-button-default-active-background:     transparent;
-@inverse-button-default-active-color:          @inverse-global-emphasis-color;
-
-@inverse-button-text-color:                    @inverse-global-emphasis-color;
-@inverse-button-text-hover-color:              @inverse-global-emphasis-color;
-
-.hook-inverse-button-default() { border-color: @inverse-global-color; }
-.hook-inverse-button-default-hover() { border-color: @inverse-global-emphasis-color; }
-.hook-inverse-button-default-active() { border-color: @inverse-global-emphasis-color; }
-
-.hook-inverse-button-primary() {}
-.hook-inverse-button-primary-hover() {}
-.hook-inverse-button-primary-active() {}
-
-.hook-inverse-button-secondary() {}
-.hook-inverse-button-secondary-hover() {}
-.hook-inverse-button-secondary-active() {}
-
-.hook-inverse-button-text() {
-    &::before { border-bottom-color: @inverse-global-emphasis-color; }
-}
-.hook-inverse-button-text-hover() {}
-.hook-inverse-button-text-disabled() {}
-
-.hook-inverse-button-link() {}
-// Inverse
-// ========================================================================
-//@tm-dark-mode-secondary-background
-
 @inverse-button-default-background:            @tm-dark-mode-primary-background;
-@inverse-button-default-color:                 @inverse-global-inverse-color;
+@inverse-button-default-color:                 @global-inverse-color;
 @inverse-button-default-hover-background:      darken(@inverse-button-default-background, 5%);
-@inverse-button-default-hover-color:           @inverse-global-inverse-color;
+@inverse-button-default-hover-color:           @global-inverse-color;
 @inverse-button-default-active-background:     darken(@inverse-button-default-background, 10%);
-@inverse-button-default-active-color:          @inverse-global-inverse-color;
+@inverse-button-default-active-color:          @global-inverse-color;
 @inverse-button-primary-background:            @tm-dark-mode-primary-background;
-@inverse-button-primary-color:                 @inverse-global-inverse-color;
-@inverse-button-primary-hover-background:      darken(@tm-dark-mode-primary-background, 5%);
-@inverse-button-primary-hover-color:           @inverse-global-inverse-color;
-@inverse-button-primary-active-background:     darken(@tm-dark-mode-primary-background, 10%);
-@inverse-button-primary-active-color:          @inverse-global-inverse-color;
+@inverse-button-primary-color:                 @global-inverse-color;
+@inverse-button-primary-hover-background:      darken(@inverse-button-primary-background, 5%);
+@inverse-button-primary-hover-color:           @global-inverse-color;
+@inverse-button-primary-active-background:     darken(@inverse-button-primary-background, 10%);
+@inverse-button-primary-active-color:          @global-inverse-color;
 @inverse-button-secondary-background:          @tm-dark-mode-primary-background;
-@inverse-button-secondary-color:               @inverse-global-inverse-color;
+@inverse-button-secondary-color:               @global-inverse-color;
 @inverse-button-secondary-hover-background:    darken(@inverse-button-secondary-background, 5%);
-@inverse-button-secondary-hover-color:         @inverse-global-inverse-color;
+@inverse-button-secondary-hover-color:         @global-inverse-color;
 @inverse-button-secondary-active-background:   darken(@inverse-button-secondary-background, 10%);
-@inverse-button-secondary-active-color:        @inverse-global-inverse-color;
+@inverse-button-secondary-active-color:        @global-inverse-color;
 @inverse-button-text-color:                    @inverse-global-muted-color;
 @inverse-button-text-hover-color:              @inverse-global-color;
 @inverse-button-text-disabled-color:           @inverse-global-muted-color;

@@ -1,5 +1,5 @@
-export default function (Vue) {
-    Vue.prototype.$notify = function () {
+export default function(Vue) {
+    Vue.prototype.$notify = function() {
         const args = arguments;
         const msgs = document.getElementsByClassName('pk-system-messages');
         const UIkit = window.UIkit || {};
@@ -10,7 +10,7 @@ export default function (Vue) {
             UIkit.notification({
                 message,
                 status,
-                pos: 'top-center',
+                pos: 'top-right',
             });
         } else if (msgs) {
             msgs.empty().append(`<div uk-alert><p class="uk-alert-${status}">${message}</p></div>`);

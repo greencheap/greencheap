@@ -112,9 +112,9 @@ return [
         ],
 
         'marketplace' => [
-            'label' => 'Marketplace',
+            'label' => 'App Store',
             'layout' => 'sidebar',
-            'icon' => 'installer:assets/images/marketplace.svg',
+            'icon' => 'installer:assets/marketplace.svg',
             'url' => '@system/marketplace',
             'active' => '@system/marketplace*',
             'priority' => 120
