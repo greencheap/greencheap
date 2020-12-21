@@ -2,40 +2,7 @@
 
 A modular and lightweight CMS made with Symfony and Vuejs components 
 
-[Click here](https://greencheap.net/docs) to access the Turkish documentation.
-
-## How To Install
-You have three options to run the project locally.
-
-_with Composer:_
-
-    composer create-project greencheap/greencheap
-
-_with Git:_
-
-    git clone https://github.com/greencheap/greencheap
-
-_width Official last stable version:_
-
-    wget -O greencheap.zip https://greencheap.net/version/download/forced
-
-_Composer Install:_
-
-**Note:** If you downloaded the official package, you can skip all the installation steps.
-
-    cd greencheap && composer install
-
-_Js Packages Install:_
-
-    yarn
-
-or
-
-    npm install
-
-## How To Start Server
-
-    php greencheap start
+This version of GreenCheap is under development. It is not a stable version. So do not recommend using it. In this case, we recommend that you use the branch that supports [PHP 7.4](https://github.com/greencheap/greencheap/tree/php-7.4)
 
 ## Explanation
 
