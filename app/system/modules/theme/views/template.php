@@ -28,8 +28,8 @@
                 <div class="uk-navbar-right">
                     <ul class="uk-navbar-item uk-grid">
                         <li><a @click="onDarkMode" :uk-icon="`icon:${darkMode ? 'sun':'moon'};ratio:1.3`" :uk-tooltip="`${darkMode ? 'Light Mode':'Dark Mode'}` | trans"></a></li>
-                        <li><a :href="$url('/')" uk-icon="icon:robot;ratio:1.3" :title="'Help'|trans" uk-tooltip></a></li>
-                        <li><a :href="$url('/')" uk-icon="icon:laptop;ratio:1.3" :title="'Visit Site'|trans" uk-tooltip></a></li>
+                        <li><a href="https://greencheap.net/docs" uk-icon="icon:robot;ratio:1.3" target="_blank" :title="'Help'|trans" uk-tooltip></a></li>
+                        <li><a :href="$url('/')" uk-icon="icon:laptop;ratio:1.3" target="_blank" :title="'Visit Site'|trans" uk-tooltip></a></li>
                         <li><a :href="$url('user/logout')" uk-icon="icon:logout;ratio:1.3" :title="'Logout'|trans" uk-tooltip></a></li>
                         <li><a :href="$url('admin/user/edit' , {id:user.id})"><img :src="$url(user.avatar)" class="uk-border-circle" width="30px" height="30px"></a></li>
                     </ul>
@@ -64,12 +64,12 @@
             <div class="uk-modal-dialog uk-height-viewport uk-padding-small">
                 <ul class="tm-mobile-items">
                     <li><a @click="onDarkMode" :uk-icon="`icon:${darkMode ? 'sun':'moon'};ratio:1.6`" :uk-tooltip="`${darkMode ? 'Light Mode':'Dark Mode'}` | trans"></a></li>
-                    <li><a :href="$url('/')" uk-icon="icon:robot;ratio:1.6" :title="'Help'|trans" uk-tooltip></a></li>
-                    <li><a :href="$url('/')" uk-icon="icon:laptop;ratio:1.6" :title="'Visit Site'|trans" uk-tooltip></a></li>
+                    <li><a href="https://greencheap.net" uk-icon="icon:robot;ratio:1.6" target="_blank" :title="'Help'|trans" uk-tooltip></a></li>
+                    <li><a :href="$url('/')" uk-icon="icon:laptop;ratio:1.6" target="_blank" :title="'Visit Site'|trans" uk-tooltip></a></li>
                     <li><a :href="$url('user/logout')" uk-icon="icon:logout;ratio:1.6" :title="'Logout'|trans" uk-tooltip></a></li>
                     <li><a class="uk-modal-close-default" uk-icon="icon:close;ratio:1.6" :title="'Close'|trans" uk-tooltip></a></li>
                 </ul>
-                <div class="uk-margin">
+                <div v-if="subnav.length" class="uk-margin">
                     <h5 class="uk-text-bold uk-h6 uk-text-uppercase" style="letter-spacing: 2px;">{{'Sub Menus' | trans}}</h5>
                     <ul class="uk-margin-top uk-nav-default" uk-nav>
                         <li v-for="(sub , id) in subnav" :key="id" :class="{'uk-active':sub.active}">
@@ -87,7 +87,7 @@
         </div>
     </header>
 
-    <section class="uk-section">
+    <section class="uk-section uk-section-small">
         <div class="uk-container">
             <?= $view->render('content') ?>
         </div>

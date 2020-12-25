@@ -1,7 +1,7 @@
 module.exports = [{
     entry: {
         theme: "./app/views/theme",
-        header: "./app/views/header"
+        header: "./app/views/header",
     },
     output: {
         filename: "./app/bundle/[name].js",

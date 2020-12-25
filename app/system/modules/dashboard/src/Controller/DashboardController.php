@@ -49,37 +49,13 @@ class DashboardController
     }
 
     /**
-     * @Request({"widgets": "array"}, csrf=true)
-     * @param array $widgets
-     * @return array
-     */
-    public function saveWidgetsAction($widgets = [])
-    {
-
-        $widgets = array_replace($this->dashboard->getWidgets(), $widgets);
-
-        $this->dashboard->saveWidgets($widgets);
-
-        return ['widgets' => $widgets];
-    }
-
-
-    /**
      * @Route("/", methods="POST")
-     * @Route("/{id}", methods="POST", requirements={"id"="\w+"})
-     * @Request({"id", "widget": "array"}, csrf=true)
+     * @Request({"widgets": "array"}, csrf=true)
      */
-    public function saveAction($id = 0, $widget = [])
+    public function saveAction($widgets = [])
     {
-        if ($new = !$id) {
-            $id = uniqid();
-        }
-
-        $widget['id'] = $id;
-
-        $this->dashboard->saveWidgets(array_replace($this->dashboard->getWidgets(), [$id => $widget]));
-
-        return $widget;
+        $this->dashboard->saveWidgets($widgets);
+        return $widgets;
     }
 
     /**
@@ -88,34 +64,7 @@ class DashboardController
      */
     public function deleteAction($id)
     {
-        $widgets = $this->dashboard->getWidgets();
-
-        unset($widgets[$id]);
-
-        $this->dashboard->saveWidgets($widgets);
-
-        return ['message' => __('Widget deleted.')];
-    }
-
-    /**
-     * @Request({"order": "array"}, csrf=true)
-     */
-    public function reorderAction($order = [])
-    {
-        $widgets = $this->dashboard->getWidgets();
-        $reordered = [];
-
-        foreach ($order as $id) {
-            if ($widget = $this->dashboard->getWidget($id)) {
-                $reordered[$id] = $widget;
-            }
-        }
-
-        if (count($widgets) == count($reordered)) {
-            $this->dashboard->saveWidgets($reordered);
-        }
-
-        return ['message' => __('Widgets reordered.')];
+        
     }
 
     /**

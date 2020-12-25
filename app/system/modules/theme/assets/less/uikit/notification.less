@@ -1,18 +1,30 @@
-@notification-position:                               10px;
-@notification-z-index:                                @global-z-index + 40;
-@notification-width:                                  350px;
-
-@notification-message-margin-top:                     10px;
 @notification-message-padding:                        @global-small-gutter;
-@notification-message-background:                     @global-background;
-@notification-message-color:                          @global-color;
 @notification-message-font-size:                      @global-font-size;
-@notification-message-line-height:                    1.4;
 
-@notification-close-top:                              @notification-message-padding + 5px;
-@notification-close-right:                            @notification-message-padding;
+.hook-notification-close() {
+    color: @global-inverse-color;
+}
 
-@notification-message-primary-color:                  @global-primary-background;
-@notification-message-success-color:                  @global-success-background;
-@notification-message-warning-color:                  @global-warning-background;
-@notification-message-danger-color:                   @global-danger-background;
+.uk-notification-close:hover{
+    color: fade(@global-inverse-color , 80%);
+}
+
+.hook-notification-message-primary() {
+    background: darken(@global-primary-background , 10%);
+    color: @global-inverse-color;
+}
+
+.hook-notification-message-success() {
+    background: darken(@global-success-background , 10%);
+    color: @global-inverse-color;
+}
+
+.hook-notification-message-warning() {
+    background: darken(@global-warning-background , 10%);
+    color: @global-inverse-color;
+}
+
+.hook-notification-message-danger() {
+    background: darken(@global-danger-background , 10%);
+    color: @global-inverse-color;
+}

@@ -38,8 +38,6 @@ const header = {
         if (submenus) {
             this.subnav = _(submenus[findActive.id]).sortBy('priority').value();
         }
-
-        this.$notify('Hello World')
     },
 
 

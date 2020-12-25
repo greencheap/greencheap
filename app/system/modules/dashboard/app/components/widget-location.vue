@@ -2,11 +2,11 @@
     <div>
         <div class="uk-card-badge">
             <ul class="uk-iconnav uk-invisible-hover">
-                <li v-show="!editing" class="uk-light">
+                <li v-show="!editing">
                     <a uk-icon="file-edit" class="uk-link-muted" :title="'Edit' | trans" uk-tooltip="delay: 500" @click.prevent="$parent.edit" />
                 </li>
-                <li v-show="!editing" class="uk-light">
-                    <a uk-icon="more-vertical" class="uk-link-muted uk-sortable-handle" :title="'Drag' | trans" uk-tooltip="delay: 500" />
+                <li v-show="!editing">
+                    <a uk-icon="icon:more-vertical;ratio:1.4" class="uk-link-muted uk-sortable-handle" :title="'Drag' | trans" uk-tooltip="delay: 500" />
                 </li>
                 <li v-show="editing">
                     <a v-confirm="'Delete widget?'" uk-icon="trash" :title="'Delete' | trans" uk-tooltip="delay: 500" @click.prevent="$parent.remove" />
@@ -17,7 +17,7 @@
             </ul>
         </div>
 
-        <div v-show="editing" class="uk-card-header pk-panel-teaser">
+        <div v-show="editing" class="uk-card-header">
             <form class="uk-form-stacked" @submit.prevent>
                 <div class="uk-margin">
                     <label for="form-city" class="uk-form-label">{{ 'Location' | trans }}</label>
@@ -51,8 +51,9 @@
             </form>
         </div>
 
-        <div v-if="status !== 'loading'" class="uk-inline-clip uk-card uk-card-secondary uk-light">
+        <div v-if="status !== 'loading'" class="uk-inline-clip uk-card uk-background-image uk-background-cover" :data-src="$url('app/system/modules/theme/assets/images/widget-location-background.jpg')" uk-img>
             <canvas class="" width="550" height="350"></canvas>
+            <div class="uk-position-cover uk-overlay-default"></div>
             <div class="uk-position-cover uk-width-1-1">
                 <div class="uk-flex uk-flex-center uk-flex-column uk-height-1-1">
                     <h1 class="uk-margin-remove uk-text-center pk-text-xlarge" v-if="time">{{ time | date(format) }}</h1>
@@ -60,7 +61,7 @@
                 </div>
                 <div class="uk-position-bottom uk-padding-small uk-flex uk-flex-middle uk-flex-between uk-flex-wrap">
                     <h3 class="uk-h4 uk-margin-remove" v-if="widget.city">{{ widget.city }}</h3>
-                    <h3 class="uk-h4 uk-flex uk-flex-middle uk-margin-remove" v-if="status=='done'">{{ temperature }} <img class="uk-margin-small-left" :src="icon" width="25" height="25" alt="Weather"></h3>
+                    <h3 class="uk-h4 uk-flex uk-flex-middle uk-margin-remove" v-if="status=='done'">{{ temperature }} <img class="uk-margin-small-left" :data-src="icon" width="25" height="25" alt="Weather" uk-svg></h3>
                 </div>
             </div>
         </div>

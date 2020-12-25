@@ -61,8 +61,8 @@
         </div>
 
         <div class="uk-card-body">
-            <div v-if="widget.total" class="pk-text-large">
-                {{ userscount }}
+            <div v-if="widget.total" class="uk-text-lead">
+                {{'Total User:' | trans}} {{ userscount }}
             </div>
 
             <h3 v-if="widget.show == 'registered' && widget.total" class="uk-card-title uk-margin-small-top">

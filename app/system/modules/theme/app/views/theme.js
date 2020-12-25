@@ -5,3 +5,17 @@ import Icons from '../../../../../../node_modules/uikit/dist/js/uikit-icons';
 UIkit.use(Icons);
 
 import '../../assets/less/theme.less';
+
+import {
+    $,
+    on,
+    css,
+    toNodes,
+    isString,
+    assign,
+    html,
+    remove,
+} from 'uikit-util';
+import Autocomplete from '../lib/autocomplete';
+import Pagination from '../lib/pagination';
+import HTMLEditor from '../lib/htmleditor';

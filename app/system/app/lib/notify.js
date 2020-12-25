@@ -7,10 +7,18 @@ export default function(Vue) {
         const status = args[1] ? args[1] : 'primary';
 
         if (UIkit.notification) {
+            let icons;
+            if (status == 'warning') {
+                icons = '<i uk-icon="icon:exlamation;ratio:1.3" class="uk-margin-right"></i>';
+            } else if (status == 'danger') {
+                icons = '<i uk-icon="icon:x;ratio:1.3" class="uk-margin-right"></i>';
+            } else {
+                icons = '<i uk-icon="icon:tick;ratio:1.3" class="uk-margin-right"></i>';
+            }
             UIkit.notification({
-                message,
+                message: `${icons}${message}`,
                 status,
-                pos: 'top-right',
+                pos: 'top-center',
             });
         } else if (msgs) {
             msgs.empty().append(`<div uk-alert><p class="uk-alert-${status}">${message}</p></div>`);

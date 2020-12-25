@@ -81,7 +81,7 @@
 
         <div class="uk-card-body">
             <div v-if="status != 'loading'">
-                <h3 v-if="widget.title" class="uk-card-title">
+                <h3 v-if="widget.title" class="uk-card-title uk-text-bold uk-text-primary">
                     {{ widget.title }}
                 </h3>
                 <div v-else class="uk-margin-bottom">
@@ -95,14 +95,15 @@
 
                 <ul class="uk-list uk-list-divider uk-margin-remove">
                     <li v-for="(entry, key) in count" :key="key">
-                        <a :href="entry.link" target="_blank" v-html="entry.title" />
+                        <a class="uk-link-text uk-text-small uk-text-bold" :href="entry.link" target="_blank" v-html="entry.title" />
+                        
                         <p class="uk-text-small uk-text-muted uk-text-nowrap uk-margin-remove-top uk-margin-small-bottom">
                             {{ entry.publishedDate | relativeDate }}
                         </p>
 
-                        <div v-if="widget.content == '1'" class="uk-margin-small-top uk-text-justify uk-text-small" v-html="entry.contentSnippet"></div>
+                        <div v-if="widget.content == '1'" class="uk-margin-small-top uk-text-small" v-html="entry.contentSnippet"></div>
 
-                        <div v-if="widget.content == '2'" class="uk-margin-small-top uk-text-justify uk-text-small" v-html="key == 0 ? entry.contentSnippet : ''"></div>
+                        <div v-if="widget.content == '2'" class="uk-margin-small-top uk-text-small" v-html="key == 0 ? entry.contentSnippet : ''"></div>
                     </li>
                 </ul>
 
@@ -137,7 +138,7 @@ export default {
         },
         defaults: {
             count: 5,
-            url: 'http://greencheap.com/blog/feed',
+            url: 'http://greencheap.net/blog/feed',
             content: '',
         },
 

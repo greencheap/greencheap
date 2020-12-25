@@ -1,6 +1,6 @@
 <template>
     <a title="System Information">
-        <img :src="$url('app/system/assets/images/logo/fav-black.svg')" width="20">
+        <img :src="$url('app/system/modules/theme/assets/images/greencheap-logo.svg')" width="20">
     </a>
 </template>
 

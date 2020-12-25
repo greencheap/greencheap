@@ -6,13 +6,13 @@
                     <a uk-icon="file-edit" :title="'Edit' | trans" uk-tooltip="delay: 500" @click.prevent="edit" />
                 </li>
                 <li v-show="!editing">
-                    <a uk-icon="more-vertical" class="uk-sortable-handle" :title="'Drag' | trans" uk-tooltip="delay: 500" />
+                    <a uk-icon="icon:more-vertical;ratio:1.4" class="uk-sortable-handle" :title="'Drag' | trans" uk-tooltip="delay: 500" />
                 </li>
                 <li v-show="editing">
-                    <a v-confirm="'Delete widget?'" uk-icon="trash" :title="'Delete' | trans" uk-tooltip="delay: 500" @click.prevent="remove" />
+                    <a v-confirm="'Delete widget?'" uk-icon="icon:trash" :title="'Delete' | trans" uk-tooltip="delay: 500" @click.prevent="remove" />
                 </li>
                 <li v-show="editing">
-                    <a uk-icon="check" :title="'Close' | trans" uk-tooltip="delay: 500" @click.prevent="save" />
+                    <a uk-icon="icon:check" :title="'Save' | trans" uk-tooltip="delay: 500" @click.prevent="save" />
                 </li>
             </ul>
         </div>
@@ -36,7 +36,7 @@ export default {
     },
 
     created() {
-        this.$options.components = this.$parent.$options.components;
+        this.$options.components = this.$parent.$parent.$options.components;
     },
 
 
@@ -45,6 +45,10 @@ export default {
         type() {
             return this.$root.getType(this.widget.type);
         },
+
+        isEdit() {
+            return this.$root.getEdit;
+        }
 
     },
 
@@ -60,7 +64,8 @@ export default {
         },
 
         remove() {
-            this.$root.remove(this.widget);
+            this.editing = false;
+            this.$root.remove(this.widget.unix_id);
         },
 
     },
