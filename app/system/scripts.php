@@ -164,14 +164,45 @@ return [
             });
         }
 
-        $app['config']->set('system/dashboard', [
-            '55dda578e93b5' => ['type' => 'location', 'column' => 1, 'idx' => 0, 'units' => 'metric', 'id' => '55dda578e93b5', 'uid' => 323786, 'city' => 'Ankara', 'country' => 'TR', 'coords' => ['lon' => 32.8543, 'lat' => 39.9199]],
-            '55dda581d5781' => ['type' => 'feed', 'column' => 2, 'idx' => 0, 'count' => 5, 'content' => '1', 'id' => '55dda581d5781', 'title' => 'GreenCheap Haberler', 'url' => 'https://greencheap.net/blog/feed'],
-            '55dda6e3dd661' => ['type' => 'user', 'column' => 0, 'idx' => 100, 'show' => 'registered', 'display' => 'thumbnail', 'total' => '1', 'count' => 12, 'id' => '55dda6e3dd661']
-        ]);
-
         $app['config']->set('system/site', [
             'menus' => ['main' => ['id' => 'main', 'label' => 'Main']]
+        ]);
+
+        $app['config']->set('system/dashboard', [
+            [
+                [
+                    'type' => 'feed',
+                    'unix_id' => 1608983060446,
+                    'count' => '2',
+                    'url' => 'http://greencheap.net/blog/feed',
+                    'content' => '1',
+                    'title' => 'GCNEWS',
+                ]
+            ],
+            [
+                [
+                    'type' => 'location',
+                    'unix_id' => 1608983062675,
+                    'units' => 'metric',
+                    'uid' => 323786,
+                    'city' => 'Ankara',
+                    'country' => 'TR',
+                    'coords' => [
+                        'lat' => 39.9199,
+                        'lon' => 32.8543,
+                    ]
+                ]
+            ],
+            [
+                [
+                    'type' => 'user',
+                    'unix_id' => 1608983065298,
+                    'show' => 'login',
+                    'display' => 'list',
+                    'total' => '',
+                    'count' => 12,
+                ]
+            ]
         ]);
 
     },
@@ -225,6 +256,45 @@ return [
                     $app['db']->executeQuery('ALTER TABLE @system_categories ADD "type" varchar(255) NULL DEFAULT NULL');
 				}
             }
+        },
+
+        '3.0.1' => function ($app) {
+            $app['config']->set('system/dashboard', [
+                [
+                    [
+                        'type' => 'feed',
+                        'unix_id' => 1608983060446,
+                        'count' => '2',
+                        'url' => 'http://greencheap.net/blog/feed',
+                        'content' => '1',
+                        'title' => 'GCNEWS',
+                    ]
+                ],
+                [
+                    [
+                        'type' => 'location',
+                        'unix_id' => 1608983062675,
+                        'units' => 'metric',
+                        'uid' => 323786,
+                        'city' => 'Ankara',
+                        'country' => 'TR',
+                        'coords' => [
+                            'lat' => 39.9199,
+                            'lon' => 32.8543,
+                        ]
+                    ]
+                ],
+                [
+                    [
+                        'type' => 'user',
+                        'unix_id' => 1608983065298,
+                        'show' => 'login',
+                        'display' => 'list',
+                        'total' => '',
+                        'count' => 12,
+                    ]
+                ]
+            ]);
         }
     ]
 

@@ -1,15 +1,15 @@
 <template>
-    <div class="uk-flex uk-flex-center uk-flex-middle tm-background uk-height-viewport">
+    <div class="uk-text-center">
         <installer-steps :steps="steps" :current="step">
             <template v-slot:start="{ step }">
-                <div :step="step" class="uk-text-center">
-                    <div class="uk-panel uk-padding-small">
+                <div :step="step" class="uk-panel">
+                    <div class="uk-panel">
                         <a @click="gotoStep('language')">
-                            <img :src="$url('/app/system/assets/images/logo/fav-white.svg')" width="100" alt="GreenCheap">
+                            <img :data-src="$url('/app/system/modules/theme/assets/images/greencheap-logo.svg')" width="150" alt="GreenCheap" uk-img>
                             <div class="uk-margin">
                                 <svg class="tm-arrow" width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                                    <line fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" x1="2" y1="18" x2="36" y2="18"/>
-                                    <polyline fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="26.071,6.5 37.601,18.03 26,29.631 "/>
+                                    <line fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" x1="2" y1="18" x2="36" y2="18"/>
+                                    <polyline fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="26.071,6.5 37.601,18.03 26,29.631 "/>
                                 </svg>
                             </div>
                         </a>
@@ -17,9 +17,8 @@
                 </div>
             </template>
             <template v-slot:language="{ step }">
-                <div :step="step" class="uk-card uk-card-default uk-card-body">
-
-                    <h1 class="uk-card-title uk-text-center">{{ 'Choose language' | trans }}</h1>
+                <div :step="step" class="uk-panel">
+                    <h1 class="uk-text-center">{{ 'Choose language' | trans }}</h1>
                     <div class="uk-margin uk-text-muted uk-text-center">{{ "Select your site language." | trans }}</div>
 
                     <form @submit.prevent="stepLanguage">
@@ -38,9 +37,9 @@
                 </div>
             </template>
             <template v-slot:database="{ step, passes }">
-                <div :step="step" class="uk-card uk-card-default uk-card-body">
+                <div :step="step" class="uk-panel">
 
-                    <h1 class="uk-card-title uk-text-center">{{ 'Connect database' | trans }}</h1>
+                    <h1 class="uk-text-center">{{ 'Connect database' | trans }}</h1>
                     <div class="uk-margin uk-text-muted uk-text-center">{{ 'Enter your database connection details.' | trans }}</div>
 
                     <div class="uk-alert uk-alert-danger uk-margin uk-text-center" v-show="message"><p>{{ message }}</p></div>
@@ -55,6 +54,9 @@
                                     </option>
                                     <option value="mysql">
                                         MySQL
+                                    </option>
+                                    <option value="pgsql">
+                                        PostgreSQL
                                     </option>
                                 </select>
                             </div>
@@ -119,9 +121,9 @@
                 </div>
             </template>
             <template v-slot:site="{ step, passes }">
-                <div :step="step" class="uk-card uk-card-default uk-card-body">
+                <div :step="step" class="uk-panel">
 
-                    <h1 class="uk-card-title uk-text-center">{{ 'Setup your site' | trans }}</h1>
+                    <h1 class="uk-text-center">{{ 'Setup your site' | trans }}</h1>
                     <div class="uk-margin uk-text-muted uk-text-center">{{ 'Choose a title and create the administrator account.' | trans }}</div>
 
                     <form class="uk-form-horizontal tm-form-horizontal" @submit.prevent="passes(stepSite)">
@@ -152,22 +154,20 @@
                 </div>
             </template>
             <template v-slot:finish="{ step }">
-                <div :step="step">
+                <div :step="step" class="uk-panel">
                     <div class="uk-text-center" v-show="status == 'install'">
-                        <svg class="tm-loader" width="150" height="150" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg">
-                            <g><circle cx="0" cy="0" r="70" fill="none" stroke-width="2"/></g>
-                        </svg>
+                        <span uk-spinner="ratio:4"></span>
                     </div>
 
                     <div class="uk-panel uk-padding-small uk-text-center" v-show="status == 'finished'">
                         <a :href="$url.route('admin')">
                             <svg class="tm-checkmark" width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                <polyline fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="5.125,63.25 27.375,89.375 95.25,18.875"/>
+                                <polyline fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="5.125,63.25 27.375,89.375 95.25,18.875"/>
                             </svg>
                         </a>
                     </div>
 
-                    <div class="uk-card uk-card-default uk-card-body" v-show="status == 'failed'">
+                    <div class="uk-panel" v-show="status == 'failed'">
                         <h1>{{ 'Installation failed!' | trans }}</h1>
                         <div class="uk-text-break">{{ message }}</div>
                         <div class="uk-margin uk-text-right uk-margin-remove-bottom">
@@ -349,8 +349,7 @@ let Installer = {
             }
         },
         VInput
-    },
-
+    }
 };
 
 export default Installer;

@@ -44,8 +44,8 @@
                         <a class="uk-button tm-button-success uk-button-small" @click="update(pkg, updates)" v-show="updates && updates[pkg.name]">{{ 'Update' | trans }}</a>
                     </td>
                     <td class="uk-text-center">
-                        <a class="pk-icon-circle-success" :title="'Enabled' | trans" v-if="pkg.enabled" @click="disable(pkg)"></a>
-                        <a class="pk-icon-circle-danger" :title="'Disabled' | trans" v-else @click="enable(pkg)"></a>
+                        <a class="pk-icon-circle-success" :title="'Enabled' | trans" v-if="pkg.enabled" @click="disable(pkg)">Disable</a>
+                        <a class="pk-icon-circle-danger" :title="'Disabled' | trans" v-else @click="enable(pkg)">Enable</a>
                     </td>
                     <td class="uk-text-center">{{ pkg.version }}</td>
                     <td class="uk-text-truncate">/{{ pkg.name }}</td>

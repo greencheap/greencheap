@@ -1,3 +1,19 @@
+.hook-button(){
+    transition: all 0.2s ease-in-out;
+}
+
+.hook-button-default(){
+    background:transparent;
+    border: 1px solid @global-primary-background;
+    color: @global-color;
+}
+
+.hook-button-default-hover(){
+    background:transparent;
+    border: 1px solid fade(@global-primary-background , 40%);
+    color: @global-color;
+}
+
 @inverse-button-default-background:            @tm-dark-mode-primary-background;
 @inverse-button-default-color:                 @global-inverse-color;
 @inverse-button-default-hover-background:      darken(@inverse-button-default-background, 5%);

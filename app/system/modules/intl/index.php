@@ -27,7 +27,7 @@ return [
 
     'config' => [
 
-        'locale' => 'en_US'
+        'locale' => 'en_GB'
 
     ],
 

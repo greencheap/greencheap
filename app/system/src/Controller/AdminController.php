@@ -36,7 +36,7 @@ class AdminController
             'redirect' => $redirect ?: App::url('@system'),
             'message' => $message,
             'images' => [
-                $this->getUnsplashImages()[rand(0, 2)]
+                self::getUnsplashImages()[rand(0, 2)]
             ],
         ];
     }
@@ -58,7 +58,7 @@ class AdminController
         return ['message' => __('Order saved.')];
     }
 
-    public function getUnsplashImages():array
+    public static function getUnsplashImages():array
     {
         return [
             [

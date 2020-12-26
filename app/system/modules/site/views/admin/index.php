@@ -2,11 +2,9 @@
 
 <form id="site" v-cloak>
 
-    <div class="pk-grid-large" uk-grid>
-        <div class="pk-width-sidebar">
-
+    <div class="uk-grid-large" uk-grid>
+        <div class="uk-width-medium">
             <div>
-
                 <ul class="uk-nav uk-nav-default">
                     <li class="uk-visible-toggle uk-flex uk-flex-between" :class="{'uk-active': isActive(menu), 'uk-nav-divider': menu.divider}" v-for="menu in divided(menus)">
                         <a class="uk-text-nowrap uk-text-truncate" @click.prevent="selectMenu(menu, false)" v-if="!menu.divider">{{ menu.label }}</a>
@@ -19,12 +17,9 @@
                 <p>
                     <a class="uk-button uk-button-default" @click.prevent="editMenu">{{ 'Add Menu' | trans }}</a>
                 </p>
-
             </div>
-
         </div>
-        <div class="pk-width-content">
-
+        <div class="uk-width-expand">
             <div class="uk-margin uk-flex uk-flex-middle uk-flex-between uk-flex-wrap uk-grid-small" uk-grid>
                 <div class="uk-flex uk-flex-middle uk-flex-wrap" >
 

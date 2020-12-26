@@ -14,15 +14,12 @@
             <div class="uk-container uk-visible@s" uk-navbar>
                 <div class="uk-navbar-left">
                     <div class="uk-navbar-item uk-inline">
-                        <button class="uk-navbar-toggle" uk-icon="icon:align-text-left;ratio:2"></button>
+                        <a class="uk-navbar-toggle"><i uk-icon="icon:align-text-left;ratio:2" class="uk-margin-medium-right"></i><span class="uk-text-lead uk-text-uppercase">{{ title | trans }}</span></a>
                         <div class="tm-drop" uk-drop="offset:-50;mode:click">
                             <div class="uk-card uk-card-body uk-card-default">
                                 <Navbar :navs="navs" />
                             </div>
                         </div>
-                    </div>
-                    <div class="uk-navbar-item">
-                        <span class="uk-text-lead uk-text-uppercase">{{ title | trans }}</span>
                     </div>
                 </div>
                 <div class="uk-navbar-right">
@@ -52,9 +49,9 @@
         </nav>
         <aside v-if="subnav.length > 0" class="uk-section uk-section-primary tm-section-2xsmall uk-visible@s">
             <div class="uk-container">
-                <ul uk-tab>
+                <ul class="uk-tab">
                     <li v-for="(sub , id) in subnav" :key="id" :class="{'uk-active':sub.active}">
-                        <a :href="$url.route(sub.url)">{{sub.label}}</a>
+                        <a :href="$url(sub.url)">{{sub.label}}</a>
                     </li>
                 </ul>
             </div>

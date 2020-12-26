@@ -34,7 +34,8 @@ class InstallerController
                 'locales' => $intl->getAvailableLanguages(),
                 'sqlite' => class_exists('SQLite3') || (class_exists('PDO') && in_array('sqlite', \PDO::getAvailableDrivers(), true)),
                 'pgsql' => in_array('pgsql', \PDO::getAvailableDrivers(), true)
-            ]
+            ],
+            'image' => \GreenCheap\System\Controller\AdminController::getUnsplashImages()[array_rand(\GreenCheap\System\Controller\AdminController::getUnsplashImages() , 1)]
         ];
     }
 
