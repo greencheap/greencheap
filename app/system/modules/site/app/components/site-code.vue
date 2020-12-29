@@ -39,7 +39,7 @@ export default {
 
     section: {
         label: 'Code',
-        icon: 'pk-icon-large-code',
+        icon: 'code',
         priority: 20,
     },
 

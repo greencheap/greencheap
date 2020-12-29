@@ -1,9 +1,9 @@
 <template>
     <div>
         <div v-if="!source" :class="[inputClass, 'uk-inline-clip']" @click.prevent="pick">
-            <a>
+            <a class="uk-link-reset">
                 <div class="uk-placeholder uk-text-center uk-margin-remove">
-                    <img width="60" height="60" :alt="'Placeholder Image' | trans" :src="$url('app/system/assets/images/placeholder-image.svg')">
+                    <span class="uk-display-block uk-text-primary" uk-icon="icon:image-alt;ratio:3"></span>
                     <p class="uk-text-muted uk-margin-small-top">{{ title | trans }}</p>
                 </div>
             </a>

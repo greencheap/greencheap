@@ -27,10 +27,6 @@ window.Site = {
         this.$theme.$tabs('leftTab', '#settings .uk-nav', { connect: '.settings-tab', state: true });
     },
 
-    mounted() {
-        // UIkit.switcher(this.$refs.tab, { connect: '.settings-tab' });
-    },
-
     computed: {
 
         sections() {
@@ -64,9 +60,9 @@ window.Site = {
         save() {
             this.$trigger('save:settings', this.config);
 
-            this.$http.post('admin/system/settings/config', { name: 'system/site', config: this.config }).then(function () {
+            this.$http.post('admin/system/settings/config', { name: 'system/site', config: this.config }).then(function() {
                 this.$notify('Settings saved.');
-            }, function (res) {
+            }, function(res) {
                 this.$notify(res.data, 'danger');
             });
         },

@@ -78,11 +78,10 @@ export default {
 
     section: {
         label: 'System',
-        icon: 'pk-icon-large-settings',
+        icon: 'adjust-horizontal-alt',
         priority: 10,
     },
 
-    // eslint-disable-next-line vue/require-prop-types
     props: ['config', 'options'],
 
     data() {

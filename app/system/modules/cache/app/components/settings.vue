@@ -78,7 +78,7 @@ var Cache = {
 
     section: {
         label: 'Cache',
-        icon: 'pk-icon-large-bolt',
+        icon: 'history',
         priority: 30,
     },
 

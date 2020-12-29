@@ -43,8 +43,8 @@
 
                 <div class="uk-card-badge pk-panel-badge uk-hidden-hover" v-if="!pkg.enabled">
                     <ul class="uk-subnav pk-subnav-icon">
-                        <li><a class="pk-icon-star pk-icon-hover" :uk-tooltip="'Enable' | trans" @click="enable(pkg)"></a></li>
-                        <li><a class="pk-icon-delete pk-icon-hover" :uk-tooltip="'Delete' | trans" @click="uninstall(pkg, packages)" v-confirm="'Uninstall theme?'"></a></li>
+                        <li><a uk-icon="icon:star;ratio:1.3" :uk-tooltip="'Enable' | trans" @click="enable(pkg)"></a></li>
+                        <li><a uk-icon="icon:bin;ratio:1.3" :uk-tooltip="'Delete' | trans" @click="uninstall(pkg, packages)" v-confirm="'Uninstall theme?'"></a></li>
                     </ul>
                 </div>
 
@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <h3 class="uk-h2 uk-text-muted uk-text-center" v-show="packages | empty">{{ 'No theme found.' | trans }}</h3>
+    <h3 class="uk-h2 uk-text-muted uk-text-center" v-show="!packages.length">{{ 'No theme found.' | trans }}</h3>
 
     <v-modal ref="details">
         <package-details :api="api" :package="package"></package-details>

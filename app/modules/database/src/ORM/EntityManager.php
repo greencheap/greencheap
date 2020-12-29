@@ -5,6 +5,7 @@ namespace GreenCheap\Database\ORM;
 use GreenCheap\Database\Connection;
 use GreenCheap\Database\Events;
 use GreenCheap\Event\EventDispatcherInterface;
+use Doctrine\DBAL\Platforms\PostgreSQL100Platform;
 use GreenCheap\Event\PrefixEventDispatcher;
 
 class EntityManager
@@ -153,7 +154,13 @@ class EntityManager
 
             $this->trigger(Events::CREATING, $metadata, [$entity, $data]);
 
-            $this->connection->insert($metadata->getTable(), $metadata->getValues($entity, true, true));
+            if($this->connection->getDatabasePlatform() instanceof PostgreSQL100Platform){
+                $data = $metadata->getValues($entity, true, true);
+                unset($data['id']);
+                $this->connection->insert($metadata->getTable(), $data);
+            }else{
+                $this->connection->insert($metadata->getTable(), $metadata->getValues($entity, true, true));
+            }
 
             $metadata->setValue($entity, $identifier, $this->connection->lastInsertId(), true, true);
 

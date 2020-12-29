@@ -4,7 +4,9 @@ namespace GreenCheap\Database\Query;
 
 use Closure;
 use Doctrine\DBAL\Driver\Statement;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
+use Doctrine\DBAL\Platforms\PostgreSQL100Platform;
 use Doctrine\DBAL\Types\Type;
 use GreenCheap\Database\Connection;
 use PDO;
@@ -239,13 +241,14 @@ class QueryBuilder
     /**
      * Creates and adds a "where FIND_IN_SET" equivalent to the query.
      *
-     * @param  string $column
-     * @param  mixed  $values
-     * @param  bool   $not
-     * @param  string $type
+     * @param string $column
+     * @param mixed $values
+     * @param bool $not
+     * @param null $type
      * @return self
+     * @throws Exception
      */
-    public function whereInSet($column, $values, $not = false, $type = null)
+    public function whereInSet(string $column, mixed $values, $not = false, $type = null)
     {
         $not    = $not ? ' NOT' : '';
         $values = (array) $values;
@@ -253,6 +256,11 @@ class QueryBuilder
         if (count($values) === 1 && $this->connection->getDatabasePlatform() instanceof MySqlPlatform) {
             $value = $this->connection->quote(current($values));
             return $this->addWhere("{$not} FIND_IN_SET({$value}, {$column})", [], $type);
+        }
+
+        if($this->connection->getDatabasePlatform() instanceof PostgreSQL100Platform) {
+            $value = $this->connection->quote(current($values));
+            return $this->addWhere("{$column} {$not} IN ({$value})", [], $type);
         }
 
         $values = implode('|', (array) $values);

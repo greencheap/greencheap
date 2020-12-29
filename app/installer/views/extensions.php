@@ -24,15 +24,14 @@
                     <th class="pk-table-width-minimum uk-text-center">{{ 'Status' | trans }}</th>
                     <th class="pk-table-width-100 uk-text-center">{{ 'Version' | trans }}</th>
                     <th class="pk-table-width-150">{{ 'Folder' | trans }}</th>
-                    <th class="pk-table-width-minimum"></th>
+                    <th style="width:80px"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr class="uk-visible-toggle" v-for="(pkg , id) in filterBy(packages, search, 'title')">
-                    <td class="pk-table-width-minimum">
+                    <td style="width:50px">
                         <div class="uk-position-relative">
-                            <div class="uk-background-cover uk-position-cover" :style="{'background-image': 'url('+icon(pkg)+')'}"></div>
-                            <canvas class="uk-display-block uk-img-preserve" width="50" height="50"></canvas>
+                            <img :data-src="icon(pkg)" width="100%" uk-img>
                         </div>
                     </td>
                     <td class="uk-text-nowrap">
@@ -44,17 +43,17 @@
                         <a class="uk-button tm-button-success uk-button-small" @click="update(pkg, updates)" v-show="updates && updates[pkg.name]">{{ 'Update' | trans }}</a>
                     </td>
                     <td class="uk-text-center">
-                        <a class="pk-icon-circle-success" :title="'Enabled' | trans" v-if="pkg.enabled" @click="disable(pkg)">Disable</a>
-                        <a class="pk-icon-circle-danger" :title="'Disabled' | trans" v-else @click="enable(pkg)">Enable</a>
+                        <a class="pk-icon-circle-success" :title="'Enabled' | trans" v-if="pkg.enabled" @click="disable(pkg)"></a>
+                        <a class="pk-icon-circle-danger" :title="'Disabled' | trans" v-else @click="enable(pkg)"></a>
                     </td>
                     <td class="uk-text-center">{{ pkg.version }}</td>
                     <td class="uk-text-truncate">/{{ pkg.name }}</td>
                     <td class="uk-text-right">
                         <div class="uk-invisible-hover">
-                            <ul class="uk-subnav pk-subnav-icon">
-                                <li><a class="pk-icon-info pk-icon-hover" :uk-tooltip="'View Details' | trans" @click.prevent="details(pkg)"></a></li>
-                                <li v-show="pkg.enabled && pkg.permissions"><a class="pk-icon-permission pk-icon-hover" :uk-tooltip="'View Permissions' | trans" :href="$url.route('admin/user/permissions#{name}', {name:pkg.module})"></a></li>
-                                <li v-show="!pkg.enabled"><a class="pk-icon-delete pk-icon-hover" :uk-tooltip="'Delete' | trans" @click="uninstall(pkg, packages)" v-confirm="'Uninstall extension?'"></a></li>
+                            <ul class="uk-subnav uk-margin-remove">
+                                <li><a uk-icon="icon:info;ratio:1.3" :uk-tooltip="'View Details' | trans" @click.prevent="details(pkg)"></a></li>
+                                <li v-show="pkg.enabled && pkg.permissions"><a uk-icon="icon:lock;ratio:1.3" :uk-tooltip="'View Permissions' | trans" :href="$url.route('admin/user/permissions#{name}', {name:pkg.module})"></a></li>
+                                <li v-show="!pkg.enabled"><a uk-icon="icon:bin;ratio:1.3" :uk-tooltip="'Delete' | trans" @click="uninstall(pkg, packages)" v-confirm="'Uninstall extension?'"></a></li>
                             </ul>
                         </div>
                     </td>

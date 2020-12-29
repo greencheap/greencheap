@@ -6,13 +6,11 @@
         <div class="pk-width-sidebar">
 
             <div class="uk-panel">
-
                 <ul class="uk-nav uk-nav-default pk-nav-large" ref="tab">
                     <li :class="{'uk-active': section.active}" v-for="section in orderBy(sections, 'priority')" :key="section.name">
-                        <a><span :class="section.icon ? 'uk-margin-right ' + section.icon : ''"></span><span class="uk-text-middle">{{ section.label | trans }}</span></a>
+                        <a><i class="uk-margin-right" :uk-icon="`icon:${section.icon};ratio:1.3`"></i><span class="uk-text-middle">{{ section.label | trans }}</span></a>
                     </li>
                 </ul>
-
             </div>
 
         </div>

@@ -1,7 +1,7 @@
 <template>
     <div>
-        <a v-if="!source" class="uk-placeholder uk-text-center uk-display-block uk-margin-remove" @click.prevent="pick">
-            <img width="60" height="60" :alt="'Placeholder Image' | trans" :src="$url('app/system/assets/images/placeholder-video.svg')">
+        <a v-if="!source" class="uk-placeholder uk-text-center uk-link-reset uk-display-block uk-margin-remove" @click.prevent="pick">
+            <span class="uk-display-block uk-text-primary" uk-icon="icon:play;ratio:3"></span>
             <p class="uk-text-muted uk-margin-small-top">{{ 'Select Video' | trans }}</p>
         </a>
 

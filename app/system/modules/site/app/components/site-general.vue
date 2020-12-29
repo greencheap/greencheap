@@ -49,7 +49,7 @@ export default {
 
     section: {
         label: 'General',
-        icon: 'pk-icon-large-settings',
+        icon: 'layers',
         priority: 10,
     },
 

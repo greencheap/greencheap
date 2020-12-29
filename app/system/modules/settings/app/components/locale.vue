@@ -45,7 +45,7 @@ export default {
 
     section: {
         label: 'Localization',
-        icon: 'pk-icon-large-pin',
+        icon: 'flag-alt',
         priority: 20,
     },
 

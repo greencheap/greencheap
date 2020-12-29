@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - New composer package added: `google/apiclient`.
 - Added .php-version file for some packages until updated to php 8.
+- PostgreSQL database support has been added.
 
 ### Changed
 - PHP 8 Support.

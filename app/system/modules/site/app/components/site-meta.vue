@@ -51,7 +51,7 @@ export default {
 
     section: {
         label: 'Meta',
-        icon: 'pk-icon-large-meta',
+        icon: 'table',
         priority: 50,
     },
 

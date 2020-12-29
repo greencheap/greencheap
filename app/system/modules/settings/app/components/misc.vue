@@ -57,7 +57,7 @@ export default {
 
     section: {
         label: 'Misc',
-        icon: 'pk-icon-large-cogwheel',
+        icon: 'lifebuoy',
         priority: 100,
     },
 

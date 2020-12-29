@@ -44,7 +44,7 @@ export default {
 
     section: {
         label: 'Maintenance',
-        icon: 'pk-icon-large-cone',
+        icon: 'bracket',
         priority: 30,
     },
 

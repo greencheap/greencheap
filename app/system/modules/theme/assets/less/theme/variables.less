@@ -57,7 +57,8 @@
 .tm-darkmode .uk-select,
 .tm-darkmode .uk-textarea,
 .tm-darkmode .uk-radio,
-.tm-darkmode .uk-checkbox{
+.tm-darkmode .uk-checkbox,
+.tm-darkmode .uk-search-input{
     background-color:transparent !important;
     border:1px solid fade(@global-inverse-color , 25%);
 }
@@ -77,4 +78,30 @@
 
 .tm-section-2xsmall{
     padding:0px;
+}
+
+.tm-darkmode .pk-nav-large > li.uk-active > a {
+    background-color: @tm-dark-mode-muted-background;
+}
+
+.tm-darkmode .uk-placeholder,
+.tm-darkmode .uk-table-hover tbody tr:hover,
+.tm-darkmode .uk-table-hover tbody tr.uk-active,
+.tm-darkmode .uk-modal-header,
+.tm-darkmode .uk-modal-footer{
+    background:@tm-dark-mode-muted-background !important;
+}
+
+.tm-darkmode .uk-htmleditor-navbar{
+    background: @tm-dark-mode-primary-background;
+}
+
+.tm-darkmode .uk-htmleditor-navbar-nav > li:hover > a,
+.tm-darkmode .uk-htmleditor-preview{
+    background: @tm-dark-mode-muted-background;
+}
+
+.tm-darkmode .uk-htmleditor-code > .CodeMirror{
+    background: @tm-dark-mode-muted-background;
+    color: @global-inverse-color;
 }
