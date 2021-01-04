@@ -6,4 +6,4 @@ This version of GreenCheap is under development. It is not a stable version. So 
 
 ## Explanation
 
-This project was taken from [Pagekit](http://pagekit.com). Dependencies of old packages that are no longer developed have been updated and shared with you under the name of **GreenCheap**. I also thank [Uatrend](https://github.com/uatrend/) for some addictions.
+This project was taken from [Pagekit](http://pagekit.com). Dependencies of old packages that are no longer developed have been updated and shared with you under the name of **GreenCheap**. I also thank [Uatrend](https://github.com/uatrend/) for some addictions. We thank [Doruk Karaboncuk](https://github.com/Chaisser) for his material and moral support.

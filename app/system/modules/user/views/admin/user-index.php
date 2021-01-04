@@ -12,10 +12,10 @@
                 <h2 class="uk-h3 uk-margin-remove">{{ '{1} %count% User selected|]1,Inf[ %count% Users selected' | transChoice(selected.length, {count:selected.length}) }}</h2>
 
                 <div class="uk-margin-left">
-                    <ul class="uk-subnav pk-subnav-icon">
-                        <li><a class="pk-icon-check pk-icon-hover" :title="'Activate' | trans" uk-tooltip="delay: 500" @click="status(1)"></a></li>
-                        <li><a class="pk-icon-block pk-icon-hover" :title="'Block' | trans" uk-tooltip="delay: 500" @click="status(0)"></a></li>
-                        <li><a class="pk-icon-delete pk-icon-hover" :title="'Delete' | trans" uk-tooltip="delay: 500" @click.prevent="remove" v-confirm="'Delete users?'"></a></li>
+                    <ul class="uk-iconnav">
+                        <li><a uk-icon="icon:check;ratio:1" :title="'Activate' | trans" uk-tooltip="delay: 500" @click="status(1)"></a></li>
+                        <li><a uk-icon="icon:ban;ratio:1" :title="'Block' | trans" uk-tooltip="delay: 500" @click="status(0)"></a></li>
+                        <li><a uk-icon="icon:trash;ratio:1" :title="'Delete' | trans" uk-tooltip="delay: 500" @click.prevent="remove" v-confirm="'Delete users?'"></a></li>
                     </ul>
                 </div>
 

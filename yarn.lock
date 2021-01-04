@@ -3119,7 +3119,7 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
-lodash@^4.17.11, lodash@^4.17.19:
+lodash@^4.17.11, lodash@^4.17.15, lodash@^4.17.19:
   version "4.17.20"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
   integrity sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==
@@ -3721,6 +3721,11 @@ pkg-dir@^4.1.0:
   integrity sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==
   dependencies:
     find-up "^4.0.0"
+
+popper.js@^1.16.0:
+  version "1.16.1"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.16.1.tgz#2a223cb3dc7b6213d740e40372be40de43e65b1b"
+  integrity sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ==
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
@@ -4466,6 +4471,11 @@ terser@^4.1.2, terser@^4.6.3:
     source-map "~0.6.1"
     source-map-support "~0.5.12"
 
+textarea-caret@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/textarea-caret/-/textarea-caret-3.1.0.tgz#5d5a35bb035fd06b2ff0e25d5359e97f2655087f"
+  integrity sha512-cXAvzO9pP5CGa6NKx0WYHl+8CHKZs8byMkt3PCJBCmq2a34YA9pO1NrQET5pzeqnBjBdToF5No4rrmkDUgQC2Q==
+
 through2@^2.0.0:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.5.tgz#01c1e39eb31d07cb7d03a96a70823260b23132cd"
@@ -4679,6 +4689,15 @@ util@^0.11.0:
   dependencies:
     inherits "2.0.3"
 
+v-tooltip@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/v-tooltip/-/v-tooltip-2.1.1.tgz#2962aaa3615d611544b0ece48001b6495911e9e4"
+  integrity sha512-PeHb8BuYRMX1W+0mCYo6Sw9ZHtZVLRsu2NhoSOdwelmOmpDnpLtWs0MoJyQFM1S2DhDiSuVkV0Lcec0a40M4QQ==
+  dependencies:
+    lodash "^4.17.15"
+    popper.js "^1.16.0"
+    vue-resize "^1.0.0"
+
 v8-compile-cache@^2.1.1:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.2.0.tgz#9471efa3ef9128d2f7c6a7ca39c4dd6b5055b132"
@@ -4731,6 +4750,13 @@ vue-loader@^15.7.1:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-mention@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vue-mention/-/vue-mention-1.0.0.tgz#81f83305e2eaaa43eb613da50da2a0d4b817cd9e"
+  integrity sha512-hL+BG1A6DRySyqS1kHTZEOwPoDtfl8iOssBBCIYUGv6cbiYgFbhHEEpsYgZhdZhl58qhJ+3WAJjtGMpqBGli0Q==
+  dependencies:
+    textarea-caret "^3.1.0"
+
 vue-multiselect@^2.1.6:
   version "2.1.6"
   resolved "https://registry.yarnpkg.com/vue-multiselect/-/vue-multiselect-2.1.6.tgz#5be5d811a224804a15c43a4edbb7485028a89c7f"
@@ -4743,6 +4769,11 @@ vue-nestable@^2.4.4:
   dependencies:
     immutability-helper "^3.1.1"
     vue "^2.6.12"
+
+vue-resize@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vue-resize/-/vue-resize-1.0.0.tgz#380565b36e411190d85f8fbd3aa230a4cc22f1a5"
+  integrity sha512-SkIi19neeJClapYavfmHiewFZkkTfITVWskg/dIL8b1Eb+RlvnCb8fjGUwLjQJmsw2qsRiiAo4o7BAJVM4pcOA==
 
 vue-resource@^1.5.1:
   version "1.5.1"

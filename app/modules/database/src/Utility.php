@@ -250,6 +250,7 @@ class Utility
      * Migrates the database.
      *
      * @return Schema
+     * @throws \Doctrine\DBAL\Exception
      */
     public function migrate() {
         $diff = Comparator::compareSchemas($this->manager->createSchema(), $this->schema);

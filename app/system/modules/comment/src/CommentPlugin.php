@@ -2,24 +2,12 @@
 
 namespace GreenCheap\Comment;
 
-use GreenCheap\Content\Event\ContentEvent;
-use GreenCheap\Event\EventSubscriberInterface;
-
-class CommentPlugin implements EventSubscriberInterface
+class CommentPlugin
 {
-    /**
-     * Content plugins callback.
-     *
-     * @param ContentEvent $event
-     */
-    public function onContentPlugins(ContentEvent $event)
+    public static function onContentPlugins($data)
     {
-        if (true != $event['comment']) {
-            return;
-        }
-
         // remove all html tags or escape if in [code] tag
-        $content = preg_replace_callback('/\[code\](.+?)\[\/code\]/is', function($matches) { return htmlspecialchars($matches[0]); }, $event->getContent());
+        $content = preg_replace_callback('/\[code\](.+?)\[\/code\]/is', function($matches) { return htmlspecialchars($matches[0]); }, $data);
         $content = strip_tags($content);
 
         $content = ' '.$content.' ';
@@ -36,7 +24,7 @@ class CommentPlugin implements EventSubscriberInterface
                 $url = 'http://' . $url;
             }
 
-            return " <a href=\"$url\" rel=\"nofollow\">$original_url</a>";
+            return " <a href=\"$url\" rel=\"nofollow\" target=\"_blank\">$original_url</a>";
 
         }, $content);
 
@@ -44,16 +32,16 @@ class CommentPlugin implements EventSubscriberInterface
         $content = substr($content, 1);
         $content = substr($content, 0, -1);
 
-        $event->setContent(nl2br($content));
-    }
+        $content = preg_replace_callback('/(\*\*|__)(.*?)\1/', function ($matches){
+            $text = $matches[2];
+            return " <strong>$text</strong>";
+        } , $content);
 
-    /**
-     * {@inheritdoc}
-     */
-    public function subscribe()
-    {
-        return [
-            'content.plugins' => 'onContentPlugins'
-        ];
+        $content = preg_replace_callback("/`(.*?)`/" , function($matches){
+            $code = $matches[1];
+            return " <code>$code</code>";
+        } , $content);
+
+        return nl2br($content);
     }
 }

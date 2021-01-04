@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <?= $view->render('head') ?>
-    <?php $view->script('system_theme','system/theme:app/bundle/theme.js') ?>
-    <?php $view->script('system_theme_header','system/theme:app/bundle/header.js' , 'vue') ?>
+    <?php $view->script('system_theme','system/theme:app/bundle/theme.js' , ['uikit' , 'vue']) ?>
+    <?php $view->script('system_theme_header','system/theme:app/bundle/header.js' , 'system_theme') ?>
 </head>
 <body>
     <header id="header">

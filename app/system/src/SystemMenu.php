@@ -59,7 +59,7 @@ class SystemMenu implements \IteratorAggregate, \JsonSerializable
             'label' => $id,
             'parent' => 'root',
             'priority' => 0,
-            'layout' => 'navbar'
+            'icon' => App::url()->getStatic('app/system/modules/theme/assets/images/picture-icon.svg')
         ]);
 
         if (!App::user()->hasAccess($item['access'])) {

@@ -1,4 +1,6 @@
 <?php
+use Doctrine\DBAL\Schema\Comparator;
+
 return [
 
     'install' => function ($app) {
@@ -160,6 +162,7 @@ return [
                 $table->addColumn('created', 'datetime');
                 $table->addColumn('content', 'text');
                 $table->addColumn('status', 'smallint');
+                $table->addColumn('data', 'json_array' , ['notnull' => false]);
                 $table->setPrimaryKey(['id']);
             });
         }
@@ -259,42 +262,25 @@ return [
         },
 
         '3.0.1' => function ($app) {
+            $util = $app['db']->getUtility();
+            $manager = $util->getSchemaManager();
+
+            if($util->tableExists('@system_comments')) {
+                $fromTable =  $util->listTableDetails('@system_comments');
+				if (!$fromTable->hasColumn('data')) {
+				    $toTable = clone $fromTable;
+				    $toTable->addColumn('data', 'json_array' , ['notnull' => false]);
+                    $comparator = new Comparator;
+                    $manager->alterTable($comparator->diffTable($fromTable, $toTable));
+				}
+            }
+
             $app['config']->set('system/dashboard', [
-                [
-                    [
-                        'type' => 'feed',
-                        'unix_id' => 1608983060446,
-                        'count' => '2',
-                        'url' => 'http://greencheap.net/blog/feed',
-                        'content' => '1',
-                        'title' => 'GCNEWS',
-                    ]
-                ],
-                [
-                    [
-                        'type' => 'location',
-                        'unix_id' => 1608983062675,
-                        'units' => 'metric',
-                        'uid' => 323786,
-                        'city' => 'Ankara',
-                        'country' => 'TR',
-                        'coords' => [
-                            'lat' => 39.9199,
-                            'lon' => 32.8543,
-                        ]
-                    ]
-                ],
-                [
-                    [
-                        'type' => 'user',
-                        'unix_id' => 1608983065298,
-                        'show' => 'login',
-                        'display' => 'list',
-                        'total' => '',
-                        'count' => 12,
-                    ]
-                ]
+                [],
+                [],
+                []
             ]);
+
         }
     ]
 

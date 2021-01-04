@@ -3,12 +3,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 3.0.0 - 2020-12-06
+## 3.0.0
 
 ### Added
 - New composer package added: `google/apiclient`.
 - Added .php-version file for some packages until updated to php 8.
 - PostgreSQL database support has been added.
+- Comment Service added.
 
 ### Changed
 - PHP 8 Support.
@@ -18,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Updated
 - Composer packages updated: `composer/composer`, `doctrine/dbal`, `maximebf/debugbar`, `phpunit/phpunit`.
 - Vue and UIkit last version updated
+- System/Scripts.php changed #265 for Symfony 5.1 .
 
 ### Removed
 - Gulp packages deprecated. 

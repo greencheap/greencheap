@@ -59,7 +59,7 @@
 
                     </template>
 
-                    <div class="uk-search uk-search-default pk-search">
+                    <div class="uk-search uk-search-default">
                         <span uk-search-icon></span>
                         <input class="uk-search-input" type="search" v-model="config.filter.search" debounce="300">
                     </div>

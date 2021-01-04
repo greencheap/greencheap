@@ -1,0 +1,19 @@
+.tooltip {
+    border: 1px solid #e5e5e5;
+    left: 100px !important;
+}
+
+.tm-mention {
+    display: block;
+    padding: 5px 10px;
+    background: #fff;
+    min-width: 200px;
+}
+
+.tm-mention:hover,
+.tm-mention:active,
+.tm-mention:focus,
+.mention-selected .tm-mention {
+    cursor: pointer;
+    background: #e5e5e5;
+}
