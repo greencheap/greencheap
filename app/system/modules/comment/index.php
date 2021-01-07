@@ -1,6 +1,8 @@
 <?php
 
 use GreenCheap\Comment\Model\Comment;
+use GreenCheap\Comment\Events\CommentListener;
+use GreenCheap\Comment\Events\MentionListener;
 
 return [
 
@@ -32,6 +34,8 @@ return [
         'comment' => [
             'label' => 'Comments',
             'url' => '@comment/page',
+            'access' => 'comment: access comment',
+            'icon' => 'system/comment:icon.svg',
             'priority' => 120
         ],
         'comment: index' => [
@@ -44,7 +48,8 @@ return [
             'parent' => 'comment',
             'label' => 'Settings',
             'url' => '@comment/settings',
-            'active' => '@comment/settings'
+            'active' => '@comment/settings',
+            'access' => 'comment: manage settings'
         ]
     ],
 
@@ -58,7 +63,7 @@ return [
         //Admin approved comment
         'approved_admin' => true,
         //Threshold of repeated comment
-        'threshold_comment' => '-1 min', 
+        'threshold_comment' => '-1 min',
         'markdown_enabled' => true,
         'attribute_people' => false,
         'to_quote' => true,
@@ -66,8 +71,8 @@ return [
     ],
 
     'permissions' => [
-        'comment: manage own edit' => [
-            'title' => 'It\'s can edit its own comments.'
+        'comment: manage own remove' => [
+            'title' => 'It\'s can remove its own comments.'
         ],
         'comment: manage all comment' => [
             'title' => 'Can edit all comments.'
@@ -84,5 +89,14 @@ return [
         'comment: write comment' => [
             'title' => 'Users with this authority can comment.'
         ]
+    ],
+
+    'events' => [
+        'boot' => function($event, $app){
+            $app->subscribe(
+                new CommentListener($this->config),
+                new MentionListener($this->config),
+            );
+        }
     ]
 ];

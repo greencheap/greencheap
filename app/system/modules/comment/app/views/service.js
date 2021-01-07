@@ -5,7 +5,10 @@ const Service = {
         return _.merge({
             comments:  [],
             comment: false,
-            msg: '',
+            error: {
+                style: 'uk-alert-warning',
+                message: ''
+            },
             users: [],
             config: {
                 filter: { parent_id: 0, order: 'created desc' },
@@ -58,24 +61,42 @@ const Service = {
                 textAreaElement.style.display = 'none'
             }
 
-            this.resource.save({ id: 'save' }, { comment: this.comment, id: this.comment.id })
-                .then(() => {
-                    this.msg = this.$trans('Saved');
-                    this.comment = _.merge(this.draft, {
-                        user_id: this.user_id,
-                        own_id: this.service.own_id,
-                        type: this.service.type,
-                        status: this.getCommentStatus,
-                        parent_id: 0,
-                        data: {
-                            type_url: this.service.type_url
-                        },
-                        content: ''
-                    })
-                    this.load();
-                }).catch((err) => {
-                    this.$notify(err.data, 'danger')
+            this.resource.save({ id: 'save' }, { comment: this.comment, id: this.comment.id }).then((res) => {
+                const { query } = res.data
+                const messageItem = this.getMessage(query.status);
+                this.error = {
+                    style: messageItem.status,
+                    message: messageItem.message
+                };
+                this.comment = _.merge(this.draft, {
+                    user_id: this.user_id,
+                    own_id: this.service.own_id,
+                    type: this.service.type,
+                    status: this.getCommentStatus,
+                    parent_id: 0,
+                    data: {
+                        type_url: this.service.type_url
+                    },
+                    content: ''
                 })
+                this.load();
+            }).catch((err) => {
+                this.error = {
+                    style: 'uk-alert-danger',
+                    message: err.data
+                };
+            })
+        },
+
+        deleteComment(comment) {
+            this.resource.delete({ id: 'delete' }, { comment: comment }).then((res) => {
+                this.load()
+            }).catch((err) => {
+                this.error = {
+                    style: 'uk-alert-danger',
+                    message: err.data
+                };
+            })
         },
 
         getUsers() {
@@ -91,6 +112,30 @@ const Service = {
 
         cancelReply() {
             this.comment.parent_id = 0;
+        },
+
+        getMessage(id) {
+            let message = '';
+            let status = '';
+            const statuses = this.config.statuses;
+            message += `<strong>${statuses[id]}</strong>:`;
+            switch (id) {
+                case 1:
+                    message += ` ${this.$trans('Your message has been approved and published.')}`;
+                    status = 'uk-alert-success';
+                    break;
+                case 2:
+                    message += ` ${this.$trans('Your message has been detected as spam.')}`;
+                    status = 'uk-alert-danger';
+                    break;
+                default:
+                    message += ` ${this.$trans('After your message is approved, it will be published.')}`;
+                    status = 'uk-alert-warning';
+            }
+            return {
+                message: message,
+                status: status
+            };
         }
     },
 

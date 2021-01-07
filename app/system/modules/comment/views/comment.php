@@ -1,12 +1,15 @@
 <?php if($app['config']->get('system/user')->get('registration') !== 'admin'): ?>
-    <?php 
+    <?php
     $view->data('$comment_service', array_merge([
         'config' => $config ?? $app['comment.config'],
         'draft' => $app['comment.draft'],
         'user_id' => $app['user']->id,
         'user_config' => $app['config']->get('system/user'),
         'getCommentStatus' => $app['config']->get('system/comment')->get('approved_admin') && !$app['user']->isAdministrator() ? 0:1,
-        'isAuthCanComment' => ($app['user']->hasPermission('comment: write comment') && $app['user']->isAuthenticated()) || $app['user']->isAdministrator()
+        'isAuthCanComment' => $app['user']->isAuthenticated() || $app['user']->isAdministrator(),
+        'isAccessCanComment' => $app['user']->hasPermission('comment: write comment') || $app['user']->isAdministrator(),
+        'isRemoveCanComment' => $app['user']->hasPermission('comment: manage own remove'),
+        'isRemoveCanAllComment' => $app['user']->hasPermission('comment: manage all remove comment') || $app['user']->isAdministrator()
     ] , compact('service')));
 
     $view->script('comment_service' , 'system/comment:app/bundle/service.js' , ['uikit' , 'vue']);
@@ -14,12 +17,15 @@
     ?>
     <div id="comment_service" class="uk-margin-large-top" v-cloak>
         <div v-if="!isAuthCanComment">
-            <p>{{ 'You must be logged in to post a comment.' | trans }} <a :href="$url.route('user/login' , {redirect: comment.data.type_url})">{{ 'Sign In' | trans }}</a></p>
+            <p>{{ 'You must be logged in to post a comment.' | trans }} <a :href="$url.route('user/login' , {redirect: comment.data.type_url})">{{ 'Sign In' | trans }}</a></p>
         </div>
-        <form v-if="isAuthCanComment" @submit.prevent="sendComment">
+        <form v-if="isAuthCanComment && isAccessCanComment" @submit.prevent="sendComment">
             <h3 v-if="!comment.parent_id">{{ 'Write Comment' | trans}}</h3>
             <h3 v-if="comment.parent_id">{{ 'Reply to Comment' | trans}}</h3>
-            <div v-if="msg" class="uk-alert-success" uk-alert>{{msg}}</div>
+            <div v-if="error.message" :class="error.style" uk-alert>
+                <a class="uk-alert-close" uk-close></a>
+                <div v-html="error.message"></div>
+            </div>
             <div class="uk-margin">
                 <Mentionable
                     v-if="config.attribute_people"
@@ -28,7 +34,7 @@
                     offset="3"
                 >
                     <textarea class="uk-textarea uk-width-expand uk-height-small" :placeholder=" 'Your Message' | trans " style="resize:none" v-on:keyup.alt.enter="sendComment" v-model="comment.content"></textarea>
-                
+
                     <template #no-result>
                         <div class="uk-card uk-card-default uk-card-body uk-card-small">
                             {{ 'User not found' | trans }}
@@ -74,7 +80,8 @@
                                     <h4 class="uk-comment-title uk-margin-remove"><a class="uk-link-reset" href="#">{{com.author.name}}</a></h4>
                                     <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
                                         <li><a href="#">{{ com.created | relativeDate }}</a></li>
-                                        <li v-if="isAuthCanComment"><a href="#comment_service" uk-scroll="offset:200" @click="setReply(com.id)">{{ 'Reply' | trans }}</a></li>
+                                        <li v-if="isAuthCanComment && isAccessCanComment && config.to_quote"><a href="#comment_service" uk-scroll="offset:200" @click="setReply(com.id)">{{ 'Reply' | trans }}</a></li>
+                                        <li v-if="(isRemoveCanComment && user_id == com.user_id) || isRemoveCanAllComment"><a @click.prevent="deleteComment(com)">{{ 'Delete' | trans }}</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -93,6 +100,7 @@
                                             <h4 class="uk-comment-title uk-margin-remove"><a class="uk-link-reset" href="#">{{child.author.name}}</a></h4>
                                             <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
                                                 <li><a href="#">{{ child.created | relativeDate }}</a></li>
+                                                <li v-if="(isRemoveCanComment && user_id == child.user_id) || isRemoveCanAllComment"><a @click.prevent="deleteComment(child)">{{ 'Delete' | trans }}</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -101,7 +109,7 @@
                             </article>
                         </li>
                     </ul>
-                </li> 
+                </li>
             </ul>
         </div>
     </div>

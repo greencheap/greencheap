@@ -1,6 +1,7 @@
 module.exports = [{
     entry: {
         index: "./app/views/index",
+        edit: "./app/views/edit",
         settings: "./app/views/settings",
         service: "./app/views/service",
     },

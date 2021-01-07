@@ -2,6 +2,10 @@
 
 namespace GreenCheap\Comment\Model;
 
+use GreenCheap\Application as App;
+use GreenCheap\Database\ORM\ModelTrait;
+use GreenCheap\System\Model\DataModelTrait;
+
 /**
  * Class Comment
  * @package GreenCheap\Comment\Model
@@ -9,7 +13,7 @@ namespace GreenCheap\Comment\Model;
  */
 class Comment implements \JsonSerializable
 {
-    use CommentModelTrait;
+    use ModelTrait, DataModelTrait;
 
     const STATUS_PENDING = 0;
     const STATUS_APPROVED = 1;
@@ -65,11 +69,15 @@ class Comment implements \JsonSerializable
     /**
      * @return array
      */
-    protected static $properties = [
+    protected static array $properties = [
         'author' => 'getAuthor',
-        'hasChildComment' => 'hasChildComment'
+        'hasChildComment' => 'hasChildComment',
+        'url' => 'getUrl'
     ];
 
+    /**
+     * @return array|bool
+     */
     public function getAuthor():array|bool
     {
         if($this->user){
@@ -81,7 +89,22 @@ class Comment implements \JsonSerializable
         return false;
     }
 
-    public function hasChildComment()
+    /**
+     * @return string
+     */
+    public function getUrl(bool $base = true)
+    {
+        if($this->own_id){
+            $url = $this->get('type_url');
+            return App::url($url['url'], [$url['key'] => $this->own_id] , $base);
+        }
+        return false;
+    }
+
+    /**
+     * @return bool|array
+     */
+    public function hasChildComment(): bool|array
     {
         $query = self::where([
             'status = :status',
@@ -100,6 +123,9 @@ class Comment implements \JsonSerializable
         return false;
     }
 
+    /**
+     * @return array
+     */
     public static function getStatuses():array
     {
         return [
@@ -111,8 +137,9 @@ class Comment implements \JsonSerializable
 
     /**
      * It is the algorithm that prevents frequent comments.
-     * @param comment
-     * @param date 
+     * @param array $comment
+     * @param string|null $date
+     * @return bool
      */
     public static function isInterpretationThreshold(array $comment = [], string $date = null):bool
     {

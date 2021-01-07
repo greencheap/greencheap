@@ -46,7 +46,7 @@ trait UserModelTrait
      * @param  User $user
      * @return Role[]
      */
-    public static function findRoles(User $user)
+    public static function findRoles(User $user): array
     {
         static $cached = [];
 
@@ -59,6 +59,8 @@ trait UserModelTrait
 
     /**
      * @Saving
+     * @param $event
+     * @param User $user
      */
     public static function saving($event, User $user)
     {

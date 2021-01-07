@@ -11,8 +11,8 @@
                     <li class="uk-visible-toggle uk-flex uk-flex-between" v-for="(role, key_role) in orderBy(roles, 'priority')" :key="role.id" :data-id="role.id" :class="{'uk-active': current.id === role.id}">
                         <a class="pk-sortable-dragged-list" @click.prevent="config.role = role.id">{{ role.name }}</a>
                         <ul class="uk-subnav pk-subnav-icon uk-hidden-hover uk-flex uk-flex-middle" v-if="!role.locked">
-                            <li><a class="pk-icon-edit pk-icon-hover" :uk-tooltip="'Edit' | trans" @click="edit(role)"></a></li>
-                            <li><a class="pk-icon-delete pk-icon-hover" :uk-tooltip="'Delete' | trans" @click="remove(role)" v-confirm="'Delete role?'"></a></li>
+                            <li><a uk-icon="icon:edit;ratio:1" :uk-tooltip="'Edit' | trans" @click="edit(role)"></a></li>
+                            <li><a uk-icon="icon:trash;ratio:1" :uk-tooltip="'Delete' | trans" @click="remove(role)" v-confirm="'Delete role?'"></a></li>
                         </ul>
                     </li>
                 </ul>

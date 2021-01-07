@@ -4,6 +4,9 @@ namespace GreenCheap\Comment\Controller;
 
 use GreenCheap\Application as App;
 use GreenCheap\User\Model\User;
+use GreenCheap\Comment\Model\Comment;
+use JetBrains\PhpStorm\ArrayShape;
+
 /**
  * @Access(admin=true)
  */
@@ -13,13 +16,23 @@ class CommentController
      * @Acces("comment: access comment")
      * @Route("/page" , name="page")
      * @Request({"filter":"array", "page":"int"})
+     * @param array $filter
+     * @param int $page
+     * @return array
      */
     public function indexAction(array $filter = [] , int $page = 0): array
     {
         $db = App::db();
+
         $roles = $db->createQueryBuilder()
-        ->from('@system_role')
-        ->get();
+            ->from('@system_role')
+            ->get();
+
+        $types = $db->createQueryBuilder()
+            ->select('type')
+            ->from('@system_comments')
+            ->groupBy('type')
+            ->get();
 
         return [
             '$view' => [
@@ -32,7 +45,35 @@ class CommentController
                 'config' => [
                     'filter' => (object) $filter,
                     'page' => $page
-                ]
+                ],
+                'statuses' => Comment::getStatuses(),
+                'types' => $types
+            ]
+        ];
+    }
+
+    /**
+     * @Route("page/edit/{id}", name="page/edit", requirements={"id"="\d+"})
+     * @Access("comment: manage all comment")
+     */
+    public function editAction(int $id = 0):array
+    {
+        if(!$comment = Comment::where(compact('id'))->related('user')->first()){
+            return App::abort(404 , __('Not Found Comment'));
+        }
+
+        $module = App::module('system/comment');
+
+        return [
+            '$view' => [
+                'title' => __('Edit Comment'),
+                'name' => 'system:modules/comment/views/admin/edit.php'
+            ],
+            '$data' => [
+                'comment' => $comment,
+                'statuses' => Comment::getStatuses(),
+                'originstatus' => $comment->status,
+                'notify_reply' => $module->get('config.notify_reply'),
             ]
         ];
     }
