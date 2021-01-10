@@ -1,28 +1,23 @@
-<!DOCTYPE html>
-<html>
+<html lang="<?= str_replace('_', '-', $app['translator']->getLocale()) ?>">
     <head>
-        <title><?= __('Error') ?></title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noindex,nofollow">
-        <link href="<?= $view->url()->getStatic('system/theme:favicon.ico') ?>" rel="shortcut icon" type="image/x-icon">
-        <link href="<?= $view->url()->getStatic('system/theme:apple_touch_icon.png') ?>" rel="apple-touch-icon-precomposed">
-        <link href="<?= $view->url()->getStatic('system/theme:css/theme.css') ?>" rel="stylesheet">
+        <?= $view->render('head') ?>
+        <?php $view->script('system_theme','system/theme:app/bundle/theme.js' , ['uikit' , 'vue']) ?>
     </head>
     <body>
-
-        <div class="uk-height-viewport uk-flex uk-flex-center uk-flex-middle uk-text-center">
-            <div class="tm-container">
-
-                <img class="uk-margin-large-bottom" src="<?= $view->url()->getStatic('app/system/assets/images/logo/logo-green.svg') ?>" alt="GreenCheap">
-
-                <div class="uk-panel">
-                    <h1 class="uk-h2"><?= $title ?></h1>
+        <section class="uk-section uk-section-default tm-greencheap-concept uk-background-image uk-background-cover" data-src="<?= $view->url()->getStatic('app/system/modules/theme/assets/images/default-bg.svg') ?>" uk-img>
+            <div class="tm-greencheap-content-wrapper">
+                <div class="uk-text-center">
+                    <h1 class="uk-heading-2xlarge uk-text-bold uk-text-secondary"><?= $exception->getCode() ?></h1>
+                    <div class="uk-panel uk-width-xlarge uk-margin">
+                        <h2 class="uk-h3 uk-margin-small uk-text-bold uk-text-uppercase"><?= $title ?></h2>
+                        <p class="uk-margin uk-text-italic"><?= $message ?></p>
+                    </div>
                 </div>
-
             </div>
-        </div>
-
+        </section>
+        <?= $view->render('footer') ?>
     </body>
 </html>

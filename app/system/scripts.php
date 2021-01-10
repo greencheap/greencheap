@@ -134,24 +134,6 @@ return [
             });
         }
 
-        if($util->tableExists('@system_categories') === false) {
-            $util->createTable('@system_categories' , function($table){
-                $table->addColumn('id', 'integer', ['autoincrement' => true, 'unsigned' => true, 'length' => 10]);
-                $table->addColumn('title', 'string');
-                $table->addColumn('slug', 'string');
-                $table->addColumn('user_id', 'integer');
-                $table->addColumn('sub_category', 'integer');
-                $table->addColumn('date', 'datetime');
-                $table->addColumn('type' , 'string');
-                $table->addColumn('modified', 'datetime', ['notnull' => false]);
-                $table->addColumn('status', 'integer');
-                $table->addColumn('data', 'json_array');
-                $table->setPrimaryKey(['id']);
-                $table->addIndex(['title'], '@SYSTEM_CATEGORIES_TITLE');
-                $table->addIndex(['slug'], '@SYSTEM_CATEGORIES_SLUG');
-            });
-        }
-
         if ($util->tableExists('@system_comments') === false) {
             $util->createTable('@system_comments', function ($table) {
                 $table->addColumn('id', 'integer', ['unsigned' => true, 'length' => 10, 'autoincrement' => true]);
@@ -280,6 +262,10 @@ return [
                 [],
                 []
             ]);
+
+            if($util->tableExists('@system_categories')) {
+                $util->dropTable('@system_categories');
+            }
 
         }
     ]

@@ -9,7 +9,8 @@
         'isAuthCanComment' => $app['user']->isAuthenticated() || $app['user']->isAdministrator(),
         'isAccessCanComment' => $app['user']->hasPermission('comment: write comment') || $app['user']->isAdministrator(),
         'isRemoveCanComment' => $app['user']->hasPermission('comment: manage own remove'),
-        'isRemoveCanAllComment' => $app['user']->hasPermission('comment: manage all remove comment') || $app['user']->isAdministrator()
+        'isRemoveCanAllComment' => $app['user']->hasPermission('comment: manage all remove comment') || $app['user']->isAdministrator(),
+        'redirectUrl' => $app['view']->url($service['type_url']['url'], [$service['type_url']['key'] => $service['own_id']])
     ] , compact('service')));
 
     $view->script('comment_service' , 'system/comment:app/bundle/service.js' , ['uikit' , 'vue']);
@@ -17,7 +18,7 @@
     ?>
     <div id="comment_service" class="uk-margin-large-top" v-cloak>
         <div v-if="!isAuthCanComment">
-            <p>{{ 'You must be logged in to post a comment.' | trans }} <a :href="$url.route('user/login' , {redirect: comment.data.type_url})">{{ 'Sign In' | trans }}</a></p>
+            <p>{{ 'You must be logged in to post a comment.' | trans }} <a :href="$url.route('user/login' , {redirect: redirectUrl})">{{ 'Sign In' | trans }}</a></p>
         </div>
         <form v-if="isAuthCanComment && isAccessCanComment" @submit.prevent="sendComment">
             <h3 v-if="!comment.parent_id">{{ 'Write Comment' | trans}}</h3>

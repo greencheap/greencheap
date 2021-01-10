@@ -21,7 +21,7 @@ class MaintenanceListener implements EventSubscriberInterface
         if ($site->config('maintenance.enabled') && !(App::isAdmin() || $request->attributes->get('_maintenance') || App::user()->hasAccess('site: maintenance access') || App::user()->hasAccess('system: access admin area'))) {
 
             $message = $site->config('maintenance.msg') ?: __("We make updates at the back. That's why you can't access our website right now. If you have any questions, you can contact us through social networks.");
-            $logo = $site->config('maintenance.logo') ?: 'app/system/assets/images/logo/logo-white.svg';
+            $logo = $site->config('maintenance.logo') ?: 'app/system/modules/theme/assets/images/greencheap-logo.svg';
             $response = App::view('system/theme:views/maintenance.php', compact('message', 'logo'));
 
             $request->attributes->set('_disable_debugbar', true);

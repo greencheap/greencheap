@@ -18,13 +18,13 @@ class Requirement
     /**
      * Constructor that initializes the requirement.
      *
-     * @param Boolean     $fulfilled   Whether the requirement is fulfilled
-     * @param string      $testMessage The message for testing the requirement
-     * @param string      $helpHtml    The help text formatted in HTML for resolving the problem
-     * @param string|null $helpText    The help text (when null, it will be inferred from $helpHtml, i.e. stripped from HTML tags)
-     * @param Boolean     $optional    Whether this is only an optional recommendation not a mandatory requirement
+     * @param Boolean $fulfilled Whether the requirement is fulfilled
+     * @param string $testMessage The message for testing the requirement
+     * @param string $helpHtml The help text formatted in HTML for resolving the problem
+     * @param null $helpText The help text (when null, it will be inferred from $helpHtml, i.e. stripped from HTML tags)
+     * @param Boolean $optional Whether this is only an optional recommendation not a mandatory requirement
      */
-    public function __construct($fulfilled, $testMessage, $helpHtml, $helpText = null, $optional = false)
+    public function __construct(bool $fulfilled, $testMessage, $helpHtml, $helpText = null, $optional = false)
     {
         $this->fulfilled = (Boolean) $fulfilled;
         $this->testMessage = (string) $testMessage;
@@ -38,7 +38,7 @@ class Requirement
      *
      * @return Boolean true if fulfilled, otherwise false
      */
-    public function isFulfilled()
+    public function isFulfilled(): bool
     {
         return $this->fulfilled;
     }
@@ -48,7 +48,7 @@ class Requirement
      *
      * @return string The test message
      */
-    public function getTestMessage()
+    public function getTestMessage(): string
     {
         return $this->testMessage;
     }
@@ -58,7 +58,7 @@ class Requirement
      *
      * @return string The help text
      */
-    public function getHelpText()
+    public function getHelpText(): string
     {
         return $this->helpText;
     }
@@ -68,7 +68,7 @@ class Requirement
      *
      * @return string The HTML help
      */
-    public function getHelpHtml()
+    public function getHelpHtml(): string
     {
         return $this->helpHtml;
     }
@@ -78,7 +78,7 @@ class Requirement
      *
      * @return Boolean true if optional, false if mandatory
      */
-    public function isOptional()
+    public function isOptional(): bool
     {
         return $this->optional;
     }

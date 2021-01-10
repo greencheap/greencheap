@@ -1,3 +1,68 @@
+.tm-greencheap-concept{
+    padding: 50px;
+}
+
+.tm-greencheap-concept::before{
+    position:absolute;
+    top:0px;
+    right:0px;
+    content:'';
+    background-image:data-uri('../../images/right-top.svg');
+    width: 490px;
+    height: 430px;
+    background-repeat: no-repeat;
+}
+.tm-greencheap-concept::after{
+    position:absolute;
+    bottom:0px;
+    left:0px;
+    content:'';
+    background-image:data-uri('../../images/left-bottom.svg');
+    width: 100%;
+    height: 410px;
+    background-repeat: no-repeat;
+    background-size: 500px;
+}
+
+.tm-greencheap-concept .tm-greencheap-content-wrapper{
+    border: 15px solid @global-primary-2-background;
+    height: 85%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tm-greencheap-concept .tm-greencheap-content-wrapper .uk-text-center{
+    position: relative;
+    z-index: 99;
+}
+
+@media only screen and (max-width: @breakpoint-xsmall-max) {
+    .tm-greencheap-concept{
+        padding: 10px;
+    }
+    .tm-greencheap-concept .tm-greencheap-content-wrapper{
+        border: 5px solid @global-primary-2-background;
+        height: 95%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .tm-greencheap-concept::before{
+        width: 50%;
+        height: 160px;
+        background-repeat: no-repeat;
+        background-size: 200px;
+    }
+
+    .tm-greencheap-concept::after{
+        width: 100%;
+        height: 160px;
+        background-repeat: no-repeat;
+        background-size: 200px;
+    }
+}
+
 .tm-module-title{
     font-size:1.6rem;
     line-height: 1.4;

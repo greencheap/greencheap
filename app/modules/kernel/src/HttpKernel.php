@@ -35,7 +35,7 @@ class HttpKernel implements HttpKernelInterface
      * Constructor.
      *
      * @param EventDispatcherInterface $events
-     * @param RequestStack             $stack
+     * @param RequestStack|null $stack
      */
     public function __construct(EventDispatcherInterface $events, RequestStack $stack = null)
     {

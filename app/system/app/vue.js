@@ -9,6 +9,7 @@ import State from './lib/state';
 import ResourceCache from './lib/resourceCache';
 import Csrf from './lib/csrf';
 import Notify from './lib/notify';
+import BtnLoader from './lib/btnLoader';
 import Trans from './lib/trans';
 import Filters from './lib/filters';
 import VLoader from './components/loader.vue';
@@ -21,7 +22,7 @@ import InputDate from './components/input-date.vue';
 import InputImage from './components/input-image.vue';
 import InputImageMeta from './components/input-image-meta.vue';
 import InputVideo from './components/input-video.vue';
-import {VInput} from './components/validation.vue';
+import { VInput } from './components/validation.vue';
 
 import CheckAll from './directives/check-all';
 import Confirm from './directives/confirm';
@@ -36,22 +37,21 @@ function Install(Vue) {
 
     Vue.config.debug = false;
     Vue.cache = Vue.prototype.$cache = Cache(config.url);
-    Vue.session = Vue.prototype.$session = Cache('session',
-        {
-            load(name) {
-                if (Vue.cache.get('_session') !== Vue.cache.get('_csrf')) {
-                    Vue.cache.remove(name);
-                }
-                Vue.cache.set('_session', Vue.cache.get('_csrf'));
+    Vue.session = Vue.prototype.$session = Cache('session', {
+        load(name) {
+            if (Vue.cache.get('_session') !== Vue.cache.get('_csrf')) {
+                Vue.cache.remove(name);
+            }
+            Vue.cache.set('_session', Vue.cache.get('_csrf'));
 
-                return Vue.cache.get(name, {});
-            },
+            return Vue.cache.get(name, {});
+        },
 
-            store(name, data) {
-                return Vue.cache.set(name, data);
-            },
+        store(name, data) {
+            return Vue.cache.set(name, data);
+        },
 
-        });
+    });
 
     /**
      * Libraries
@@ -64,6 +64,7 @@ function Install(Vue) {
     Vue.use(ResourceCache);
     Vue.use(Csrf);
     Vue.use(Notify);
+    Vue.use(BtnLoader);
     Vue.use(Trans);
     Vue.use(Filters);
 
@@ -105,7 +106,7 @@ function Install(Vue) {
     Vue.http.options.root = config.url;
     Vue.http.options.emulateHTTP = true;
 
-    Vue.url.route = function (url, params) {
+    Vue.url.route = function(url, params) {
         let options = url;
 
         if (!_.isPlainObject(options)) {
@@ -121,16 +122,16 @@ function Install(Vue) {
 
     Vue.url.current = Vue.url.parse(window.location.href);
 
-    Vue.ready = function (fn) {
+    Vue.ready = function(fn) {
         if ((fn !== null) && (typeof fn === 'object')) {
             var options = fn;
 
-            fn = function () {
+            fn = function() {
                 new Vue(options);
             };
         }
 
-        var handle = function () {
+        var handle = function() {
             document.removeEventListener('DOMContentLoaded', handle);
             window.removeEventListener('load', handle);
             fn();
@@ -149,5 +150,5 @@ if (window.Vue) {
     Vue.use(Install);
 }
 
-window.history.pushState = window.history.pushState || function () {};
-window.history.replaceState = window.history.replaceState || function () {};
+window.history.pushState = window.history.pushState || function() {};
+window.history.replaceState = window.history.replaceState || function() {};

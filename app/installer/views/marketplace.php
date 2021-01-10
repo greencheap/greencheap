@@ -17,7 +17,7 @@
     </div>
 
     <div class="uk-section uk-section-xsmall">
-        <div class="uk-grid uk-child-width-1-4@xl uk-child-width-1-3@m uk-child-width-1-2@s uk-grid-match" uk-grid>
+        <div class="uk-grid uk-child-width-1-3@m uk-child-width-1-2@s uk-grid-match" uk-grid>
             <div v-for="pkg in pkgs">
                 <div class="uk-card tm-marketplace-item" @click.prevent="openModal(pkg)">
                     <div class="uk-card-media-top">

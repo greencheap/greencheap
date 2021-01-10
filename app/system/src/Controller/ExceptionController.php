@@ -3,7 +3,7 @@
 namespace GreenCheap\System\Controller;
 
 use GreenCheap\Application as App;
-use Symfony\Component\Debug\Exception\FlattenException;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -12,28 +12,23 @@ class ExceptionController
     /**
      * Converts an Exception to a Response.
      *
-     * @param  Request          $request
      * @param  FlattenException $exception
      * @return Response
      */
-    public function showAction(Request $request, FlattenException $exception)
+    public function showAction(FlattenException $exception): Response
     {
-        // if (is_subclass_of($exception->getClass(), 'GreenCheap\Kernel\Exception\HttpException')) {
-        //     $title = $exception->getMessage();
-        // } else {
-        //     $title = __('Whoops, looks like something went wrong.');
-        // }
+        $request = new Request();
 
         if (is_subclass_of($exception->getClass(), 'GreenCheap\Kernel\Exception\HttpException')) {
-            $title = $exception->getMessage();
-            if ($exception->getCode() == 404)
-                $title = __('Page not found');
-            } else {
-                $title = __('Whoops, looks like something went wrong.');
+            $message = $exception->getMessage();
+            $title = $exception->getCode() === 404 ? __('Page Not Found'):__('An error has been encountered');
+        }else{
+            $title = __('An error has been encountered');
+            $message = __('Whoops, looks like something went wrong.');
         }
 
         $content  = $this->getAndCleanOutputBuffering($request->headers->get('X-Php-Ob-Level', -1));
-        $response = App::view('system/error.php', compact('title', 'exception', 'content'));
+        $response = App::view('system/error.php', compact('title', 'exception','message', 'content'));
 
         return App::response($response, $exception->getCode(), $exception->getHeaders());
     }

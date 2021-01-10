@@ -31,11 +31,10 @@ class MentionListener implements EventSubscriberInterface
         $config = App::config('system/comment');
 
         if(!$config->get('attribute_people') || !$config->get('notify_reply')){
-            return;
+            return false;
         }
-
-        if($comment->get('notify_send') && $comment->status != Comment::STATUS_APPROVED){
-            return; 
+        if($comment->get('notify_send') || $comment->status != Comment::STATUS_APPROVED){
+            return false; 
         }
 
         $content = $comment->content;
@@ -51,7 +50,7 @@ class MentionListener implements EventSubscriberInterface
             
             $name = $user->name;
             $message = __('A user mentioned you. That\'s why we wanted to let you know.');
-            $commentInformation = $content;
+            $commentInformation = $comment->content;
             $link = $comment->getUrl(false);
             
             $mail = App::mailer()->create();

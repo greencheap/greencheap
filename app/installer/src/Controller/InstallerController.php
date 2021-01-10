@@ -21,7 +21,10 @@ class InstallerController
         $this->installer = new Installer($app);
     }
 
-    public function indexAction()
+    /**
+     * @return array
+     */
+    public function indexAction(): array
     {
         $intl = App::module('system/intl');
         return [
@@ -44,7 +47,7 @@ class InstallerController
      * @param array $config
      * @return array
      */
-    public function checkAction($config = [])
+    public function checkAction($config = []): array
     {
         return $this->installer->check($config);
     }
@@ -56,7 +59,7 @@ class InstallerController
      * @param array $user
      * @return array
      */
-    public function installAction($config = [], $option = [], $user = [])
+    public function installAction($config = [], $option = [], $user = []): array
     {
         return $this->installer->install($config, $option, $user);
     }

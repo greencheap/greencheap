@@ -15,15 +15,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - PHP 8 Support.
 - Docker Compose file updated.
 - ReflectionMethod `getClass` deprecated. Change `getClass` to `getType`
+- ExceptionHandler deprecated for Symfony/ErrorHandler
 
 ### Updated
 - Composer packages updated: `composer/composer`, `doctrine/dbal`, `maximebf/debugbar`, `phpunit/phpunit`.
 - Vue and UIkit last version updated
-- System/Scripts.php changed #265 for Symfony 5.1 .
+- System/Scripts.php changed #265 for Symfony 5.1.
 
 ### Removed
 - Gulp packages deprecated. 
 - Eslint and deprecated for new pattern
+- symfony/debug deprecated
+
 
 ## 2.0.11.1-RC1 - 2.0.11-RC1 - 2020-10-25
 

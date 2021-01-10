@@ -5,20 +5,32 @@ namespace GreenCheap\Kernel\Event;
 use GreenCheap\Event\EventSubscriberInterface;
 use GreenCheap\Kernel\Exception\HttpException;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Debug\Exception\FlattenException;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 
 class ExceptionListener implements EventSubscriberInterface
 {
+
     protected $controller;
     protected $logger;
 
+    /**
+     * ExceptionListener constructor.
+     * @param $controller
+     * @param LoggerInterface|null $logger
+     */
     public function __construct($controller, LoggerInterface $logger = null)
     {
         $this->controller = $controller;
         $this->logger = $logger;
     }
 
+    /**
+     * @param $event
+     * @param $request
+     * @return false
+     * @throws \Exception
+     */
     public function onException($event, $request)
     {
         static $handling;
@@ -67,7 +79,7 @@ class ExceptionListener implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
-    public function subscribe()
+    public function subscribe(): array
     {
         return [
             'exception' => ['onException', -100]
@@ -78,9 +90,9 @@ class ExceptionListener implements EventSubscriberInterface
      * Logs an exception.
      *
      * @param \Exception $exception
-     * @param string     $message
+     * @param string $message
      */
-    protected function logException(\Exception $exception, $message)
+    protected function logException(\Exception $exception, string $message)
     {
         if ($this->logger !== null) {
             if (!$exception instanceof HttpException || $exception->getCode() >= 500) {
@@ -98,7 +110,7 @@ class ExceptionListener implements EventSubscriberInterface
      * @param  Request   $request
      * @return Request   $request
      */
-    protected function duplicateRequest(\Exception $exception, Request $request)
+    protected function duplicateRequest(\Exception $exception, Request $request): Request
     {
         $attributes = [
             '_controller' => $this->controller,

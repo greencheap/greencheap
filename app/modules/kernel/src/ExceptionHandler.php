@@ -6,6 +6,12 @@ use GreenCheap\Kernel\Exception\HttpException;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\Debug\ExceptionHandler as DebugExceptionHandler;
 
+/**
+ * Class ExceptionHandler
+ * @package GreenCheap\Kernel
+ * @deprecated
+ */
+#[deprecated]
 class ExceptionHandler extends DebugExceptionHandler
 {
     /**

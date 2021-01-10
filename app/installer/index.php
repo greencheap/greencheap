@@ -70,15 +70,12 @@ return [
                 'GreenCheap\Installer\Controller\ApiUpdateController',
             ]
         ]
-
     ],
 
     'languages' => '/../system/languages',
 
     'resources' => [
-
         'installer:' => ''
-
     ],
 
     'permissions' => [
@@ -118,15 +115,19 @@ return [
             'url' => '@system/marketplace',
             'active' => '@system/marketplace*',
             'priority' => 120
+        ],
+        
+        'system: update' => [
+            'label' => 'Update',
+            'parent' => 'system: system',
+            'url' => '@system/update',
+            'access' => 'system: software updates',
+            'priority' => 100
         ]
-
     ],
 
     'config' => [
-
         'enabled' => false,
         'release_channel' => 'stable'
-
     ]
-
 ];

@@ -3,7 +3,9 @@
 use GreenCheap\Application\Response;
 use GreenCheap\Application\UrlProvider;
 use GreenCheap\Kernel\ExceptionHandler;
-use Symfony\Component\Debug\ErrorHandler;
+//use Symfony\Component\Debug\ErrorHandler;
+use Symfony\Component\ErrorHandler\Debug;
+use Symfony\Component\ErrorHandler\ErrorHandler;
 
 return [
 
@@ -27,7 +29,8 @@ return [
             return new Response($app['url']);
         };
 
-        $app['exception'] = ExceptionHandler::register($app['debug']);
+        //$app['exception'] = ExceptionHandler::register($app['debug']);
+        Debug::enable();
 
         ErrorHandler::register()->throwAt(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_RECOVERABLE_ERROR);
 

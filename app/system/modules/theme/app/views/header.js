@@ -40,7 +40,6 @@ const header = {
         }
     },
 
-
     methods: {
         onDarkMode() {
             this.darkMode = this.$session.get('darkMode') ? 0 : 1;
@@ -48,11 +47,13 @@ const header = {
     },
 
     components: {
-        Navbar
+        Navbar,
+        Update
     }
 };
 
 import Navbar from '../components/navbar.vue';
+import Update from '../components/update.vue';
 
 export default header;
 Vue.ready(header);

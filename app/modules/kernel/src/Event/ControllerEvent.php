@@ -21,7 +21,7 @@ class ControllerEvent extends KernelEvent
      *
      * @return callable
      */
-    public function getController()
+    public function getController(): callable
     {
         return $this->controller;
     }
@@ -41,7 +41,7 @@ class ControllerEvent extends KernelEvent
      *
      * @return mixed
      */
-    public function getControllerResult()
+    public function getControllerResult(): mixed
     {
         return $this->controllerResult;
     }
@@ -51,7 +51,7 @@ class ControllerEvent extends KernelEvent
      *
      * @param mixed $controllerResult
      */
-    public function setControllerResult($controllerResult)
+    public function setControllerResult(mixed $controllerResult)
     {
         $this->controllerResult = $controllerResult;
     }
