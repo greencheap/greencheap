@@ -13,7 +13,7 @@ use GreenCheap\Event\EventSubscriberInterface;
  */
 class MentionListener implements EventSubscriberInterface
 {
-    protected $mentions = [];
+    protected array $mentions = [];
 
     /**
      * CommentListener constructor.
@@ -31,10 +31,10 @@ class MentionListener implements EventSubscriberInterface
         $config = App::config('system/comment');
 
         if(!$config->get('attribute_people') || !$config->get('notify_reply')){
-            return false;
+            return;
         }
         if($comment->get('notify_send') || $comment->status != Comment::STATUS_APPROVED){
-            return false; 
+            return;
         }
 
         $content = $comment->content;
@@ -44,22 +44,22 @@ class MentionListener implements EventSubscriberInterface
                 $this->setMention($match);
             }
         }, $content);
-        
+
         foreach($this->getMentions() as $username){
             $user = User::findByUsername(str_replace('@' , '', $username));
-            
+
             $name = $user->name;
             $message = __('A user mentioned you. That\'s why we wanted to let you know.');
             $commentInformation = $comment->content;
             $link = $comment->getUrl(false);
-            
+
             $mail = App::mailer()->create();
             $mail->setTo($user->email)
             ->setSubject(__('%site% - You were mentioned in a comment..', ['%site%' => App::module('system/site')->config('title')]))
             ->setBody(App::view('system/comment:mails/mention.php', compact(['message' , 'name' , 'commentInformation' , 'link'])), 'text/html')
             ->send();
         }
-       
+
         $comment->set('notify_send' , true);
         $comment->save();
     }
@@ -69,7 +69,10 @@ class MentionListener implements EventSubscriberInterface
         $this->mentions[] = $name;
     }
 
-    protected function getMentions()
+    /**
+     * @return array
+     */
+    protected function getMentions(): array
     {
         return array_unique($this->mentions);
     }

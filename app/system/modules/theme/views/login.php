@@ -13,11 +13,10 @@
     <section id="app" class="uk-grid-collapse" uk-grid>
         <div class="uk-width-2-3@m uk-width-1-2@s uk-visible@s uk-background-primary">
             <div class="uk-position-relative uk-visible-toggle" tabindex="-1" uk-slideshow="ratio: false;autoplay:true">
-                <ul class="uk-slideshow-items" uk-height-viewport="">
+                <ul class="uk-slideshow-items" uk-height-viewport>
                     <?php foreach($images as $image): ?>
                         <li>
                             <img data-src="<?= $image['image'] ?>" alt="<?= $image['information']['label'] ?>" uk-img uk-cover>
-                            <div class="uk-position-cover uk-overlay uk-overlay-default"></div>
                             <div class="uk-position-bottom-left uk-position-small uk-text-small">
                                 <div class="uk-flex uk-flex-middle">
                                     <div class="uk-margin-small-right">
@@ -25,16 +24,16 @@
                                             <img data-src="<?= $image['author']['avatarUrl'] ?>" width="40" class="uk-border-circle" uk-img>
                                         </a>
                                     </div>
-                                    <div>
+                                    <div class="uk-light">
                                         <a href="<?= $image['author']['profileUrl'] ?>" target="_blank">
                                             <h4 class="uk-h6 uk-margin-remove uk-text-bold"><?= $image['author']['fullName'] ?></h4>
                                         </a>
-                                        <span class="uk-display-block"><i uk-icon="icon:flag-alt;ratio:0.8"></i> <?= $image['information']['locationName'] ?></span> 
+                                        <span class="uk-display-block"><i uk-icon="icon:flag-alt;ratio:0.8"></i> <?= $image['information']['locationName'] ?></span>
                                     </div>
                                 </div>
                             </div>
                         </li>
-                    <?php endforeach ?> 
+                    <?php endforeach ?>
                 </ul>
                 <a class="uk-position-center-left uk-position-small uk-hidden-hover uk-light" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
                 <a class="uk-position-center-right uk-position-small uk-hidden-hover uk-light" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
