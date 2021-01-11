@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Docker Compose file updated.
 - ReflectionMethod `getClass` deprecated. Change `getClass` to `getType`
 - ExceptionHandler deprecated for Symfony/ErrorHandler
+- Replaced `App::exception()->setHandler` with `App::exception()->setExceptionHandler` for _Symfony ErrorHandler Component_
 
 ### Updated
 - Composer packages updated: `composer/composer`, `doctrine/dbal`, `maximebf/debugbar`, `phpunit/phpunit`.

@@ -117,7 +117,7 @@ class PackageController
 
         $this->manager->enable($package);
 
-        App::exception()->setHandler($handler);
+        App::exception()->setExceptionHandler($handler);
 
         return ['message' => 'success'];
     }
@@ -316,7 +316,7 @@ class PackageController
     {
         ini_set('display_errors', 0);
 
-        return App::exception()->setHandler(function ($exception) use ($name) {
+        return App::exception()->setExceptionHandler(function ($exception) use ($name) {
 
             while (ob_get_level()) {
                 ob_get_clean();

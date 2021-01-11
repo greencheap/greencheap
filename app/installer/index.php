@@ -38,7 +38,7 @@ return [
                 }
             });
 
-            $app->error(function (NotFoundException $e) use ($app) {
+            $app->error(function () use ($app) {
                 return $app['response']->redirect('@installer');
             });
         }
@@ -116,7 +116,7 @@ return [
             'active' => '@system/marketplace*',
             'priority' => 120
         ],
-        
+
         'system: update' => [
             'label' => 'Update',
             'parent' => 'system: system',

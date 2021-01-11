@@ -2,7 +2,6 @@
 
 namespace GreenCheap\Installer;
 
-use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Exception\ConnectionException;
 use GreenCheap\Application;
@@ -175,7 +174,7 @@ class Installer
 
             $status = 'success';
 
-        } catch (DBALException $e) {
+        } catch (\Exception $e) {
 
             $status = 'db-sql-failed';
             $message = __('Database error: %error%', ['%error%' => $e->getMessage()]);

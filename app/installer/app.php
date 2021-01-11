@@ -27,3 +27,4 @@ $app['module']->addLoader(new ConfigLoader(require __DIR__.'/config.php'));
 $app['module']->load('installer');
 
 $app->run();
+
