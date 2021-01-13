@@ -5,8 +5,9 @@ namespace GreenCheap\Twig;
 use GreenCheap\View\Loader\FilesystemLoader;
 use Symfony\Component\Templating\TemplateNameParser;
 use Symfony\Component\Templating\TemplateNameParserInterface;
+use Twig\Loader\FilesystemLoader as Twig_Loader_Filesystem;
 
-class TwigLoader extends \Twig_Loader_Filesystem
+class TwigLoader extends Twig_Loader_Filesystem
 {
     protected $loader;
     protected $parser;
@@ -14,8 +15,8 @@ class TwigLoader extends \Twig_Loader_Filesystem
     /**
      * Constructor.
      *
-     * @param FilesystemLoader            $loader
-     * @param TemplateNameParserInterface $parser
+     * @param FilesystemLoader $loader
+     * @param TemplateNameParserInterface|null $parser
      */
     public function __construct(FilesystemLoader $loader, TemplateNameParserInterface $parser = null)
     {

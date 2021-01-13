@@ -10,6 +10,7 @@ use GreenCheap\Auth\Exception\AuthException;
 use GreenCheap\Event\EventSubscriberInterface;
 use GreenCheap\User\Annotation\Access;
 
+
 class AccessListener implements EventSubscriberInterface
 {
     /**
@@ -29,6 +30,8 @@ class AccessListener implements EventSubscriberInterface
 
     /**
      * Reads the "@Access" annotations from the controller stores them in the "access" route option.
+     * @param $event
+     * @param $route
      */
     public function onConfigureRoute($event, $route)
     {

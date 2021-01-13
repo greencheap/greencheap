@@ -2,9 +2,11 @@
 
 namespace GreenCheap\Twig;
 
-class TwigCache extends \Twig_Cache_Filesystem
+use Twig\Cache\FilesystemCache;
+
+class TwigCache extends FilesystemCache
 {
-    protected $dir;
+    protected string $dir;
 
     /**
      * {@inheritdoc}

@@ -17,6 +17,10 @@ class UserApiController
     /**
      * @Route("/", methods="GET")
      * @Request({"filter": "array", "page":"int", "limit":"int"})
+     * @param array $filter
+     * @param int $page
+     * @param int $limit
+     * @return array
      */
     public function indexAction($filter = [], $page = 0, $limit = 0)
     {
@@ -43,7 +47,9 @@ class UserApiController
         }
 
         if ($role) {
-            $query->whereInSet('roles', $role);
+            $query->where(function($query)use($role){
+                $query->whereInSet('roles', (int) $role);
+            });
         }
 
         if ($access) {
@@ -66,9 +72,10 @@ class UserApiController
         $count   = $query->count();
         $pages   = ceil($count / $limit);
         $page    = max(0, min($pages - 1, $page));
+        $sql   = $query->getSql();
         $users   = array_values($query->offset($page * $limit)->limit($limit)->orderBy($order[1], $order[2])->get());
 
-        return compact('users', 'pages', 'count');
+        return compact('users', 'pages', 'count', 'sql');
     }
 
     /**

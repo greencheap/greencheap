@@ -1,6 +1,5 @@
 <?php
 
-use Detection\MobileDetect;
 use GreenCheap\Util\ArrObject;
 use GreenCheap\View\Event\ResponseListener;
 use Twig\TwigFilter;
@@ -10,8 +9,6 @@ return [
     'name' => 'system/view',
 
     'main' => function ($app) {
-
-        $app['device'] = new MobileDetect();
 
         $app->extend('twig', function ($twig) use ($app) {
 

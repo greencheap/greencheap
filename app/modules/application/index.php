@@ -5,9 +5,12 @@ use GreenCheap\Application\UrlProvider;
 use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\ErrorHandler\ErrorHandler;
 
-//@deprecated
-//use GreenCheap\Kernel\ExceptionHandler;
-//use Symfony\Component\Debug\ErrorHandler;
+/**
+ * @deprecated
+ * use GreenCheap\Kernel\ExceptionHandler;
+ * use Symfony\Component\Debug\ErrorHandler;
+ */
+
 
 return [
 
@@ -30,8 +33,6 @@ return [
         $app['response'] = function ($app) {
             return new Response($app['url']);
         };
-
-        //$app['exception'] = ExceptionHandler::register($app['debug']);
 
         $app['exception'] = Debug::enable();
 

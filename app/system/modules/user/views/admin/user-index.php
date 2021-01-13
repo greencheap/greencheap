@@ -43,13 +43,13 @@
                         {{ 'User' | trans }}
                     </th>
                     <th class="pk-table-width-100 uk-text-center">
-                        <input-filter :title="$trans('Status')" :value.sync="config.filter.status" :options="statuses"></input-filter>
+                        <input-filter :title="$trans('Status')" :value.sync="config.filter.status" :options="statuses" v-model.number="config.filter.status"></input-filter>
                     </th>
                     <th class="pk-table-width-200" v-order:email="config.filter.order">
                         {{ 'Email' | trans }}
                     </th>
                     <th class="pk-table-width-100">
-                        <input-filter :title="$trans('Roles')" :value.sync="config.filter.role" :options="roles"></input-filter>
+                        <input-filter :title="$trans('Roles')" :value.sync="config.filter.role" :options="roles" v-model.number="config.filter.role"></input-filter>
                     </th>
                 </tr>
             </thead>

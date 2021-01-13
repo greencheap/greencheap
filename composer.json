@@ -14,7 +14,7 @@
     "require": {
         "php": "8.0.*",
         "composer/composer": "^1.10.19",
-        "doctrine/annotations": "^1.8.0",
+        "doctrine/annotations": "^1.11.1",
         "doctrine/dbal": "~2.12.1",
         "paragonie/random-lib": "^2.0.1",
         "maximebf/debugbar": "^1.16.3",
@@ -23,7 +23,7 @@
         "psr/log": "~1.1",
         "swiftmailer/swiftmailer": "~6.2",
         "symfony/finder": "~5.1.5",
-        "symfony/http-foundation": "~5.1.5",
+        "symfony/http-foundation": "~5.2",
         "symfony/routing": "~5.1.5",
         "symfony/stopwatch": "~5.1.5",
         "symfony/templating": "~5.1.5",
@@ -31,7 +31,6 @@
         "twig/twig": "^2.12",
         "php-curl-class/php-curl-class": "^8.7",
         "ext-json": "*",
-        "mobiledetect/mobiledetectlib": "~2.8",
         "symfony/mime": "^5.1",
         "google/apiclient": "~2.8.3",
         "symfony/error-handler": "^5.2"
