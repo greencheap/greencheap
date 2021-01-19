@@ -3,6 +3,8 @@
 namespace GreenCheap\Mail\Controller;
 
 use GreenCheap\Application as App;
+use GreenCheap\Routing\Annotation\Request;
+use GreenCheap\User\Annotation\Access;
 use GreenCheap\Util\Arr;
 
 /**
@@ -12,8 +14,10 @@ class MailController
 {
     /**
      * @Request({"option": "array"}, csrf=true)
+     * @param array $option
+     * @return array
      */
-    public function smtpAction($option = [])
+    public function smtpAction($option = []): array
     {
         try {
 
@@ -31,8 +35,10 @@ class MailController
      * Note: If the mailer is accessed prior to this controller action, this will possibly test the wrong mailer
      *
      * @Request({"option": "array"}, csrf=true)
+     * @param array $option
+     * @return array
      */
-    public function emailAction($option = [])
+    public function emailAction($option = []): array
     {
         try {
 

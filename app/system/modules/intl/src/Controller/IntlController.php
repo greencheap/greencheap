@@ -3,6 +3,8 @@
 namespace GreenCheap\Intl\Controller;
 
 use GreenCheap\Application as App;
+use GreenCheap\Routing\Annotation\Request;
+use GreenCheap\Routing\Annotation\Route;
 
 class IntlController
 {
@@ -10,6 +12,8 @@ class IntlController
      * TODO: Limit catalogue if maintenance mode is enabled?
      * @Route("/{locale}", requirements={"locale"="[a-zA-Z0-9_-]+"}, defaults={"_maintenance" = true})
      * @Request({"locale"})
+     * @param null $locale
+     * @return mixed
      */
     public function indexAction($locale = null)
     {

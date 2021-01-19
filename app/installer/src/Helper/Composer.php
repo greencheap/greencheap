@@ -159,7 +159,7 @@ class Composer
         }
 
         if ($updates) {
-            $installer->setUpdateWhitelist($updates)->setWhitelistDependencies();
+            $installer->setUpdateAllowList($updates)->setAllowListTransitiveDependencies();
         }
 
         $installer->run();

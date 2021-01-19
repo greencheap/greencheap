@@ -5,6 +5,9 @@ namespace GreenCheap\Installer\Controller;
 use GreenCheap\Application as App;
 use GreenCheap\Installer\Package\PackageManager;
 use \Curl\Curl;
+use GreenCheap\Routing\Annotation\Request;
+use GreenCheap\Routing\Annotation\Route;
+use GreenCheap\User\Annotation\Access;
 
 /**
  * @Access("system: manage packages", admin=true)
@@ -21,7 +24,7 @@ class PackageController
         $this->manager = new PackageManager();
     }
 
-    public function themesAction()
+    public function themesAction(): array
     {
         $packages = array_values(App::package()->all('greencheap-theme'));
 
@@ -50,7 +53,7 @@ class PackageController
         ];
     }
 
-    public function extensionsAction()
+    public function extensionsAction(): array
     {
         $packages = array_values(App::package()->all('greencheap-extension'));
 

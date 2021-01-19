@@ -2,7 +2,11 @@
 namespace GreenCheap\Dashboard\Controller;
 
 use GreenCheap\Application as App;
+use GreenCheap\Application\Response;
 use GreenCheap\Module\Module;
+use GreenCheap\Routing\Annotation\Request;
+use GreenCheap\Routing\Annotation\Route;
+use GreenCheap\User\Annotation\Access;
 
 /**
  * @Access(admin=true)
@@ -12,17 +16,17 @@ class DashboardController
     /**
      * @var Module
      */
-    protected $dashboard;
+    protected Module $dashboard;
 
     /**
      * @var string
      */
-    protected $api = 'http://api.openweathermap.org/data/2.5';
+    protected string $api = 'http://api.openweathermap.org/data/2.5';
 
     /**
      * @var string
      */
-    protected $apiKey = '08c012f513db564bd6d4bae94b73cc94';
+    protected string $apiKey = '08c012f513db564bd6d4bae94b73cc94';
 
     /**
      * Constructor.
@@ -35,7 +39,7 @@ class DashboardController
     /**
      * @Route("/", methods="GET")
      */
-    public function indexAction()
+    public function indexAction(): array
     {
         return [
             '$view' => [
@@ -51,8 +55,10 @@ class DashboardController
     /**
      * @Route("/", methods="POST")
      * @Request({"widgets": "array"}, csrf=true)
+     * @param array $widgets
+     * @return array|mixed
      */
-    public function saveAction($widgets = [])
+    public function saveAction($widgets = []): mixed
     {
         $this->dashboard->saveWidgets($widgets);
         return $widgets;
@@ -61,16 +67,19 @@ class DashboardController
     /**
      * @Route("/{id}", methods="DELETE", requirements={"id"="\w+"})
      * @Request({"id"}, csrf=true)
+     * @param $id
      */
+    #[deprecated]
     public function deleteAction($id)
-    {
-        
-    }
+    {}
 
     /**
      * @Request({"data": "array", "action": "string",})
+     * @param $data
+     * @param $action
+     * @return mixed
      */
-    public function weatherAction($data, $action)
+    public function weatherAction($data, $action):Response
     {
         $url = $this->api;
 

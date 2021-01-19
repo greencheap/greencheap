@@ -3,13 +3,27 @@
 namespace GreenCheap\Site\Controller;
 
 use GreenCheap\Application as App;
+use GreenCheap\Routing\Annotation\Request;
+use GreenCheap\Routing\Annotation\Route;
 use GreenCheap\Site\Model\Node;
+use GreenCheap\User\Annotation\Access;
 use GreenCheap\User\Model\Role;
+use JetBrains\PhpStorm\ArrayShape;
 
+/**
+ * Class NodeController
+ * @package GreenCheap\Site\Controller
+ */
 class NodeController
 {
+    /**
+     * @var
+     */
     protected $site;
 
+    /**
+     * NodeController constructor.
+     */
     public function __construct()
     {
         $this->site = App::module('system/site');
@@ -19,12 +33,12 @@ class NodeController
      * @Route("site/page", name="page")
      * @Access("site: manage site", admin=true)
      */
-    public function indexAction()
+    public function indexAction(): array
     {
         if ($test = Node::fixOrphanedNodes()) {
             return App::redirect('@site/page');
         }
-        
+
         return [
             '$view' => [
                 'title' => __('Pages'),
@@ -43,8 +57,12 @@ class NodeController
      * @Route("site/page/edit", name="page/edit")
      * @Access("site: manage site", admin=true)
      * @Request({"id", "menu"})
+     * @param string $id
+     * @param string $menu
+     * @return array
      */
-    public function editAction($id = '', $menu = '')
+    #[ArrayShape(['$view' => "array", '$data' => "array"])]
+    public function editAction($id = '', $menu = ''): array
     {
         if (is_numeric($id)) {
 
@@ -83,7 +101,8 @@ class NodeController
      * @Route("site/settings")
      * @Access("system: access settings", admin=true)
      */
-    public function settingsAction()
+    #[ArrayShape(['$view' => "array", '$data' => "array"])]
+    public function settingsAction(): array
     {
         return [
             '$view' => [
@@ -100,8 +119,11 @@ class NodeController
      * @Route("api/site/link", name="api/link")
      * @Request({"link"})
      * @Access("site: manage site")
+     * @param $link
+     * @return array
      */
-    public function linkAction($link)
+    #[ArrayShape(['message' => "string", 'url' => "mixed"])]
+    public function linkAction($link): array
     {
         return ['message' => 'success', 'url' => App::url($link, [], 'base') ?: $link];
     }

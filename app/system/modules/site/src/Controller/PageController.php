@@ -4,13 +4,19 @@ namespace GreenCheap\Site\Controller;
 
 use GreenCheap\Application as App;
 use GreenCheap\Site\Model\Page;
+use JetBrains\PhpStorm\ArrayShape;
 
+/**
+ * Class PageController
+ * @package GreenCheap\Site\Controller
+ */
 class PageController
 {
     /**
      * @param int $id
      * @return array
      */
+    #[ArrayShape(['$view' => "array", 'page' => "\GreenCheap\Site\Model\Page", 'node' => "mixed"])]
     public static function indexAction($id = 0): array
     {
         if (!$page = Page::find($id)) {

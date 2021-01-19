@@ -4,6 +4,8 @@ namespace GreenCheap\Installer\Controller;
 
 use GreenCheap\Application as App;
 use GreenCheap\Installer\SelfUpdater;
+use GreenCheap\Routing\Annotation\Request;
+use GreenCheap\User\Annotation\Access;
 use Symfony\Component\Console\Output\StreamOutput;
 
 /**
@@ -13,9 +15,9 @@ class UpdateController
 {
 
     /**
-     * 
+     * @return array[]
      */
-    public function indexAction()
+    public function indexAction(): array
     {
         return [
             '$view' => [
@@ -37,7 +39,7 @@ class UpdateController
      * @param $constraint
      * @return array
      */
-    public function downloadAction($constraint)
+    public function downloadAction($constraint): array
     {
         $url = App::get('system.api').'/api/brain/download/'.$constraint;
         $file = tempnam(App::get('path.temp'), 'update_');

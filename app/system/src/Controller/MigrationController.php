@@ -4,6 +4,8 @@ namespace GreenCheap\System\Controller;
 
 use GreenCheap\Application as App;
 use GreenCheap\Installer\Package\PackageScripts;
+use GreenCheap\Routing\Annotation\Request;
+use GreenCheap\User\Annotation\Access;
 
 /**
  * @Access("system: software updates", admin=true)
@@ -13,8 +15,11 @@ class MigrationController
     /**
      * @var PackageScripts
      */
-    protected $scripts;
+    protected PackageScripts $scripts;
 
+    /**
+     * MigrationController constructor.
+     */
     public function __construct()
     {
         $system = App::system();
@@ -23,8 +28,10 @@ class MigrationController
 
     /**
      * @Request({"redirect": "string"})
+     * @param null $redirect
+     * @return array
      */
-    public function indexAction($redirect = null)
+    public function indexAction($redirect = null): array
     {
         if (!$this->scripts->hasUpdates()) {
             return App::redirect($redirect ?: '@system');
@@ -42,6 +49,8 @@ class MigrationController
 
     /**
      * @Request({"redirect": "string"}, csrf=true)
+     * @param null $redirect
+     * @return mixed
      */
     public function migrateAction($redirect = null)
     {

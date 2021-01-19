@@ -4,16 +4,25 @@ namespace GreenCheap\User\Controller;
 
 use GreenCheap\Application as App;
 use GreenCheap\Application\Exception;
+use GreenCheap\Captcha\Annotation\Captcha;
 use GreenCheap\Module\Module;
+use GreenCheap\Routing\Annotation\Request;
 use GreenCheap\User\Model\User;
 
+/**
+ * Class RegistrationController
+ * @package GreenCheap\User\Controller
+ */
 class RegistrationController
 {
     /**
      * @var Module
      */
-    protected $module;
+    protected Module $module;
 
+    /**
+     * RegistrationController constructor.
+     */
     public function __construct()
     {
         $this->module = App::module('system/user');
@@ -22,7 +31,7 @@ class RegistrationController
     /**
      * @Captcha(route="@user/registration/register")
      */
-    public function indexAction()
+    public function indexAction(): array
     {
         if (App::user()->isAuthenticated()) {
             return App::redirect();
@@ -43,8 +52,10 @@ class RegistrationController
     /**
      * @Request({"user": "array"})
      * @Captcha(verify="true")
+     * @param $data
+     * @return array
      */
-    public function registerAction($data)
+    public function registerAction($data): array
     {
         try {
 
@@ -106,8 +117,11 @@ class RegistrationController
 
     /**
      * @Request({"user", "key"})
+     * @param $username
+     * @param $activation
+     * @return mixed
      */
-    public function activateAction($username, $activation)
+    public function activateAction($username, $activation): mixed
     {
         if (empty($username) || empty($activation) || !$user = User::where(['username' => $username, 'activation' => $activation, 'login IS NULL'])->first()) {
             App::abort(400, __('Invalid key.'));
@@ -137,6 +151,9 @@ class RegistrationController
         return App::redirect('@user/login');
     }
 
+    /**
+     * @param $user
+     */
     protected function sendWelcomeEmail($user)
     {
         try {
@@ -151,6 +168,9 @@ class RegistrationController
         }
     }
 
+    /**
+     * @param $user
+     */
     protected function sendVerificationMail($user)
     {
         try {
@@ -166,6 +186,9 @@ class RegistrationController
         }
     }
 
+    /**
+     * @param $user
+     */
     protected function sendApproveMail($user)
     {
         try {

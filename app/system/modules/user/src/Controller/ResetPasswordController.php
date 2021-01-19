@@ -4,12 +4,20 @@ namespace GreenCheap\User\Controller;
 
 use GreenCheap\Application as App;
 use GreenCheap\Application\Exception;
+use GreenCheap\Routing\Annotation\Request;
 use GreenCheap\User\Model\User;
 
+/**
+ * Class ResetPasswordController
+ * @package GreenCheap\User\Controller
+ */
 class ResetPasswordController
 {
 
-    public function indexAction()
+    /**
+     * @return array
+     */
+    public function indexAction(): array
     {
         if (App::user()->isAuthenticated()) {
             return App::redirect();
@@ -26,8 +34,10 @@ class ResetPasswordController
 
     /**
      * @Request({"email"})
+     * @param $email
+     * @return array
      */
-    public function requestAction($email)
+    public function requestAction($email): array
     {
         try {
 
@@ -86,8 +96,11 @@ class ResetPasswordController
 
     /**
      * @Request({"key", "password"})
+     * @param string $activation
+     * @param string $password
+     * @return array
      */
-    public function confirmAction($activation = '', $password = '')
+    public function confirmAction($activation = '', $password = ''): array
     {
         if ($activation and $user = User::where(compact('activation'))->first()) {
 

@@ -4,6 +4,9 @@ namespace GreenCheap\Comment\Controller;
 use GreenCheap\Application as App;
 use GreenCheap\Comment\Model\Comment;
 use GreenCheap\Comment\CommentPlugin;
+use GreenCheap\Routing\Annotation\Request;
+use GreenCheap\Routing\Annotation\Route;
+use GreenCheap\User\Annotation\Access;
 use GreenCheap\User\Model\User;
 
 class ApiCommentController
@@ -14,7 +17,7 @@ class ApiCommentController
     protected $module;
 
     /**
-     *
+     * ApiCommentController constructor.
      */
     public function __construct()
     {
@@ -85,9 +88,9 @@ class ApiCommentController
      * @Request({"comment":"array","id":"integer"} , csrf=true)
      * @param array $comment
      * @param int $id
-     * @return array|void
+     * @return array
      */
-    public function saveAction(array $comment = [] , int $id = 0)
+    public function saveAction(array $comment = [] , int $id = 0): array
     {
         if( !$query = Comment::where(compact('id'))->first() ){
             if($id){
@@ -143,7 +146,7 @@ class ApiCommentController
      * @Request({"comments": "array"}, csrf=true)
      * @param array $comments
      */
-    public function bulkSaveAction( array $comments = [] )
+    public function bulkSaveAction( array $comments = [] ): array
     {
         foreach ($comments as $data) {
             $this->saveAction($data, isset($data['id']) ? $data['id'] : 0);
@@ -155,9 +158,10 @@ class ApiCommentController
     /**
      * @Route("/bulk", methods="DELETE")
      * @Request({"comments": "array"}, csrf=true)
+     * @param array $comments
      * @return string[]
      */
-    public function bulkDeleteAction( array $comments = [] )
+    public function bulkDeleteAction( array $comments = [] ): array
     {
         foreach (array_filter($comments) as $comment) {
             $this->deleteAction($comment);
@@ -169,8 +173,10 @@ class ApiCommentController
      * @Access(admin=true)
      * @Route("sendinformation")
      * @Request({"comment":"array"} , csrf=true)
+     * @param array $comment
+     * @return array
      */
-    public function sendInformationAction(array $comment = [])
+    public function sendInformationAction(array $comment = []): array
     {
         $message = __('Your comment has been approved by the administrator and is now live.');
         $name = $comment['author']['name'];

@@ -73,7 +73,7 @@ trait DbUtil
 
                 foreach ($stmts AS $stmt) {
                     try {
-                        $realConn->exec($stmt);
+                        $realConn->executeStatement($stmt);
                     } catch (\Exception $e) {
                         // TODO: Now is this a real good idea?
                     }

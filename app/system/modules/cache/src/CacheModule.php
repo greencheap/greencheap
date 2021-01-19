@@ -2,11 +2,11 @@
 
 namespace GreenCheap\Cache;
 
-use Doctrine\Common\Cache\ApcCache;
+use Doctrine\Common\Cache\ApcuCache;
 use Doctrine\Common\Cache\ArrayCache;
-use Doctrine\Common\Cache\XcacheCache;
 use GreenCheap\Application as App;
 use GreenCheap\Module\Module;
+use RuntimeException;
 
 class CacheModule extends Module
 {
@@ -21,7 +21,7 @@ class CacheModule extends Module
                 $supports = $this->supports();
 
                 if (!isset($config['storage'])) {
-                    throw new \RuntimeException('Cache storage missing.');
+                    throw new RuntimeException('Cache storage missing.');
                 }
 
                 if ($this->config['nocache']) {
@@ -37,11 +37,7 @@ class CacheModule extends Module
                         break;
 
                     case 'apc':
-                        $cache = new ApcCache;
-                        break;
-
-                    case 'xcache':
-                        $cache = new XcacheCache;
+                        $cache = new ApcuCache;
                         break;
 
                     case 'file':
@@ -53,7 +49,7 @@ class CacheModule extends Module
                         break;
 
                     default:
-                        throw new \RuntimeException('Unknown cache storage.');
+                        throw new RuntimeException('Unknown cache storage.');
                         break;
                 }
 
@@ -101,6 +97,7 @@ class CacheModule extends Module
 
     /**
      * TODO: clear opcache
+     * @param array $options
      */
     public function doClearCache(array $options = [])
     {

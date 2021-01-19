@@ -37,7 +37,7 @@ return [
             $caches = [
                 'auto'   => ['name' => '', 'supported' => true],
                 'apc'    => ['name' => 'APC', 'supported' => in_array('apc', $supported)],
-                'xcache' => ['name' => 'XCache', 'supported' => in_array('xcache', $supported)],
+                //'xcache' => ['name' => 'XCache', 'supported' => in_array('xcache', $supported)],
                 'file'   => ['name' => 'File', 'supported' => in_array('file', $supported)]
             ];
 

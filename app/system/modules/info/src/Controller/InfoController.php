@@ -3,13 +3,19 @@
 namespace GreenCheap\Info\Controller;
 
 use GreenCheap\Application as App;
+use GreenCheap\User\Annotation\Access;
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * @Access(admin=true)
  */
 class InfoController
 {
-    public function indexAction()
+    /**
+     * @return array
+     */
+    #[ArrayShape(['$view' => "array", '$info' => "mixed"])]
+    public function indexAction(): array
     {
         return [
             '$view' => [

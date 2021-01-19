@@ -9,6 +9,9 @@ use GreenCheap\Event\EventDispatcher;
 use GreenCheap\Module\ModuleManager;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method static response(false|string $file_get_contents, int $int, string[] $array)
+ */
 class Application extends Container
 {
     use StaticTrait, EventTrait, RouterTrait;

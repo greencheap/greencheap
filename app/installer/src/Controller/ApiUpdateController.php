@@ -3,7 +3,9 @@ namespace GreenCheap\Installer\Controller;
 
 use GreenCheap\Application as App;
 use GreenCheap\OAuth2Kernel;
-use Symfony\Component\HttpFoundation\Request;
+use GreenCheap\Routing\Annotation\Request;
+use GreenCheap\Routing\Annotation\Route;
+use GreenCheap\User\Annotation\Access;
 use \Curl\Curl;
 
 /**
@@ -15,6 +17,8 @@ class ApiUpdateController
     /**
      * @Route("/download-release" , methods="GET")
      * @Request({"constraint":"string"} , csrf=true)
+     * @param string $constraint
+     * @return array
      */
     public function getClientDownloadAction(string $constraint = 'stable')
     {
@@ -22,7 +26,7 @@ class ApiUpdateController
 
         $parameters = http_build_query([
             'constraint' => $constraint
-        ], '', '&'); 
+        ], '', '&');
 
         $zip_name = tempnam(App::get('path.temp'), 'update_');
         $path = App::get('path.temp').'/';
@@ -44,13 +48,12 @@ class ApiUpdateController
     }
 
     /**
-     * Yüklenen yeni version buradan bir kontürole geçer temp dosyasına geçici veri oluşturulur içeriği alınır ve temp olarak devreye girer.
      * @Route("/upload-package" , methods="POST")
      * @Request(csrf=true)
      * @param Request $request
      * @return array
      */
-    public function uploadPackageAction(Request $request)
+    public function uploadPackageAction(Request $request): array
     {
         $file = $request->files->get('_package');
         $system_version = OAuth2Kernel::versionParse($request->request->get('_version'));
@@ -98,7 +101,7 @@ class ApiUpdateController
      * @param string $fullPath
      * @return bool
      */
-    public function removeTempPackageAction(string $fullPath = '')
+    public function removeTempPackageAction(string $fullPath = ''): bool
     {
         if(App::file()->exists($fullPath)){
             App::file()->delete($fullPath);

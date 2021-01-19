@@ -1,6 +1,8 @@
 <?php
 namespace GreenCheap\Installer\Controller;
 use GreenCheap\Application as App;
+use GreenCheap\Routing\Annotation\Request;
+use GreenCheap\User\Annotation\Access;
 
 /**
  * @Access("system: manage packages", admin=true)
@@ -9,8 +11,11 @@ class MarketplaceController
 {
     /**
      * @Request({"filter":"array" , "page":"int"})
+     * @param array $filter
+     * @param int|null $page
+     * @return array
      */
-    public function indexAction( array $filter = [] , int $page = null )
+    public function indexAction( array $filter = [] , int $page = null ): array
     {
         return [
             '$view' => [

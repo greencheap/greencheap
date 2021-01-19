@@ -5,7 +5,11 @@ namespace GreenCheap\Site\Controller;
 use GreenCheap\Application as App;
 use GreenCheap\Config\Config;
 use GreenCheap\Kernel\Exception\ConflictException;
+use GreenCheap\Routing\Annotation\Request;
+use GreenCheap\Routing\Annotation\Route;
 use GreenCheap\Site\Model\Node;
+use GreenCheap\User\Annotation\Access;
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * @Access("site: manage site")
@@ -15,8 +19,11 @@ class MenuApiController
     /**
      * @var Config
      */
-    protected $config;
+    protected Config $config;
 
+    /**
+     * MenuApiController constructor.
+     */
     public function __construct()
     {
         $this->config = App::config('system/site');
@@ -25,7 +32,7 @@ class MenuApiController
     /**
      * @Route("/", methods="GET")
      */
-    public function indexAction()
+    public function indexAction(): array
     {
         $menus = App::menu()->all();
 
@@ -45,8 +52,11 @@ class MenuApiController
     /**
      * @Route("/", methods="POST")
      * @Request({"menu":"array"}, csrf=true)
+     * @param $menu
+     * @return array
      */
-    public function saveAction($menu)
+    #[ArrayShape(['message' => "string", 'menu' => ""])]
+    public function saveAction($menu): array
     {
         $oldId = isset($menu['id']) ? trim($menu['id']) : null;
         $label = trim($menu['label']);
@@ -76,8 +86,11 @@ class MenuApiController
     /**
      * @Route("/{id}", methods="DELETE")
      * @Request({"id"}, csrf=true)
+     * @param $id
+     * @return array
      */
-    public function deleteAction($id)
+    #[ArrayShape(['message' => "string"])]
+    public function deleteAction($id): array
     {
         App::config('system/site')->remove('menus.'.$id);
         Node::where(['menu = :id'], [':id' => $id])->update(['menu' => 'trash', 'status' => 0]);

@@ -4,9 +4,12 @@ namespace GreenCheap\User\Controller;
 
 use GreenCheap\Application as App;
 use GreenCheap\Application\Exception;
+use GreenCheap\Routing\Annotation\Request;
+use GreenCheap\Routing\Annotation\Route;
+use GreenCheap\User\Annotation\Access;
 use GreenCheap\User\Model\Role;
 use GreenCheap\User\Model\User;
-use Symfony\Component\HttpFoundation\Request;
+use JetBrains\PhpStorm\ArrayShape;
 use RandomLib\Factory;
 
 /**
@@ -22,7 +25,7 @@ class UserApiController
      * @param int $limit
      * @return array
      */
-    public function indexAction($filter = [], $page = 0, $limit = 0)
+    public function indexAction($filter = [], $page = 0, $limit = 0): array
     {
         $query  = User::query();
         $filter = array_merge(array_fill_keys(['status', 'search', 'role', 'order', 'access'], ''), $filter);
@@ -79,8 +82,10 @@ class UserApiController
 
     /**
      * @Request({"filter": "array"})
+     * @param array $filter
+     * @return array
      */
-    public function countAction($filter = [])
+    public function countAction($filter = []): array
     {
         $query  = User::query();
         $filter = array_merge(array_fill_keys(['status', 'search', 'role', 'order', 'access'], ''), (array)$filter);
@@ -124,8 +129,10 @@ class UserApiController
 
     /**
      * @Route("/{id}", methods="GET", requirements={"id"="\d+"})
+     * @param $id
+     * @return User
      */
-    public function getAction($id)
+    public function getAction($id): User|null
     {
         if (!$user = User::find($id)) {
             return App::abort(404, 'User not found.');
@@ -143,7 +150,8 @@ class UserApiController
      * @param int $id
      * @return array
      */
-    public function saveAction($data, $password = null, $id = 0)
+    #[ArrayShape(['message' => "string", 'user' => "\GreenCheap\User\Model\User"])]
+    public function saveAction($data, $password = null, $id = 0): array
     {
         try {
 
@@ -210,8 +218,11 @@ class UserApiController
     /**
      * @Route("/{id}", methods="DELETE", requirements={"id"="\d+"})
      * @Request({"id": "int"}, csrf=true)
+     * @param $id
+     * @return array
      */
-    public function deleteAction($id)
+    #[ArrayShape(['message' => "string"])]
+    public function deleteAction($id): array
     {
         if (App::user()->id == $id) {
             App::abort(400, __('Unable to delete yourself.'));
@@ -231,8 +242,10 @@ class UserApiController
     /**
      * @Route("/avatar-upload" , methods="POST")
      * @Request(csrf=true)
+     * @param Request $request
+     * @return array
      */
-    public function avatarUploadAction(Request $request)
+    public function avatarUploadAction(Request $request): array
     {
         $file = $request->files->get('_avatar');
         if( !App::file()->exists(App::get('path').'/storage/users/avatar') ){
@@ -249,8 +262,11 @@ class UserApiController
     /**
      * @Route("/bulk", methods="POST")
      * @Request({"users": "array"}, csrf=true)
+     * @param array $users
+     * @return array
      */
-    public function bulkSaveAction($users = [])
+    #[ArrayShape(['message' => "string"])]
+    public function bulkSaveAction($users = []): array
     {
         foreach ($users as $data) {
             $this->saveAction($data, null, isset($data['id']) ? $data['id'] : 0);
@@ -262,8 +278,11 @@ class UserApiController
     /**
      * @Route("/bulk", methods="DELETE")
      * @Request({"ids": "array"}, csrf=true)
+     * @param array $ids
+     * @return array
      */
-    public function bulkDeleteAction($ids = [])
+    #[ArrayShape(['message' => "string"])]
+    public function bulkDeleteAction($ids = []): array
     {
         foreach (array_filter($ids) as $id) {
             $this->deleteAction($id);

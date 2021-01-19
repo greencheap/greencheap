@@ -4,13 +4,20 @@ namespace GreenCheap\System\Controller;
 
 use GreenCheap\Application as App;
 use GreenCheap\Config\Config;
+use GreenCheap\Routing\Annotation\Request;
+use GreenCheap\User\Annotation\Access;
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * @Access("system: access settings", admin=true)
  */
 class SettingsController
 {
-    public function indexAction()
+    /**
+     * @return array[]
+     */
+    #[ArrayShape(['$view' => "array"])]
+    public function indexAction(): array
     {
         return [
             '$view' => [
@@ -22,8 +29,12 @@ class SettingsController
 
     /**
      * @Request({"config": "array", "options": "array"}, csrf=true)
+     * @param array $values
+     * @param array $options
+     * @return array
      */
-    public function saveAction($values = [], $options = [])
+    #[ArrayShape(['message' => "string"])]
+    public function saveAction($values = [], $options = []): array
     {
         $config = new Config;
         $config->merge(include $file = App::get('config.file'));
@@ -47,8 +58,12 @@ class SettingsController
 
     /**
      * @Request({"name", "config": "array"}, csrf=true)
+     * @param $name
+     * @param array $config
+     * @return array
      */
-    public function configAction($name, $config = [])
+    #[ArrayShape(['message' => "string"])]
+    public function configAction($name, $config = []): array
     {
         App::config()->set($name, array_replace(App::config($name)->toArray(), $config));
 

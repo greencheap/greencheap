@@ -6,15 +6,23 @@ use GreenCheap\Application as App;
 use GreenCheap\Auth\Auth;
 use GreenCheap\Auth\Exception\AuthException;
 use GreenCheap\Auth\Exception\BadCredentialsException;
+use GreenCheap\Routing\Annotation\Request;
+use GreenCheap\Routing\Annotation\Route;
 use GreenCheap\Session\Csrf\Exception\CsrfException;
 
+/**
+ * Class AuthController
+ * @package GreenCheap\User\Controller
+ */
 class AuthController
 {
     /**
      * @Route(defaults={"_maintenance"=true})
      * @Request({"redirect"})
+     * @param string $redirect
+     * @return array
      */
-    public function loginAction($redirect = '')
+    public function loginAction($redirect = ''): array
     {
         if (!$redirect) {
             $redirect = App::url(App::config('system/user')['login_redirect']);
@@ -37,8 +45,10 @@ class AuthController
     /**
      * @Route(defaults={"_maintenance" = true})
      * @Request({"redirect": "string"})
+     * @param string $redirect
+     * @return mixed
      */
-    public function logoutAction($redirect = '')
+    public function logoutAction($redirect = ''): mixed
     {
         if (($event = App::auth()->logout()) && $event->hasResponse()) {
             return $event->getResponse();
@@ -94,6 +104,10 @@ class AuthController
         }
     }
 
+    /**
+     * @param $url
+     * @return mixed
+     */
     protected function redirect($url)
     {
         do {

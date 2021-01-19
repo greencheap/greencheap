@@ -3,6 +3,8 @@
 namespace GreenCheap\Cache\Controller;
 
 use GreenCheap\Application as App;
+use GreenCheap\Routing\Annotation\Request;
+use GreenCheap\User\Annotation\Access;
 
 /**
  * @Access(admin=true)

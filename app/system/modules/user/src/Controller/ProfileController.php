@@ -4,11 +4,20 @@ namespace GreenCheap\User\Controller;
 
 use GreenCheap\Application as App;
 use GreenCheap\Application\Exception;
+use GreenCheap\Routing\Annotation\Request;
 use GreenCheap\User\Model\User;
+use JetBrains\PhpStorm\ArrayShape;
 
+/**
+ * Class ProfileController
+ * @package GreenCheap\User\Controller
+ */
 class ProfileController
 {
-    public function indexAction()
+    /**
+     * @return array
+     */
+    public function indexAction(): array
     {
         $user = App::user();
 
@@ -32,8 +41,11 @@ class ProfileController
 
     /**
      * @Request({"user": "array"}, csrf=true)
+     * @param $data
+     * @return array
      */
-    public function saveAction($data)
+    #[ArrayShape(['message' => "string"])]
+    public function saveAction($data): array
     {
         $user = App::user();
 

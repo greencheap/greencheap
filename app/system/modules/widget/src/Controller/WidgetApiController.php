@@ -3,6 +3,9 @@
 namespace GreenCheap\Widget\Controller;
 
 use GreenCheap\Application as App;
+use GreenCheap\Routing\Annotation\Request;
+use GreenCheap\Routing\Annotation\Route;
+use GreenCheap\User\Annotation\Access;
 use GreenCheap\Widget\Model\Widget;
 
 /**
@@ -13,7 +16,7 @@ class WidgetApiController
     /**
      * @Route("/", methods="GET")
      */
-    public function indexAction()
+    public function indexAction(): array
     {
         $widgets = Widget::findAll();
         $positions = App::position()->all();
@@ -34,11 +37,13 @@ class WidgetApiController
 
     /**
      * @Route("/{id}", methods="GET", requirements={"id"="\d+"})
+     * @param $id
+     * @return mixed
      */
-    public function getAction($id)
+    public function getAction($id): mixed
     {
         if (!$widget = Widget::find($id)) {
-            App::abort(404, 'Widget not found.');
+           return App::abort(404, 'Widget not found.');
         }
 
         return $widget;
@@ -46,8 +51,11 @@ class WidgetApiController
 
     /**
      * @Request({"position", "ids": "array"}, csrf=true)
+     * @param $position
+     * @param $ids
+     * @return array
      */
-    public function assignAction($position, $ids)
+    public function assignAction($position, $ids): array
     {
         App::position()->assign($position, $ids);
 
@@ -58,17 +66,20 @@ class WidgetApiController
      * @Route("/", methods="POST")
      * @Route("/{id}", methods="POST", requirements={"id"="\d+"})
      * @Request({"widget": "array", "id": "int"}, csrf=true)
+     * @param $data
+     * @param int $id
+     * @return array
      */
     public function saveAction($data, $id = 0)
     {
         if (!$id) {
             $widget = Widget::create();
         } else if (!$widget = Widget::find($id)) {
-            App::abort(404, 'Widget not found.');
+            return App::abort(404, 'Widget not found.');
         }
 
         if (empty($data['title'])) {
-            App::abort(400, 'Widget title empty.');
+            return App::abort(400, 'Widget title empty.');
         }
 
         $widget->save($data);
@@ -79,6 +90,8 @@ class WidgetApiController
     /**
      * @Route("/{id}", methods="DELETE", requirements={"id"="\d+"})
      * @Request({"id": "int"}, csrf=true)
+     * @param $id
+     * @return string[]
      */
     public function deleteAction($id)
     {
@@ -94,8 +107,10 @@ class WidgetApiController
     /**
      * @Route(methods="POST")
      * @Request({"ids": "int[]"}, csrf=true)
+     * @param array $ids
+     * @return array
      */
-    public function copyAction($ids = [])
+    public function copyAction($ids = []): array
     {
         foreach ($ids as $id) {
             if ($widget = Widget::find((int) $id)) {
@@ -113,8 +128,10 @@ class WidgetApiController
     /**
      * @Route("/bulk", methods="POST")
      * @Request({"widgets": "array"}, csrf=true)
+     * @param array $widgets
+     * @return array
      */
-    public function bulkSaveAction($widgets = [])
+    public function bulkSaveAction($widgets = []): array
     {
         foreach ($widgets as $data) {
             $this->saveAction($data, isset($data['id']) ? $data['id'] : 0);
@@ -126,8 +143,10 @@ class WidgetApiController
     /**
      * @Route("/bulk", methods="DELETE")
      * @Request({"ids": "array"}, csrf=true)
+     * @param array $ids
+     * @return array
      */
-    public function bulkDeleteAction($ids = [])
+    public function bulkDeleteAction($ids = []): array
     {
         foreach (array_filter($ids) as $id) {
             $this->deleteAction($id);

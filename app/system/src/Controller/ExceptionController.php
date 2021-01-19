@@ -7,6 +7,10 @@ use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class ExceptionController
+ * @package GreenCheap\System\Controller
+ */
 class ExceptionController
 {
     /**
@@ -39,7 +43,7 @@ class ExceptionController
      * @param  int    $level
      * @return string
      */
-    protected function getAndCleanOutputBuffering($level)
+    protected function getAndCleanOutputBuffering($level): string
     {
         if (ob_get_level() <= $level) {
             return '';

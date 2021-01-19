@@ -3,13 +3,19 @@
 namespace GreenCheap\Finder\Controller;
 
 use GreenCheap\Application as App;
+use GreenCheap\User\Annotation\Access;
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * @Access("system: manage storage", admin=true)
  */
 class StorageController
 {
-    public function indexAction()
+    /**
+     * @return array
+     */
+    #[ArrayShape(['$view' => "array", 'root' => "mixed", 'mode' => "string"])]
+    public function indexAction():array
     {
         return [
             '$view' => [

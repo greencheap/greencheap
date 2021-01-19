@@ -3,8 +3,14 @@
 namespace GreenCheap\Routing\Loader;
 
 use Doctrine\Common\Annotations\Annotation;
+/**
+ * @deprecated
+ * use Doctrine\Common\Annotations\SimpleAnnotationReader;
+ * to
+ * use Doctrine\Common\Annotations\AnnotationReader;
+ */
+use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\Reader;
-use Doctrine\Common\Annotations\SimpleAnnotationReader;
 use GreenCheap\Routing\Annotation\Route as RouteAnnotation;
 use GreenCheap\Routing\Route;
 
@@ -139,8 +145,8 @@ class AnnotationLoader implements LoaderInterface
     protected function getAnnotationReader()
     {
         if (!$this->reader) {
-            $this->reader = new SimpleAnnotationReader();
-            $this->reader->addNamespace('GreenCheap\Routing\Annotation');
+            $this->reader = new AnnotationReader();
+            $this->reader->addGlobalIgnoredNamespace('GreenCheap\Routing\Annotation');
         }
 
         return $this->reader;

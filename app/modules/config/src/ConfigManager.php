@@ -107,8 +107,9 @@ class ConfigManager implements \IteratorAggregate
      * Removes a config.
      *
      * @param string $name
+     * @throws \Doctrine\DBAL\Exception
      */
-    public function remove($name)
+    public function remove(string $name)
     {
         $this->connection->delete($this->table, compact('name'));
     }

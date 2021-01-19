@@ -5,6 +5,7 @@ namespace GreenCheap\Notifications\Controller;
 use GreenCheap\Application as App;
 use GreenCheap\Notifications\Model\Notifications;
 use GreenCheap\Routing\Annotation\Request;
+use GreenCheap\Routing\Annotation\Route;
 use GreenCheap\User\Annotation\Access;
 
 /**
@@ -30,7 +31,7 @@ class ApiNotifications
      * @Route("/get" , name="get")
      * @Request(csrf=true)
      */
-    public function indexAction()
+    public function indexAction(): array
     {
         if($this->user->isAnonymous()){
             return App::abort(401 , __('Unauthorized'));
@@ -58,9 +59,9 @@ class ApiNotifications
      * @Route(methods="POST")
      * @Request({"notification":"array"} , csrf=true)
      * @param array $notification
-     * @return array|void
+     * @return array
      */
-    public function readAction( array $notification )
+    public function readAction( array $notification ): array
     {
         $id = $notification['id'];
         if( !$query = Notifications::where(compact('id'))->first() ){

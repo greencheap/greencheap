@@ -3,8 +3,11 @@
 namespace GreenCheap\User\Controller;
 
 use GreenCheap\Application as App;
+use GreenCheap\Routing\Annotation\Request;
+use GreenCheap\User\Annotation\Access;
 use GreenCheap\User\Model\Role;
 use GreenCheap\User\Model\User;
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * @Access(admin=true)
@@ -14,8 +17,12 @@ class UserController
     /**
      * @Access("user: manage users")
      * @Request({"filter": "array", "page":"int"})
+     * @param array $filter
+     * @param null $page
+     * @return array
      */
-    public function indexAction($filter = [], $page = null)
+    #[ArrayShape(['$view' => "array", '$data' => "array[]"])]
+    public function indexAction($filter = [], $page = null): array
     {
         $roles = $this->getRoles();
         unset($roles[Role::ROLE_AUTHENTICATED]);
@@ -43,7 +50,8 @@ class UserController
      * @param int $id
      * @return array[]
      */
-    public function editAction($id = 0)
+    #[ArrayShape(['$view' => "array", '$data' => "array"])]
+    public function editAction($id = 0): array
     {
         if (!$id) {
             $user = User::create(['roles' => [Role::ROLE_AUTHENTICATED]]);
@@ -71,7 +79,8 @@ class UserController
     /**
      * @Access("user: manage user permissions")
      */
-    public function permissionsAction()
+    #[ArrayShape(['$view' => "array", '$data' => "array"])]
+    public function permissionsAction(): array
     {
         return [
             '$view' => [
@@ -88,8 +97,11 @@ class UserController
     /**
      * @Access("user: manage user permissions")
      * @Request({"id": "int"})
+     * @param null $id
+     * @return array
      */
-    public function rolesAction($id = null)
+    #[ArrayShape(['$view' => "array", '$config' => "array|null[]", '$data' => "array"])]
+    public function rolesAction($id = null): array
     {
         return [
             '$view' => [
@@ -109,7 +121,8 @@ class UserController
     /**
      * @Access("system: access settings")
      */
-    public function settingsAction()
+    #[ArrayShape(['$view' => "array", '$data' => "array"])]
+    public function settingsAction(): array
     {
         return [
             '$view' => [
@@ -125,10 +138,10 @@ class UserController
     /**
      * Gets the user roles.
      *
-     * @param  User $user
+     * @param User|null $user
      * @return array
      */
-    protected function getRoles(User $user = null)
+    protected function getRoles(User $user = null): array
     {
         $roles = [];
         $self  = $user && $user->id === App::user()->id;

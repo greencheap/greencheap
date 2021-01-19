@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 trait RouterTrait
 {
     /**
+     * @param $code
+     * @param null $message
+     * @param array $headers
      * @see HttpKernel::abort()
      */
     public static function abort($code, $message = null, array $headers = [])

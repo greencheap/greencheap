@@ -5,13 +5,22 @@ namespace GreenCheap\Finder\Controller;
 use GreenCheap\Application as App;
 use GreenCheap\Finder\Event\FileAccessEvent;
 use GreenCheap\Kernel\Exception\ForbiddenException;
+use GreenCheap\Routing\Annotation\Request;
+use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
 
+/**
+ * Class FinderController
+ * @package GreenCheap\Finder\Controller
+ */
 class FinderController
 {
     /**
      * @Request({"path"})
+     * @param $path
+     * @return array
      */
-    public function indexAction($path)
+    public function indexAction($path): array
     {
         if (!$dir = $this->getPath()) {
             return $this->error(__('Invalid path.'));
@@ -59,8 +68,10 @@ class FinderController
 
     /**
      * @Request({"name"})
+     * @param $name
+     * @return array
      */
-    public function createFolderAction($name)
+    public function createFolderAction($name): array
     {
         if (!$this->isValidFilename($name)) {
             return $this->error(__('Invalid file name.'));
@@ -92,8 +103,11 @@ class FinderController
 
     /**
      * @Request({"oldname", "newname"})
+     * @param $oldname
+     * @param $newname
+     * @return array
      */
-    public function renameAction($oldname, $newname)
+    public function renameAction($oldname, $newname): array
     {
         if (!$this->isValidFilename($newname)) {
             return $this->error(__('Invalid file name.'));
@@ -116,8 +130,10 @@ class FinderController
 
     /**
      * @Request({"names": "array"})
+     * @param $names
+     * @return array
      */
-    public function removeFilesAction($names)
+    public function removeFilesAction($names): array
     {
         foreach ($names as $name) {
 
@@ -142,7 +158,10 @@ class FinderController
         return $this->success(__('Removed selected.'));
     }
 
-    public function uploadAction()
+    /**
+     * @return array
+     */
+    public function uploadAction(): array
     {
         try {
 
@@ -181,7 +200,11 @@ class FinderController
         }
     }
 
-    protected function getMode($path)
+    /**
+     * @param $path
+     * @return string
+     */
+    protected function getMode($path): string
     {
         $mode = App::trigger(new FileAccessEvent('system.finder'))->mode($path);
 
@@ -196,7 +219,11 @@ class FinderController
         return $mode;
     }
 
-    protected function formatFileSize($size)
+    /**
+     * @param $size
+     * @return string
+     */
+    protected function formatFileSize($size): string
     {
       if ($size == 0) {
           return __('n/a');
@@ -207,7 +234,11 @@ class FinderController
       return sprintf($sizes[$i], $size);
     }
 
-    protected function getPath($path = '')
+    /**
+     * @param string $path
+     * @return bool|string
+     */
+    protected function getPath($path = ''): bool|string
     {
         $root = strtr(App::path(), '\\', '/');
         $path = $this->normalizePath($root.'/'.App::request()->get('root').'/'.App::request()->get('path').'/'.$path);
@@ -218,10 +249,10 @@ class FinderController
     /**
      * Normalizes the given path
      *
-     * @param  string $path
+     * @param string $path
      * @return string
      */
-    protected function normalizePath($path)
+    protected function normalizePath(string $path): string
     {
         $path   = str_replace(['\\', '//'], '/', $path);
         $prefix = preg_match('|^(?P<prefix>([a-zA-Z]+:)?//?)|', $path, $matches) ? $matches['prefix'] : '';
@@ -240,7 +271,11 @@ class FinderController
         return $prefix . implode('/', $tokens);
     }
 
-    protected function isValidFilename($name)
+    /**
+     * @param $name
+     * @return bool
+     */
+    protected function isValidFilename($name): bool
     {
         if (empty($name)) {
             return false;
@@ -256,14 +291,26 @@ class FinderController
             return !preg_match('#[\\/:"*?<>|]#', $name);
         }
 
-        return false === strpos($name, '/');
+        return !str_contains($name, '/');
     }
 
-    protected function success($message) {
+    /**
+     * @param $message
+     * @return array
+     */
+    #[Pure]
+    protected function success($message): array
+    {
         return compact('message');
     }
 
-    protected function error($message) {
+    /**
+     * @param $message
+     * @return array
+     */
+    #[ArrayShape(['error' => "bool", 'message' => ""])]
+    protected function error($message): array
+    {
         return ['error' => true, 'message' => $message];
     }
 }

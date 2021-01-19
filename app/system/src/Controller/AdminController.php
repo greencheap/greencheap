@@ -4,8 +4,16 @@ namespace GreenCheap\System\Controller;
 
 use GreenCheap\Application as App;
 use GreenCheap\Auth\Auth;
+use GreenCheap\Routing\Annotation\Request;
+use GreenCheap\Routing\Annotation\Route;
+use GreenCheap\User\Annotation\Access;
 use GreenCheap\User\Model\User;
+use JetBrains\PhpStorm\ArrayShape;
 
+/**
+ * Class AdminController
+ * @package GreenCheap\System\Controller
+ */
 class AdminController
 {
     /**
@@ -19,8 +27,11 @@ class AdminController
     /**
      * @Route("/admin/login", defaults={"_maintenance"=true})
      * @Request({"redirect": "string", "message": "string"})
+     * @param string $redirect
+     * @param string $message
+     * @return array
      */
-    public function loginAction($redirect = '', $message = '')
+    public function loginAction($redirect = '', $message = ''): array
     {
         if (App::user()->isAuthenticated()) {
             return App::redirect('@system');
@@ -44,8 +55,11 @@ class AdminController
     /**
      * @Access(admin=true)
      * @Request({"order": "array"})
+     * @param $order
+     * @return array
      */
-    public function adminMenuAction($order)
+    #[ArrayShape(['message' => "mixed"])]
+    public function adminMenuAction($order): array
     {
         if (!$order) {
             App::abort(400, __('Missing order data.'));
@@ -58,6 +72,9 @@ class AdminController
         return ['message' => __('Order saved.')];
     }
 
+    /**
+     * @return array[]
+     */
     public static function getUnsplashImages():array
     {
         return [

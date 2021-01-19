@@ -2,7 +2,13 @@
 
 namespace GreenCheap\Database\ORM\Loader;
 
-use Doctrine\Common\Annotations\SimpleAnnotationReader;
+/**
+ * @deprecated
+ * use Doctrine\Common\Annotations\SimpleAnnotationReader;
+ * to
+ * use Doctrine\Common\Annotations\AnnotationReader;
+ */
+use Doctrine\Common\Annotations\AnnotationReader;
 use GreenCheap\Database\ORM\Annotation\Annotation;
 use GreenCheap\Database\ORM\Annotation\BelongsTo;
 use GreenCheap\Database\ORM\Annotation\Column;
@@ -135,8 +141,8 @@ class AnnotationLoader implements LoaderInterface
     protected function getAnnotation($from, $name)
     {
         if (!$this->reader) {
-            $this->reader = new SimpleAnnotationReader;
-            $this->reader->addNamespace($this->namespace);
+            $this->reader = new AnnotationReader();
+            $this->reader->addGlobalIgnoredNamespace($this->namespace);
         }
 
         $name = "{$this->namespace}\\$name";

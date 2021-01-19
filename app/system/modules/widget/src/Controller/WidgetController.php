@@ -3,7 +3,9 @@
 namespace GreenCheap\Widget\Controller;
 
 use GreenCheap\Application as App;
+use GreenCheap\Routing\Annotation\Request;
 use GreenCheap\Site\Model\Node;
+use GreenCheap\User\Annotation\Access;
 use GreenCheap\User\Model\Role;
 use GreenCheap\Widget\Model\Widget;
 
@@ -12,7 +14,10 @@ use GreenCheap\Widget\Model\Widget;
  */
 class WidgetController
 {
-    public function indexAction()
+    /**
+     * @return array[]
+     */
+    public function indexAction(): array
     {
         return [
             '$view' => [
@@ -32,13 +37,16 @@ class WidgetController
 
     /**
      * @Request({"id": "int", "type": "string"})
+     * @param int $id
+     * @param null $type
+     * @return array[]
      */
-    public function editAction($id = 0, $type = null)
+    public function editAction($id = 0, $type = null): array
     {
         if (!$id) {
             $widget = Widget::create(['type' => $type]);
         } else if (!$widget = Widget::find($id)) {
-            App::abort(404, 'Widget not found.');
+            return App::abort(404, 'Widget not found.');
         }
 
         return [

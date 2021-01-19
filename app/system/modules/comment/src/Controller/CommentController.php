@@ -3,9 +3,11 @@
 namespace GreenCheap\Comment\Controller;
 
 use GreenCheap\Application as App;
+use GreenCheap\Routing\Annotation\Request;
+use GreenCheap\Routing\Annotation\Route;
+use GreenCheap\User\Annotation\Access;
 use GreenCheap\User\Model\User;
 use GreenCheap\Comment\Model\Comment;
-use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * @Access(admin=true)
@@ -13,14 +15,14 @@ use JetBrains\PhpStorm\ArrayShape;
 class CommentController
 {
     /**
-     * @Acces("comment: access comment")
+     * @Access("comment: access comment")
      * @Route("/page" , name="page")
      * @Request({"filter":"array", "page":"int"})
      * @param array $filter
      * @param int $page
      * @return array
      */
-    public function indexAction(array $filter = [] , int $page = 0): array
+    public function indexAction(array $filter = [] , int $page = 0):array
     {
         $db = App::db();
 
@@ -55,6 +57,8 @@ class CommentController
     /**
      * @Route("page/edit/{id}", name="page/edit", requirements={"id"="\d+"})
      * @Access("comment: manage all comment")
+     * @param int $id
+     * @return array
      */
     public function editAction(int $id = 0):array
     {

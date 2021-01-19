@@ -4,6 +4,7 @@ namespace GreenCheap\Installer\Controller;
 
 use GreenCheap\Application as App;
 use GreenCheap\Installer\Installer;
+use GreenCheap\Routing\Annotation\Request;
 
 class InstallerController
 {

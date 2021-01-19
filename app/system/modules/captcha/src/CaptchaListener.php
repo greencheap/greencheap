@@ -2,8 +2,14 @@
 
 namespace GreenCheap\Captcha;
 
+/**
+ * @deprecated
+ * use Doctrine\Common\Annotations\SimpleAnnotationReader;
+ * to
+ * use Doctrine\Common\Annotations\AnnotationReader;
+ */
+use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\Reader;
-use Doctrine\Common\Annotations\SimpleAnnotationReader;
 use GreenCheap\Application as App;
 use GreenCheap\Captcha\Annotation\Captcha;
 use GreenCheap\Event\EventSubscriberInterface;
@@ -31,8 +37,8 @@ class CaptchaListener implements EventSubscriberInterface
     public function onConfigureRoute($event, $route)
     {
         if (!$this->reader) {
-            $this->reader = new SimpleAnnotationReader;
-            $this->reader->addNamespace('GreenCheap\Captcha\Annotation');
+            $this->reader = new AnnotationReader();
+            $this->reader->addGlobalIgnoredNamespace('GreenCheap\Captcha\Annotation');
         }
 
         if (!$route->getControllerClass()) {
