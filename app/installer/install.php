@@ -27,11 +27,24 @@ if (App::db()->getUtility()->tableExists('@blog_post')) {
         'user_id' => 1,
         'slug' => 'hello-greencheap',
         'title' => 'Hello GreenCheap',
+        'categories_id' => 1,
         'status' => 3,
         'date' => date('Y-m-d H:i:s'),
         'modified' => date('Y-m-d H:i:s'),
         'content' => "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         'excerpt' => '',
         'data' => '{"title":null,"markdown":true}'
+    ]);
+}
+
+if (App::db()->getUtility()->tableExists('@blog_categories')) {
+    App::db()->insert('@blog_categories' , [
+        'title' => 'Uncategorized',
+        'slug' => 'uncategorized',
+        'status' => 3,
+        'date' => date('Y-m-d H:i:s'),
+        'user_id' => 1,
+        'roles' => null,
+        'excerpt' => "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\nconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     ]);
 }

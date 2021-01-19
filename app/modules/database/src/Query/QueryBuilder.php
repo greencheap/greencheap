@@ -260,7 +260,7 @@ class QueryBuilder
 
         if($this->connection->getDatabasePlatform() instanceof PostgreSQL100Platform) {
             $value = $this->connection->quote(current($values));
-            return $this->addWhere("{$column} {$not} IN ({$value})", [], $type);
+            return $this->addWhere("{$not} {$value} = ANY (string_to_array({$column}, ','))", [], $type);
         }
 
         $values = implode('|', (array) $values);

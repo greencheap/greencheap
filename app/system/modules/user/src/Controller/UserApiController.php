@@ -72,10 +72,9 @@ class UserApiController
         $count   = $query->count();
         $pages   = ceil($count / $limit);
         $page    = max(0, min($pages - 1, $page));
-        $sql   = $query->getSql();
         $users   = array_values($query->offset($page * $limit)->limit($limit)->orderBy($order[1], $order[2])->get());
 
-        return compact('users', 'pages', 'count', 'sql');
+        return compact('users', 'pages', 'count');
     }
 
     /**
@@ -129,7 +128,7 @@ class UserApiController
     public function getAction($id)
     {
         if (!$user = User::find($id)) {
-            App::abort(404, 'User not found.');
+            return App::abort(404, 'User not found.');
         }
 
         return $user;
@@ -139,6 +138,10 @@ class UserApiController
      * @Route("/", methods="POST")
      * @Route("/{id}", methods="POST", requirements={"id"="\d+"})
      * @Request({"user": "array", "password", "id": "int"}, csrf=true)
+     * @param $data
+     * @param null $password
+     * @param int $id
+     * @return array
      */
     public function saveAction($data, $password = null, $id = 0)
     {

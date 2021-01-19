@@ -214,11 +214,11 @@ class Metadata
      *
      * @param object $entity
      * @param string $name
-     * @param mixed  $value
-     * @param bool   $column
-     * @param bool   $convert
+     * @param mixed $value
+     * @param bool $column
+     * @param bool $convert
      */
-    public function setValue($entity, $name, $value, $column = false, $convert = false)
+    public function setValue(object $entity, $name, $value, $column = false, $convert = false)
     {
         if ($column && isset($this->fieldNames[$name])) {
             $name = $this->fieldNames[$name];

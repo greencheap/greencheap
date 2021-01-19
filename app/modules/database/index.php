@@ -3,6 +3,7 @@
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Logging\DebugStack;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use GreenCheap\Database\ORM\EntityManager;
 use GreenCheap\Database\ORM\Loader\AnnotationLoader;
 use GreenCheap\Database\ORM\MetadataManager;
@@ -52,8 +53,8 @@ $config = [
             return new DebugStack();
         };
 
-        Type::overrideType(Type::SIMPLE_ARRAY, '\GreenCheap\Database\Types\SimpleArrayType');
-        Type::overrideType(Type::JSON_ARRAY, '\GreenCheap\Database\Types\JsonArrayType');
+        Type::overrideType(Types::SIMPLE_ARRAY, '\GreenCheap\Database\Types\SimpleArrayType');
+        Type::overrideType(Types::JSON_ARRAY, '\GreenCheap\Database\Types\JsonArrayType');
     },
 
     'autoload' => [

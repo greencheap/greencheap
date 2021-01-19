@@ -3,7 +3,7 @@
 namespace GreenCheap\Database\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\JsonArrayType as BaseJsonArrayType;
+use Doctrine\DBAL\Types\JsonType as BaseJsonArrayType;
 
 class JsonArrayType extends BaseJsonArrayType
 {
