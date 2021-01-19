@@ -3,6 +3,9 @@
 namespace GreenCheap\Site\Model;
 
 use GreenCheap\Application as App;
+use GreenCheap\Database\ORM\Annotation\Column;
+use GreenCheap\Database\ORM\Annotation\Entity;
+use GreenCheap\Database\ORM\Annotation\Id;
 use GreenCheap\System\Model\DataModelTrait;
 use GreenCheap\System\Model\NodeInterface;
 use GreenCheap\System\Model\NodeTrait;
@@ -16,7 +19,10 @@ class Node implements NodeInterface, \JsonSerializable
 {
     use AccessModelTrait, DataModelTrait, NodeModelTrait, NodeTrait;
 
-    /** @Column(type="integer") @Id */
+    /**
+     * @Column(type="integer")
+     * @Id
+     */
     public $id;
 
     /** @Column(type="integer") */
@@ -47,7 +53,7 @@ class Node implements NodeInterface, \JsonSerializable
     public $menu = '';
 
     /** @var array */
-    protected static $properties = [
+    protected static array $properties = [
         'accessible' => 'isAccessible'
     ];
 
@@ -57,12 +63,16 @@ class Node implements NodeInterface, \JsonSerializable
      * @param  mixed  $referenceType
      * @return string
      */
-    public function getUrl($referenceType = false)
+    public function getUrl($referenceType = false): string
     {
         return App::url($this->link, [], $referenceType);
     }
 
-    public function isAccessible(User $user = null)
+    /**
+     * @param User|null $user
+     * @return bool
+     */
+    public function isAccessible(User $user = null): bool
     {
         return $this->status && $this->hasAccess($user ?: App::user());
     }

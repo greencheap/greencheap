@@ -144,13 +144,14 @@ class Connection extends BaseConnection
     /**
      * Prepares and executes an SQL query and returns the result as an array of objects.
      *
-     * @param  string $statement
-     * @param  array  $params
-     * @param  string $class
-     * @param  array  $args
+     * @param string $statement
+     * @param array $params
+     * @param string $class
+     * @param array $args
      * @return array
+     * @throws Driver\Exception
      */
-    public function fetchAllObjects($statement, array $params = [], $class = 'stdClass', $args = [])
+    public function fetchAllObjects($statement, array $params = [], $class = 'stdClass', $args = []): array
     {
         return $this->executeQuery($statement, $params)->fetchAllAssociative(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class, $args);
     }

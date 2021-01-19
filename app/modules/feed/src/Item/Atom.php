@@ -29,7 +29,7 @@ class Atom extends Item
      */
     protected function removeNamespace($name)
     {
-        return 0 === strpos($name, 'atom:') ? substr($name, 5) : $name;
+        return str_starts_with($name, 'atom:') ? substr($name, 5) : $name;
     }
 
     /**

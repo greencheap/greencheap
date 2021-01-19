@@ -4,6 +4,9 @@ namespace GreenCheap\User\Model;
 
 use GreenCheap\Application\Exception;
 use GreenCheap\Auth\UserInterface;
+use GreenCheap\Database\ORM\Annotation\Column;
+use GreenCheap\Database\ORM\Annotation\Entity;
+use GreenCheap\Database\ORM\Annotation\Id;
 use GreenCheap\System\Model\DataModelTrait;
 use GreenCheap\Application as App;
 
@@ -28,7 +31,10 @@ class User implements UserInterface, \JsonSerializable
      */
     const STATUS_ACTIVE = 1;
 
-    /** @Column(type="integer") @Id */
+    /**
+     * @Column(type="integer")
+     * @Id
+     */
     public $id;
 
     /** @Column */

@@ -44,7 +44,7 @@ class ControllerResolver
             throw new \InvalidArgumentException(sprintf('Controller "%s" for URI "%s" is not callable.', get_class($controller), $request->getPathInfo()));
         }
 
-        if (false === strpos($controller, ':')) {
+        if (!str_contains($controller, ':')) {
             if (method_exists($controller, '__invoke')) {
                 return $this->instantiateController($controller);
             } elseif (function_exists($controller)) {

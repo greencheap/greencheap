@@ -2,7 +2,13 @@
 
 namespace GreenCheap\Info;
 
-use Doctrine\DBAL\Driver\PDOConnection;
+/**
+ * @deprecated
+ * use Doctrine\DBAL\Driver\PDOConnection;
+ * to
+ * use Doctrine\DBAL\Driver\PDO\Connection;
+ */
+use Doctrine\DBAL\Driver\PDO\Connection;
 use GreenCheap\Application as App;
 use Symfony\Component\HttpFoundation\ServerBag;
 
@@ -20,7 +26,7 @@ class InfoHelper
         $info                  = [];
         $info['php']           = php_uname();
 
-        if ($pdo = App::db()->getWrappedConnection() and $pdo instanceof PDOConnection) {
+        if ($pdo = App::db()->getWrappedConnection() and $pdo instanceof Connection) {
             $info['dbdriver']  = $pdo->getAttribute(\PDO::ATTR_DRIVER_NAME);
             $info['dbversion'] = $pdo->getAttribute(\PDO::ATTR_SERVER_VERSION);
             $info['dbclient']  = $pdo->getAttribute(\PDO::ATTR_CLIENT_VERSION);
@@ -80,7 +86,7 @@ class InfoHelper
      */
     protected function getRelativePath($path)
     {
-        if (0 === strpos($path, App::path())) {
+        if (str_starts_with($path, App::path())) {
             $path = ltrim(str_replace('\\', '/', substr($path, strlen(App::path()))), '/');
         }
 

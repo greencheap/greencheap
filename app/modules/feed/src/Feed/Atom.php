@@ -80,7 +80,7 @@ class Atom extends Feed
      */
     protected function buildElement(\DOMDocument $doc, array $element)
     {
-        $element[0] = 0 === strpos($element[0], 'atom:') ? substr($element[0], 5) : $element[0];
+        $element[0] = str_starts_with($element[0], 'atom:') ? substr($element[0], 5) : $element[0];
         return parent::buildElement($doc, $element);
     }
 

@@ -2,6 +2,11 @@
 
 namespace GreenCheap\User\Model;
 
+use GreenCheap\Database\ORM\Annotation\Column;
+use GreenCheap\Database\ORM\Annotation\Entity;
+use GreenCheap\Database\ORM\Annotation\Id;
+use JetBrains\PhpStorm\Pure;
+
 /**
  * @Entity(tableClass="@system_role")
  */
@@ -30,7 +35,10 @@ class Role implements \JsonSerializable
      */
     const ROLE_ADMINISTRATOR = 3;
 
-    /** @Column(type="integer") @Id */
+    /**
+     * @Column(type="integer")
+     * @Id
+     */
     public $id;
 
     /** @Column(type="string") */
@@ -53,7 +61,8 @@ class Role implements \JsonSerializable
     /**
      * {@inheritdoc}
      */
-    public function hasPermission($permission)
+    #[Pure]
+    public function hasPermission($permission): bool
     {
         return in_array($permission, $this->permissions);
     }

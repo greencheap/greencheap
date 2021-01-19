@@ -11,7 +11,13 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
-use GreenCheap\Routing\Matcher\Dumper\PhpMatcherDumper;
+/**
+ * @deprecated
+ * use GreenCheap\Routing\Matcher\Dumper\PhpMatcherDumper;
+ * to
+ * use Symfony\Component\Routing\Matcher\Dumper\CompiledUrlMatcherDumper;
+ */
+use Symfony\Component\Routing\Matcher\Dumper\CompiledUrlMatcherDumper;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
@@ -175,7 +181,7 @@ class Router implements RouterInterface, UrlGeneratorInterface
      *
      * @return UrlMatcher
      */
-    public function getMatcher()
+    public function getMatcher(): UrlMatcher
     {
         if (!$this->matcher) {
             if ($cache = $this->getCache('%s/%s.matcher.cache')) {
@@ -184,7 +190,7 @@ class Router implements RouterInterface, UrlGeneratorInterface
 
                 if (!$cache['fresh']) {
                     $options = ['class' => $class, 'base_class' => $this->options['matcher']];
-                    $this->writeCache($cache['file'], (new PhpMatcherDumper($this->getRouteCollection()))->dump($options));
+                    $this->writeCache($cache['file'], (new CompiledUrlMatcherDumper($this->getRouteCollection()))->dump($options));
                 }
 
                 require_once $cache['file'];

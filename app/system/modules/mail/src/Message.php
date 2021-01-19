@@ -86,7 +86,7 @@ class Message extends Swift_Message implements MessageInterface
         $attachment = Swift_Image::fromPath($file);
 
         if ($cid) {
-            $attachment->setId(strpos($cid, 'cid:') === 0 ? $cid : 'cid:'.$cid);
+            $attachment->setId(str_starts_with($cid, 'cid:') ? $cid : 'cid:'.$cid);
         }
 
         return $this->embed($attachment);

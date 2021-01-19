@@ -2,7 +2,8 @@
 
 namespace GreenCheap\Site\Model;
 
-use GreenCheap\Application as App;
+use GreenCheap\Database\ORM\Annotation\Deleting;
+use GreenCheap\Database\ORM\Annotation\Saving;
 use GreenCheap\Database\ORM\ModelTrait;
 
 trait NodeModelTrait
@@ -16,11 +17,11 @@ trait NodeModelTrait
     /**
      * Retrieves an entity by its identifier.
      *
-     * @param  mixed $id
-     * @param  bool  $cached
+     * @param mixed $id
+     * @param bool $cached
      * @return static
      */
-    public static function find($id, $cached = false)
+    public static function find(mixed $id, $cached = false)
     {
         if (!$cached || !isset(self::$nodes[$id])) {
             self::$nodes[$id] = self::modelFind($id);
@@ -59,7 +60,7 @@ trait NodeModelTrait
      *
      * @return int
      */
-    public static function fixOrphanedNodes()
+    public static function fixOrphanedNodes(): int
     {
         if ($orphaned = self::getConnection()
             ->createQueryBuilder()
@@ -78,6 +79,9 @@ trait NodeModelTrait
 
     /**
      * @Saving
+     * @param $event
+     * @param Node $node
+     * @throws \Doctrine\DBAL\Exception
      */
     public static function saving($event, Node $node)
     {
@@ -128,12 +132,14 @@ trait NodeModelTrait
                     ->from('@system_node')
                     ->where(['parent_id' => $node->parent_id])
                     ->execute()
-                    ->fetchColumn();
+                    ->fetchOne();
         }
     }
 
     /**
      * @Deleting
+     * @param $event
+     * @param Node $node
      */
     public static function deleting($event, Node $node)
     {

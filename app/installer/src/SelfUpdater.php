@@ -68,7 +68,7 @@ class SelfUpdater
 
             $fileList = array_values(array_filter($fileList, function ($file) {
                 foreach ($this->ignoreFolder as $ignore) {
-                    if(strpos($file, $ignore) === 0) {
+                    if(str_starts_with($file, $ignore)) {
                         return false;
                     }
                 }

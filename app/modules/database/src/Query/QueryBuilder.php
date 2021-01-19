@@ -7,8 +7,9 @@ use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\DBAL\Platforms\PostgreSQL100Platform;
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use GreenCheap\Database\Connection;
+use JetBrains\PhpStorm\Pure;
 use PDO;
 
 class QueryBuilder
@@ -504,7 +505,7 @@ class QueryBuilder
      * @param  mixed $columns
      * @return mixed
      */
-    public function first($columns = ['*'])
+    public function first($columns = ['*']): mixed
     {
         return $this->limit(1)->execute($columns)->fetch(PDO::FETCH_ASSOC);
     }
@@ -515,7 +516,7 @@ class QueryBuilder
      * @param  string $column
      * @return int
      */
-    public function count($column = '*')
+    public function count($column = '*'): int
     {
         return (int) $this->aggregate('count', $column);
     }
@@ -523,10 +524,10 @@ class QueryBuilder
     /**
      * Execute the query and get the "min" result.
      *
-     * @param  string $column
+     * @param string $column
      * @return mixed
      */
-    public function min($column)
+    public function min(string $column): mixed
     {
         return $this->aggregate('min', $column);
     }
@@ -534,10 +535,10 @@ class QueryBuilder
     /**
      * Execute the query and get the "max" result.
      *
-     * @param  string $column
+     * @param string $column
      * @return mixed
      */
-    public function max($column)
+    public function max(string $column): mixed
     {
         return $this->aggregate('max', $column);
     }
@@ -545,10 +546,10 @@ class QueryBuilder
     /**
      * Execute the query and get the "sum" result.
      *
-     * @param  string $column
+     * @param string $column
      * @return mixed
      */
-    public function sum($column)
+    public function sum(string $column): mixed
     {
         return $this->aggregate('sum', $column);
     }
@@ -556,10 +557,10 @@ class QueryBuilder
     /**
      * Execute the query and get the "avg" result.
      *
-     * @param  string $column
+     * @param string $column
      * @return mixed
      */
-    public function avg($column)
+    public function avg(string $column): mixed
     {
         return $this->aggregate('avg', $column);
     }
@@ -567,11 +568,11 @@ class QueryBuilder
     /**
      * Execute the query with an aggregate function.
      *
-     * @param  string $function
-     * @param  string $column
+     * @param string $function
+     * @param string $column
      * @return mixed
      */
-    public function aggregate($function, $column)
+    public function aggregate(string $function, string $column): mixed
     {
         $select  = $this->getPart('select');
         $results = $this->setPart('select', sprintf('%s(%s) aggregates', strtoupper($function), $column))->get();
@@ -589,7 +590,7 @@ class QueryBuilder
      * @param  mixed $columns
      * @return Statement
      */
-    public function execute($columns = ['*'])
+    public function execute($columns = ['*']): Statement
     {
         if (empty($this->parts['select'])) {
             $this->select($columns);
@@ -604,7 +605,7 @@ class QueryBuilder
      * @param  array $values
      * @return int
      */
-    public function update(array $values)
+    public function update(array $values): int
     {
         foreach ($values as $key => $value) {
             $name          = $this->parameter($key);
@@ -620,7 +621,7 @@ class QueryBuilder
      *
      * @return int
      */
-    public function delete()
+    public function delete(): int
     {
         return $this->executeQuery('delete');
     }
@@ -630,7 +631,7 @@ class QueryBuilder
      *
      * @return string
      */
-    public function getSQL()
+    public function getSQL(): string
     {
         return $this->getSQLForSelect();
     }
@@ -638,7 +639,7 @@ class QueryBuilder
     /**
      * {@see QueryBuilder::getSQL}
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getSQLForSelect();
     }
@@ -648,6 +649,7 @@ class QueryBuilder
      *
      * @return QueryBuilder
      */
+    #[Pure]
     protected function newQuery()
     {
         return new static($this->connection);
@@ -659,20 +661,13 @@ class QueryBuilder
      * @param  string $type
      * @return mixed
      */
-    protected function executeQuery($type = 'select')
+    protected function executeQuery($type = 'select'): mixed
     {
-        switch ($type) {
-            case 'update':
-                $sql = $this->getSQLForUpdate();
-                break;
-
-            case 'delete':
-                $sql = $this->getSQLForDelete();
-                break;
-
-            default:
-                $sql = $this->getSQLForSelect();
-        }
+        $sql = match ($type) {
+            'update' => $this->getSQLForUpdate(),
+            'delete' => $this->getSQLForDelete(),
+            default => $this->getSQLForSelect(),
+        };
 
         if ($type == 'select') {
             return $this->connection->executeQuery($sql, $this->params, $this->guessParamTypes($this->params));
@@ -685,8 +680,9 @@ class QueryBuilder
      * Creates the "select" SQL string from the query parts.
      *
      * @return string
+     * @throws Exception
      */
-    protected function getSQLForSelect()
+    protected function getSQLForSelect(): string
     {
         extract($this->parts);
 
@@ -720,7 +716,7 @@ class QueryBuilder
      *
      * @return string
      */
-    protected function getSQLForUpdate()
+    protected function getSQLForUpdate(): string
     {
         extract($this->parts);
 
@@ -744,7 +740,7 @@ class QueryBuilder
      *
      * @return string
      */
-    protected function getSQLForDelete()
+    protected function getSQLForDelete(): string
     {
         extract($this->parts);
 
@@ -772,7 +768,7 @@ class QueryBuilder
         $types = [];
         foreach ($params as $key => $param) {
             if ($param instanceof \DateTimeInterface) {
-                $types[is_int($key) ? $key + 1 : $key] = Type::DATETIME;
+                $types[is_int($key) ? $key + 1 : $key] = Types::DATETIME_MUTABLE;
             }
         }
         return $types;

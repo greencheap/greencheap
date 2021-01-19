@@ -118,7 +118,7 @@ class MoFileLoader extends ArrayLoader
             fseek($stream, $offset);
             $singularId = fread($stream, $length);
 
-            if (strpos($singularId, "\000") !== false) {
+            if (str_contains($singularId, "\000")) {
                 list($singularId, $pluralId) = explode("\000", $singularId);
             }
 
@@ -129,7 +129,7 @@ class MoFileLoader extends ArrayLoader
             fseek($stream, $offset);
             $translated = fread($stream, $length);
 
-            if (strpos($translated, "\000") !== false) {
+            if (str_contains($translated, "\000")) {
                 $translated = explode("\000", $translated);
             }
 

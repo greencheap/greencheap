@@ -120,7 +120,7 @@ class MenuHelper extends Helper
             $depth = substr_count($node->path, '/');
             $parent = isset($nodes[$node->parent_id]) ? $nodes[$node->parent_id] : null;
 
-            $node->set('active', 0 === strpos($path, $node->path.'/'));
+            $node->set('active', str_starts_with($path, $node->path . '/'));
 
             if ($node->status !== 1
                 || $depth >= $maxDepth
@@ -128,7 +128,7 @@ class MenuHelper extends Helper
                 || $node->get('menu_hide')
                 || !($parameters['mode'] == 'all'
                     || $node->get('active')
-                    || 0 === strpos($node->path.'/', $rootPath)
+                    || str_starts_with($node->path . '/', $rootPath)
                     || $depth == $startLevel)
             ) {
                 $node->setParent();

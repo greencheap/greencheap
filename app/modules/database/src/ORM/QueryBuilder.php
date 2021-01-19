@@ -94,7 +94,7 @@ class QueryBuilder
             }
 
             // is nested ?
-            if (strpos($name, '.') !== false) {
+            if (str_contains($name, '.')) {
 
                 $progress = [];
 
@@ -126,7 +126,7 @@ class QueryBuilder
         $relations = [];
 
         foreach ($this->relations as $name => $constraints) {
-            if (strpos($name, '.') === false) {
+            if (!str_contains($name, '.')) {
 
                 $mapping = $this->metadata->getRelationMapping($name);
                 $query   = call_user_func("{$mapping['targetEntity']}::query");

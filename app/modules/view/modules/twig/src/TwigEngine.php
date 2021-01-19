@@ -6,6 +6,8 @@ use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Templating\StreamingEngineInterface;
 use Symfony\Component\Templating\TemplateNameParserInterface;
 use Symfony\Component\Templating\TemplateReferenceInterface;
+use Twig\Environment;
+use Twig\Error\LoaderError;
 
 class TwigEngine implements EngineInterface, StreamingEngineInterface
 {
@@ -15,10 +17,10 @@ class TwigEngine implements EngineInterface, StreamingEngineInterface
     /**
      * Constructor.
      *
-     * @param \Twig_Environment           $environment
+     * @param Environment $environment
      * @param TemplateNameParserInterface $parser
      */
-    public function __construct(\Twig_Environment $environment, TemplateNameParserInterface $parser)
+    public function __construct(Environment $environment, TemplateNameParserInterface $parser)
     {
         $this->environment = $environment;
         $this->parser = $parser;
@@ -47,7 +49,7 @@ class TwigEngine implements EngineInterface, StreamingEngineInterface
     {
         try {
             $this->environment->getLoader()->getSource((string) $name);
-        } catch (\Twig_Error_Loader $e) {
+        } catch (LoaderError $e) {
             return false;
         }
 
@@ -67,15 +69,16 @@ class TwigEngine implements EngineInterface, StreamingEngineInterface
     /**
      * Loads the given template.
      *
-     * @param  string|TemplateReferenceInterface|\Twig_Template $name
+     * @param string|TemplateReferenceInterface|\Twig_Template $name
      * @return \Twig_TemplateInterface
-     * @throws \InvalidArgumentException
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
     protected function load($name)
     {
         try {
             return $this->environment->loadTemplate((string) $name);
-        } catch (\Twig_Error_Loader $e) {
+        } catch (LoaderError $e) {
             throw new \InvalidArgumentException($e->getMessage(), $e->getCode(), $e);
         }
     }

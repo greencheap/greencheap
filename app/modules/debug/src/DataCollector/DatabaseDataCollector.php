@@ -28,7 +28,7 @@ class DatabaseDataCollector extends DoctrineCollector
     /**
      * {@inheritdoc}
      */
-    public function collect()
+    public function collect(): array
     {
         $driver = $this->connection->getDriver()->getName();
 

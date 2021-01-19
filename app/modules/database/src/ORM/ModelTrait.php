@@ -78,10 +78,10 @@ trait ModelTrait
     /**
      * Retrieves an entity by its identifier.
      *
-     * @param  mixed $id
+     * @param mixed $id
      * @return static
      */
-    public static function find($id)
+    public static function find(mixed $id)
     {
         return static::where([static::getMetadata()->getIdentifier() => $id])->first();
     }

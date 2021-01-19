@@ -243,7 +243,7 @@ class Arr
         foreach ($data as $keypath => $value) {
             $add = !$include;
             foreach ($keys as $key) {
-                if (0 === strpos($keypath, $key)) {
+                if (str_starts_with($keypath, $key)) {
                     $add = $include;
                     break;
                 }

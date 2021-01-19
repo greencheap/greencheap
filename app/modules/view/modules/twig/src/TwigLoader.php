@@ -5,6 +5,7 @@ namespace GreenCheap\Twig;
 use GreenCheap\View\Loader\FilesystemLoader;
 use Symfony\Component\Templating\TemplateNameParser;
 use Symfony\Component\Templating\TemplateNameParserInterface;
+use Twig\Error\LoaderError;
 use Twig\Loader\FilesystemLoader as Twig_Loader_Filesystem;
 
 class TwigLoader extends Twig_Loader_Filesystem
@@ -28,6 +29,7 @@ class TwigLoader extends Twig_Loader_Filesystem
 
     /**
      * {@inheritdoc}
+     * @throws LoaderError
      */
     protected function findTemplate($template, $throw = true)
     {
@@ -40,7 +42,7 @@ class TwigLoader extends Twig_Loader_Filesystem
         $file = $this->loader->load($this->parser->parse($template));
 
         if (false === $file || null === $file) {
-            throw new \Twig_Error_Loader(sprintf('Unable to find template "%s".', $key));
+            throw new LoaderError(sprintf('Unable to find template "%s".', $key));
         }
 
         return $this->cache[$key] = $file;

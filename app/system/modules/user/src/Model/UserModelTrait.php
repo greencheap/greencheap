@@ -2,6 +2,7 @@
 
 namespace GreenCheap\User\Model;
 
+use GreenCheap\Database\ORM\Annotation\Saving;
 use GreenCheap\Database\ORM\ModelTrait;
 
 trait UserModelTrait

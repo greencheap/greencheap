@@ -3,6 +3,7 @@
 namespace GreenCheap\User\Model;
 
 use GreenCheap\Application as App;
+use GreenCheap\Database\ORM\Annotation\Column;
 
 trait AccessModelTrait
 {

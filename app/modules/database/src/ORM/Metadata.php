@@ -394,7 +394,7 @@ class Metadata
 
             $namespace = $this->getReflectionClass()->getNamespaceName();
 
-            if (strlen($namespace) > 0 && strpos($relation['targetEntity'], '\\') === false) {
+            if (strlen($namespace) > 0 && !str_contains($relation['targetEntity'], '\\')) {
                 $relation['targetEntity'] = $namespace.'\\'.$relation['targetEntity'];
             }
 

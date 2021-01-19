@@ -2,6 +2,8 @@
 
 namespace GreenCheap\Config;
 
+use ArrayIterator;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
 use GreenCheap\Database\Connection;
 
@@ -10,7 +12,7 @@ class ConfigManager implements \IteratorAggregate
     /**
      * @var Connection
      */
-    protected $connection;
+    protected Connection $connection;
 
     /**
      * @var string
@@ -25,7 +27,7 @@ class ConfigManager implements \IteratorAggregate
     /**
      * @var array
      */
-    protected $configs = [];
+    protected array $configs = [];
 
     /**
      * Constructor.
@@ -42,9 +44,11 @@ class ConfigManager implements \IteratorAggregate
     /**
      * Get shortcut.
      *
+     * @param $name
+     * @return Config
      * @see get()
      */
-    public function __invoke($name)
+    public function __invoke($name): Config
     {
         return $this->get($name);
     }
@@ -52,10 +56,10 @@ class ConfigManager implements \IteratorAggregate
     /**
      * Checks if a config exists.
      *
-     * @param  string $name
+     * @param string $name
      * @return bool
      */
-    public function has($name)
+    public function has(string $name): bool
     {
         return isset($this->configs[$name]) || $this->fetch($name);
     }
@@ -63,10 +67,10 @@ class ConfigManager implements \IteratorAggregate
     /**
      * Gets a config, creates a new config if none existent.
      *
-     * @param  string $name
+     * @param string $name
      * @return Config
      */
-    public function get($name)
+    public function get(string $name): Config
     {
         if (!$this->has($name)) {
             $this->set($name, new Config());
@@ -81,9 +85,10 @@ class ConfigManager implements \IteratorAggregate
      * Sets a config.
      *
      * @param string $name
-     * @param mixed  $config
+     * @param mixed $config
+     * @throws Exception
      */
-    public function set($name, $config)
+    public function set(string $name, mixed $config)
     {
         if (is_array($config)) {
             $config = (new Config())->merge($config);
@@ -107,7 +112,7 @@ class ConfigManager implements \IteratorAggregate
      * Removes a config.
      *
      * @param string $name
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     public function remove(string $name)
     {
@@ -117,25 +122,24 @@ class ConfigManager implements \IteratorAggregate
     /**
      * Returns an iterator.
      *
-     * @return \ArrayIterator
+     * @return ArrayIterator
      */
-    public function getIterator()
+    public function getIterator(): ArrayIterator
     {
-        return new \ArrayIterator($this->configs);
+        return new ArrayIterator($this->configs);
     }
 
     /**
      * Fetches config from database.
-     *
-     * @param  string $name
+     * @param string $name
      * @return null|Config
      */
-    protected function fetch($name)
+    protected function fetch(string $name)
     {
+
         if ($this->cache === null) {
             $this->cache = $this->connection->executeQuery("SELECT name, value FROM {$this->table}")->fetchAll(\PDO::FETCH_COLUMN | \PDO::FETCH_UNIQUE);
         }
-
         if (isset($this->cache[$name]) && $values = @json_decode($this->cache[$name], true)) {
             return $this->configs[$name] = new Config($values);
         }

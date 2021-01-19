@@ -2,6 +2,9 @@
 
 namespace GreenCheap\Widget\Model;
 
+use GreenCheap\Database\ORM\Annotation\Column;
+use GreenCheap\Database\ORM\Annotation\Entity;
+use GreenCheap\Database\ORM\Annotation\Id;
 use GreenCheap\Database\ORM\ModelTrait;
 use GreenCheap\System\Model\DataModelTrait;
 use GreenCheap\User\Model\AccessModelTrait;
@@ -13,7 +16,10 @@ class Widget implements \JsonSerializable
 {
     use AccessModelTrait, DataModelTrait, ModelTrait;
 
-    /** @Column(type="integer") @Id */
+    /**
+     * @Column(type="integer")
+     * @Id
+     */
     public $id;
 
     /** @Column */

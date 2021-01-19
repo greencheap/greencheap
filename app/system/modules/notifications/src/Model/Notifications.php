@@ -2,7 +2,9 @@
 namespace GreenCheap\Notifications\Model;
 
 use GreenCheap\Application as App;
+use GreenCheap\Database\ORM\Annotation\Column;
 use GreenCheap\Database\ORM\Annotation\Entity;
+use GreenCheap\Database\ORM\Annotation\Id;
 use GreenCheap\Database\ORM\ModelTrait;
 use GreenCheap\System\Model\DataModelTrait;
 

@@ -117,7 +117,7 @@ class UrlProvider
      */
     public function get($path = '', $parameters = [], $referenceType = UrlGenerator::ABSOLUTE_PATH)
     {
-        if (0 === strpos($path, '@')) {
+        if (str_starts_with($path, '@')) {
             return $this->getRoute($path, $parameters, $referenceType);
         }
 

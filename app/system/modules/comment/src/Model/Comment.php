@@ -3,6 +3,10 @@
 namespace GreenCheap\Comment\Model;
 
 use GreenCheap\Application as App;
+use GreenCheap\Database\ORM\Annotation\BelongsTo;
+use GreenCheap\Database\ORM\Annotation\Column;
+use GreenCheap\Database\ORM\Annotation\Entity;
+use GreenCheap\Database\ORM\Annotation\Id;
 use GreenCheap\Database\ORM\ModelTrait;
 use GreenCheap\System\Model\DataModelTrait;
 
@@ -90,6 +94,7 @@ class Comment implements \JsonSerializable
     }
 
     /**
+     * @param bool $base
      * @return string
      */
     public function getUrl(bool $base = true)
