@@ -20,8 +20,6 @@ use Symfony\Component\Routing\Matcher\Dumper\CompiledUrlMatcherDumper;
  * @author Tobias Schultze <http://tobion.de>
  * @author Arnaud Le Blanc <arnaud.lb@gmail.com>
  * @author Nicolas Grekas <p@tchwork.com>
- *
- * @deprecated since Symfony 4.3, use CompiledUrlMatcherDumper instead.
  */
 class PhpMatcherDumper extends CompiledUrlMatcherDumper
 {
