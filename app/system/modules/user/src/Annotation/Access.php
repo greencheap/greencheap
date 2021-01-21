@@ -2,6 +2,8 @@
 
 namespace GreenCheap\User\Annotation;
 
+use BadMethodCallException;
+
 /**
  * @Annotation
  */
@@ -15,13 +17,13 @@ class Access
     /**
      * @var bool
      */
-    protected $admin = null;
+    protected ?bool $admin = null;
 
     /**
      * Constructor.
      *
      * @param  array $data
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
     public function __construct(array $data)
     {
@@ -32,7 +34,7 @@ class Access
             }
 
             if (!method_exists($this, $method = 'set'.$key)) {
-                throw new \BadMethodCallException(sprintf("Unknown property '%s' on annotation '%s'.", $key, get_class($this)));
+                throw new BadMethodCallException(sprintf("Unknown property '%s' on annotation '%s'.", $key, get_class($this)));
             }
 
             $this->$method($value);
@@ -64,7 +66,7 @@ class Access
      *
      * @return bool
      */
-    public function getAdmin()
+    public function getAdmin(): ?bool
     {
         return $this->admin;
     }
@@ -74,7 +76,7 @@ class Access
      *
      * @param bool $admin
      */
-    public function setAdmin($admin)
+    public function setAdmin(bool $admin)
     {
         $this->admin = $admin;
     }

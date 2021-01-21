@@ -12,9 +12,7 @@ return [
     'main' => 'GreenCheap\\User\\UserModule',
 
     'autoload' => [
-
         'GreenCheap\\User\\' => 'src'
-
     ],
 
     'routes' => [

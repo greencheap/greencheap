@@ -8,6 +8,8 @@ use GreenCheap\User\Annotation\Access;
 use JetBrains\PhpStorm\ArrayShape;
 
 /**
+ * Class CacheController
+ * @package GreenCheap\Cache\Controller
  * @Access(admin=true)
  */
 class CacheController

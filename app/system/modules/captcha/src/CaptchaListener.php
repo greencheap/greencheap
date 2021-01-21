@@ -3,12 +3,14 @@
 namespace GreenCheap\Captcha;
 
 /**
+ * @todo Deprecated Class
+ * @body The removed class needs to be edited.
  * @deprecated
  * use Doctrine\Common\Annotations\SimpleAnnotationReader;
  * to
  * use Doctrine\Common\Annotations\AnnotationReader;
  */
-use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\SimpleAnnotationReader;
 use Doctrine\Common\Annotations\Reader;
 use GreenCheap\Application as App;
 use GreenCheap\Captcha\Annotation\Captcha;
@@ -37,8 +39,8 @@ class CaptchaListener implements EventSubscriberInterface
     public function onConfigureRoute($event, $route)
     {
         if (!$this->reader) {
-            $this->reader = new AnnotationReader();
-            $this->reader->addGlobalIgnoredNamespace('GreenCheap\Captcha\Annotation');
+            $this->reader = new SimpleAnnotationReader();
+            $this->reader->addNamespace('GreenCheap\Captcha\Annotation');
         }
 
         if (!$route->getControllerClass()) {

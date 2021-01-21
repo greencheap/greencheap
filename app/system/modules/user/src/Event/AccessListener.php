@@ -4,12 +4,14 @@ namespace GreenCheap\User\Event;
 
 use Doctrine\Common\Annotations\Reader;
 /**
+ * @todo Deprecated Class
+ * @body The removed class needs to be edited.
  * @deprecated
  * use Doctrine\Common\Annotations\SimpleAnnotationReader;
  * to
  * use Doctrine\Common\Annotations\AnnotationReader;
  */
-use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\SimpleAnnotationReader;
 use GreenCheap\Application as App;
 use GreenCheap\Auth\Event\AuthorizeEvent;
 use GreenCheap\Auth\Exception\AuthException;
@@ -42,8 +44,8 @@ class AccessListener implements EventSubscriberInterface
     public function onConfigureRoute($event, $route)
     {
         if (!$this->reader) {
-            $this->reader = new AnnotationReader();
-            $this->reader->addGlobalIgnoredNamespace('GreenCheap\User\Annotation');
+            $this->reader = new SimpleAnnotationReader();
+            $this->reader->addNamespace('GreenCheap\User\Annotation');
         }
 
         if (!$route->getControllerClass()) {

@@ -2,14 +2,15 @@
 
 namespace GreenCheap\Routing\Event;
 
-use Doctrine\Common\Annotations\AnnotationReader;
-
 /**
+ * @todo Deprecated Class
+ * @body The removed class needs to be edited.
  * @deprecated
  * use Doctrine\Common\Annotations\SimpleAnnotationReader;
  * to
  * use Doctrine\Common\Annotations\Reader;
  */
+use Doctrine\Common\Annotations\SimpleAnnotationReader;
 use Doctrine\Common\Annotations\Reader;
 use GreenCheap\Event\EventSubscriberInterface;
 
@@ -70,8 +71,8 @@ class ConfigureRouteListener implements EventSubscriberInterface
     protected function getReader()
     {
         if (!$this->reader) {
-            $this->reader = new AnnotationReader();
-            $this->reader->addGlobalIgnoredNamespace($this->namespace);
+            $this->reader = new SimpleAnnotationReader();
+            $this->reader->addNamespace($this->namespace);
         }
 
         return $this->reader;
