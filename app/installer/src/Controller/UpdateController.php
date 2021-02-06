@@ -23,13 +23,6 @@ class UpdateController
             '$view' => [
                 'title' => __('Update System'),
                 'name' => 'installer:views/update.php'
-            ],
-            '$data' => [
-                'version' => App::version(),
-                'system_api' => App::get('system.api'),
-                'settings' => App::module('system')->config(['beta']),
-                'project_uri' => App::url()->base(0),
-                'project_title' => App::config('system/site')->get('title')
             ]
         ];
     }

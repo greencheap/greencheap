@@ -31,7 +31,6 @@ module.exports = {
         clientResource(url, parameter) {
             const urlParam = `${this.system_api}/${url}`;
             if (!parameter) {
-                // eslint-disable-next-line no-param-reassign
                 parameter = {};
             }
             const http = this.$http.get(urlParam, {

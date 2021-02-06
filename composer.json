@@ -4,7 +4,7 @@
     "description": "The GreenCheap CMS",
     "version": "3.0.0",
     "keywords": ["cms", "greencheap", "symfony", "vue", "uikit"],
-    "homepage": "http://greencheap.net",
+    "homepage": "https://greencheap.net",
     "license": "MIT",
     "authors": [{
         "name": "GreenCheap",
@@ -12,7 +12,7 @@
         "email": "support@greencheap.net"
     }],
     "require": {
-        "php": "8.0.*",
+        "php": "^8.0.1",
         "composer/composer": "^1.10.19",
         "doctrine/annotations": "^1.11.1",
         "doctrine/dbal": "~2.12.1",

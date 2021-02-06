@@ -1,6 +1,8 @@
 <?php $view->script('dashboard', 'system/dashboard:app/bundle/index.js', ['vue']) ?>
 <div id="dashboard" v-cloak>
 
+    <Update></Update>
+
     <div class="uk-flex uk-flex-middle uk-flex-right">
         <div>
             <a class="uk-button uk-button-primary" @click.prevent>{{ 'Add Widget' | trans }}</a>

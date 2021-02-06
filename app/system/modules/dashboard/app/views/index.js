@@ -4,6 +4,8 @@ import Panel from '../components/widget-panel.vue';
 import Feed from '../components/widget-feed.vue';
 import Location from '../components/widget-location.vue';
 
+import Update from '../../../theme/app/components/update.vue'
+
 import Draggable from 'vuedraggable';
 
 window.Dashboard = {
@@ -103,7 +105,8 @@ window.Dashboard = {
         draggable: Draggable,
         panel: Panel,
         feed: Feed,
-        location: Location
+        location: Location,
+        Update
     },
 
 };

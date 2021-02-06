@@ -6,7 +6,7 @@
                     <a uk-icon="file-edit" :title="'Edit' | trans" uk-tooltip="delay: 500" @click.prevent="edit" />
                 </li>
                 <li v-show="!editing">
-                    <a uk-icon="icon:more-vertical;ratio:1.4" class="uk-sortable-handle" :title="'Drag' | trans" uk-tooltip="delay: 500" />
+                    <a uk-icon="icon:more-vertical" class="uk-sortable-handle" :title="'Drag' | trans" uk-tooltip="delay: 500" />
                 </li>
                 <li v-show="editing">
                     <a v-confirm="'Delete widget?'" uk-icon="icon:trash" :title="'Delete' | trans" uk-tooltip="delay: 500" @click.prevent="remove" />

@@ -39,7 +39,7 @@ return [
             $user = $app['user'];
 
             $view->data('$greencheap', [
-                'editor' => $app->module('system/editor')->config(),//->config('editor')
+                'editor' => $app->module('system/editor')->config(),
                 'storage' => $app->module('system/finder')->config('storage'),
                 'user' => [
                     'id' => $user->id,
@@ -57,7 +57,8 @@ return [
                 'system_api' => $app->get('system.api'),
                 'settings' => $app['system']->config(['beta']),
                 'project_uri' => $app->url()->base(0),
-                'project_title' => $app->config('system/site')->get('title')
+                'project_title' => $app->config('system/site')->get('title'),
+                'client_php_version' => PHP_VERSION
             ]);
 
             $subsets = 'latin,latin-ext';

@@ -47,13 +47,11 @@ const header = {
     },
 
     components: {
-        Navbar,
-        Update
+        Navbar
     }
 };
 
 import Navbar from '../components/navbar.vue';
-import Update from '../components/update.vue';
 
 export default header;
 Vue.ready(header);

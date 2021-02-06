@@ -10,7 +10,6 @@
 </head>
 <body>
     <header id="header">
-        <Update></Update>
         <nav class="uk-navbar-container">
             <div class="uk-container uk-visible@s" uk-navbar>
                 <div class="uk-navbar-left">

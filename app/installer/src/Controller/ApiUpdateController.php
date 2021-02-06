@@ -16,18 +16,12 @@ class ApiUpdateController
 {
     /**
      * @Route("/download-release" , methods="GET")
-     * @Request({"constraint":"string"} , csrf=true)
+     * @Request({"url":"string"} , csrf=true)
      * @param string $constraint
      * @return array
      */
-    public function getClientDownloadAction(string $constraint = 'stable')
+    public function getClientDownloadAction(string $url)
     {
-        $url = App::get('system.api').'/version/download/forced?';
-
-        $parameters = http_build_query([
-            'constraint' => $constraint
-        ], '', '&');
-
         $zip_name = tempnam(App::get('path.temp'), 'update_');
         $path = App::get('path.temp').'/';
 
@@ -36,8 +30,8 @@ class ApiUpdateController
         $curl->setOpt(CURLOPT_TIMEOUT, 1000);
         $curl->setOpt(CURLOPT_CONNECTTIMEOUT, 1000);
         $curl->setOpt(CURLOPT_RETURNTRANSFER, true);
-        $curl->setOpt( CURLOPT_SSL_VERIFYPEER, true);
-        $curl->download($url.$parameters, $zip_name);
+        $curl->setOpt(CURLOPT_SSL_VERIFYPEER, true);
+        $curl->download($url, $zip_name);
 
         App::session()->set('system.update', $zip_name);
         if ($curl->error) {
