@@ -45,6 +45,7 @@ class UpdateController
     }
 
     /**
+     * @Route(methods="POST")
      * @Request(csrf=true)
      */
     public function updateAction()

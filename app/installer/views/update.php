@@ -1,7 +1,7 @@
 <?php $view->script('update-system', 'installer:app/bundle/update.js', ['vue']) ?>
 
 <div id="app">
-    <div v-if="hasUpdate" class="">
+    <div v-if="hasUpdate && !finished" class="">
         <div v-if="!isInstall">
             <div class="uk-child-width-1-2@m" uk-grid>
                 <div>
@@ -23,11 +23,8 @@
                     </ul>
                 </div>
             </div>
-
             <div class="uk-margin" v-html="$options.filters.markdown(hasUpdate.content)"></div>
-
             <h2>{{'Changelog' | trans}}</h2>
-
             <div class="uk-grid-small" uk-grid v-html="changelog(hasUpdate.changelog)"></div>
         </div>
         <div class="uk-section uk-section-large uk-text-center" v-else>
@@ -46,10 +43,16 @@
             </div>
         </div>
     </div>
-    <div v-else class="uk-flex uk-flex-center uk-flex-middle" uk-height-viewport="expand:true">
+    <div v-if="!hasUpdate && !finished" class="uk-flex uk-flex-center uk-flex-middle" uk-height-viewport="expand:true">
         <div class="uk-text-center">
             <h2 class="uk-text-muted">{{'There is no update you can install' | trans}}</h2>
             <p class="uk-text-meta">{{'The GreenCheap version you are using is %version%' | trans({version: version})}}</p>
+        </div>
+    </div>
+    <div v-if="finished" class="uk-flex uk-flex-center uk-flex-middle" uk-height-viewport="expand:true">
+        <div class="uk-text-center">
+            <i uk-icon="icon:check;ratio:6" class="uk-text-primary"></i>
+            <p class="uk-text-muted">{{'Installation completed successfully.' | trans({version: version})}}</p>
         </div>
     </div>
 </div>

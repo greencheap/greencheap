@@ -158,7 +158,7 @@ var Update = {
         doInstall() {
             this.output += 'Starting Update...\n\n';
             this.progressbar = 79;
-            this.$http.get('admin/system/update/update', null).then((res) => {
+            this.$http.post('admin/system/update/update').then((res) => {
                 this.setOutput(res.bodyText);
                 this.doMigration();
             }).catch(() => {
@@ -188,7 +188,9 @@ var Update = {
                 this.$http.get('admin/system/migration/migrate').then((res) => {
                     const { data } = res;
                     this.output += `\n\n${data.status}`;
-                    this.finished = true;
+                    setTimeout(() => {
+                        this.finished = true;
+                    }, 3000);
                 }, this.error);
             } else {
                 this.error();
