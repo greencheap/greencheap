@@ -114,10 +114,11 @@ module.exports = {
 
         },
         defaults: {
-            show: 'login',
-            display: 'thumbnail',
-            total: true,
-            count: 12,
+            type: "user",
+            show: "login",
+            display: "list",
+            total: "",
+            count: 12
         },
 
     },

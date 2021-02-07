@@ -88,7 +88,15 @@ export default {
         description() {
         },
         defaults: {
-            units: 'metric',
+            type: "location",
+            units: "metric",
+            uid: 323786,
+            city: "Ankara",
+            country: "TR",
+            coords: {
+              lat: 39.9199,
+              lon: 32.8543
+          }
         },
 
     },

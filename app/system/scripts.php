@@ -158,7 +158,7 @@ return [
                 [
                     'type' => 'feed',
                     'unix_id' => 1608983060446,
-                    'count' => '2',
+                    'count' => '3',
                     'url' => 'http://greencheap.net/blog/feed',
                     'content' => '1',
                     'title' => 'GCNEWS',

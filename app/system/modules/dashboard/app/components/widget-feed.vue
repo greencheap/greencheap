@@ -96,7 +96,7 @@
                 <ul class="uk-list uk-list-divider uk-margin-remove">
                     <li v-for="(entry, key) in count" :key="key">
                         <a class="uk-link-text uk-text-small uk-text-bold" :href="entry.link" target="_blank" v-html="entry.title" />
-                        
+
                         <p class="uk-text-small uk-text-muted uk-text-nowrap uk-margin-remove-top uk-margin-small-bottom">
                             {{ entry.publishedDate | relativeDate }}
                         </p>
@@ -137,9 +137,11 @@ export default {
 
         },
         defaults: {
-            count: 5,
-            url: 'http://greencheap.net/blog/feed',
-            content: '',
+            type: "feed",
+            count: "3",
+            url: "http://greencheap.net/blog/feed",
+            content: "2",
+            title: "GCNEWS"
         },
 
     },

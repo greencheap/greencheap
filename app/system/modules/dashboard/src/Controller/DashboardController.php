@@ -79,7 +79,7 @@ class DashboardController
      * @param $action
      * @return mixed
      */
-    public function weatherAction($data, $action):Response
+    public function weatherAction($data, $action)
     {
         $url = $this->api;
 

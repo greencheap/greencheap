@@ -3,7 +3,7 @@
     <li v-for="folder in filterBy($parent.searched, 'application/folder', 'mime')">
         <div class="uk-panel uk-text-center" @click.prevent="$parent.toggleSelect(folder.name)">
             <div class="uk-card-media-top uk-cover-container">
-                <div class="uk-background-cover uk-position-cover uk-icon-image tm-folder-block" uk-icon="icon: folder; ratio:4"></div>
+                <div class="uk-background-cover uk-position-center" uk-icon="icon: folder; ratio:3"></div>
                 <canvas class="uk-responsive-width uk-display-block" width="622" height="350"></canvas>
             </div>
             <div class="uk-card-footer uk-text-truncate uk-padding-remove">
