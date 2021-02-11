@@ -29,9 +29,8 @@ class AdminController
      * @Request({"redirect": "string", "message": "string"})
      * @param string $redirect
      * @param string $message
-     * @return array
      */
-    public function loginAction($redirect = '', $message = ''): array
+    public function loginAction($redirect = '', $message = '')
     {
         if (App::user()->isAuthenticated()) {
             return App::redirect('@system');
@@ -59,7 +58,7 @@ class AdminController
      * @return array
      */
     #[ArrayShape(['message' => "mixed"])]
-    public function adminMenuAction($order): array
+    public function adminMenuAction($order)
     {
         if (!$order) {
             App::abort(400, __('Missing order data.'));

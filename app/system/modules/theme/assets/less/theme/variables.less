@@ -1,9 +1,9 @@
 @tm-border-radius: 5px;
 
-@tm-dark-mode-primary-background: #0b0c0b;
-@tm-dark-mode-secondary-background: #101010;
-@tm-dark-mode-background: #121212;
-@tm-dark-mode-muted-background: #171616;
+@tm-dark-mode-primary-background: #182c25;
+@tm-dark-mode-secondary-background: #1e453e;
+@tm-dark-mode-background: #12211d;
+@tm-dark-mode-muted-background: #2c4c3b;
 
 .tm-darkmode{
     background:@tm-dark-mode-background !important;
@@ -59,8 +59,13 @@
 .tm-darkmode .uk-radio,
 .tm-darkmode .uk-checkbox,
 .tm-darkmode .uk-search-input{
-    background-color:transparent !important;
+    background-color:@tm-dark-mode-primary-background !important;
     border:1px solid fade(@global-inverse-color , 25%);
+}
+
+.tm-darkmode .uk-checkbox:checked,
+.uk-light .uk-checkbox:checked{
+    background-image: data-uri('../../images/light-check.svg') !important;
 }
 
 .tm-darkmode .uk-radio,
@@ -90,6 +95,10 @@
 .tm-darkmode .uk-modal-header,
 .tm-darkmode .uk-modal-footer{
     background:@tm-dark-mode-muted-background !important;
+}
+
+.tm-darkmode .uk-input::placeholder{
+    color: fade(@global-inverse-color, 30%) !important;
 }
 
 .tm-darkmode .uk-htmleditor-navbar{
