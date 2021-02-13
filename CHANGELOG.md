@@ -5,6 +5,7 @@
 - Added .php-version file for some packages until updated to php 8.
 - PostgreSQL database support has been added.
 - Comment Service added.
+- jsonabort() for abort() alternative
 
 ### Changed
 - PHP 8 Support.
