@@ -6,6 +6,7 @@ use GreenCheap\Application as App;
 use GreenCheap\Installer\SelfUpdater;
 use GreenCheap\Routing\Annotation\Request;
 use GreenCheap\User\Annotation\Access;
+use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\Console\Output\StreamOutput;
 
 /**
@@ -17,6 +18,7 @@ class UpdateController
     /**
      * @return array[]
      */
+    #[ArrayShape(['$view' => "array"])]
     public function indexAction(): array
     {
         return [
@@ -39,7 +41,7 @@ class UpdateController
 
         App::session()->set('system.update', $file);
         if (!$hi = file_put_contents($file, @fopen($url, 'r'))) {
-            App::abort(500, $hi);
+            App::jsonabort(500, $hi);
         }
         return [];
     }

@@ -3,6 +3,7 @@ namespace GreenCheap\Installer\Controller;
 use GreenCheap\Application as App;
 use GreenCheap\Routing\Annotation\Request;
 use GreenCheap\User\Annotation\Access;
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * @Access("system: manage packages", admin=true)
@@ -15,7 +16,8 @@ class MarketplaceController
      * @param int|null $page
      * @return array
      */
-    public function indexAction( array $filter = [] , int $page = null ): array
+    #[ArrayShape(['$view' => "array", '$data' => "array"])]
+    public function indexAction(array $filter = [] , int $page = null ): array
     {
         return [
             '$view' => [

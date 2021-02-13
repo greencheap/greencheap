@@ -7,6 +7,7 @@ use GreenCheap\Routing\Annotation\Request;
 use GreenCheap\Routing\Annotation\Route;
 use GreenCheap\User\Annotation\Access;
 use GreenCheap\Widget\Model\Widget;
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * @Access("system: manage widgets")
@@ -16,6 +17,7 @@ class WidgetApiController
     /**
      * @Route("/", methods="GET")
      */
+    #[ArrayShape(['positions' => "array", 'unassigned' => "\GreenCheap\Widget\Model\Widget[]"])]
     public function indexAction(): array
     {
         $widgets = Widget::findAll();
@@ -43,7 +45,7 @@ class WidgetApiController
     public function getAction($id): mixed
     {
         if (!$widget = Widget::find($id)) {
-           return App::abort(404, 'Widget not found.');
+           return App::jsonabort(404, 'Widget not found.');
         }
 
         return $widget;
@@ -55,6 +57,7 @@ class WidgetApiController
      * @param $ids
      * @return array
      */
+    #[ArrayShape(['message' => "string"])]
     public function assignAction($position, $ids): array
     {
         App::position()->assign($position, $ids);
@@ -68,18 +71,18 @@ class WidgetApiController
      * @Request({"widget": "array", "id": "int"}, csrf=true)
      * @param $data
      * @param int $id
-     * @return array
+     * @return mixed
      */
-    public function saveAction($data, $id = 0)
+    public function saveAction($data, $id = 0): mixed
     {
         if (!$id) {
             $widget = Widget::create();
         } else if (!$widget = Widget::find($id)) {
-            return App::abort(404, 'Widget not found.');
+            return App::jsonabort(404, 'Widget not found.');
         }
 
         if (empty($data['title'])) {
-            return App::abort(400, 'Widget title empty.');
+            return App::jsonabort(400, 'Widget title empty.');
         }
 
         $widget->save($data);
@@ -91,12 +94,13 @@ class WidgetApiController
      * @Route("/{id}", methods="DELETE", requirements={"id"="\d+"})
      * @Request({"id": "int"}, csrf=true)
      * @param $id
-     * @return string[]
+     * @return mixed
      */
-    public function deleteAction($id)
+    #[ArrayShape(['message' => "string"])]
+    public function deleteAction($id): mixed
     {
         if (!$widget = Widget::find($id)) {
-            App::abort(404, 'Widget not found.');
+            App::jsonabort(404, 'Widget not found.');
         }
 
         $widget->delete();
@@ -110,6 +114,7 @@ class WidgetApiController
      * @param array $ids
      * @return array
      */
+    #[ArrayShape(['message' => "string"])]
     public function copyAction($ids = []): array
     {
         foreach ($ids as $id) {
@@ -131,6 +136,7 @@ class WidgetApiController
      * @param array $widgets
      * @return array
      */
+    #[ArrayShape(['message' => "string"])]
     public function bulkSaveAction($widgets = []): array
     {
         foreach ($widgets as $data) {
@@ -146,6 +152,7 @@ class WidgetApiController
      * @param array $ids
      * @return array
      */
+    #[ArrayShape(['message' => "string"])]
     public function bulkDeleteAction($ids = []): array
     {
         foreach (array_filter($ids) as $id) {

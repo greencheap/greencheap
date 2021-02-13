@@ -108,7 +108,7 @@ class AuthController
      * @param $url
      * @return mixed
      */
-    protected function redirect($url)
+    protected function redirect($url): mixed
     {
         do {
             $url = preg_replace('#^(https?:)?//[^/]+#', '', $url, 1, $count);

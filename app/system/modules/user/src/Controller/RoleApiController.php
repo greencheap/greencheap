@@ -24,6 +24,8 @@ class RoleApiController
 
     /**
      * @Route("/{id}", methods="GET", requirements={"id"="\d+"})
+     * @param $id
+     * @return Role
      */
     public function getAction($id): Role
     {
@@ -45,7 +47,7 @@ class RoleApiController
         if (!$role = Role::find($id)) {
 
             if ($id) {
-                App::abort(404, __('Role not found.'));
+                App::jsonabort(404, __('Role not found.'));
             }
 
             $role = Role::create();

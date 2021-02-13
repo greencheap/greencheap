@@ -130,12 +130,12 @@ class UserApiController
     /**
      * @Route("/{id}", methods="GET", requirements={"id"="\d+"})
      * @param $id
-     * @return User
+     * @return User|null
      */
     public function getAction($id): User|null
     {
         if (!$user = User::find($id)) {
-            return App::abort(404, 'User not found.');
+            return App::jsonabort(404, 'User not found.');
         }
 
         return $user;
@@ -159,18 +159,18 @@ class UserApiController
             if (!$user = User::find($id)) {
 
                 if ($id) {
-                    App::abort(404, __('User not found.'));
+                    App::jsonabort(404, __('User not found.'));
                 }
 
                 if (!$password) {
-                    App::abort(400, __('Password required.'));
+                    App::jsonabort(400, __('Password required.'));
                 }
 
                 $user = User::create(['registered' => new \DateTime]);
             }
 
             if ($user->isAdministrator() && !App::user()->isAdministrator()) {
-                App::abort(400, __('Unable to edit administrator.'));
+                App::jsonabort(400, __('Unable to edit administrator.'));
             }
 
             $user->name = @$data['name'];
@@ -211,7 +211,7 @@ class UserApiController
             return ['message' => 'success', 'user' => $user];
 
         } catch (Exception $e) {
-            App::abort(400, $e->getMessage());
+            App::jsonabort(400, $e->getMessage());
         }
     }
 
@@ -225,12 +225,12 @@ class UserApiController
     public function deleteAction($id): array
     {
         if (App::user()->id == $id) {
-            App::abort(400, __('Unable to delete yourself.'));
+            App::jsonabort(400, __('Unable to delete yourself.'));
         }
 
         if ($user = User::find($id)) {
             if ($user->isAdministrator() && !App::user()->isAdministrator()) {
-                App::abort(400, __('Unable to delete administrator.'));
+                App::jsonabort(400, __('Unable to delete administrator.'));
             }
 
             $user->delete();

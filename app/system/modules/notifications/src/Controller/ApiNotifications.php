@@ -34,7 +34,7 @@ class ApiNotifications
     public function indexAction(): array
     {
         if($this->user->isAnonymous()){
-            return App::abort(401 , __('Unauthorized'));
+            return App::jsonabort(401 , __('Unauthorized'));
         }
 
         $id = $this->user->id;
@@ -65,7 +65,7 @@ class ApiNotifications
     {
         $id = $notification['id'];
         if( !$query = Notifications::where(compact('id'))->first() ){
-            return App::abort(404 , __('Not Found Notification'));
+            return App::jsonabort(404 , __('Not Found Notification'));
         }
         if(!is_array($query->read_user && !$query->read_user)){
             $query->read_user = [];

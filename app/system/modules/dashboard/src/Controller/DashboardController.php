@@ -7,6 +7,7 @@ use GreenCheap\Module\Module;
 use GreenCheap\Routing\Annotation\Request;
 use GreenCheap\Routing\Annotation\Route;
 use GreenCheap\User\Annotation\Access;
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * @Access(admin=true)
@@ -39,6 +40,7 @@ class DashboardController
     /**
      * @Route("/", methods="GET")
      */
+    #[ArrayShape(['$view' => "array", '$data' => "array"])]
     public function indexAction(): array
     {
         return [
@@ -56,9 +58,9 @@ class DashboardController
      * @Route("/", methods="POST")
      * @Request({"widgets": "array"}, csrf=true)
      * @param array $widgets
-     * @return array|mixed
+     * @return array
      */
-    public function saveAction($widgets = []): mixed
+    public function saveAction($widgets = []): array
     {
         $this->dashboard->saveWidgets($widgets);
         return $widgets;
@@ -79,7 +81,7 @@ class DashboardController
      * @param $action
      * @return mixed
      */
-    public function weatherAction($data, $action)
+    public function weatherAction($data, $action): mixed
     {
         $url = $this->api;
 

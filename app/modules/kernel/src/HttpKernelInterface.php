@@ -12,14 +12,14 @@ interface HttpKernelInterface
      *
      * @return Request
      */
-    public function getRequest();
+    public function getRequest(): Request;
 
     /**
      * Checks if this is a master request.
      *
      * @return bool
      */
-    public function isMasterRequest();
+    public function isMasterRequest(): bool;
 
     /**
      * Handles the request.
@@ -27,17 +27,17 @@ interface HttpKernelInterface
      * @param  Request $request
      * @return Response
      */
-    public function handle(Request $request);
+    public function handle(Request $request): Response;
 
     /**
      * Aborts the current request with HTTP exception.
      *
-     * @param  int    $code
-     * @param  string $message
-     * @param  array  $headers
+     * @param int $code
+     * @param null $message
+     * @param array $headers
      * @throws HttpException
      */
-    public function abort($code, $message = null, array $headers = []);
+    public function abort(int $code, $message = null, array $headers = []);
 
     /**
      * Terminates the current request.

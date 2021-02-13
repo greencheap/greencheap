@@ -257,12 +257,6 @@ return [
 				}
             }
 
-            $app['config']->set('system/dashboard', [
-                [],
-                [],
-                []
-            ]);
-
             if($util->tableExists('@system_categories')) {
                 $util->dropTable('@system_categories');
             }

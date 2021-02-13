@@ -8,6 +8,7 @@ use \Curl\Curl;
 use GreenCheap\Routing\Annotation\Request;
 use GreenCheap\Routing\Annotation\Route;
 use GreenCheap\User\Annotation\Access;
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * @Access("system: manage packages", admin=true)
@@ -24,6 +25,10 @@ class PackageController
         $this->manager = new PackageManager();
     }
 
+    /**
+     * @return array[]
+     */
+    #[ArrayShape(['$view' => "array", '$data' => "array"])]
     public function themesAction(): array
     {
         $packages = array_values(App::package()->all('greencheap-theme'));
@@ -178,6 +183,9 @@ class PackageController
     }
 
     /**
+     * @param int $id
+     * @param string $type
+     * @return array|null
      * @Request({"id":"integer","type":"string"}, csrf=true)
      */
     public function downloadPackageAction(int $id, string $type)
@@ -191,6 +199,7 @@ class PackageController
         $file = App::file();
 
         $zip_name = tempnam(App::get('path.temp'), 'package_');
+
         $path = App::get('path.temp').'/';
 
         $curl = new Curl();
@@ -202,13 +211,13 @@ class PackageController
         $curl->download($url, $zip_name);
 
         if ($curl->error) {
-            App::abort(500 , $curl->errorMessage);
+            return App::jsonabort(500, $curl->errorMessage);
         }
 
         $package = $this->loadPackage($zip_name);
 
         if (!$package->getName() || !$package->get('title') || !$package->get('version')) {
-            App::abort(400, __('"composer.json" file not valid.'));
+            return App::jsonabort(400, __('"composer.json" file not valid.'));
         }
 
         $filename = str_replace('/', '-', $package->getName()) . '-' . $package->get('version') . '.zip';

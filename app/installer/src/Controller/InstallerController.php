@@ -5,6 +5,7 @@ namespace GreenCheap\Installer\Controller;
 use GreenCheap\Application as App;
 use GreenCheap\Installer\Installer;
 use GreenCheap\Routing\Annotation\Request;
+use JetBrains\PhpStorm\ArrayShape;
 
 class InstallerController
 {
@@ -25,6 +26,7 @@ class InstallerController
     /**
      * @return array
      */
+    #[ArrayShape(['$view' => "array", '$installer' => "array", 'image' => "array"])]
     public function indexAction(): array
     {
         $intl = App::module('system/intl');

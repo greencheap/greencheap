@@ -61,7 +61,7 @@ class AdminController
     public function adminMenuAction($order)
     {
         if (!$order) {
-            App::abort(400, __('Missing order data.'));
+            return App::abort(400, __('Missing order data.'));
         }
 
         $user = User::find(App::user()->id);

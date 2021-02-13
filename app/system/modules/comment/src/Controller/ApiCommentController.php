@@ -8,6 +8,7 @@ use GreenCheap\Routing\Annotation\Request;
 use GreenCheap\Routing\Annotation\Route;
 use GreenCheap\User\Annotation\Access;
 use GreenCheap\User\Model\User;
+use JetBrains\PhpStorm\ArrayShape;
 
 class ApiCommentController
 {
@@ -94,7 +95,7 @@ class ApiCommentController
     {
         if( !$query = Comment::where(compact('id'))->first() ){
             if($id){
-                return App::abort(404 , __('Not Found Comment'));
+                return App::jsonabort(404 , __('Not Found Comment'));
             }
             $query = Comment::create();
         }
@@ -102,7 +103,7 @@ class ApiCommentController
         $comment['content'] = CommentPlugin::onContentPlugins($comment['content']);
 
         if($comment['user_id'] && Comment::isInterpretationThreshold($comment, $this->module->config('threshold_comment'))){
-            return App::abort(429 , __('Too Many Requests For Comment'));
+            return App::jsonabort(429 , __('Too Many Requests For Comment'));
         }
 
         $query->save($comment);
@@ -123,7 +124,7 @@ class ApiCommentController
             $query->delete();
             return true;
         }
-        return App::abort(403 , __('You do not have the authority to delete this comment.'));
+        return App::jsonabort(403 , __('You do not have the authority to delete this comment.'));
     }
 
     /**
@@ -145,8 +146,10 @@ class ApiCommentController
      * @Route("/bulk", methods="POST")
      * @Request({"comments": "array"}, csrf=true)
      * @param array $comments
+     * @return array
      */
-    public function bulkSaveAction( array $comments = [] ): array
+    #[ArrayShape(['message' => "string"])]
+    public function bulkSaveAction(array $comments = [] ): array
     {
         foreach ($comments as $data) {
             $this->saveAction($data, isset($data['id']) ? $data['id'] : 0);
@@ -161,7 +164,8 @@ class ApiCommentController
      * @param array $comments
      * @return string[]
      */
-    public function bulkDeleteAction( array $comments = [] ): array
+    #[ArrayShape(['message' => "string"])]
+    public function bulkDeleteAction(array $comments = [] ): array
     {
         foreach (array_filter($comments) as $comment) {
             $this->deleteAction($comment);
@@ -176,7 +180,8 @@ class ApiCommentController
      * @param array $comment
      * @return array
      */
-    public function sendInformationAction(array $comment = []): array
+    #[ArrayShape(['message' => "string"])] public function
+    sendInformationAction(array $comment = []): array
     {
         $message = __('Your comment has been approved by the administrator and is now live.');
         $name = $comment['author']['name'];

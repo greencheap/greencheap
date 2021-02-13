@@ -3,6 +3,7 @@
 namespace GreenCheap\Kernel\Controller;
 
 use GreenCheap\Event\EventSubscriberInterface;
+use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\HttpFoundation\Response;
 
 class ControllerListener implements EventSubscriberInterface
@@ -69,7 +70,8 @@ class ControllerListener implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
-    public function subscribe()
+    #[ArrayShape(['controller' => "array[]"])]
+    public function subscribe(): array
     {
         return [
             'controller' => [

@@ -1,5 +1,5 @@
 <?php $view->script('marketplace', 'installer:app/bundle/marketplace.js', 'vue') ?>
-<?php $view->style('marketplace', 'installer:assets/css/marketplace.css') ?>
+
 <section id="marketplace" v-cloak>
 
     <div class="uk-section uk-section-small uk-text-center">

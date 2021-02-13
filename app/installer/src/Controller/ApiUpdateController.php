@@ -35,7 +35,7 @@ class ApiUpdateController
 
         App::session()->set('system.update', $zip_name);
         if ($curl->error) {
-            return App::abort(500 , $curl->errorMessage);
+            return App::jsonabort(500 , $curl->errorMessage);
         } else {
             return ['message' => $zip_name];
         }
@@ -56,7 +56,7 @@ class ApiUpdateController
         \preg_match('/(.+[\/])(update.+)/' , $zip_name , $pregMatch);
 
         if(!$file->move($pregMatch[1] , $pregMatch[2])){
-            return App::abort(500 , __('Problem'));
+            return App::jsonabort(500 , __('Problem'));
         }
 
         $versionsData = [];
@@ -67,7 +67,7 @@ class ApiUpdateController
             $versionsData['readme']     =   $zip->getFromName('README.md');
             $versionsData['changelog']  =   $zip->getFromName('CHANGELOG.md');
         }else{
-            return App::abort(400 , __('Not Open Zip File'));
+            return App::jsonabort(400 , __('Not Open Zip File'));
         }
 
         $versionsData['path']       =   $pregMatch[1];
@@ -77,12 +77,12 @@ class ApiUpdateController
 
         if( $versionsData['version']->constraint != $system_version->constraint ){
             App::file()->delete($versionsData['fullPath']);
-            return App::abort(409 , __('Constraint Problem'));
+            return App::jsonabort(409 , __('Constraint Problem'));
         }
 
         if(version_compare($system_version->version , $versionsData['version']->version , '>')){
             App::file()->delete($versionsData['fullPath']);
-            return App::abort(409 , __('Error: System version, New package new_version' , ['version' => $system_version->version , 'new_version' => $versionsData['version']->version]));
+            return App::jsonabort(409 , __('Error: System version, New package new_version' , ['version' => $system_version->version , 'new_version' => $versionsData['version']->version]));
         }
 
         App::session()->set('system.update', $zip_name);

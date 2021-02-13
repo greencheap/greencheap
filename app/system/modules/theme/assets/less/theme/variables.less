@@ -63,11 +63,6 @@
     border:1px solid fade(@global-inverse-color , 25%);
 }
 
-.tm-darkmode .uk-checkbox:checked,
-.uk-light .uk-checkbox:checked{
-    background-image: data-uri('../../images/light-check.svg') !important;
-}
-
 .tm-darkmode .uk-radio,
 .tm-darkmode .uk-checkbox{
     color: @global-primary-background !important;
@@ -120,4 +115,14 @@
 .tm-darkmode .nestable-item-content > .uk-active.nestable-handle,
 .tm-darkmode .nestable-item-content > div.uk-active{
     background: @tm-dark-mode-primary-background;
+}
+
+.tm-darkmode .uk-checkbox:checked,
+.uk-light .uk-checkbox:checked{
+    background-image: data-uri('../../images/light-check.svg') !important;
+}
+
+.tm-darkmode .uk-radio:checked,
+.uk-light .uk-radio:checked{
+    background-image: data-uri('../../images/light-point.svg') !important;
 }

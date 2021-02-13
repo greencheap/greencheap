@@ -15,6 +15,7 @@ use GreenCheap\Kernel\Exception\InternalErrorException;
 use GreenCheap\Kernel\Exception\MethodNotAllowedException;
 use GreenCheap\Kernel\Exception\NotFoundException;
 use GreenCheap\Kernel\Exception\UnauthorizedException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,12 +25,12 @@ class HttpKernel implements HttpKernelInterface
     /**
      * @var EventDispatcherInterface
      */
-    protected $events;
+    protected EventDispatcherInterface $events;
 
     /**
      * @var RequestStack
      */
-    protected $stack;
+    protected RequestStack $stack;
 
     /**
      * Constructor.
@@ -46,7 +47,7 @@ class HttpKernel implements HttpKernelInterface
     /**
      * {@inheritdoc}
      */
-    public function getRequest()
+    public function getRequest(): Request
     {
         return $this->stack->getCurrentRequest();
     }
@@ -54,21 +55,22 @@ class HttpKernel implements HttpKernelInterface
     /**
      * {@inheritdoc}
      */
-    public function isMasterRequest()
+    public function isMasterRequest(): bool
     {
         return $this->getRequest() === $this->stack->getMasterRequest();
     }
 
     /**
      * {@inheritdoc}
+     * @throws \Exception
      */
-    public function handle(Request $request)
+    public function handle(Request $request): Response
     {
         try {
-
             $event = new RequestEvent('request', $this);
 
             $this->stack->push($request);
+
             $this->events->trigger($event, [$request]);
 
             if ($event->hasResponse()) {
@@ -88,44 +90,18 @@ class HttpKernel implements HttpKernelInterface
     /**
      * {@inheritdoc}
      */
-    public function abort($code, $message = null, array $headers = [])
+    public function abort(int $code, $message = null, array $headers = [])
     {
-        switch ($code) {
-
-            case 400:
-                $exception = new BadRequestException($message);
-                break;
-
-            case 401:
-                $exception = new UnauthorizedException($message);
-                break;
-
-            case 403:
-                $exception = new ForbiddenException($message);
-                break;
-
-            case 404:
-                $exception = new NotFoundException($message);
-                break;
-
-            case 405:
-                $exception = new MethodNotAllowedException($message);
-                break;
-
-            case 409:
-                $exception = new ConflictException($message);
-                break;
-
-            case 500:
-                $exception = new InternalErrorException($message);
-                break;
-
-            default:
-                $exception = new HttpException($message);
-                break;
-        }
-
-        throw $exception;
+        throw match ($code) {
+            400 => new BadRequestException($message),
+            401 => new UnauthorizedException($message),
+            403 => new ForbiddenException($message),
+            404 => new NotFoundException($message),
+            405 => new MethodNotAllowedException($message),
+            409 => new ConflictException($message),
+            500 => new InternalErrorException($message),
+            default => new HttpException($message),
+        };
     }
 
     /**
@@ -142,7 +118,7 @@ class HttpKernel implements HttpKernelInterface
      *
      * @return Response
      */
-    protected function handleController()
+    protected function handleController(): Response
     {
         $event = new ControllerEvent('controller', $this);
         $this->events->trigger($event, [$this->getRequest()]);
@@ -169,7 +145,7 @@ class HttpKernel implements HttpKernelInterface
      * @param  Response $response
      * @return Response
      */
-    protected function handleResponse(Response $response)
+    protected function handleResponse(Response $response): Response
     {
         $event = new KernelEvent('response', $this);
         $this->events->trigger($event, [$this->getRequest(), $response]);
@@ -185,7 +161,7 @@ class HttpKernel implements HttpKernelInterface
      * @return Response
      * @throws \Exception
      */
-    protected function handleException(\Exception $e)
+    protected function handleException(\Exception $e): Response
     {
         $event = new ExceptionEvent('exception', $this, $e);
         $this->events->trigger($event, [$this->getRequest()]);
@@ -207,11 +183,8 @@ class HttpKernel implements HttpKernelInterface
         }
 
         try {
-
             return $this->handleResponse($response);
-
         } catch (\Exception $e) {
-
             return $response;
         }
     }

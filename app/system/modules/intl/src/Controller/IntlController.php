@@ -15,7 +15,7 @@ class IntlController
      * @param null $locale
      * @return mixed
      */
-    public function indexAction($locale = null)
+    public function indexAction($locale = null): mixed
     {
         $intl = App::module('system/intl');
         $intl->loadLocale($locale);

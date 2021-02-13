@@ -3,6 +3,7 @@
 namespace GreenCheap\Application\Traits;
 
 use GreenCheap\Kernel\Event\ExceptionListenerWrapper;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,20 +21,35 @@ trait RouterTrait
     }
 
     /**
+     * @param int $code
+     * @param null $message
+     * @return JsonResponse
+     */
+    public static function jsonabort(int $code = 500, $message = null): JsonResponse
+    {
+        return new JsonResponse($message, $code);
+    }
+
+    /**
      * Registers an error handler.
      *
-     * @param mixed   $callback
+     * @param mixed $callback
      * @param integer $priority
      */
-    public static function error($callback, $priority = -8)
+    public static function error(mixed $callback, $priority = -8)
     {
         static::events()->on('exception', new ExceptionListenerWrapper($callback), $priority);
     }
 
     /**
+     * @param string $url
+     * @param array $parameters
+     * @param int $status
+     * @param array $headers
+     * @return mixed
      * @see Router::redirect()
      */
-    public static function redirect($url = '', $parameters = [], $status = 302, $headers = [])
+    public static function redirect($url = '', $parameters = [], $status = 302, $headers = []): mixed
     {
         return static::router()->redirect($url, $parameters, $status, $headers);
     }

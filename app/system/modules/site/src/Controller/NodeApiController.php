@@ -39,7 +39,7 @@ class NodeApiController
     public function getAction($id)
     {
         if (!$node = Node::find($id)) {
-            return App::abort(404, __('Node not found.'));
+            return App::jsonabort(404, __('Node not found.'));
         }
 
         return $node;
@@ -62,7 +62,7 @@ class NodeApiController
         }
 
         if (!$data['slug'] = App::filter($data['slug'] ?: $data['title'], 'slugify')) {
-            return App::abort(400, __('Invalid slug.'));
+            return App::jsonabort(400, __('Invalid slug.'));
         }
 
         $node->save($data);
@@ -82,7 +82,7 @@ class NodeApiController
         if ($node = Node::find($id)) {
 
             if ($type = App::module('system/site')->getType($node->type) and isset($type['protected']) and $type['protected']) {
-                return App::abort(400, __('Invalid type.'));
+                return App::jsonabort(400, __('Invalid type.'));
             }
 
             $node->delete();
@@ -158,11 +158,11 @@ class NodeApiController
     public function frontpageAction($id): array
     {
         if (!$node = Node::find($id) or !$type = App::module('system/site')->getType($node->type)) {
-            return App::abort(404, __('Node not found.'));
+            return App::jsonabort(404, __('Node not found.'));
         }
 
         if (isset($type['frontpage']) and !$type['frontpage']) {
-            return App::abort(400, __('Invalid node type.'));
+            return App::jsonabort(400, __('Invalid node type.'));
         }
 
         App::config('system/site')->set('frontpage', $id);

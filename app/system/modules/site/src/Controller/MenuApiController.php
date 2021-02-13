@@ -62,7 +62,7 @@ class MenuApiController
         $label = trim($menu['label']);
 
         if (!$id = App::filter($label, 'slugify')) {
-            App::abort(400, __('Invalid id.'));
+            App::jsonabort(400, __('Invalid id.'));
         }
 
         if ($id != $oldId) {
