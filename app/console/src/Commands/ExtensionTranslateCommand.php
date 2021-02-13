@@ -172,10 +172,11 @@ class ExtensionTranslateCommand extends Command
     /**
      * Returns all files of an extension to extract translations.
      *
-     * @param  string $path
-     * @return array
+     * @param string $path
+     * @param $extension
+     * @return mixed
      */
-    protected function getFiles($path, $extension):array
+    protected function getFiles(string $path, $extension):mixed
     {
         $files = Finder::create()->files()->in($path);
 
@@ -190,10 +191,10 @@ class ExtensionTranslateCommand extends Command
     /**
      * Returns the extension path.
      *
-     * @param  string $path
-     * @return array
+     * @param string $path
+     * @return mixed
      */
-    protected function getPath($path):array
+    protected function getPath(string $path):mixed
     {
         if ($path == 'system') {
             // system module

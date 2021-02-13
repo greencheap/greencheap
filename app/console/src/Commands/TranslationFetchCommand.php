@@ -73,9 +73,9 @@ class TranslationFetchCommand extends Command
      * Returns the extension path.
      *
      * @param $resource
-     * @return string|boolean
+     * @return mixed
      */
-    protected function getPath($resource):string|bool
+    protected function getPath($resource):mixed
     {
         $vendor = 'greencheap';
 

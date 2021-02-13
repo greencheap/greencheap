@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: GreenCheap 2.0.11-RC1 (system, messages)\n"
-"POT-Creation-Date: 2020-10-24 22:21+0000\n"
+"Project-Id-Version: GreenCheap 3.0.2 (system, messages)\n"
+"POT-Creation-Date: 2021-02-13 12:03+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -321,6 +321,147 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
+msgid "Saved"
+msgstr ""
+
+msgid "Do you want to inform the user that their comment has been approved?"
+msgstr ""
+
+msgid "Mail sent"
+msgstr ""
+
+msgid "Your message has been approved and published."
+msgstr ""
+
+msgid "Your message has been detected as spam."
+msgstr ""
+
+msgid "After your message is approved, it will be published."
+msgstr ""
+
+msgid "Filter by"
+msgstr ""
+
+msgid "Hello name!"
+msgstr ""
+
+msgid "Read the comment"
+msgstr ""
+
+msgid "Hello!"
+msgstr ""
+
+msgid "Threshold of comment"
+msgstr ""
+
+msgid "Unlimited"
+msgstr ""
+
+msgid "Comments per page"
+msgstr ""
+
+msgid "Others"
+msgstr ""
+
+msgid "Notification of response"
+msgstr ""
+
+msgid "Admin approved comment"
+msgstr ""
+
+msgid "Markdown can be used"
+msgstr ""
+
+msgid "Attribute people"
+msgstr ""
+
+msgid "To qoute"
+msgstr ""
+
+msgid "Content"
+msgstr ""
+
+msgid "Author"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Child Comment"
+msgstr ""
+
+msgid "No comments found."
+msgstr ""
+
+msgid "Open New Window"
+msgstr ""
+
+msgid "Edit Comment"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "You must be logged in to post a comment."
+msgstr ""
+
+msgid "User not found"
+msgstr ""
+
+msgid "You have to write a message to comment"
+msgstr ""
+
+msgid "Cancel Reply"
+msgstr ""
+
+msgid "Send"
+msgstr ""
+
+msgid "Reply"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Comments"
+msgstr ""
+
+msgid "Not Found Comment"
+msgstr ""
+
+msgid "Too Many Requests For Comment"
+msgstr ""
+
+msgid "You do not have the authority to delete this comment."
+msgstr ""
+
+msgid "Your comment has been approved by the administrator and is now live."
+msgstr ""
+
+msgid "%site% - Your comment has been approved."
+msgstr ""
+
+msgid "Pending"
+msgstr ""
+
+msgid "Approved"
+msgstr ""
+
+msgid "Spam"
+msgstr ""
+
+msgid "A new comment has been added on your website. This comment is waiting for your approval."
+msgstr ""
+
+msgid "%site% - Member commented."
+msgstr ""
+
+msgid "A user mentioned you. That's why we wanted to let you know."
+msgstr ""
+
+msgid "%site% - You were mentioned in a comment.."
+msgstr ""
+
 msgid "Mail"
 msgstr ""
 
@@ -397,9 +538,6 @@ msgid "Profile Updated"
 msgstr ""
 
 msgid "New"
-msgstr ""
-
-msgid "Filter by"
 msgstr ""
 
 msgid "Username"
@@ -505,9 +643,6 @@ msgid "Thank you for signing up for %site%. Just one more step! Please click the
 msgstr ""
 
 msgid "Activate Account"
-msgstr ""
-
-msgid "Hello!"
 msgstr ""
 
 msgid "A new user signed up for %site% with the username %username%. Please click the button below to approve the account."
@@ -873,55 +1008,25 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-msgid "Widget deleted."
-msgstr ""
-
-msgid "Widgets reordered."
-msgstr ""
-
 msgid "_subset"
-msgstr ""
-
-msgid "Whoops, something went wrong."
-msgstr ""
-
-msgid "Update Released"
-msgstr ""
-
-msgid "Changelog"
-msgstr ""
-
-msgid "YOUR VERSION"
-msgstr ""
-
-msgid "NEW VERSION"
-msgstr ""
-
-msgid "Wait"
-msgstr ""
-
-msgid "Finish Update"
 msgstr ""
 
 msgid "We are currently under construction"
 msgstr ""
 
-msgid "Error"
+msgid "Sign In"
 msgstr ""
 
-msgid "Visit Site"
+msgid "A panel where you can manage and navigate your website."
 msgstr ""
 
-msgid "Help"
+msgid "If you have forgotten your password, you can request to change your user password here."
 msgstr ""
 
-msgid "There are no installed applications. You can install the application you want from the market."
+msgid "Back to the login page"
 msgstr ""
 
-msgid "Go To Marketplace"
-msgstr ""
-
-msgid "Update GreenCheap"
+msgid "Migrate GreenCheap"
 msgstr ""
 
 msgid "GreenCheap has been updated! Before we send you on your way, we have to update your database to the newest version."
@@ -1057,9 +1162,6 @@ msgid "URL Alias"
 msgstr ""
 
 msgid "Redirect"
-msgstr ""
-
-msgid "Content"
 msgstr ""
 
 msgid "Enable Markdown"
@@ -1218,10 +1320,16 @@ msgstr ""
 msgid "Order saved."
 msgstr ""
 
-msgid "Page not found"
+msgid "Page Not Found"
+msgstr ""
+
+msgid "An error has been encountered"
 msgstr ""
 
 msgid "Whoops, looks like something went wrong."
+msgstr ""
+
+msgid "Update GreenCheap"
 msgstr ""
 
 msgid "Your GreenCheap database has been updated successfully."
@@ -1242,7 +1350,7 @@ msgstr ""
 msgid "Published"
 msgstr ""
 
-msgid "Failed to withdraw from version client. Contact Us"
+msgid "Whoops, something went wrong."
 msgstr ""
 
 msgid "\\"%title%\\" enabled."
@@ -1273,6 +1381,9 @@ msgid "Email:"
 msgstr ""
 
 msgid "Successfully installed."
+msgstr ""
+
+msgid "Error"
 msgstr ""
 
 msgid "Close"
@@ -1335,9 +1446,6 @@ msgstr ""
 msgid "Retry"
 msgstr ""
 
-msgid "Update Now"
-msgstr ""
-
 msgid "Themes"
 msgstr ""
 
@@ -1347,10 +1455,10 @@ msgstr ""
 msgid "No theme found."
 msgstr ""
 
-msgid "Theme"
+msgid "Changelog"
 msgstr ""
 
-msgid "Author"
+msgid "Theme"
 msgstr ""
 
 msgid "Created"
@@ -1374,6 +1482,9 @@ msgstr ""
 msgid "There was a problem installing."
 msgstr ""
 
+msgid "Wait"
+msgstr ""
+
 msgid "Enable Package"
 msgstr ""
 
@@ -1387,6 +1498,9 @@ msgid "No extension found."
 msgstr ""
 
 msgid "GreenCheap Installer"
+msgstr ""
+
+msgid "Update System"
 msgstr ""
 
 msgid "You may not call this step directly."
@@ -1413,7 +1527,7 @@ msgstr ""
 msgid "Unable to enable \"%name%\"."
 msgstr ""
 
-msgid "The Package Is Not Suitable For Green Cheap Version."
+msgid "The Package Is Not Suitable For GreenCheap Version."
 msgstr ""
 
 msgid "To activate this module, the %package% module must be installed."
