@@ -1,4 +1,4 @@
-## 3.0.0
+## 3.0.4
 
 ### Added
 - New composer package added: `google/apiclient`.
@@ -18,6 +18,7 @@
 - Composer packages updated: `composer/composer`, `doctrine/dbal`, `maximebf/debugbar`, `phpunit/phpunit`.
 - Vue and UIkit last version updated.
 - System/Scripts.php changed #265 for Symfony 5.1.
+- Fixed the problem of dark mode suddenly disappearing. The data will now be stored in the user's data.
 
 ### Removed
 - Gulp packages deprecated. 

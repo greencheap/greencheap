@@ -260,6 +260,23 @@ class UserApiController
     }
 
     /**
+     * @Route(methods="POST")
+     * @Request({"darkMode":"bool"}, csrf=true)
+     * @param bool $darkMode
+     * @return array
+     */
+    #[ArrayShape(['message' => "string"])]
+    public function darkModeAction(bool $darkMode): array
+    {
+        $user = User::find(App::user()->id);
+        $user->set('darkMode', $darkMode);
+        $user->save();
+
+        $mode = $user->get('darkMode');
+        return compact('mode');
+    }
+
+    /**
      * @Route("/bulk", methods="POST")
      * @Request({"users": "array"}, csrf=true)
      * @param array $users

@@ -3,7 +3,6 @@ const header = {
     name: "ThemeHeader",
     data() {
         return _.merge({
-            darkMode: this.$session.get('darkMode', 0),
             navs: null,
             subnav: null,
             title: null,
@@ -13,7 +12,7 @@ const header = {
     watch: {
         darkMode: {
             handler(status) {
-                this.$session.set('darkMode', status)
+                //this.$session.set('darkMode', status)
                 const htmlElement = document.getElementsByTagName('html')[0];
                 if (status) {
                     htmlElement.classList.add('uk-section-secondary', 'tm-darkmode', 'uk-light');
@@ -42,7 +41,12 @@ const header = {
 
     methods: {
         onDarkMode() {
-            this.darkMode = this.$session.get('darkMode') ? 0 : 1;
+            //this.darkMode = this.$session.get('darkMode') ? 0 : 1;
+            this.$http.post('api/user/darkmode', {
+                "darkMode": this.darkMode ? false:true
+            }).then((res) => {
+                this.darkMode = res.body.mode
+            })
         }
     },
 

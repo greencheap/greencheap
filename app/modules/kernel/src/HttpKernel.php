@@ -15,7 +15,6 @@ use GreenCheap\Kernel\Exception\InternalErrorException;
 use GreenCheap\Kernel\Exception\MethodNotAllowedException;
 use GreenCheap\Kernel\Exception\NotFoundException;
 use GreenCheap\Kernel\Exception\UnauthorizedException;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,7 +46,7 @@ class HttpKernel implements HttpKernelInterface
     /**
      * {@inheritdoc}
      */
-    public function getRequest(): Request
+    public function getRequest(): mixed
     {
         return $this->stack->getCurrentRequest();
     }

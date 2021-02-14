@@ -48,8 +48,9 @@ return [
                     'username' => $user->username,
                     'avatar' => $user->getAvatar()
                 ],
+                'darkMode' => $user->get('darkMode') ?? false,
                 'menu' => array_values($app['system']->getMenu()->getItems()),
-                
+
             ]);
 
             $view->data('$client' , [

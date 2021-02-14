@@ -25,7 +25,7 @@
                 <div class="uk-navbar-right">
                     <ul class="uk-navbar-item uk-grid">
                         <li><a @click="onDarkMode" :uk-icon="`icon:${darkMode ? 'sun':'moon'};ratio:1.3`" :uk-tooltip="`${darkMode ? 'Light Mode':'Dark Mode'}` | trans"></a></li>
-                        <li><a href="https://greencheap.net/docs" uk-icon="icon:robot;ratio:1.3" target="_blank" :title="'Help'|trans" uk-tooltip></a></li>
+                        <li><a href="https://greencheap.net" uk-icon="icon:robot;ratio:1.3" target="_blank" :title="'Help'|trans" uk-tooltip></a></li>
                         <li><a :href="$url('/')" uk-icon="icon:laptop;ratio:1.3" target="_blank" :title="'Visit Site'|trans" uk-tooltip></a></li>
                         <li><a :href="$url('user/logout')" uk-icon="icon:logout;ratio:1.3" :title="'Logout'|trans" uk-tooltip></a></li>
                         <li><a :href="$url('admin/user/edit' , {id:user.id})"><img :src="$url(user.avatar)" class="uk-border-circle" width="30px" height="30px"></a></li>
@@ -51,7 +51,7 @@
             <div class="uk-container">
                 <ul class="uk-tab">
                     <li v-for="(sub , id) in subnav" :key="id" :class="{'uk-active':sub.active}">
-                        <a :href="$url(sub.url)">{{sub.label}}</a>
+                        <a :href="$url(sub.url)">{{sub.label | trans}}</a>
                     </li>
                 </ul>
             </div>

@@ -10,9 +10,9 @@ interface HttpKernelInterface
     /**
      * Gets the current request.
      *
-     * @return Request
+     * @return mixed
      */
-    public function getRequest(): Request;
+    public function getRequest(): mixed;
 
     /**
      * Checks if this is a master request.
