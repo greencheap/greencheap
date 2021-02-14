@@ -20,3 +20,4 @@ robots.txt
 .vscode/
 /tmp/docker_volume
 package-lock.json
+php.ini

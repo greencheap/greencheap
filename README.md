@@ -1,4 +1,4 @@
-![GreenCheap](https://res.cloudinary.com/dwmejslx5/image/upload/v1599391312/greencheap/greencheap-wallpaper_j1glw0.jpg)
+![GreenCheap CMS](https://res.cloudinary.com/dwmejslx5/image/upload/v1613331047/greencheap/heading-image_lenvxf.jpg)
 
 A modular and lightweight CMS made with Symfony and Vuejs components 
 
