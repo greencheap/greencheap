@@ -48,10 +48,10 @@ class UserController
      * @Access("user: manage users")
      * @Request({"id": "int"})
      * @param int $id
-     * @return array[]
+     * @return mixed
      */
     #[ArrayShape(['$view' => "array", '$data' => "array"])]
-    public function editAction($id = 0): array
+    public function editAction($id = 0): mixed
     {
         if (!$id) {
             $user = User::create(['roles' => [Role::ROLE_AUTHENTICATED]]);

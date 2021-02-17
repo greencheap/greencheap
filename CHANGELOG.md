@@ -1,4 +1,4 @@
-## 3.0.4
+## 3.0.6
 
 ### Added
 - New composer package added: `google/apiclient`.

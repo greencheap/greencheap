@@ -22,7 +22,9 @@ class ExceptionController
     public function showAction(FlattenException $exception): Response
     {
         $request = new Request();
-
+        if($exception->getCode() === 0){
+            $exception->setCode(500);
+        }
         if (is_subclass_of($exception->getClass(), 'GreenCheap\Kernel\Exception\HttpException')) {
             $message = $exception->getMessage();
             $title = $exception->getCode() === 404 ? __('Page Not Found'):__('An error has been encountered');

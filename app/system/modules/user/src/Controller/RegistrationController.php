@@ -31,7 +31,7 @@ class RegistrationController
     /**
      * @Captcha(route="@user/registration/register")
      */
-    public function indexAction(): array
+    public function indexAction(): mixed
     {
         if (App::user()->isAuthenticated()) {
             return App::redirect();

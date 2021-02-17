@@ -15,9 +15,9 @@ class ResetPasswordController
 {
 
     /**
-     * @return array
+     * @return mixed
      */
-    public function indexAction(): array
+    public function indexAction(): mixed
     {
         if (App::user()->isAuthenticated()) {
             return App::redirect();

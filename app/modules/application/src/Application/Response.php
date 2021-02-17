@@ -36,6 +36,9 @@ class Response
      */
     public function __invoke($content = '', $status = 200, $headers = []): HttpResponse
     {
+        if(!$status){
+            $status = 500;
+        }
         return $this->create($content, $status, $headers);
     }
 
@@ -49,7 +52,7 @@ class Response
 	 */
 	public function create($content = '', $status = 200, $headers = []): HttpResponse
     {
-		return new HttpResponse($content, $status, $headers);
+        return new HttpResponse($content, $status, $headers);
 	}
 
     /**

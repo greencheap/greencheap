@@ -15,9 +15,9 @@ use JetBrains\PhpStorm\ArrayShape;
 class ProfileController
 {
     /**
-     * @return array
+     * @return mixed
      */
-    public function indexAction(): array
+    public function indexAction(): mixed
     {
         $user = App::user();
 
