@@ -1,7 +1,7 @@
 {
     "name": "greencheap",
     "scripts": {
-        "install": "yarn icons && ./node_modules/.bin/webpack && ./node_modules/.bin/gulp",
+        "install": "yarn icons && ./node_modules/.bin/gulp && ./node_modules/.bin/webpack",
         "icons": "cpx './app/system/modules/theme/assets/icons/**/*' node_modules/uikit/custom/icons && cd node_modules/uikit && npm install && yarn compile && cd -",
         "watch": "./node_modules/.bin/webpack --progress --colors --hide-modules --watch",
         "build": "./node_modules/.bin/webpack --progress --display-error-details --hide-modules -p",

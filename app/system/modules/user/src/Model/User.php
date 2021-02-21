@@ -223,7 +223,7 @@ class User implements UserInterface, \JsonSerializable
             return (int) $user->hasPermission(trim($permission[0]));
         }, $expression));
 
-        if (!$fn = @create_function("", "return $exp;")) {
+        if (!$fn = fn() => $exp) {
             throw new \InvalidArgumentException(sprintf('Unable to parse the given access string "%s"', $expression));
         }
 

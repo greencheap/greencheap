@@ -68,9 +68,9 @@ return [
                 $table->addIndex(['name', 'priority'], '@SYSTEM_ROLE_NAME_PRIORITY');
             });
 
-            $db->insert('@system_role', ['id' => null, 'name' => 'Anonymous', 'priority' => 0]);
-            $db->insert('@system_role', ['id' => null, 'name' => 'Authenticated', 'priority' => 1, 'permissions' => 'blog: post comments']);
-            $db->insert('@system_role', ['id' => null, 'name' => 'Administrator', 'priority' => 2]);
+            $db->insert('@system_role', ['name' => 'Anonymous', 'priority' => 0]);
+            $db->insert('@system_role', ['name' => 'Authenticated', 'priority' => 1, 'permissions' => 'blog: post comments']);
+            $db->insert('@system_role', ['name' => 'Administrator', 'priority' => 2]);
         }
 
         if ($util->tableExists('@system_session') === false) {
