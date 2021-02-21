@@ -49,7 +49,7 @@ export default {
 
     section: {
         label: 'General',
-        icon: 'layers',
+        icon: 'future',
         priority: 10,
     },
 

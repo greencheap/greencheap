@@ -45,7 +45,7 @@ export default {
 
     section: {
         label: 'Localization',
-        icon: 'flag-alt',
+        icon: 'world',
         priority: 20,
     },
 

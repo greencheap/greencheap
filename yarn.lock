@@ -5454,9 +5454,9 @@ typedarray@^0.0.6:
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
 uikit@^3.6.*:
-  version "3.6.9"
-  resolved "https://registry.yarnpkg.com/uikit/-/uikit-3.6.9.tgz#468389832fd16f89987cee8571d8445295a916df"
-  integrity sha512-4GshI7lyr0Khtcjgz5VSw0ClP5Soemf+nmmKwhb/KMCf79YV0ABKUgJXApQjFMya22OL4SsM/8H339uDQDu+Hw==
+  version "3.6.16"
+  resolved "https://registry.yarnpkg.com/uikit/-/uikit-3.6.16.tgz#7884733236ba3e31257cfa0a01b4b26775665d90"
+  integrity sha512-L/5BpfcMTRNcuPtwMcQSffPpq+mapMOpHfmL2CbijBDKq/D24blcN/2QRMhQkTeFpM5p6nBgcKDGbWOhr/nilg==
 
 unc-path-regex@^0.1.2:
   version "0.1.2"

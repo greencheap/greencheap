@@ -115,7 +115,7 @@ var Mail = {
 
     section: {
         label: 'Mail',
-        icon: 'envelope',
+        icon: 'mail',
         priority: 40,
     },
 

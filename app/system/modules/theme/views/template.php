@@ -14,7 +14,7 @@
             <div class="uk-container uk-visible@s" uk-navbar>
                 <div class="uk-navbar-left">
                     <div class="uk-navbar-item uk-inline">
-                        <a class="uk-navbar-toggle"><i uk-icon="icon:align-text-left;ratio:2" class="uk-margin-medium-right"></i><span class="uk-text-lead uk-text-uppercase">{{ title | trans }}</span></a>
+                        <a class="uk-navbar-toggle"><i uk-icon="icon:toggle-menu;ratio:1.5" class="uk-margin-medium-right"></i><span class="uk-text-lead uk-text-uppercase">{{ title | trans }}</span></a>
                         <div class="tm-drop" uk-drop="offset:-50;mode:click">
                             <div class="uk-card uk-card-body uk-card-default">
                                 <Navbar :navs="navs" />
@@ -27,7 +27,7 @@
                         <li><a @click="onDarkMode" :uk-icon="`icon:${darkMode ? 'sun':'moon'};ratio:1.3`" :uk-tooltip="`${darkMode ? 'Light Mode':'Dark Mode'}` | trans"></a></li>
                         <li><a href="https://greencheap.net" uk-icon="icon:robot;ratio:1.3" target="_blank" :title="'Help'|trans" uk-tooltip></a></li>
                         <li><a :href="$url('/')" uk-icon="icon:laptop;ratio:1.3" target="_blank" :title="'Visit Site'|trans" uk-tooltip></a></li>
-                        <li><a :href="$url('user/logout')" uk-icon="icon:logout;ratio:1.3" :title="'Logout'|trans" uk-tooltip></a></li>
+                        <li><a :href="$url('user/logout')" uk-icon="icon:sign-out;ratio:1.3" :title="'Logout'|trans" uk-tooltip></a></li>
                         <li><a :href="$url('admin/user/edit' , {id:user.id})"><img :src="$url(user.avatar)" class="uk-border-circle" width="30px" height="30px"></a></li>
                     </ul>
                 </div>

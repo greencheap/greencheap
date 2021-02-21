@@ -9,11 +9,11 @@ export default function(Vue) {
         if (UIkit.notification) {
             let icons;
             if (status == 'warning') {
-                icons = '<i uk-icon="icon:exlamation;ratio:1.3" class="uk-margin-right"></i>';
+                icons = '<i uk-icon="icon:info;ratio:1.3" class="uk-margin-right"></i>';
             } else if (status == 'danger') {
-                icons = '<i uk-icon="icon:x;ratio:1.3" class="uk-margin-right"></i>';
+                icons = '<i uk-icon="icon:close;ratio:1.3" class="uk-margin-right"></i>';
             } else {
-                icons = '<i uk-icon="icon:tick;ratio:1.3" class="uk-margin-right"></i>';
+                icons = '<i uk-icon="icon:check;ratio:1.3" class="uk-margin-right"></i>';
             }
             UIkit.notification({
                 message: `${icons}${message}`,

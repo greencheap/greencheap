@@ -5,7 +5,7 @@
 
         <div class="uk-panel">
             <ul class="uk-nav uk-nav-default pk-nav-large" uk-switcher="connect: #tab-content">
-                <li><a><span class="uk-margin-right" uk-icon="icon:router;ratio:1.3"></span><span class="uk-text-middle">{{ 'System' | trans }}</span></a></li>
+                <li><a><span class="uk-margin-right" uk-icon="icon:server;ratio:1.3"></span><span class="uk-text-middle">{{ 'System' | trans }}</span></a></li>
                 <li><a><span class="uk-margin-right" uk-icon="icon:php;ratio:1.3"></span><span class="uk-text-middle">{{ 'PHP' | trans }}</span></a></li>
                 <li><a><span class="uk-margin-right" uk-icon="icon:database;ratio:1.3"></span><span class="uk-text-middle">{{ 'Database' | trans }}</span></a></li>
                 <li><a><span class="uk-margin-right" uk-icon="icon:face-id;ratio:1.3"></span><span class="uk-text-middle">{{ 'Permissions' | trans }}</span></a></li>

@@ -78,7 +78,7 @@ export default {
 
     section: {
         label: 'System',
-        icon: 'adjust-horizontal-alt',
+        icon: 'settings',
         priority: 10,
     },
 

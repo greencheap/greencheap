@@ -44,7 +44,7 @@ export default {
 
     section: {
         label: 'Maintenance',
-        icon: 'bracket',
+        icon: 'grid',
         priority: 30,
     },
 

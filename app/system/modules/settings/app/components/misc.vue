@@ -57,7 +57,7 @@ export default {
 
     section: {
         label: 'Misc',
-        icon: 'lifebuoy',
+        icon: 'cog',
         priority: 100,
     },
 

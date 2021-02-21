@@ -3,7 +3,7 @@
         <v-modal ref="login" modal-small center>
             <div class="uk-text-center">
                 <form ref="loginEle" class="tm-form" @submit.prevent="login">
-                    <div class="uk-card uk-card-default uk-panel" style="padding: 20px;">
+                    <div class="uk-card uk-card-default uk-card-body uk-panel" style="padding: 20px;">
                         <div>
                             <p class="uk-h3 uk-margin-remove-top">
                                 {{ 'Autorization' | trans }}
@@ -19,7 +19,7 @@
                                 <span class="uk-form-icon" uk-icon="icon: user" />
                                 <input
                                     v-model="credentials.username"
-                                    class="uk-input"
+                                    class="uk-input uk-form-large"
                                     type="text"
                                     name="credentials[username]"
                                     :placeholder="'Username' | trans"
@@ -34,7 +34,7 @@
                                 <input
                                     ref="password"
                                     v-model="credentials.password"
-                                    class="uk-input"
+                                    class="uk-input uk-form-large"
                                     type="password"
                                     name="credentials[password]"
                                     :placeholder="'Password' | trans"
@@ -42,7 +42,7 @@
                             </div>
                         </div>
 
-                        <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-medium uk-margin-remove-bottom">
+                        <button class="uk-button uk-button-default">
                             <span>{{ 'Sign in' | trans }}</span>
                         </button>
 
