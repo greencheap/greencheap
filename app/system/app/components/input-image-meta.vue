@@ -1,7 +1,7 @@
 <template>
     <div>
         <a v-if="!img_meta.src" class="uk-placeholder uk-link-reset uk-text-center uk-display-block uk-margin-remove" @click.prevent="pick">
-            <span class="uk-display-block uk-text-primary" uk-icon="icon:image-alt;ratio:3"></span>
+            <span class="uk-display-block uk-text-primary" uk-icon="icon:image;ratio:3"></span>
             <p class="uk-text-muted uk-margin-small-top">{{ 'Add Image' | trans }}</p>
         </a>
 

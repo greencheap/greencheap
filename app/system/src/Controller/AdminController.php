@@ -55,10 +55,10 @@ class AdminController
      * @Access(admin=true)
      * @Request({"order": "array"})
      * @param $order
-     * @return array
+     * @return mixed
      */
     #[ArrayShape(['message' => "mixed"])]
-    public function adminMenuAction($order)
+    public function adminMenuAction($order): mixed
     {
         if (!$order) {
             return App::abort(400, __('Missing order data.'));

@@ -1,5 +1,13 @@
-## 3.0.7
+## 3.0.8
 
 ### Fixed
-- UIkit icons fixed
-- User model line:236 create_function 
+- ResetPasswordController, RegisterController, ProfileController change response type
+- ElementsTrait fix for Blog Feed
+- uk-list-striped fix
+- Prettierrc
+
+### Added
+- New Icon: key.svg
+
+### Removed
+- EditorConfig

@@ -45,12 +45,12 @@ class ProfileController
      * @return array
      */
     #[ArrayShape(['message' => "string"])]
-    public function saveAction($data): array
+    public function saveAction($data): mixed
     {
         $user = App::user();
 
         if (!$user->isAuthenticated()) {
-            App::abort(404);
+            return App::jsonabort(404);
         }
 
         try {

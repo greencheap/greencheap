@@ -130,9 +130,9 @@ class UserApiController
     /**
      * @Route("/{id}", methods="GET", requirements={"id"="\d+"})
      * @param $id
-     * @return User|null
+     * @return mixed
      */
-    public function getAction($id): User|null
+    public function getAction($id): mixed
     {
         if (!$user = User::find($id)) {
             return App::jsonabort(404, 'User not found.');
@@ -151,7 +151,7 @@ class UserApiController
      * @return array
      */
     #[ArrayShape(['message' => "string", 'user' => "\GreenCheap\User\Model\User"])]
-    public function saveAction($data, $password = null, $id = 0): array
+    public function saveAction($data, $password = null, $id = 0): mixed
     {
         try {
 
@@ -159,18 +159,18 @@ class UserApiController
             if (!$user = User::find($id)) {
 
                 if ($id) {
-                    App::jsonabort(404, __('User not found.'));
+                    return App::jsonabort(404, __('User not found.'));
                 }
 
                 if (!$password) {
-                    App::jsonabort(400, __('Password required.'));
+                    return App::jsonabort(400, __('Password required.'));
                 }
 
                 $user = User::create(['registered' => new \DateTime]);
             }
 
             if ($user->isAdministrator() && !App::user()->isAdministrator()) {
-                App::jsonabort(400, __('Unable to edit administrator.'));
+                return App::jsonabort(400, __('Unable to edit administrator.'));
             }
 
             $user->name = @$data['name'];

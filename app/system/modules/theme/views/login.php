@@ -49,7 +49,7 @@
                     <p><?= __('A panel where you can manage and navigate your website.') ?></p>
                     <div class="uk-panel">
                         <div class="uk-margin uk-inline uk-width-expand">
-                            <span class="uk-form-icon" uk-icon="icon:user-circle"></span>
+                            <span class="uk-form-icon" uk-icon="icon:user"></span>
                             <input class="uk-width-expand uk-input uk-form-large" type="text" name="credentials[username]" value="<?= $this->escape($last_username) ?>" placeholder="<?= __('Username') ?>" autofocus>
                         </div>
                         <div class="uk-margin uk-inline uk-width-expand">
@@ -72,7 +72,7 @@
                     <p><?= __('If you have forgotten your password, you can request to change your user password here.') ?></p>
                     <div class="uk-panel">
                         <div class="uk-margin uk-inline uk-width-expand">
-                            <span class="uk-form-icon" uk-icon="icon:envelope"></span>
+                            <span class="uk-form-icon" uk-icon="icon:mail"></span>
                             <input class="uk-width-expand uk-input uk-form-large" type="text" name="email" value="" placeholder="<?= __('Email') ?>" required>
                         </div>
                         <p class="uk-margin">

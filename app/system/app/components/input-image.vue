@@ -3,7 +3,7 @@
         <div v-if="!source" :class="[inputClass, 'uk-inline-clip']" @click.prevent="pick">
             <a class="uk-link-reset">
                 <div class="uk-placeholder uk-text-center uk-margin-remove">
-                    <span class="uk-display-block uk-text-primary" uk-icon="icon:image-alt;ratio:3"></span>
+                    <span class="uk-display-block uk-text-primary" uk-icon="icon:image;ratio:3"></span>
                     <p class="uk-text-muted uk-margin-small-top">{{ title | trans }}</p>
                 </div>
             </a>

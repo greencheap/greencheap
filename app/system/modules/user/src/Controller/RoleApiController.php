@@ -41,13 +41,13 @@ class RoleApiController
      * @return array
      */
     #[ArrayShape(['message' => "string", 'role' => "\GreenCheap\User\Model\Role"])]
-    public function saveAction($data, $id = 0): array
+    public function saveAction($data, $id = 0): mixed
     {
         // is new ?
         if (!$role = Role::find($id)) {
 
             if ($id) {
-                App::jsonabort(404, __('Role not found.'));
+                return App::jsonabort(404, __('Role not found.'));
             }
 
             $role = Role::create();

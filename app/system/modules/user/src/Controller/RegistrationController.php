@@ -55,7 +55,7 @@ class RegistrationController
      * @param $data
      * @return array
      */
-    public function registerAction($data): array
+    public function registerAction($data): mixed
     {
         try {
 

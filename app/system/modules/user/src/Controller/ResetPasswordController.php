@@ -37,7 +37,7 @@ class ResetPasswordController
      * @param $email
      * @return array
      */
-    public function requestAction($email): array
+    public function requestAction($email): mixed
     {
         try {
 
@@ -100,7 +100,7 @@ class ResetPasswordController
      * @param string $password
      * @return array
      */
-    public function confirmAction($activation = '', $password = ''): array
+    public function confirmAction($activation = '', $password = ''): mixed
     {
         if ($activation and $user = User::where(compact('activation'))->first()) {
 

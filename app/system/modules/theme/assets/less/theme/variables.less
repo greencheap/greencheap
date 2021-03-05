@@ -110,6 +110,10 @@
     color: @global-inverse-color;
 }
 
+.tm-darkmode textarea {
+    caret-color: #fff !important;
+}
+
 .tm-darkmode .nestable-item-content:hover > .nestable-handle,
 .tm-darkmode .nestable-item-content:hover > div,
 .tm-darkmode .nestable-item-content > .uk-active.nestable-handle,
@@ -125,4 +129,16 @@
 .tm-darkmode .uk-radio:checked,
 .uk-light .uk-radio:checked{
     background-image: data-uri('../../images/light-point.svg') !important;
+}
+
+.tm-darkmode .uk-modal-body > pre{
+    color: @global-inverse-color !important;
+}
+
+.tm-darkmode .uk-list-striped > :nth-of-type(odd){
+    background: @tm-dark-mode-muted-background !important;
+}
+
+.tm-darkmode .uk-alert-danger{
+    background: @global-danger-background !important;
 }

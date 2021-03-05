@@ -52,6 +52,6 @@ trait ElementsTrait
      */
     public function getElements()
     {
-        return call_user_func_array('array_merge', $this->elements);
+        return call_user_func_array('array_merge', array_values($this->elements));
     }
 }
