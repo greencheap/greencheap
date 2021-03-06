@@ -308,9 +308,11 @@ Vue.ready({
         },
 
         setFrontpage(node) {
-            this.Nodes.save({ id: 'frontpage' }, { id: node.id }).then(function () {
+            this.Nodes.save({ id: 'frontpage' }, { id: node.id }).then(() => {
                 this.load();
                 this.$notify('Frontpage updated.');
+            }).catch(err => {
+                this.$notify(err.data, 'danger')
             });
         },
 

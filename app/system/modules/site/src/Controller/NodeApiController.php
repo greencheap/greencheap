@@ -155,7 +155,7 @@ class NodeApiController
      * @return array
      */
     #[ArrayShape(['message' => "string"])]
-    public function frontpageAction($id): array
+    public function frontpageAction($id): mixed
     {
         if (!$node = Node::find($id) or !$type = App::module('system/site')->getType($node->type)) {
             return App::jsonabort(404, __('Node not found.'));

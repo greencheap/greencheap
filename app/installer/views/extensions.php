@@ -53,7 +53,7 @@
                             <ul class="uk-iconnav">
                                 <li><a uk-icon="icon:info;ratio:1.3" :uk-tooltip="'View Details' | trans" @click.prevent="details(pkg)"></a></li>
                                 <li v-show="pkg.enabled && pkg.permissions"><a uk-icon="icon:lock;ratio:1.3" :uk-tooltip="'View Permissions' | trans" :href="$url.route('admin/user/permissions#{name}', {name:pkg.module})"></a></li>
-                                <li v-show="!pkg.enabled"><a uk-icon="icon:bin;ratio:1.3" :uk-tooltip="'Delete' | trans" @click="uninstall(pkg, packages)" v-confirm="'Uninstall extension?'"></a></li>
+                                <li v-show="!pkg.enabled"><a uk-icon="icon:trash;ratio:1.3" :uk-tooltip="'Delete' | trans" @click="uninstall(pkg, packages)" v-confirm="'Uninstall extension?'"></a></li>
                             </ul>
                         </div>
                     </td>
