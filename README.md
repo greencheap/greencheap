@@ -2,7 +2,7 @@
 
 A modular and lightweight CMS made with Symfony and Vuejs components 
 
-This version of GreenCheap is under development. It is not a stable version. So do not recommend using it. In this case, we recommend that you use the branch that supports [PHP 7.4](https://github.com/greencheap/greencheap/tree/php-7.4)
+GreenCheap works with PHP 8 version. In this case, lower versions of php will fail. If you want to try a lower version of GreenCheap version 2, you can access it [here](https://github.com/greencheap/greencheap/tree/2.1). But you need to know, GreenCheap version 2 is no longer supported.
 
 ## Explanation
 
