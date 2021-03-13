@@ -5,7 +5,7 @@
                 <div class="tm-navbar-icon">
                     <img :data-src="nav.icon" width="100%" uk-img>
                 </div>
-                <span class="tm-navbar-item uk-text-truncate">{{nav.label}}</span>
+                <span class="tm-navbar-item uk-text-truncate">{{ nav.label | trans }}</span>
             </a>
         </div>
     </div>

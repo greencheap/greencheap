@@ -17,8 +17,25 @@ class SlugifyFilter extends AbstractFilter
         $value = preg_replace('#[:\#\*"@+=;!><&\.%()\]\/\'\\\\|\[]#', "\x20", $value);
         $value = str_replace('?', '', $value);
         $value = trim(mb_strtolower($value, 'UTF-8'));
+        $value = str_replace($this->getLatinExtend(), $this->getEnglishLetters(), $value);
         $value = preg_replace('#\x20+#', '-', $value);
 
         return $value;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getLatinExtend():array
+    {
+        return ["ı", "ğ", "ü", "ş", "ö", "ç"];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getEnglishLetters():array
+    {
+        return ["i", "g", "u", "s", "o", "c"];
     }
 }

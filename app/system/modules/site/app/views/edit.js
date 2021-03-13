@@ -88,6 +88,11 @@ var Site = {
         },
 
         save() {
+            if(!this.node.link){
+                this.$notify(this.$trans('Link cannot be empty!'), 'danger')
+                this.processing = false;
+                return false;
+            }
             const data = { node: this.node };
 
             this.$trigger('save:node', data);

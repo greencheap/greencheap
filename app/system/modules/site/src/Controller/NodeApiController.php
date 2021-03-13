@@ -51,10 +51,10 @@ class NodeApiController
      * @Request({"node": "array", "id": "int"}, csrf=true)
      * @param $data
      * @param int $id
-     * @return array
+     * @return mixed
      */
     #[ArrayShape(['message' => "string", 'node' => "\GreenCheap\Site\Model\Node"])]
-    public function saveAction($data, $id = 0): array
+    public function saveAction($data, $id = 0): mixed
     {
         if (!$node = Node::find($id)) {
             $node = Node::create();
@@ -74,10 +74,10 @@ class NodeApiController
      * @Route("/{id}", methods="DELETE", requirements={"id"="\d+"})
      * @Request({"id": "int"}, csrf=true)
      * @param $id
-     * @return array
+     * @return mixed
      */
     #[ArrayShape(['message' => "string"])]
-    public function deleteAction($id): array
+    public function deleteAction($id): mixed
     {
         if ($node = Node::find($id)) {
 

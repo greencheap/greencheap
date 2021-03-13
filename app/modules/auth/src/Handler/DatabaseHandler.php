@@ -98,7 +98,10 @@ class DatabaseHandler implements HandlerInterface
 
         $this->cookie->set($this->config['cookie']['name'], $id, $this->config['cookie']['lifetime'] + time());
 
-        $this->createTable();
+        /**
+         * @deprecated
+         */
+        //$this->createTable();
 
         $this->connection->insert($this->config['table'], [
             'id' => sha1($id),

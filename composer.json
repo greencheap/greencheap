@@ -2,7 +2,7 @@
     "name": "greencheap/greencheap",
     "type": "project",
     "description": "The GreenCheap CMS",
-    "version": "3.0.8",
+    "version": "3.0.9",
     "keywords": ["cms", "greencheap", "symfony", "vue", "uikit"],
     "homepage": "https://greencheap.net",
     "license": "MIT",
