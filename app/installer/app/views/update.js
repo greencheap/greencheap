@@ -140,9 +140,12 @@ var Update = {
                     url: this.hasUpdate.download_url
                 }
             }, {
-                progress(e) {
-                    if (e.lengthComputable) {
-                        ref.progressbar = (e.loaded / e.total) * 50;
+                xhr: {
+                    progress(e) {
+                        if (e.lengthComputable) {
+                            ref.progressbar = (e.loaded / e.total) * 50;
+                            ref.setOutput(this.responseText);
+                        }
                     }
                 },
             }).then(() => {

@@ -2,15 +2,23 @@
     "name": "greencheap/greencheap",
     "type": "project",
     "description": "The GreenCheap CMS",
-    "version": "3.0.9",
-    "keywords": ["cms", "greencheap", "symfony", "vue", "uikit"],
+    "version": "3.0.10",
+    "keywords": [
+        "cms",
+        "greencheap",
+        "symfony",
+        "vue",
+        "uikit"
+    ],
     "homepage": "https://greencheap.net",
     "license": "MIT",
-    "authors": [{
-        "name": "GreenCheap",
-        "homepage": "https://greencheap.net",
-        "email": "support@greencheap.net"
-    }],
+    "authors": [
+        {
+            "name": "GreenCheap",
+            "homepage": "https://greencheap.net",
+            "email": "support@greencheap.net"
+        }
+    ],
     "require": {
         "php": "^8.0.1",
         "composer/composer": "^1.10.19",

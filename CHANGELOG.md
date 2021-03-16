@@ -1,4 +1,4 @@
-## 3.0.9
+## 3.0.10
 
 ### Fixed
 - ResetPasswordController, RegisterController, ProfileController change response type
@@ -7,6 +7,9 @@
 - Prettierrc
 - Navbar title translate
 - Latin characters issue fixed
+- Created Folder stack fix on finder
+- Table header and form label fix
+- Extension translate falling to allowed memory due to node modules is fixed.
 
 ### Added
 - New Icon: key.svg

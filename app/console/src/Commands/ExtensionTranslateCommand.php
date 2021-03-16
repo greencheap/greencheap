@@ -185,6 +185,8 @@ class ExtensionTranslateCommand extends Command
             $files->in($this->container->path().'/app/installer');
         }
 
+        $files->exclude('node_modules');
+
         return $files->name('*.{php,vue,js,html,twig}');
     }
 

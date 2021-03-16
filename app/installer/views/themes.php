@@ -11,7 +11,8 @@
                 <input class="uk-search-input" type="search" v-model="search">
             </div>
         </div>
-        <div>
+        <div class="uk-flex uk-flex-right uk-flex-middle">
+            <a :href="$url.route('admin/system/marketplace')" class="uk-button uk-button-secondary uk-margin-small-right">{{ 'App Store' | trans }}</a>
             <package-upload :api="api" :packages="packages" type="theme"></package-upload>
         </div>
     </div>
