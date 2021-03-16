@@ -4,53 +4,28 @@
             <div class="uk-flex uk-flex-between uk-flex-wrap">
                 <div class="uk-flex uk-flex-middle uk-flex-wrap">
                     <h2 class="uk-h3 uk-margin-remove">
-                        <span v-if="!selected.length">{{
-                            "{0} %count% Files|{1} %count% File|]1,Inf[ %count% Files"
-                                | transChoice(count, { count: count })
-                        }}</span>
+                        <span v-if="!selected.length">{{ "{0} %count% Files|{1} %count% File|]1,Inf[ %count% Files" | transChoice(count, { count: count }) }}</span>
                         <span v-else>{{
                             "{1} %count% File selected|]1,Inf[ %count% Files selected"
                                 | transChoice(selected.length, {
-                                    count: selected.length
+                                    count: selected.length,
                                 })
                         }}</span>
                     </h2>
-                    <div
-                        class="uk-margin-left"
-                        v-if="isWritable && selected.length"
-                    >
+                    <div class="uk-margin-left" v-if="isWritable && selected.length">
                         <ul class="uk-iconnav">
-                            <li
-                                :class="
-                                    selected.length !== 1 ? 'uk-disabled' : ''
-                                "
-                            >
-                                <a
-                                    uk-icon="file-edit"
-                                    :title="'Rename' | trans"
-                                    uk-tooltip="delay: 500"
-                                    @click.prevent="rename"
-                                />
+                            <li :class="selected.length !== 1 ? 'uk-disabled' : ''">
+                                <a uk-icon="file-edit" :title="'Rename' | trans" uk-tooltip="delay: 500" @click.prevent="rename" />
                             </li>
                             <li :class="!selected.length ? 'uk-disabled' : ''">
-                                <a
-                                    v-confirm="'Delete files?'"
-                                    uk-icon="trash"
-                                    :title="'Delete' | trans"
-                                    uk-tooltip="delay: 500"
-                                    @click.prevent="remove"
-                                />
+                                <a v-confirm="'Delete files?'" uk-icon="trash" :title="'Delete' | trans" uk-tooltip="delay: 500" @click.prevent="remove" />
                             </li>
                         </ul>
                     </div>
 
                     <div class="uk-search uk-search-default pk-search">
                         <span uk-search-icon />
-                        <input
-                            v-model="search"
-                            class="uk-search-input"
-                            type="search"
-                        />
+                        <input v-model="search" class="uk-search-input" type="search" />
                     </div>
                 </div>
                 <div class="uk-flex uk-flex-middle uk-flex-wrap">
@@ -58,52 +33,29 @@
                         <ul class="uk-iconnav">
                             <li
                                 :class="{
-                                    'uk-active': view == 'template-table'
+                                    'uk-active': view == 'template-table',
                                 }"
                             >
-                                <a
-                                    uk-icon="table"
-                                    :title="'Table View' | trans"
-                                    uk-tooltip="delay: 500"
-                                    @click.prevent="view = 'template-table'"
-                                />
+                                <a uk-icon="table" :title="'Table View' | trans" uk-tooltip="delay: 500" @click.prevent="view = 'template-table'" />
                             </li>
                             <li
                                 :class="{
-                                    'uk-active': view == 'template-thumbnail'
+                                    'uk-active': view == 'template-thumbnail',
                                 }"
                             >
-                                <a
-                                    uk-icon="thumbnails"
-                                    :title="'Thumbnails View' | trans"
-                                    uk-tooltip="delay: 500"
-                                    @click.prevent="view = 'template-thumbnail'"
-                                />
+                                <a uk-icon="thumbnails" :title="'Thumbnails View' | trans" uk-tooltip="delay: 500" @click.prevent="view = 'template-thumbnail'" />
                             </li>
                         </ul>
                     </div>
 
                     <div class="uk-iconnav">
                         <li>
-                            <a
-                                uk-icon="folder"
-                                :title="'Add Folder' | trans"
-                                uk-tooltip="delay: 500"
-                                @click.prevent="createFolder()"
-                            />
+                            <a uk-icon="folder" :title="'Add Folder' | trans" uk-tooltip="delay: 500" @click.prevent="createFolder()" />
                         </li>
                         <li>
-                            <a
-                                class="files-upload uk-icon uk-flex uk-flex-middle"
-                                :title="'Upload' | trans"
-                                uk-tooltip="delay: 500"
-                            >
+                            <a class="files-upload uk-icon uk-flex uk-flex-middle" :title="'Upload' | trans" uk-tooltip="delay: 500">
                                 <div uk-form-custom>
-                                    <input
-                                        type="file"
-                                        name="files[]"
-                                        multiple="multiple"
-                                    />
+                                    <input type="file" name="files[]" multiple="multiple" />
                                     <span uk-icon="upload" />
                                 </div>
                             </a>
@@ -113,36 +65,18 @@
             </div>
 
             <div class="uk-flex uk-flex-middle">
-                <i
-                    uk-icon="icon: database; ratio: 1.25"
-                    class="uk-margin-small-right"
-                />
+                <i uk-icon="icon: database; ratio: 1.25" class="uk-margin-small-right" />
                 <ul class="uk-breadcrumb uk-margin-small">
-                    <li
-                        v-for="(bc, key) in breadcrumbs"
-                        :key="key"
-                        :class="{ 'uk-active': bc.current }"
-                    >
+                    <li v-for="(bc, key) in breadcrumbs" :key="key" :class="{ 'uk-active': bc.current }">
                         <span v-if="bc.current">{{ bc.title }}</span>
-                        <a v-else @click.prevent="setPath(bc.path)">{{
-                            bc.title
-                        }}</a>
+                        <a v-else @click.prevent="setPath(bc.path)">{{ bc.title }}</a>
                     </li>
                 </ul>
             </div>
 
-            <progress
-                id="js-progressbar"
-                class="uk-progress"
-                value="0"
-                max="100"
-                hidden
-            />
+            <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden />
 
-            <div
-                class="uk-overflow-auto tm-overflow-container"
-                uk-height-viewport="offset-top: true; offset-bottom: 120px"
-            >
+            <div class="uk-overflow-auto tm-overflow-container" uk-height-viewport="offset-top: true; offset-bottom: 120px">
                 <component :is="view" v-show="count" />
                 <h3 v-show="!count" class="uk-h2 uk-text-muted uk-text-center">
                     {{ "No files found." | trans }}
@@ -156,100 +90,47 @@
                     <div class="uk-flex uk-flex-middle uk-flex-wrap">
                         <div v-if="isWritable && selected.length">
                             <ul class="uk-iconnav">
-                                <li
-                                    :class="
-                                        selected.length !== 1
-                                            ? 'uk-disabled'
-                                            : ''
-                                    "
-                                >
-                                    <a
-                                        uk-icon="file-edit"
-                                        :title="'Rename' | trans"
-                                        uk-tooltip="delay: 500"
-                                        @click.prevent="rename"
-                                    />
+                                <li :class="selected.length !== 1 ? 'uk-disabled' : ''">
+                                    <a uk-icon="file-edit" :title="'Rename' | trans" uk-tooltip="delay: 500" @click.prevent="rename" />
                                 </li>
-                                <li
-                                    :class="
-                                        !selected.length ? 'uk-disabled' : ''
-                                    "
-                                >
-                                    <a
-                                        v-confirm="'Delete files?'"
-                                        uk-icon="trash"
-                                        :title="'Delete' | trans"
-                                        uk-tooltip="delay: 500"
-                                        @click.prevent="remove"
-                                    />
+                                <li :class="!selected.length ? 'uk-disabled' : ''">
+                                    <a v-confirm="'Delete files?'" uk-icon="trash" :title="'Delete' | trans" uk-tooltip="delay: 500" @click.prevent="remove" />
                                 </li>
                             </ul>
                         </div>
                         <div class="uk-search uk-search-default pk-search">
                             <span uk-search-icon />
-                            <input
-                                v-model="search"
-                                class="uk-search-input"
-                                type="search"
-                            />
+                            <input v-model="search" class="uk-search-input" type="search" />
                         </div>
                     </div>
-                    <div
-                        class="uk-flex uk-flex-middle uk-flex-wrap uk-margin-remove"
-                    >
+                    <div class="uk-flex uk-flex-middle uk-flex-wrap uk-margin-remove">
                         <div class="uk-margin-right">
                             <ul class="uk-iconnav">
                                 <li
                                     :class="{
-                                        'uk-active': view == 'template-table'
+                                        'uk-active': view == 'template-table',
                                     }"
                                 >
-                                    <a
-                                        uk-icon="table"
-                                        :title="'Table View' | trans"
-                                        uk-tooltip="delay: 500"
-                                        @click.prevent="view = 'template-table'"
-                                    />
+                                    <a uk-icon="table" :title="'Table View' | trans" uk-tooltip="delay: 500" @click.prevent="view = 'template-table'" />
                                 </li>
                                 <li
                                     :class="{
-                                        'uk-active':
-                                            view == 'template-thumbnail'
+                                        'uk-active': view == 'template-thumbnail',
                                     }"
                                 >
-                                    <a
-                                        uk-icon="thumbnails"
-                                        :title="'Thumbnails View' | trans"
-                                        uk-tooltip="delay: 500"
-                                        @click.prevent="
-                                            view = 'template-thumbnail'
-                                        "
-                                    />
+                                    <a uk-icon="thumbnails" :title="'Thumbnails View' | trans" uk-tooltip="delay: 500" @click.prevent="view = 'template-thumbnail'" />
                                 </li>
                             </ul>
                         </div>
 
                         <div class="uk-iconnav">
                             <li>
-                                <a
-                                    uk-icon="folder"
-                                    :title="'Add Folder' | trans"
-                                    uk-tooltip="delay: 500"
-                                    @click.prevent="createFolder()"
-                                />
+                                <a uk-icon="folder" :title="'Add Folder' | trans" uk-tooltip="delay: 500" @click.prevent="createFolder()" />
                             </li>
                             <li>
-                                <a
-                                    class="files-upload uk-icon uk-flex uk-flex-middle"
-                                    :title="'Upload' | trans"
-                                    uk-tooltip="delay: 500"
-                                >
+                                <a class="files-upload uk-icon uk-flex uk-flex-middle" :title="'Upload' | trans" uk-tooltip="delay: 500">
                                     <div uk-form-custom>
-                                        <input
-                                            type="file"
-                                            name="files[]"
-                                            multiple="multiple"
-                                        />
+                                        <input type="file" name="files[]" multiple="multiple" />
                                         <span uk-icon="upload" />
                                     </div>
                                 </a>
@@ -261,25 +142,13 @@
                 <div class="uk-flex uk-flex-middle">
                     <i uk-icon="icon: database" class="uk-margin-small-right" />
                     <ul class="uk-breadcrumb">
-                        <li
-                            v-for="(bc, key) in breadcrumbs"
-                            :key="key"
-                            :class="{ 'uk-active': bc.current }"
-                        >
+                        <li v-for="(bc, key) in breadcrumbs" :key="key" :class="{ 'uk-active': bc.current }">
                             <span v-if="bc.current">{{ bc.title }}</span>
-                            <a v-else @click.prevent="setPath(bc.path)">{{
-                                bc.title
-                            }}</a>
+                            <a v-else @click.prevent="setPath(bc.path)">{{ bc.title }}</a>
                         </li>
                     </ul>
                 </div>
-                <progress
-                    id="js-progressbar"
-                    class="uk-progress"
-                    value="0"
-                    max="100"
-                    hidden
-                />
+                <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden />
             </div>
 
             <div class="uk-modal-body">
@@ -288,15 +157,12 @@
                         class="uk-overflow-auto"
                         uk-overflow-auto
                         :class="{
-                            'uk-flex uk-flex-center uk-flex-middle': !count
+                            'uk-flex uk-flex-center uk-flex-middle': !count,
                         }"
                     >
                         <div class="tm-overflow-container">
                             <component :is="view" v-show="count" />
-                            <h3
-                                v-show="!count"
-                                class="uk-h2 uk-text-muted uk-text-center"
-                            >
+                            <h3 v-show="!count" class="uk-h2 uk-text-muted uk-text-center">
                                 {{ "No files found." | trans }}
                             </h3>
                         </div>
@@ -314,7 +180,7 @@ export default {
     props: {
         root: { type: String, default: "/" },
         mode: { type: String, default: "write" },
-        modal: Boolean
+        modal: Boolean,
     },
 
     data() {
@@ -324,7 +190,7 @@ export default {
             items: false,
             search: "",
             path: "",
-            view: ""
+            view: "",
         };
     },
 
@@ -334,13 +200,10 @@ export default {
         }
 
         if (!this.view) {
-            this.view = this.$session.get(
-                `finder.${this.root}.view`,
-                "template-table"
-            );
+            this.view = this.$session.get(`finder.${this.root}.view`, "template-table");
         }
 
-        this.$watch("path", function(path) {
+        this.$watch("path", function (path) {
             this.load();
             this.$session.set(`finder.${this.root}.path`, path);
         });
@@ -352,14 +215,14 @@ export default {
         this.modaloptions = {
             labels: {
                 ok: this.$trans("Ok"),
-                cancel: this.$trans("Cancel")
+                cancel: this.$trans("Cancel"),
             },
-            stack: true
+            stack: true,
         };
 
         this.resource = this.$resource("system/finder{/cmd}");
 
-        this.load().then(function() {
+        this.load().then(function () {
             this.$emit("ready:finder", this);
         });
     },
@@ -378,9 +241,9 @@ export default {
             this.$set(
                 this,
                 "selected",
-                _.filter(this.selected, name => _.find(vm.searched, { name }))
+                _.filter(this.selected, (name) => _.find(vm.searched, { name }))
             );
-        }
+        },
     },
 
     computed: {
@@ -391,10 +254,10 @@ export default {
                     this.path
                         .substr(1)
                         .split("/")
-                        .filter(str => str.length)
-                        .map(part => ({
+                        .filter((str) => str.length)
+                        .map((part) => ({
                             path: (path += `/${part}`),
-                            title: part
+                            title: part,
                         }))
                 );
 
@@ -405,18 +268,12 @@ export default {
 
         searched() {
             const vm = this;
-            return _.filter(
-                this.items,
-                file =>
-                    !vm.search ||
-                    file.name.toLowerCase().indexOf(vm.search.toLowerCase()) !==
-                        -1
-            );
+            return _.filter(this.items, (file) => !vm.search || file.name.toLowerCase().indexOf(vm.search.toLowerCase()) !== -1);
         },
 
         count() {
             return this.searched.length;
-        }
+        },
     },
 
     methods: {
@@ -433,10 +290,7 @@ export default {
         },
 
         getFullPath() {
-            return `${(this.getRoot() + this.getPath()).replace(
-                /^\/+|\/+$/g,
-                ""
-            )}/`;
+            return `${(this.getRoot() + this.getPath()).replace(/^\/+|\/+$/g, "")}/`;
         },
 
         getRoot() {
@@ -444,7 +298,7 @@ export default {
         },
 
         getSelected() {
-            return this.selected.map(function(name) {
+            return this.selected.map(function (name) {
                 return _.find(this.items, { name }).url;
             }, this);
         },
@@ -455,9 +309,7 @@ export default {
 
         toggleSelect(name) {
             const index = this.selected.indexOf(name);
-            index === -1
-                ? this.selected.push(name)
-                : this.selected.splice(index, 1);
+            index === -1 ? this.selected.push(name) : this.selected.splice(index, 1);
         },
 
         isSelected(name) {
@@ -465,13 +317,10 @@ export default {
         },
 
         createFolder() {
-            console.log(this.modaloptions);
-            UIkit.modal
-                .prompt(this.$trans("Folder Name"), "", this.modaloptions)
-                .then(name => {
-                    if (!name) return;
-                    this.command("createfolder", { name });
-                });
+            UIkit.modal.prompt(this.$trans("Folder Name"), "", this.modaloptions).then((name) => {
+                if (!name) return;
+                this.command("createfolder", { name });
+            });
         },
 
         rename(oldname) {
@@ -481,7 +330,7 @@ export default {
 
             if (!oldname) return;
 
-            UIkit.modal.prompt(this.$trans("Name"), oldname).then(newname => {
+            UIkit.modal.prompt(this.$trans("Name"), oldname).then((newname) => {
                 if (!newname) return;
 
                 this.command("rename", { oldname, newname });
@@ -524,41 +373,28 @@ export default {
         },
 
         command(cmd, params) {
-            return this.resource
-                .save(
-                    { cmd },
-                    _.extend({ path: this.path, root: this.getRoot() }, params)
-                )
-                .then(
-                    function(res) {
-                        this.load();
-                        this.$notify(
-                            res.data.message,
-                            res.data.error ? "danger" : ""
-                        );
-                    },
-                    function(res) {
-                        this.$notify(
-                            res.status == 500 ? "Unknown error." : res.data,
-                            "danger"
-                        );
-                    }
-                );
+            return this.resource.save({ cmd }, _.extend({ path: this.path, root: this.getRoot() }, params)).then(
+                function (res) {
+                    this.load();
+                    this.$notify(res.data.message, res.data.error ? "danger" : "");
+                },
+                function (res) {
+                    this.$notify(res.status == 500 ? "Unknown error." : res.data, "danger");
+                }
+            );
         },
 
         load() {
-            return this.resource
-                .get({ path: this.path, root: this.getRoot() })
-                .then(
-                    function(res) {
-                        this.$set(this, "items", res.data.items || []);
-                        this.$set(this, "selected", []);
-                        this.$emit("path:finder", this.getFullPath(), this);
-                    },
-                    function() {
-                        this.$notify("Unable to access directory.", "danger");
-                    }
-                );
+            return this.resource.get({ path: this.path, root: this.getRoot() }).then(
+                function (res) {
+                    this.$set(this, "items", res.data.items || []);
+                    this.$set(this, "selected", []);
+                    this.$emit("path:finder", this.getFullPath(), this);
+                },
+                function () {
+                    this.$notify("Unable to access directory.", "danger");
+                }
+            );
         },
 
         initUpload() {
@@ -573,7 +409,7 @@ export default {
                     _.extend(data.params, {
                         path: finder.path,
                         root: finder.getRoot(),
-                        _csrf: $greencheap.csrf
+                        _csrf: $greencheap.csrf,
                     });
                 },
 
@@ -600,12 +436,7 @@ export default {
                         var data = JSON.parse(data.responseText);
                     } catch (e) {
                         try {
-                            var data = JSON.parse(
-                                data.responseText.substring(
-                                    data.responseText.lastIndexOf("{"),
-                                    data.responseText.lastIndexOf("}") + 1
-                                )
-                            );
+                            var data = JSON.parse(data.responseText.substring(data.responseText.lastIndexOf("{"), data.responseText.lastIndexOf("}") + 1));
                             var { message } = data;
                         } catch (e) {
                             var message = "Unable load file(s).";
@@ -622,30 +453,25 @@ export default {
                     setTimeout(() => {
                         bar.setAttribute("hidden", "hidden");
                     }, 1000);
-                }
+                },
             };
 
             UIkit.upload(this.$el.querySelector(".files-upload"), settings);
-            UIkit.upload(
-                UIkit.util.parents(this.$el, ".uk-modal").length
-                    ? this.$el
-                    : UIkit.util.$("html"),
-                settings
-            );
-        }
+            UIkit.upload(UIkit.util.parents(this.$el, ".uk-modal").length ? this.$el : UIkit.util.$("html"), settings);
+        },
     },
 
     components: {
         "template-table": {
-            template: require("../templates/table.html")
+            template: require("../templates/table.html"),
         },
         "template-thumbnail": {
-            template: require("../templates/thumbnail.html")
-        }
-    }
+            template: require("../templates/thumbnail.html"),
+        },
+    },
 };
 
-Vue.component("panel-finder", resolve => {
+Vue.component("panel-finder", (resolve) => {
     resolve(require("./panel-finder.vue"));
 });
 </script>
