@@ -4,7 +4,7 @@ export default {
 
     name: 'editor-html',
 
-    created() {
+    mounted() {
 
         var vm = this,
             baseURL = $editor.root_url;

@@ -42,8 +42,8 @@
                     </div>
                 </div>
 
-                <div class="uk-card-badge pk-panel-badge uk-hidden-hover" v-if="!pkg.enabled">
-                    <ul class="uk-subnav pk-subnav-icon">
+                <div class="uk-position-top-right uk-position-small uk-hidden-hover" v-if="!pkg.enabled">
+                    <ul class="uk-subnav pk-subnav-icon uk-light">
                         <li><a uk-icon="icon:star;ratio:1.3" :uk-tooltip="'Enable' | trans" @click="enable(pkg)"></a></li>
                         <li><a uk-icon="icon:bin;ratio:1.3" :uk-tooltip="'Delete' | trans" @click="uninstall(pkg, packages)" v-confirm="'Uninstall theme?'"></a></li>
                     </ul>

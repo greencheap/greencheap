@@ -1,4 +1,4 @@
-## 3.0.10
+## 3.1.1
 
 ### Fixed
 - ResetPasswordController, RegisterController, ProfileController change response type
@@ -16,3 +16,6 @@
 
 ### Removed
 - EditorConfig
+
+### Updated
+- UIkit new version 3.6.18

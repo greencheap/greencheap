@@ -140,6 +140,10 @@
                             <v-input id="form-password" :type="hidePassword ? 'password' : 'text'" name="password" :view="{type: 'icon', icon: () => hidePassword ? 'lock' : 'unlock', class: 'uk-input uk-form-width-large', containerClass: 'uk-form-controls', iconTag: 'a', iconDir: 'right', iconClick: () => { hidePassword = !hidePassword }}" v-model="user.password" rules="required" message="Password cannot be blank." />
                         </div>
                         <div class="uk-margin">
+                            <label for="form-try-password" class="uk-form-label">{{ 'Try Password' | trans }}</label>
+                            <v-input id="form-try-password" :type="hidePassword ? 'password' : 'text'" name="try_password" :view="{type: 'icon', icon: () => hidePassword ? 'lock' : 'unlock', class: 'uk-input uk-form-width-large', containerClass: 'uk-form-controls', iconTag: 'a', iconDir: 'right', iconClick: () => { hidePassword = !hidePassword }}" v-model="user.try_password" rules="required" message="Password cannot be blank." />
+                        </div>
+                        <div class="uk-margin">
                             <label for="form-email" class="uk-form-label">{{ 'Email' | trans }}</label>
                             <v-input id="form-email" view="class: uk-input uk-form-width-large" type="email" name="email" v-model="user.email" rules="required|email" message="Field must be a valid email address." />
                         </div>
@@ -293,6 +297,11 @@ let Installer = {
         },
 
         stepSite() {
+            if(this.user.password !== this.user.try_password){
+                this.$notify(this.$trans('Passwords do not match'), 'danger');
+                return;
+            }
+
             this.gotoStep('finish');
             this.stepInstall();
         },

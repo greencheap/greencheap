@@ -16,7 +16,6 @@
                     <ul class="uk-slideshow-items" uk-height-viewport="">
                         <li>
                             <img data-src="<?= $image['image'] ?>" alt="<?= $image['information']['label'] ?>" uk-img uk-cover>
-                            <div class="uk-position-cover uk-overlay uk-overlay-default"></div>
                             <div class="uk-position-bottom-left uk-position-small uk-text-small">
                                 <div class="uk-flex uk-flex-middle">
                                     <div class="uk-margin-small-right">
@@ -24,7 +23,7 @@
                                             <img data-src="<?= $image['author']['avatarUrl'] ?>" width="40" class="uk-border-circle" uk-img>
                                         </a>
                                     </div>
-                                    <div>
+                                    <div class="uk-light">
                                         <a href="<?= $image['author']['profileUrl'] ?>" target="_blank">
                                             <h4 class="uk-h6 uk-margin-remove uk-text-bold"><?= $image['author']['fullName'] ?></h4>
                                         </a>
