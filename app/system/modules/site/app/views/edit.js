@@ -88,7 +88,7 @@ var Site = {
         },
 
         save() {
-            if(!this.node.link){
+            if(this.node.type == 'link' && !this.node.link){
                 this.$notify(this.$trans('Link cannot be empty!'), 'danger')
                 this.processing = false;
                 return false;
