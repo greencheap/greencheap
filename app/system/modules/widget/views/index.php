@@ -22,7 +22,7 @@
                     </li>
                     <li class="uk-nav-header">{{ 'Positions' | trans }}</li>
                     <li :class="{'uk-active': active(pos)}" v-for="pos in config.positions" :key="pos.name">
-                        <a @click="select(pos)">{{ pos.label }}  <span class="uk-text-muted uk-float-right" v-show="pos.widgets.length">{{ pos.widgets.length }}</span></a>
+                        <a @click="select(pos)">{{ pos.label }} <span class="uk-text-muted uk-float-right" v-show="pos.widgets.length">{{ pos.widgets.length }}</span></a>
                     </li>
                 </ul>
 
@@ -32,7 +32,7 @@
         <div class="pk-width-content">
 
             <div class="uk-margin uk-flex uk-flex-middle uk-flex-between uk-flex-wrap uk-grid-small" uk-grid>
-                <div class="uk-flex uk-flex-middle uk-flex-wrap" >
+                <div class="uk-flex uk-flex-middle uk-flex-wrap">
 
                     <h2 class="uk-h3 uk-margin-remove" v-if="!selected.length">{{ position ? position.label : $trans('All') }}</h2>
 
@@ -65,14 +65,29 @@
                     </div>
 
                 </div>
-                <div class="uk-position-relative" >
+                <div class="uk-position-relative">
 
                     <div>
-                        <button class="uk-button uk-button-primary" type="button">{{ 'Add' | trans }}</button>
-                        <div uk-dropdown="mode: click">
-                            <ul class="uk-nav uk-dropdown-nav">
-                                <li v-for="type in types" :key="type.name"><a :href="$url.route('admin/site/widget/edit', {type: type.name, position:(position ? position.name:'')})">{{ type.label || type.name | trans }}</a></li>
-                            </ul>
+                        <a class="uk-button uk-button-primary" href="#modal-widget-types" uk-toggle>{{ 'Add' | trans }}</a>
+                        <div id="modal-widget-types" class="uk-flex-top" uk-modal>
+                            <div class="uk-modal-dialog uk-margin-auto-vertical">
+                                <button class="uk-modal-close-default" type="button" uk-close></button>
+                                <div class="uk-modal-header">
+                                    <h2 class="uk-h3">{{ 'Widgets' | trans }}</h2>
+                                </div>
+                                <div class="uk-modal-body">
+                                    <ul class="uk-child-width-1-4@m uk-child-width-1-2" uk-grid>
+                                        <li v-for="type in types" :key="type.name">
+                                            <a :href="$url.route('admin/site/widget/edit', {type: type.name, position:(position ? position.name:'')})" class="tm-navbar-href">
+                                                <div class="tm-navbar-icon">
+                                                    <img :data-src="type.icon" width="100%" uk-img>
+                                                </div>
+                                                <span class="tm-navbar-item uk-text-truncate">{{ type.label || type.name | trans }}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

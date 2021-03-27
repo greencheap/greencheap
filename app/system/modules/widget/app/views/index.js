@@ -15,7 +15,7 @@ var Widgets = {
             type: {},
         }, window.$data);
     },
-    
+
     mounted() {
         this.load();
     },
@@ -197,7 +197,7 @@ var Widgets = {
             } if (widget.nodes.length > 1) {
                 return this.$trans('Selected');
             }
-            return (_.find(this.config.nodes, 'id', widget.nodes[0]) || {}).title;
+            return (_.find(this.config.nodes, (value, key) => key == widget.nodes[0])).title
         },
 
         isSelected(id) {

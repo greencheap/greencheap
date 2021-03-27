@@ -31,18 +31,10 @@
                 <div class="uk-flex uk-flex-middle uk-flex-wrap">
                     <div class="uk-margin-right">
                         <ul class="uk-iconnav">
-                            <li
-                                :class="{
-                                    'uk-active': view == 'template-table',
-                                }"
-                            >
+                            <li :class="{ 'uk-active': view == 'template-table' }">
                                 <a uk-icon="table" :title="'Table View' | trans" uk-tooltip="delay: 500" @click.prevent="view = 'template-table'" />
                             </li>
-                            <li
-                                :class="{
-                                    'uk-active': view == 'template-thumbnail',
-                                }"
-                            >
+                            <li :class="{ 'uk-active': view == 'template-thumbnail' }">
                                 <a uk-icon="thumbnails" :title="'Thumbnails View' | trans" uk-tooltip="delay: 500" @click.prevent="view = 'template-thumbnail'" />
                             </li>
                         </ul>
@@ -106,18 +98,10 @@
                     <div class="uk-flex uk-flex-middle uk-flex-wrap uk-margin-remove">
                         <div class="uk-margin-right">
                             <ul class="uk-iconnav">
-                                <li
-                                    :class="{
-                                        'uk-active': view == 'template-table',
-                                    }"
-                                >
+                                <li :class="{ 'uk-active': view == 'template-table' }">
                                     <a uk-icon="table" :title="'Table View' | trans" uk-tooltip="delay: 500" @click.prevent="view = 'template-table'" />
                                 </li>
-                                <li
-                                    :class="{
-                                        'uk-active': view == 'template-thumbnail',
-                                    }"
-                                >
+                                <li :class="{ 'uk-active': view == 'template-thumbnail' }">
                                     <a uk-icon="thumbnails" :title="'Thumbnails View' | trans" uk-tooltip="delay: 500" @click.prevent="view = 'template-thumbnail'" />
                                 </li>
                             </ul>
@@ -153,13 +137,7 @@
 
             <div class="uk-modal-body">
                 <div class="tm-finder-modal-container">
-                    <div
-                        class="uk-overflow-auto"
-                        uk-overflow-auto
-                        :class="{
-                            'uk-flex uk-flex-center uk-flex-middle': !count,
-                        }"
-                    >
+                    <div class="uk-overflow-auto" uk-overflow-auto :class="{ 'uk-flex uk-flex-center uk-flex-middle': !count }">
                         <div class="tm-overflow-container">
                             <component :is="view" v-show="count" />
                             <h3 v-show="!count" class="uk-h2 uk-text-muted uk-text-center">
@@ -181,6 +159,11 @@ export default {
         root: { type: String, default: "/" },
         mode: { type: String, default: "write" },
         modal: Boolean,
+    },
+
+    multiFinder: {
+        label: "Local Storage",
+        priority: 0,
     },
 
     data() {

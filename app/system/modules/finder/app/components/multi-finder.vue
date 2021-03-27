@@ -32,7 +32,17 @@
         </div>
 
         <v-modal ref="modal" large bg-close>
-            <panel-finder ref="finder" :root="storage" :modal="true" @select:finder="selectFinder" />
+            <ul ref="tab" v-show="multiFinders.length > 0" id="multi-finder-tab">
+                <li v-for="multiFinder in multiFinders" :key="multiFinder.name">
+                    <a>{{ multiFinder.label | trans }}</a>
+                </li>
+            </ul>
+
+            <div ref="content" class="uk-switcher uk-margin" id="multi-finder-content">
+                <div v-for="multiFinder in multiFinders" :key="multiFinder.name">
+                    <component :is="multiFinder.name" ref="finder" :root="storage" :modal="true" @select:finder="selectFinder"></component>
+                </div>
+            </div>
 
             <div class="uk-modal-footer">
                 <div class="uk-flex uk-flex-middle uk-flex-between">
@@ -57,7 +67,9 @@
 </template>
 
 <script>
-export default {
+import PanelFinder from "./panel-finder.vue";
+
+const MultiPanel = {
     props: {
         inputClass: { default: "" },
         value: { default: "" },
@@ -71,9 +83,21 @@ export default {
                 choice: "",
                 source: this.value,
                 finder: {},
+                multiFinders: [],
+                active: this.$session.get("multi.finder.tab.active", 0),
             },
             $greencheap
         );
+    },
+
+    created() {
+        const multiFinders = [];
+        _.forIn(this.$options.components, (component, name) => {
+            if (component.multiFinder) {
+                multiFinders.push(_.extend({ name, priority: 0 }, component.multiFinder));
+            }
+        });
+        this.$set(this, "multiFinders", _.sortBy(multiFinders, "priority"));
     },
 
     computed: {
@@ -87,6 +111,21 @@ export default {
         UIkit.util.on(this.$refs.modal.$el, "shown", () => {
             vm.finder = vm.$refs.finder;
         });
+
+        this.tab = UIkit.tab("#multi-finder-tab", { connect: "#multi-finder-content" });
+
+        UIkit.util.on(this.tab.connects, "show", (e, tab) => {
+            if (tab != vm.tab) return;
+            for (const index in tab.toggles) {
+                if (tab.toggles[index].classList.contains("uk-active")) {
+                    vm.$session.set("multi.finder.tab.active", index);
+                    vm.active = index;
+                    break;
+                }
+            }
+        });
+
+        this.tab.show(this.active);
     },
 
     methods: {
@@ -109,7 +148,6 @@ export default {
 
         remove() {
             this.source = "";
-            // this.$dispatch('image-removed');
             this.$emit("image:removed");
         },
 
@@ -124,13 +162,17 @@ export default {
             this.$emit("input", src);
         },
     },
+
+    components: {
+        PanelFinder,
+    },
 };
 
-Vue.component("input-image", (resolve, reject) => {
-    Vue.asset({
-        js: ["app/system/modules/finder/app/bundle/panel-finder.js"],
-    }).then(() => {
-        resolve(require("./input-image.vue"));
-    });
+export default MultiPanel;
+
+window.MultiPanel = MultiPanel;
+
+Vue.component("v-multi-finder", function (resolve) {
+    resolve(require("./multi-finder.vue"));
 });
 </script>

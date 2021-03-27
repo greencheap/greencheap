@@ -8,6 +8,8 @@ return [
 
     'label' => 'Login',
 
+    'icon' => 'system/theme:assets/images/user-widget.svg',
+
     'events' => [
 
         'view.scripts' => function ($event, $scripts) use ($app) {

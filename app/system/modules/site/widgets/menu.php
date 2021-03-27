@@ -6,6 +6,8 @@ return [
 
     'label' => 'Menu',
 
+    'icon' => 'system/theme:assets/images/menu-widget.svg',
+
     'defaults' => [
         'start_level' => 1,
         'depth' => 0,

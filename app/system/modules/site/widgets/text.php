@@ -6,6 +6,8 @@ return [
 
     'label' => 'Text',
 
+    'icon' => 'system/theme:assets/images/text-widget.svg',
+
     'render' => function ($widget) use ($app) {
         return $app['view']->render('system/site/widget-text.php', compact('widget'));
     },
