@@ -161,11 +161,6 @@ export default {
         modal: Boolean,
     },
 
-    multiFinder: {
-        label: "Local Storage",
-        priority: 0,
-    },
-
     data() {
         return {
             upload: {},

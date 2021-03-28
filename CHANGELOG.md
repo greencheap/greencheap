@@ -7,3 +7,4 @@
 ### Added
 
 -   Icon added to widget area
+-   Multi Finder System

@@ -1,90 +1,123 @@
 <template>
     <div>
-        <div v-if="!source" :class="[inputClass, 'uk-inline-clip']" @click.prevent="pick">
-            <a class="uk-link-reset">
-                <div class="uk-placeholder uk-text-center uk-margin-remove">
-                    <span class="uk-display-block uk-text-primary" uk-icon="icon:image;ratio:3"></span>
-                    <p class="uk-text-muted uk-margin-small-top">{{ title | trans }}</p>
-                </div>
-            </a>
-        </div>
+        <a v-if="!img_meta.src" class="uk-placeholder uk-link-reset uk-text-center uk-display-block uk-margin-remove" @click.prevent="pick">
+            <span class="uk-display-block uk-text-primary" uk-icon="icon:image;ratio:3"></span>
+            <p class="uk-text-muted uk-margin-small-top">{{ "Add Image" | trans }}</p>
+        </a>
 
-        <div v-else :class="[inputClass, 'uk-inline-clip uk-position-relative uk-transition-toggle uk-visible-toggle']">
-            <img :src="source.indexOf('blob:') !== 0 ? $url(source) : source" />
+        <div v-else :class="['uk-position-relative uk-transition-toggle uk-visible-toggle', cls ? cls : '']">
+            <img :src="$url(img_meta.src)" />
 
-            <a class="uk-transition-fade uk-position-cover pk-thumbnail-overlay uk-flex uk-flex-center uk-flex-middle" @click.prevent="pick" />
+            <div class="uk-transition-fade uk-position-cover pk-thumbnail-overlay uk-flex uk-flex-center uk-flex-middle" />
+
+            <a class="uk-position-cover" @click.prevent="pick" />
 
             <div class="uk-card-badge pk-panel-badge uk-invisible-hover">
                 <ul class="uk-subnav pk-subnav-icon">
                     <li>
-                        <a class="uk-icon-link" uk-icon="trash" :title="'Delete' | trans" uk-tooltip="delay: 500" @click.prevent="remove" v-confirm="'Reset image?'"></a>
+                        <a v-confirm="'Reset image?'" class="uk-icon-link" uk-icon="icon: trash" :title="'Delete' | trans" uk-tooltip="delay: 500" @click.prevent="remove" />
                     </li>
                 </ul>
             </div>
         </div>
 
-        <div v-if="inputField" class="uk-margin-small-top">
-            <div :class="[inputClass, 'uk-inline']">
-                <a class="uk-form-icon" uk-icon="icon: image" @click.prevent="pick" />
-                <a v-if="source" v-confirm="'Reset image?'" class="uk-form-icon uk-form-icon-flip" uk-icon="icon: close" @click.prevent="source = ''" />
-                <input v-model="source" type="text" class="uk-input" />
-            </div>
-        </div>
-
-        <v-modal ref="modal" large bg-close>
-            <ul ref="tab" v-show="multiFinders.length > 0" id="multi-finder-tab">
-                <li v-for="multiFinder in multiFinders" :key="multiFinder.name">
-                    <a>{{ multiFinder.label | trans }}</a>
-                </li>
-            </ul>
-
-            <div ref="content" class="uk-switcher uk-margin" id="multi-finder-content">
-                <div v-for="multiFinder in multiFinders" :key="multiFinder.name">
-                    <component :is="multiFinder.name" ref="finder" :root="storage" :modal="true" @select:finder="selectFinder"></component>
+        <v-modal ref="modal">
+            <form class="uk-form-stacked" @submit="update">
+                <div class="uk-modal-header">
+                    <h2>{{ "Image" | trans }}</h2>
                 </div>
-            </div>
 
-            <div class="uk-modal-footer">
-                <div class="uk-flex uk-flex-middle uk-flex-between">
-                    <div>
-                        <div v-if="isFinder">
-                            <span v-if="!finder.selected.length" class="uk-text-meta">{{ "{0} %count% Files|{1} %count% File|]1,Inf[ %count% Files" | transChoice(finder.count, { count: finder.count }) }}</span>
-                            <span v-else class="uk-text-meta">{{ "{1} %count% File selected|]1,Inf[ %count% Files selected" | transChoice(finder.selected.length, { count: finder.selected.length }) }}</span>
+                <div class="uk-modal-body">
+                    <div class="uk-margin">
+                        <div v-if="isLoad" class="uk-height-small uk-flex uk-flex-center uk-flex-middle uk-width-expand">
+                            <span uk-spinner></span>
+                        </div>
+                        <input-image v-else v-model="img.src" :input-field="false" input-class="uk-width-expand" />
+                    </div>
+
+                    <ul v-if="multiFinders.length" class="uk-grid-small" uk-grid>
+                        <li v-for="(multiFinder, id) in multiFinders" :key="id">
+                            <button type="button" @click.prevent="pickMultiFinder(multiFinder)" class="uk-button uk-button-default uk-width-expand">
+                                <span class="uk-margin-small-right uk-icon uk-icon-image" :data-src="$url(multiFinder.icon)" uk-img></span>
+                                {{ multiFinder.label }}
+                            </button>
+                        </li>
+                    </ul>
+
+                    <v-modal ref="multiFinderModal" :options="{ bgClose: false }" large>
+                        <div class="uk-modal-header">
+                            <h4><span class="uk-margin-small-right uk-icon uk-icon-image" :data-src="$url(multiFinder.icon)" uk-img></span> {{ multiFinder.label }}</h4>
+                        </div>
+                        <div class="uk-modal-body">
+                            <component :is="multiFinder.component" :source.sync="multiFinder.img_meta" :selected.sync="multiFinder.selected" :count.sync="multiFinder.count"></component>
+                        </div>
+                        <div v-if="multiFinder" class="uk-modal-footer">
+                            <div class="uk-flex uk-flex-middle uk-flex-between">
+                                <div>
+                                    <div>
+                                        <span v-if="!multiFinder.selected.length" class="uk-text-meta">{{ "{1} %count% File|]1,Inf[ %count% Files" | transChoice(multiFinder.count, { count: multiFinder.count }) }}</span>
+                                        <span v-else class="uk-text-meta">{{ "{1} %count% File selected|]1,Inf[ %count% Files selected" | transChoice(multiFinder.selected.length, { count: multiFinder.selected.length }) }}</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="uk-button uk-button-text uk-margin-right uk-modal-close" type="button">
+                                        {{ "Cancel" | trans }}
+                                    </button>
+                                    <button @click.prevent="updateMultiFinderImage" class="uk-button uk-button-primary" :disabled="!multiFinder.img_meta.src" type="button">
+                                        {{ "Select" | trans }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </v-modal>
+
+                    <div class="uk-margin">
+                        <label for="form-src" class="uk-form-label">{{ "URL" | trans }}</label>
+                        <div class="uk-form-controls">
+                            <input id="form-src" v-model.lazy="img.src" class="uk-width-1-1 uk-input" type="text" />
                         </div>
                     </div>
-                    <div>
-                        <button class="uk-button uk-button-text uk-margin-right uk-modal-close" type="button">
-                            {{ "Cancel" | trans }}
-                        </button>
-                        <button class="uk-button uk-button-primary" type="button" :disabled="!choice" @click.prevent="select">
-                            {{ "Select" | trans }}
-                        </button>
+
+                    <div class="uk-margin">
+                        <label for="form-alt" class="uk-form-label">{{ "Alt" | trans }}</label>
+                        <div class="uk-form-controls">
+                            <input id="form-alt" v-model="img.alt" class="uk-width-1-1 uk-input" type="text" />
+                        </div>
                     </div>
                 </div>
-            </div>
+
+                <div class="uk-modal-footer uk-text-right">
+                    <button class="uk-button uk-button-text uk-margin-right uk-modal-close" type="button">
+                        {{ "Cancel" | trans }}
+                    </button>
+                    <button class="uk-button uk-button-primary" type="button" @click.prevent="update">
+                        {{ "Update" | trans }}
+                    </button>
+                </div>
+            </form>
         </v-modal>
     </div>
 </template>
 
 <script>
-import PanelFinder from "./panel-finder.vue";
-
-const MultiPanel = {
+const MultiFinder = {
     props: {
-        inputClass: { default: "" },
-        value: { default: "" },
-        title: { default: "Select Image" },
-        inputField: { default: true, type: Boolean },
+        cls: {
+            type: String,
+            default: "",
+        },
+        image: Object,
     },
 
     data() {
         return _.merge(
             {
-                choice: "",
-                source: this.value,
-                finder: {},
+                img: {},
+                img_meta: {},
                 multiFinders: [],
-                active: this.$session.get("multi.finder.tab.active", 0),
+                multiFinder: false,
+                multiFinderModal: false,
+                isLoad: false,
             },
             $greencheap
         );
@@ -94,85 +127,94 @@ const MultiPanel = {
         const multiFinders = [];
         _.forIn(this.$options.components, (component, name) => {
             if (component.multiFinder) {
-                multiFinders.push(_.extend({ name, priority: 0 }, component.multiFinder));
+                multiFinders.push(_.extend({ name, priority: 0, icon: false }, component.multiFinder));
             }
         });
         this.$set(this, "multiFinders", _.sortBy(multiFinders, "priority"));
-    },
-
-    computed: {
-        isFinder() {
-            return !!(this.finder.hasOwnProperty("selected") && this.finder.selected);
-        },
+        this.activeFinder = multiFinders[0];
     },
 
     mounted() {
-        const vm = this;
-        UIkit.util.on(this.$refs.modal.$el, "shown", () => {
-            vm.finder = vm.$refs.finder;
-        });
+        this.$set(this, "img_meta", this.image || { src: "", alt: "" });
+        this.$set(this, "img", _.extend({}, this.img_meta));
 
-        this.tab = UIkit.tab("#multi-finder-tab", { connect: "#multi-finder-content" });
+        this.$on("image:selected", function (path) {
+            if (path && !this.img.alt) {
+                const alt = path
+                    .split("/")
+                    .slice(-1)[0]
+                    .replace(/\.(jpeg|jpg|png|svg|gif)$/i, "")
+                    .replace(/(_|-)/g, " ")
+                    .trim();
+                const first = alt.charAt(0).toUpperCase();
 
-        UIkit.util.on(this.tab.connects, "show", (e, tab) => {
-            if (tab != vm.tab) return;
-            for (const index in tab.toggles) {
-                if (tab.toggles[index].classList.contains("uk-active")) {
-                    vm.$session.set("multi.finder.tab.active", index);
-                    vm.active = index;
-                    break;
-                }
+                this.img.alt = first + alt.substr(1);
             }
         });
-
-        this.tab.show(this.active);
     },
 
     methods: {
-        selectFinder(val) {
-            this.choice = this.hasSelection();
-        },
-
         pick() {
+            this.img.src = this.img_meta.src;
+            this.img.alt = this.img_meta.alt;
             this.$refs.modal.open();
         },
 
-        select() {
-            const old_source = this.source;
-            this.source = decodeURI(this.$refs.finder.getSelected()[0]);
-            this.$emit("input", this.source);
-            this.$emit("image:selected", this.source, old_source);
-            this.$refs.finder.removeSelection();
+        update() {
+            this.img_meta.src = this.img.src;
+            this.img_meta.alt = this.img.alt;
+            this.$emit("input", this.img_meta);
             this.$refs.modal.close();
         },
 
         remove() {
-            this.source = "";
-            this.$emit("image:removed");
+            this.img.src = "";
+            this.img_meta.src = "";
         },
 
-        hasSelection() {
-            const selected = this.$refs.finder.getSelected();
-            return selected.length === 1 && this.$refs.finder.isImage(selected[0]);
+        pickMultiFinder(component) {
+            this.multiFinder = {
+                component: component.name,
+                label: component.label,
+                icon: component.icon,
+                img_meta: {
+                    src: "",
+                    alt: "",
+                },
+                selected: [],
+                count: 0,
+            };
+            this.$refs.multiFinderModal.open();
+        },
+
+        updateMultiFinderImage() {
+            this.startLoad();
+            this.img.src = this.multiFinder.img_meta.src;
+            this.img.alt = this.multiFinder.img_meta.alt;
+            this.img_meta.src = this.multiFinder.img_meta.src;
+            this.img_meta.alt = this.multiFinder.img_meta.alt;
+            this.$emit("input", this.img_meta);
+            this.$refs.multiFinderModal.close();
+        },
+
+        startLoad() {
+            this.isLoad = true;
+            setTimeout(() => (this.isLoad = false), 500);
         },
     },
 
-    watch: {
-        source(src) {
-            this.$emit("input", src);
-        },
-    },
-
-    components: {
-        PanelFinder,
-    },
+    components: {},
 };
 
-export default MultiPanel;
+export default MultiFinder;
 
-window.MultiPanel = MultiPanel;
+window.MultiFinder = MultiFinder;
 
 Vue.component("v-multi-finder", function (resolve) {
-    resolve(require("./multi-finder.vue"));
+    Vue.asset({
+        js: ["app/system/modules/finder/app/bundle/panel-finder.js"],
+    }).then(() => {
+        resolve(require("./multi-finder.vue"));
+    });
 });
 </script>
