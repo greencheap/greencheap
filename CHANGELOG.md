@@ -8,3 +8,8 @@
 
 -   Icon added to widget area
 -   Multi Finder System
+-   Calendar Icon
+
+### Updated
+
+-   vue-event-manager and vue-resource dependencies updated

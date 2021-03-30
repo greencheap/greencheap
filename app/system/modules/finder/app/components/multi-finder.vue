@@ -48,8 +48,8 @@
                         <div class="uk-modal-header">
                             <h4><span class="uk-margin-small-right uk-icon uk-icon-image" :data-src="$url(multiFinder.icon)" uk-img></span> {{ multiFinder.label }}</h4>
                         </div>
-                        <div class="uk-modal-body">
-                            <component :is="multiFinder.component" :source.sync="multiFinder.img_meta" :selected.sync="multiFinder.selected" :count.sync="multiFinder.count"></component>
+                        <div class="uk-modal-body" :class="{'uk-padding-remove':!multiFinder.padding}">
+                            <component :is="multiFinder.component" :source.sync="multiFinder.img_meta" :selected.sync="multiFinder.selected" :count.sync="multiFinder.count" v-on:recount="multiReCount"></component>
                         </div>
                         <div v-if="multiFinder" class="uk-modal-footer">
                             <div class="uk-flex uk-flex-middle uk-flex-between">
@@ -127,7 +127,7 @@ const MultiFinder = {
         const multiFinders = [];
         _.forIn(this.$options.components, (component, name) => {
             if (component.multiFinder) {
-                multiFinders.push(_.extend({ name, priority: 0, icon: false }, component.multiFinder));
+                multiFinders.push(_.extend({ name, priority: 0, icon: false, padding: true }, component.multiFinder));
             }
         });
         this.$set(this, "multiFinders", _.sortBy(multiFinders, "priority"));
@@ -177,6 +177,7 @@ const MultiFinder = {
                 component: component.name,
                 label: component.label,
                 icon: component.icon,
+                padding: component.padding,
                 img_meta: {
                     src: "",
                     alt: "",
@@ -191,9 +192,6 @@ const MultiFinder = {
             this.startLoad();
             this.img.src = this.multiFinder.img_meta.src;
             this.img.alt = this.multiFinder.img_meta.alt;
-            this.img_meta.src = this.multiFinder.img_meta.src;
-            this.img_meta.alt = this.multiFinder.img_meta.alt;
-            this.$emit("input", this.img_meta);
             this.$refs.multiFinderModal.close();
         },
 
@@ -201,6 +199,10 @@ const MultiFinder = {
             this.isLoad = true;
             setTimeout(() => (this.isLoad = false), 500);
         },
+
+        multiReCount(val){
+            this.multiFinder.count = val
+        }
     },
 
     components: {},

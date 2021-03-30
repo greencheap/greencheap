@@ -5764,7 +5764,7 @@ vue-eslint-parser@^6.0.4:
     esquery "^1.0.1"
     lodash "^4.17.11"
 
-vue-event-manager@^2.1.2:
+vue-event-manager@^2.1.*:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/vue-event-manager/-/vue-event-manager-2.1.3.tgz#d1a978633553ec391944b630f005d80df5386cac"
   integrity sha512-r9j0BKtKBWO1FJnkGhsx4/50ZZzEV7Te9p+n+deNHcRbO1v8ZWBl7xLwBdT10i66bihr6XQAXtW/zt4n3FQwAw==
@@ -5814,7 +5814,7 @@ vue-resize@^1.0.0:
   resolved "https://registry.yarnpkg.com/vue-resize/-/vue-resize-1.0.0.tgz#380565b36e411190d85f8fbd3aa230a4cc22f1a5"
   integrity sha512-SkIi19neeJClapYavfmHiewFZkkTfITVWskg/dIL8b1Eb+RlvnCb8fjGUwLjQJmsw2qsRiiAo4o7BAJVM4pcOA==
 
-vue-resource@^1.5.1:
+vue-resource@^1.5.*:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/vue-resource/-/vue-resource-1.5.2.tgz#bd1e9944c62e9f2218baca8433f2604109aee299"
   integrity sha512-rH87jlb+TMqx+pGvG7VOThL6V38z/kneXyljntewIvsNWL5nOUJ8OMywbqZfrhGjDWC3xyh3C+0Y+wR4DScWlg==
