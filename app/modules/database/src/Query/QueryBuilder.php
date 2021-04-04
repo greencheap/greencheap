@@ -3,7 +3,6 @@
 namespace GreenCheap\Database\Query;
 
 use Closure;
-use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\DBAL\Platforms\PostgreSQL100Platform;
@@ -586,11 +585,10 @@ class QueryBuilder
 
     /**
      * Execute the "select" query.
-     *
-     * @param  mixed $columns
-     * @return Statement
+     * @param mixed $columns
+     * @return mixed
      */
-    public function execute($columns = ['*']): Statement
+    public function execute($columns = ['*']): mixed
     {
         if (empty($this->parts['select'])) {
             $this->select($columns);
