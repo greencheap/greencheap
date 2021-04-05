@@ -1,15 +1,7 @@
-## 3.1.4
-
-### Fixed
-
--   Fixed the incorrect display of pages set in the widget section.
-
-### Added
-
--   Icon added to widget area
--   Multi Finder System
--   Calendar Icon
+## 3.2.0
 
 ### Updated
 
--   vue-event-manager and vue-resource dependencies updated
+- Composer dependencies updated
+
+
