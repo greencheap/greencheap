@@ -21,9 +21,9 @@ class SettingsController
     {
         return [
             '$view' => [
-                'title' => __('Settings'),
-                'name'  => 'system:modules/settings/views/settings.php'
-            ]
+                "title" => __("Settings"),
+                "name" => "system:modules/settings/views/settings.php",
+            ],
         ];
     }
 
@@ -36,8 +36,8 @@ class SettingsController
     #[ArrayShape(['message' => "string"])]
     public function saveAction($values = [], $options = []): array
     {
-        $config = new Config;
-        $config->merge(include $file = App::get('config.file'));
+        $config = new Config();
+        $config->merge(include $file = App::get("config.file"));
 
         foreach ($values as $module => $value) {
             $config->set($module, $value);
@@ -49,11 +49,11 @@ class SettingsController
             $this->configAction($module, $value);
         }
 
-        if (function_exists('opcache_invalidate')) {
+        if (function_exists("opcache_invalidate")) {
             opcache_invalidate($file);
         }
 
-        return ['message' => 'success'];
+        return ["message" => "success"];
     }
 
     /**
@@ -67,6 +67,6 @@ class SettingsController
     {
         App::config()->set($name, array_replace(App::config($name)->toArray(), $config));
 
-        return ['message' => 'success'];
+        return ["message" => "success"];
     }
 }

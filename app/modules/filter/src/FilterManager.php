@@ -8,20 +8,20 @@ class FilterManager
      * @var array
      */
     protected $defaults = [
-        'addrelnofollow' => 'GreenCheap\Filter\AddRelNofollowFilter',
-        'alnum'          => 'GreenCheap\Filter\AlnumFilter',
-        'alpha'          => 'GreenCheap\Filter\AlphaFilter',
-        'bool'           => 'GreenCheap\Filter\BooleanFilter',
-        'boolean'        => 'GreenCheap\Filter\BooleanFilter',
-        'digits'         => 'GreenCheap\Filter\DigitsFilter',
-        'int'            => 'GreenCheap\Filter\IntFilter',
-        'integer'        => 'GreenCheap\Filter\IntFilter',
-        'float'          => 'GreenCheap\Filter\FloatFilter',
-        'json'           => 'GreenCheap\Filter\JsonFilter',
-        'pregreplace'    => 'GreenCheap\Filter\PregReplaceFilter',
-        'slugify'        => 'GreenCheap\Filter\SlugifyFilter',
-        'string'         => 'GreenCheap\Filter\StringFilter',
-        'stripnewlines'  => 'GreenCheap\Filter\StripNewlinesFilter'
+        "addrelnofollow" => "GreenCheap\Filter\AddRelNofollowFilter",
+        "alnum" => "GreenCheap\Filter\AlnumFilter",
+        "alpha" => "GreenCheap\Filter\AlphaFilter",
+        "bool" => "GreenCheap\Filter\BooleanFilter",
+        "boolean" => "GreenCheap\Filter\BooleanFilter",
+        "digits" => "GreenCheap\Filter\DigitsFilter",
+        "int" => "GreenCheap\Filter\IntFilter",
+        "integer" => "GreenCheap\Filter\IntFilter",
+        "float" => "GreenCheap\Filter\FloatFilter",
+        "json" => "GreenCheap\Filter\JsonFilter",
+        "pregreplace" => "GreenCheap\Filter\PregReplaceFilter",
+        "slugify" => "GreenCheap\Filter\SlugifyFilter",
+        "string" => "GreenCheap\Filter\StringFilter",
+        "stripnewlines" => "GreenCheap\Filter\StripNewlinesFilter",
     ];
 
     /**
@@ -34,7 +34,8 @@ class FilterManager
      *
      * @param array $defaults
      */
-    public function __construct(array $defaults = null) {
+    public function __construct(array $defaults = null)
+    {
         if (null !== $defaults) {
             $this->defaults = $defaults;
         }
@@ -83,7 +84,7 @@ class FilterManager
         }
 
         if (is_string($class = $this->filters[$name])) {
-            $this->filters[$name] = new $class;
+            $this->filters[$name] = new $class();
         }
 
         $filter = clone $this->filters[$name];

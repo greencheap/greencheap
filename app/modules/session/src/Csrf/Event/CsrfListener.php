@@ -31,11 +31,11 @@ class CsrfListener implements EventSubscriberInterface
      */
     public function onRequest($event, $request)
     {
-        $this->provider->setToken($request->get('_csrf', $request->headers->get('X-XSRF-TOKEN')));
-        $attributes = $request->attributes->get('_request', []);
+        $this->provider->setToken($request->get("_csrf", $request->headers->get("X-XSRF-TOKEN")));
+        $attributes = $request->attributes->get("_request", []);
 
-        if (isset($attributes['csrf']) && !$this->provider->validate()) {
-            throw new CsrfException('Invalid CSRF token.');
+        if (isset($attributes["csrf"]) && !$this->provider->validate()) {
+            throw new CsrfException("Invalid CSRF token.");
         }
     }
 
@@ -45,7 +45,7 @@ class CsrfListener implements EventSubscriberInterface
     public function subscribe()
     {
         return [
-            'request' => ['onRequest', -150]
+            "request" => ["onRequest", -150],
         ];
     }
 }

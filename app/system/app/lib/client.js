@@ -1,13 +1,15 @@
 module.exports = {
-
     data() {
-        return _.merge({
-            errorTemplate: {
-                isActive: false,
-                message: '',
-                title: '',
+        return _.merge(
+            {
+                errorTemplate: {
+                    isActive: false,
+                    message: "",
+                    title: "",
+                },
             },
-        }, window.$client);
+            window.$client
+        );
     },
 
     computed: {
@@ -39,7 +41,7 @@ module.exports = {
             return http;
         },
 
-        abort(active = false, message = '', title = 'Error') {
+        abort(active = false, message = "", title = "Error") {
             this.errorTemplate.isActive = active;
             this.errorTemplate.message = message;
             this.errorTemplate.title = title;
@@ -52,24 +54,24 @@ module.exports = {
             // eslint-disable-next-line func-names
             renderer.heading = function (text) {
                 section = text;
-                return '';
+                return "";
             };
 
             // eslint-disable-next-line func-names
             renderer.listitem = function (text) {
                 switch (section) {
-                case 'Added':
-                    return `<div class="uk-width-1-6"><span class="uk-label uk-label-primary uk-text-capitalize uk-text-center uk-width-expand">${section}</span></div><div class="uk-width-5-6">${text}</div>`;
-                case 'Deprecated':
-                    return `<div class="uk-width-1-6"><span class="uk-label uk-label-warning uk-text-capitalize uk-text-center uk-width-expand">${section}</span></div><div class="uk-width-5-6">${text}</div>`;
-                case 'Removed':
-                    return `<div class="uk-width-1-6"><span class="uk-label uk-label-warning uk-text-capitalize uk-text-center uk-width-expand">${section}</span></div><div class="uk-width-5-6">${text}</div>`;
-                case 'Fixed':
-                    return `<div class="uk-width-1-6"><span class="uk-label uk-label-danger uk-text-capitalize uk-text-center uk-width-expand">${section}</span></div><div class="uk-width-5-6">${text}</div>`;
-                case 'Security':
-                    return `<div class="uk-width-1-6"><span class="uk-label uk-label-danger uk-text-capitalize uk-text-center uk-width-expand">${section}</span></div><div class="uk-width-5-6">${text}</div>`;
-                default:
-                    return `<div class="uk-width-1-6"><span class="uk-label uk-text-capitalize uk-text-center uk-width-expand">${section}</span></div><div class="uk-width-5-6">${text}</div>`;
+                    case "Added":
+                        return `<div class="uk-width-1-6"><span class="uk-label uk-label-primary uk-text-capitalize uk-text-center uk-width-expand">${section}</span></div><div class="uk-width-5-6">${text}</div>`;
+                    case "Deprecated":
+                        return `<div class="uk-width-1-6"><span class="uk-label uk-label-warning uk-text-capitalize uk-text-center uk-width-expand">${section}</span></div><div class="uk-width-5-6">${text}</div>`;
+                    case "Removed":
+                        return `<div class="uk-width-1-6"><span class="uk-label uk-label-warning uk-text-capitalize uk-text-center uk-width-expand">${section}</span></div><div class="uk-width-5-6">${text}</div>`;
+                    case "Fixed":
+                        return `<div class="uk-width-1-6"><span class="uk-label uk-label-danger uk-text-capitalize uk-text-center uk-width-expand">${section}</span></div><div class="uk-width-5-6">${text}</div>`;
+                    case "Security":
+                        return `<div class="uk-width-1-6"><span class="uk-label uk-label-danger uk-text-capitalize uk-text-center uk-width-expand">${section}</span></div><div class="uk-width-5-6">${text}</div>`;
+                    default:
+                        return `<div class="uk-width-1-6"><span class="uk-label uk-text-capitalize uk-text-center uk-width-expand">${section}</span></div><div class="uk-width-5-6">${text}</div>`;
                 }
             };
 

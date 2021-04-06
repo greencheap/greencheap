@@ -46,10 +46,10 @@ class View
      */
     public function __construct(EventDispatcherInterface $events = null, EngineInterface $engine = null)
     {
-        $this->events = $events ?: new PrefixEventDispatcher('view.');
+        $this->events = $events ?: new PrefixEventDispatcher("view.");
         $this->engine = $engine ?: new DelegatingEngine();
 
-        $this->trigger('init', [$this]);
+        $this->trigger("init", [$this]);
     }
 
     /**
@@ -84,7 +84,8 @@ class View
      * @param  string $name
      * @return mixed
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         return isset($this->globals[$name]) ? $this->globals[$name] : null;
     }
 
@@ -194,13 +195,13 @@ class View
      */
     public function render($name, array $parameters = [])
     {
-        $event = new ViewEvent('render', $name);
+        $event = new ViewEvent("render", $name);
         $event->setParameters(array_replace($this->globals, end($this->parameters) ?: [], $parameters));
 
         $this->events->trigger($event, [$this]);
 
         if (!$event->isPropagationStopped()) {
-            $name = preg_replace('/\.php$/i', '', $name);
+            $name = preg_replace('/\.php$/i', "", $name);
             $this->events->trigger($event->setName($name), [$this]);
         }
 

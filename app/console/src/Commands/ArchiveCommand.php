@@ -16,20 +16,20 @@ class ArchiveCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected $name = 'archive';
+    protected $name = "archive";
 
     /**
      * {@inheritdoc}
      */
-    protected $description = 'Archives an extension or theme';
+    protected $description = "Archives an extension or theme";
 
     /**
      * {@inheritdoc}
      */
-    protected function configure():void
+    protected function configure(): void
     {
-        $this->addArgument('name', InputArgument::REQUIRED, 'Package name');
-        $this->addOption('dir', false, InputOption::VALUE_OPTIONAL, 'Write the archive to this directory');
+        $this->addArgument("name", InputArgument::REQUIRED, "Package name");
+        $this->addOption("dir", false, InputOption::VALUE_OPTIONAL, "Write the archive to this directory");
     }
 
     /**
@@ -38,41 +38,41 @@ class ArchiveCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $filesystem = new Filesystem();
-        $packageName = $this->getPackageFilename($name = $this->argument('name'));
+        $packageName = $this->getPackageFilename($name = $this->argument("name"));
 
-        if (!($targetDir = $this->option('dir'))) {
+        if (!($targetDir = $this->option("dir"))) {
             $targetDir = $this->container->path();
         }
 
-        $sourcePath = $this->container->get('path.packages').'/'.$name;
+        $sourcePath = $this->container->get("path.packages") . "/" . $name;
 
         $filesystem->ensureDirectoryExists($targetDir);
 
-        $target = realpath($targetDir).'/'.$packageName.'.zip';
+        $target = realpath($targetDir) . "/" . $packageName . ".zip";
         $filesystem->ensureDirectoryExists(dirname($target));
 
         $excludes = [];
-        if (file_exists($composerJsonPath = $sourcePath.'/composer.json')) {
+        if (file_exists($composerJsonPath = $sourcePath . "/composer.json")) {
             $jsonFile = new JsonFile($composerJsonPath);
             $jsonData = $jsonFile->read();
 
-            if (!empty($jsonData['archive']['exclude'])) {
-                $excludes = ($jsonData['archive']['exclude']);
+            if (!empty($jsonData["archive"]["exclude"])) {
+                $excludes = $jsonData["archive"]["exclude"];
             }
 
-            if (!empty($jsonData['archive']['scripts'])) {
-                system($jsonData['archive']['scripts'], $return);
+            if (!empty($jsonData["archive"]["scripts"])) {
+                system($jsonData["archive"]["scripts"], $return);
 
                 if ($return !== 0) {
-                    throw new \RuntimeException('Can not executes scripts.');
+                    throw new \RuntimeException("Can not executes scripts.");
                 }
             }
         }
 
-        $tempTarget = sys_get_temp_dir().'/composer_archive'.uniqid().'.zip';
+        $tempTarget = sys_get_temp_dir() . "/composer_archive" . uniqid() . ".zip";
         $filesystem->ensureDirectoryExists(dirname($tempTarget));
 
-        $archivePath = (new PharArchiver())->archive($sourcePath, $tempTarget, 'zip', $excludes);
+        $archivePath = (new PharArchiver())->archive($sourcePath, $tempTarget, "zip", $excludes);
         rename($archivePath, $target);
 
         $filesystem->remove($tempTarget);
@@ -83,6 +83,6 @@ class ArchiveCommand extends Command
     protected function getPackageFilename($name)
     {
         // TODO: Make this more robust.
-        return preg_replace('#[^a-z0-9-_]#i', '-', $name);
+        return preg_replace("#[^a-z0-9-_]#i", "-", $name);
     }
 }

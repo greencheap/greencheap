@@ -12,6 +12,6 @@ class AlphaFilter extends AbstractFilter
      */
     public function filter($value)
     {
-        return preg_replace('/[^[:alpha:]]/u', '', (string) $value);
+        return preg_replace("/[^[:alpha:]]/u", "", (string) $value);
     }
 }

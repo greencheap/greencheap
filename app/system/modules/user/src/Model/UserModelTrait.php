@@ -14,7 +14,7 @@ trait UserModelTrait
      */
     public static function findByUsername($username)
     {
-        return static::where(compact('username'))->first();
+        return static::where(compact("username"))->first();
     }
 
     /**
@@ -22,7 +22,7 @@ trait UserModelTrait
      */
     public static function findByEmail($email)
     {
-        return static::where(compact('email'))->first();
+        return static::where(compact("email"))->first();
     }
 
     /**
@@ -30,7 +30,9 @@ trait UserModelTrait
      */
     public static function findByLogin($login)
     {
-        return static::where(['username' => $login])->orWhere(['email' => $login])->first();
+        return static::where(["username" => $login])
+            ->orWhere(["email" => $login])
+            ->first();
     }
 
     /**
@@ -38,7 +40,7 @@ trait UserModelTrait
      */
     public static function updateLogin(User $user)
     {
-        static::where(['id' => $user->id])->update(['login' => date('Y-m-d H:i:s')]);
+        static::where(["id" => $user->id])->update(["login" => date("Y-m-d H:i:s")]);
     }
 
     /**
@@ -52,7 +54,7 @@ trait UserModelTrait
         static $cached = [];
 
         if ($ids = array_diff($user->roles, array_keys($cached))) {
-            $cached += Role::where('id IN ('.implode(',', $user->roles).')')->get();
+            $cached += Role::where("id IN (" . implode(",", $user->roles) . ")")->get();
         }
 
         return array_intersect_key($cached, array_flip($user->roles));

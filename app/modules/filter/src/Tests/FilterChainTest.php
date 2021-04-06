@@ -8,9 +8,11 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
 {
     public function testAttach()
     {
-        $chain = new FilterChain;
+        $chain = new FilterChain();
 
-        $chain->attach(function($value) { return $value; });
+        $chain->attach(function ($value) {
+            return $value;
+        });
         $this->assertCount(1, $chain->getFilters());
     }
 
@@ -19,17 +21,17 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
      */
     public function testAttachFailed()
     {
-        $chain = new FilterChain;
+        $chain = new FilterChain();
 
-        $chain->attach(new \stdClass);
+        $chain->attach(new \stdClass());
     }
 
     public function testMerge()
     {
-        $chain = new FilterChain;
+        $chain = new FilterChain();
         $chain->attach($this->getFilterMock());
 
-        $chain2 = new FilterChain;
+        $chain2 = new FilterChain();
         $chain2->attach($this->getFilterMock());
         $chain->merge($chain2);
 
@@ -38,7 +40,7 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
 
     public function testCount()
     {
-        $chain = new FilterChain;
+        $chain = new FilterChain();
         $this->assertCount(0, $chain);
 
         $chain->attach($this->getFilterMock());
@@ -50,18 +52,19 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
 
     public function testFilter()
     {
-        $chain = new FilterChain;
-        $chain->attach(function($value) { return 'filtered_'.$value; });
+        $chain = new FilterChain();
+        $chain->attach(function ($value) {
+            return "filtered_" . $value;
+        });
 
-        $value = 'TEST';
-        $this->assertEquals('filtered_TEST', $chain->filter($value));
+        $value = "TEST";
+        $this->assertEquals("filtered_TEST", $chain->filter($value));
     }
 
     protected function getFilterMock()
     {
-        $filter = $this->getMock('GreenCheap\Filter\FilterInterface');
-        $filter->expects($this->any())
-               ->method('filter');
+        $filter = $this->getMock("GreenCheap\Filter\FilterInterface");
+        $filter->expects($this->any())->method("filter");
 
         return $filter;
     }

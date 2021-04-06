@@ -16,10 +16,9 @@ class UserModule extends Module
      */
     public function main(App $app)
     {
-        $app['user'] = function ($app) {
-
-            if (!$user = $app['auth']->getUser()) {
-                $user = User::create(['roles' => [Role::ROLE_ANONYMOUS]]);
+        $app["user"] = function ($app) {
+            if (!($user = $app["auth"]->getUser())) {
+                $user = User::create(["roles" => [Role::ROLE_ANONYMOUS]]);
             }
 
             return $user;
@@ -32,14 +31,13 @@ class UserModule extends Module
     public function getPermissions()
     {
         if (!$this->perms) {
-
             foreach (App::module() as $module) {
-                if ($perms = $module->get('permissions')) {
-                    $this->registerPermissions($module->get('name'), $perms);
+                if ($perms = $module->get("permissions")) {
+                    $this->registerPermissions($module->get("name"), $perms);
                 }
             }
 
-            App::trigger('user.permission', [$this]);
+            App::trigger("user.permission", [$this]);
         }
 
         return $this->perms;

@@ -33,7 +33,7 @@ class PackageScripts
      */
     public function install()
     {
-        $this->run($this->get('install'));
+        $this->run($this->get("install"));
     }
 
     /**
@@ -41,7 +41,7 @@ class PackageScripts
      */
     public function uninstall()
     {
-        $this->run($this->get('uninstall'));
+        $this->run($this->get("uninstall"));
     }
 
     /**
@@ -49,7 +49,7 @@ class PackageScripts
      */
     public function enable()
     {
-        $this->run($this->get('enable'));
+        $this->run($this->get("enable"));
     }
 
     /**
@@ -57,7 +57,7 @@ class PackageScripts
      */
     public function disable()
     {
-        $this->run($this->get('disable'));
+        $this->run($this->get("disable"));
     }
 
     /**
@@ -105,11 +105,9 @@ class PackageScripts
     protected function run($scripts)
     {
         array_map(function ($script) {
-
             if (is_callable($script)) {
                 call_user_func($script, App::getInstance());
             }
-
         }, (array) $scripts);
     }
 
@@ -118,14 +116,14 @@ class PackageScripts
      */
     protected function getUpdates()
     {
-        $updates = $this->get('updates');
+        $updates = $this->get("updates");
 
         $versions = array_filter(array_keys($updates), function ($version) {
-            return version_compare($version, $this->current, '>');
+            return version_compare($version, $this->current, ">");
         });
 
         $updates = array_intersect_key($updates, array_flip($versions));
-        uksort($updates, 'version_compare');
+        uksort($updates, "version_compare");
 
         return $updates;
     }

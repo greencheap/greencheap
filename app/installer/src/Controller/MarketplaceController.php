@@ -17,20 +17,20 @@ class MarketplaceController
      * @return array
      */
     #[ArrayShape(['$view' => "array", '$data' => "array"])]
-    public function indexAction(array $filter = [] , int $page = null ): array
+    public function indexAction(array $filter = [], int $page = null): array
     {
         return [
             '$view' => [
-                'title' => __('Marketplace'),
-                'name'  => 'installer:views/marketplace.php'
+                "title" => __("Marketplace"),
+                "name" => "installer:views/marketplace.php",
             ],
             '$data' => [
-                'config'   => [
-                    'filter' => (object) $filter,
-                    'page'   => $page
+                "config" => [
+                    "filter" => (object) $filter,
+                    "page" => $page,
                 ],
-                'installedPackages' => array_values(array_merge(App::package()->all('greencheap-theme') , App::package()->all('greencheap-extension'))),
-            ]
+                "installedPackages" => array_values(array_merge(App::package()->all("greencheap-theme"), App::package()->all("greencheap-extension"))),
+            ],
         ];
     }
 }

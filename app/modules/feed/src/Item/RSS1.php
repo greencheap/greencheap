@@ -20,7 +20,7 @@ class RSS1 extends Item
      */
     public function setDescription($description)
     {
-        return $this->setElement('description', $description);
+        return $this->setElement("description", $description);
     }
 
     /**
@@ -28,7 +28,7 @@ class RSS1 extends Item
      */
     public function setDate(\DateTimeInterface $date)
     {
-        return $this->setElement('dc:date', date('Y-m-d', $date->getTimestamp()));
+        return $this->setElement("dc:date", date("Y-m-d", $date->getTimestamp()));
     }
 
     /**
@@ -44,7 +44,7 @@ class RSS1 extends Item
      */
     public function setLink($link)
     {
-        return $this->setElement('link', $link);
+        return $this->setElement("link", $link);
     }
 
     /**

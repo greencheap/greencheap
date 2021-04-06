@@ -17,8 +17,8 @@ class StringAsset extends Asset
     /**
      * {@inheritdoc}
      */
-    public function hash($salt = '')
+    public function hash($salt = "")
     {
-        return hash('crc32b', $this->getContent().$salt);
+        return hash("crc32b", $this->getContent() . $salt);
     }
 }

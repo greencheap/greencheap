@@ -13,8 +13,8 @@ class DebugStack extends BaseDebugStack
     protected $callstack;
 
     /**
-    * @var Stopwatch
-    */
+     * @var Stopwatch
+     */
     protected $stopwatch;
 
     public function __construct(Stopwatch $stopwatch = null)
@@ -28,12 +28,12 @@ class DebugStack extends BaseDebugStack
     public function startQuery($sql, array $params = null, array $types = null)
     {
         if ($this->enabled) {
-            $e = new \Exception;
+            $e = new \Exception();
             $this->callstack = $e->getTraceAsString();
         }
 
         if (null !== $this->stopwatch) {
-            $this->stopwatch->start('doctrine');
+            $this->stopwatch->start("doctrine");
         }
 
         parent::startQuery($sql, $params, $types);
@@ -47,11 +47,11 @@ class DebugStack extends BaseDebugStack
         parent::stopQuery();
 
         if (null !== $this->stopwatch) {
-            $this->stopwatch->stop('doctrine');
+            $this->stopwatch->stop("doctrine");
         }
-        
+
         if ($this->enabled) {
-            $this->queries[$this->currentQuery]['callstack'] = $this->callstack;
+            $this->queries[$this->currentQuery]["callstack"] = $this->callstack;
         }
     }
 }

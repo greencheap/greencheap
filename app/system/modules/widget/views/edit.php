@@ -1,4 +1,4 @@
-<?php $view->script('widget-edit', 'system/widget:app/bundle/edit.js', ['widgets', 'editor', 'input-tree']) ?>
+<?php $view->script("widget-edit", "system/widget:app/bundle/edit.js", ["widgets", "editor", "input-tree"]); ?>
 
 <validation-observer tag="form" id="widget-edit" ref="observer" @submit.prevent="submit" v-cloak>
 
@@ -11,7 +11,7 @@
         </div>
         <div class="uk-margin">
 
-            <a v-if="!processing" class="uk-button uk-button-text uk-margin-right" href="<?= $view->url('@site/widget') ?>">{{ widget.title ? 'Close' : 'Cancel' | trans }}</a>
+            <a v-if="!processing" class="uk-button uk-button-text uk-margin-right" href="<?= $view->url("@site/widget") ?>">{{ widget.title ? 'Close' : 'Cancel' | trans }}</a>
             <button class="uk-button uk-button-primary" type="submit" :disabled="processing">
                 <span v-if="processing" uk-spinner ratio=".8" class="uk-margin-small-right"></span>
                 <span class="uk-text-middle">{{ 'Save' | trans }}</span>

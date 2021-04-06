@@ -1,8 +1,7 @@
 const Info = {
+    name: "info",
 
-    name: 'info',
-
-    el: '#info',
+    el: "#info",
 
     data: {
         info: window.$info,
@@ -10,13 +9,12 @@ const Info = {
 
     computed: {
         VueVersion() {
-            return window.Vue ? Vue.version : '-';
+            return window.Vue ? Vue.version : "-";
         },
         UIkitVersion() {
-            return window.UIkit ? UIkit.version : '-';
+            return window.UIkit ? UIkit.version : "-";
         },
     },
-
 };
 
 export default Info;

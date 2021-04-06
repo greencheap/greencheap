@@ -19,20 +19,19 @@ class IntlModule extends Module
      */
     public function main(App $app)
     {
-        $app['translator'] = function () {
-
+        $app["translator"] = function () {
             $translator = new Translator($this->getLocale());
-            $translator->addLoader('php', new PhpFileLoader());
-            $translator->addLoader('mo', new MoFileLoader());
-            $translator->addLoader('po', new PoFileLoader);
-            $translator->addLoader('array', new ArrayLoader);
+            $translator->addLoader("php", new PhpFileLoader());
+            $translator->addLoader("mo", new MoFileLoader());
+            $translator->addLoader("po", new PoFileLoader());
+            $translator->addLoader("array", new ArrayLoader());
 
             $this->loadLocale($this->getLocale(), $translator);
 
             return $translator;
         };
 
-        require __DIR__.'/../functions.php';
+        require __DIR__ . "/../functions.php";
     }
 
     /**
@@ -42,7 +41,7 @@ class IntlModule extends Module
      */
     public function getLocale()
     {
-        return $this->config('locale');
+        return $this->config("locale");
     }
 
     /**
@@ -52,7 +51,7 @@ class IntlModule extends Module
      */
     public function setLocale($locale)
     {
-        $this->config['locale'] = $locale;
+        $this->config["locale"] = $locale;
     }
 
     /**
@@ -62,7 +61,7 @@ class IntlModule extends Module
      */
     public function getLocaleTag()
     {
-        return str_replace('_', '-', $this->getLocale());
+        return str_replace("_", "-", $this->getLocale());
     }
 
     /**
@@ -76,18 +75,23 @@ class IntlModule extends Module
         $territories = $this->getTerritories();
 
         $available = [];
-        foreach (Finder::create()->directories()->depth(0)->in('app/system/languages')->name('/^[a-z]{2,3}(_[A-Z]{2})?$/') as $dir) {
-
+        foreach (
+            Finder::create()
+                ->directories()
+                ->depth(0)
+                ->in("app/system/languages")
+                ->name('/^[a-z]{2,3}(_[A-Z]{2})?$/')
+            as $dir
+        ) {
             $id = $dir->getFilename();
-            @list($lang, $country) = explode('_', $id);
+            @list($lang, $country) = explode("_", $id);
 
             if (isset($languages[$lang])) {
                 $available[$id] = $languages[$lang];
 
                 if (isset($country, $territories[$country])) {
-                    $available[$id] .= ' - '.$territories[$country];
+                    $available[$id] .= " - " . $territories[$country];
                 }
-
             }
         }
 
@@ -104,7 +108,7 @@ class IntlModule extends Module
      */
     public function getLanguages($locale = null)
     {
-        return $this->getData('languages', $locale);
+        return $this->getData("languages", $locale);
     }
 
     /**
@@ -115,7 +119,7 @@ class IntlModule extends Module
      */
     public function getTerritories($locale = null)
     {
-        return $this->getData('territories', $locale);
+        return $this->getData("territories", $locale);
     }
 
     /**
@@ -159,7 +163,7 @@ class IntlModule extends Module
      */
     public function getFormats($locale = null)
     {
-        return $this->getData('formats', $locale);
+        return $this->getData("formats", $locale);
     }
 
     /**
@@ -173,15 +177,13 @@ class IntlModule extends Module
         $translator = $translator ?: App::translator();
 
         foreach (App::module() as $module) {
-
             $domains = [];
-            $path = $module->get('path').($module->get('languages') ?: '/languages');
+            $path = $module->get("path") . ($module->get("languages") ?: "/languages");
             $files = glob("{$path}/{$locale}/*.php") ?: [];
 
             foreach ($files as $file) {
-
-                $format = substr(strrchr($file, '.'), 1);
-                $domain = basename($file, '.'.$format);
+                $format = substr(strrchr($file, "."), 1);
+                $domain = basename($file, "." . $format);
 
                 if (in_array($domain, $domains)) {
                     continue;
@@ -200,10 +202,9 @@ class IntlModule extends Module
 
         if (null === $tree) {
             $tree = [];
-            $data = $this->getGeneric('territoryContainment');
+            $data = $this->getGeneric("territoryContainment");
 
-            $build = function($code, &$tree) use (&$build, $data) {
-
+            $build = function ($code, &$tree) use (&$build, $data) {
                 $tree[$code] = [];
 
                 if (isset($data[$code])) {
@@ -211,10 +212,9 @@ class IntlModule extends Module
                         $build($node, $tree[$code]);
                     }
                 }
-
             };
 
-            $build('001', $tree);
+            $build("001", $tree);
         }
 
         $getLevel = function ($node, $depth = 1) use (&$getLevel, $level) {
@@ -229,7 +229,7 @@ class IntlModule extends Module
             return $result;
         };
 
-        return array_intersect_key($this->getTerritories($locale), $getLevel($tree['001']));
+        return array_intersect_key($this->getTerritories($locale), $getLevel($tree["001"]));
     }
 
     /**

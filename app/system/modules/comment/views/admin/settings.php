@@ -1,4 +1,4 @@
-<?php $view->script('system_comment_settings' , 'system/comment:app/bundle/settings.js' , 'vue') ?>
+<?php $view->script("system_comment_settings", "system/comment:app/bundle/settings.js", "vue"); ?>
 
 <form id="app" class="uk-form-horizontal" @submit.prevent="save" v-cloak>
     <div class="uk-clearfix">

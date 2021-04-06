@@ -1,9 +1,10 @@
-import md5 from 'md5';
+import md5 from "md5";
 
 export default function (Vue) {
     Vue.http.interceptors.unshift((request) => {
-        let hit; let key; let
-            lifetime;
+        let hit;
+        let key;
+        let lifetime;
 
         if (request.cache !== undefined && /^(GET|JSONP)$/i.test(request.method)) {
             if (_.isObject(request.cache)) {
@@ -18,7 +19,7 @@ export default function (Vue) {
             if (hit) {
                 return request.respondWith(hit.body, {
                     status: 200,
-                    statusText: 'Cached',
+                    statusText: "Cached",
                 });
             }
         }

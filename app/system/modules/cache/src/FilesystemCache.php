@@ -9,7 +9,7 @@ class FilesystemCache extends BaseFilesystemCache
     /**
      * {@inheritdoc}
      */
-    protected $extension = '.cache';
+    protected $extension = ".cache";
 
     /**
      * {@inheritdoc}
@@ -34,7 +34,7 @@ class FilesystemCache extends BaseFilesystemCache
      */
     protected function doFlush()
     {
-        foreach (glob($this->directory . DIRECTORY_SEPARATOR . '*' . $this->extension) as $file) {
+        foreach (glob($this->directory . DIRECTORY_SEPARATOR . "*" . $this->extension) as $file) {
             @unlink($file);
         }
 

@@ -28,7 +28,7 @@ trait NodeTrait
     public function setParent(NodeInterface $parent = null)
     {
         if ($parent === $this) {
-            throw new \InvalidArgumentException('A node cannot have itself as a parent');
+            throw new \InvalidArgumentException("A node cannot have itself as a parent");
         }
 
         if ($parent === $this->parent) {
@@ -69,7 +69,7 @@ trait NodeTrait
      */
     public function add(NodeInterface $node)
     {
-         $this->children[$node->hashCode()] = $node->setParent($this);
+        $this->children[$node->hashCode()] = $node->setParent($this);
 
         return $this;
     }
@@ -94,7 +94,6 @@ trait NodeTrait
         $hash = $node instanceof NodeInterface ? $node->hashCode() : (string) $node;
 
         if ($node = $this->findChild($hash)) {
-
             unset($this->children[$hash]);
             $node->setParent(null);
 
@@ -110,7 +109,6 @@ trait NodeTrait
     public function removeAll(array $nodes = [])
     {
         if (empty($nodes)) {
-
             foreach ($this->children as $child) {
                 $child->setParent(null);
             }
@@ -139,7 +137,7 @@ trait NodeTrait
         $node = isset($this->children[$hash]) ? $this->children[$hash] : null;
 
         if (!$node && $recursive) {
-            foreach($this->getChildren() as $n) {
+            foreach ($this->getChildren() as $n) {
                 if ($child = $n->findChild($hash, $recursive)) {
                     return $child;
                 }
@@ -154,7 +152,7 @@ trait NodeTrait
      */
     public function contains($node, $recursive = true)
     {
-        return $this->findChild(($node instanceof NodeInterface ? $node->hashCode() : (string) $node), $recursive) !== null;
+        return $this->findChild($node instanceof NodeInterface ? $node->hashCode() : (string) $node, $recursive) !== null;
     }
 
     /**

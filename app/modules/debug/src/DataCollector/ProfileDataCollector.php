@@ -24,7 +24,7 @@ class ProfileDataCollector implements DataCollectorInterface
      */
     public function collect()
     {
-        return ['requests' => $this->storage->find()];
+        return ["requests" => $this->storage->find()];
     }
 
     /**
@@ -32,6 +32,6 @@ class ProfileDataCollector implements DataCollectorInterface
      */
     public function getName()
     {
-        return 'profile';
+        return "profile";
     }
 }

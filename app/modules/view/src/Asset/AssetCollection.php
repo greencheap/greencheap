@@ -81,7 +81,7 @@ class AssetCollection implements \IteratorAggregate, \Countable
      * @param  string $salt
      * @return string
      */
-    public function hash($salt = '')
+    public function hash($salt = "")
     {
         $hashes = [];
 
@@ -89,7 +89,7 @@ class AssetCollection implements \IteratorAggregate, \Countable
             $hashes[] = $asset->hash($salt);
         }
 
-        return hash('crc32b', implode('', $hashes));
+        return hash("crc32b", implode("", $hashes));
     }
 
     /**
@@ -100,10 +100,10 @@ class AssetCollection implements \IteratorAggregate, \Countable
      */
     public function dump(array $filters = [])
     {
-        $data = '';
+        $data = "";
 
         foreach ($this as $asset) {
-            $data .= $asset->dump($filters)."\n\n";
+            $data .= $asset->dump($filters) . "\n\n";
         }
 
         return $data;

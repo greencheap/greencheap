@@ -21,14 +21,14 @@ class RoutesDataCollector implements DataCollectorInterface
      * @param string                   $cache
      * @param string                   $file
      */
-    public function __construct(Router $router, EventDispatcherInterface $events, $cache, $file = '%s.cache')
+    public function __construct(Router $router, EventDispatcherInterface $events, $cache, $file = "%s.cache")
     {
         $this->router = $router;
         $this->cache = $cache;
         $this->file = $file;
 
-        $events->on('request', function ($event, $request) {
-            $this->route = $request->attributes->get('_route');
+        $events->on("request", function ($event, $request) {
+            $this->route = $request->attributes->get("_route");
         });
     }
 
@@ -37,29 +37,27 @@ class RoutesDataCollector implements DataCollectorInterface
      */
     public function collect()
     {
-        $path = sprintf($this->cache.'/'.$this->file, sha1(filemtime((new \ReflectionClass($this->router->getGenerator()))->getFileName())));
+        $path = sprintf($this->cache . "/" . $this->file, sha1(filemtime((new \ReflectionClass($this->router->getGenerator()))->getFileName())));
 
         if (!file_exists($path)) {
-
             $routes = [];
             foreach ($this->router->getRouteCollection() as $name => $route) {
                 $routes[] = [
-                    'name' => $name,
-                    'path' => $route->getPath(),
-                    'methods' => $route->getMethods(),
-                    'controller' => is_string($ctrl = $route->getDefault('_controller')) ? $ctrl : 'Closure',
+                    "name" => $name,
+                    "path" => $route->getPath(),
+                    "methods" => $route->getMethods(),
+                    "controller" => is_string($ctrl = $route->getDefault("_controller")) ? $ctrl : "Closure",
                 ];
             }
 
-            file_put_contents($path, '<?php return '.var_export($routes, true).';');
-
+            file_put_contents($path, "<?php return " . var_export($routes, true) . ";");
         } else {
             $routes = require $path;
         }
 
         $route = $this->route;
 
-        return compact('routes', 'route');
+        return compact("routes", "route");
     }
 
     /**
@@ -67,6 +65,6 @@ class RoutesDataCollector implements DataCollectorInterface
      */
     public function getName()
     {
-        return 'routes';
+        return "routes";
     }
 }

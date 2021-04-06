@@ -23,6 +23,6 @@ class TwigCache extends FilesystemCache
      */
     public function generateKey($name, $className)
     {
-        return $this->dir.'/'.sha1($className).'.twig.cache';
+        return $this->dir . "/" . sha1($className) . ".twig.cache";
     }
 }

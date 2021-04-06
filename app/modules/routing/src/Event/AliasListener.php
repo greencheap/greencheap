@@ -34,7 +34,7 @@ class AliasListener implements EventSubscriberInterface
         $name = $route->getName();
 
         $aliases = array_filter($this->routes->getAliases(), function ($alias) use ($name) {
-            return $name == $alias->getName() || $name == strtok($alias->getName(), '?');
+            return $name == $alias->getName() || $name == strtok($alias->getName(), "?");
         });
 
         if (!$aliases) {
@@ -44,14 +44,13 @@ class AliasListener implements EventSubscriberInterface
         $variables = $route->compile()->getPathVariables();
 
         foreach ($aliases as $alias) {
-
             // TODO: is this still needed?
             $params = [];
-            if ($query = substr(strstr($alias->getName(), '?'), 1)) {
+            if ($query = substr(strstr($alias->getName(), "?"), 1)) {
                 parse_str($query, $params);
             }
 
-            $routes->add($alias->getName(), new Route($alias->getPath(), array_merge($route->getDefaults(), $params, $alias->getDefaults(), ['_variables' => $variables])));
+            $routes->add($alias->getName(), new Route($alias->getPath(), array_merge($route->getDefaults(), $params, $alias->getDefaults(), ["_variables" => $variables])));
         }
     }
 
@@ -61,7 +60,7 @@ class AliasListener implements EventSubscriberInterface
     public function subscribe()
     {
         return [
-            'route.configure' => ['onConfigureRoute', -16]
+            "route.configure" => ["onConfigureRoute", -16],
         ];
     }
 }

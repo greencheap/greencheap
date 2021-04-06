@@ -58,7 +58,7 @@ class PackageFactory implements \ArrayAccess, \IteratorAggregate
         }
 
         $filter = function ($package) use ($type) {
-            return $package->get('type') == $type;
+            return $package->get("type") == $type;
         };
 
         if ($type !== null) {
@@ -78,8 +78,8 @@ class PackageFactory implements \ArrayAccess, \IteratorAggregate
      */
     public function load($data)
     {
-        if (is_string($data) && strpos($data, '{') !== 0) {
-            $path = strtr(dirname($data), '\\', '/');
+        if (is_string($data) && strpos($data, "{") !== 0) {
+            $path = strtr(dirname($data), "\\", "/");
             $data = @file_get_contents($data);
         }
 
@@ -87,15 +87,14 @@ class PackageFactory implements \ArrayAccess, \IteratorAggregate
             $data = @json_decode($data, true);
         }
 
-        if (is_array($data) && isset($data['name'])) {
-
-            if (!isset($data['module'])) {
-                $data['module'] = basename($data['name']);
+        if (is_array($data) && isset($data["name"])) {
+            if (!isset($data["module"])) {
+                $data["module"] = basename($data["name"]);
             }
 
             if (isset($path)) {
-                $data['path'] = $path;
-                $data['url'] = App::url()->getStatic($path);
+                $data["path"] = $path;
+                $data["url"] = App::url()->getStatic($path);
             }
 
             return new Package($data);
@@ -174,12 +173,10 @@ class PackageFactory implements \ArrayAccess, \IteratorAggregate
     protected function loadPackages()
     {
         foreach ($this->paths as $path) {
-
             $paths = glob($path, GLOB_NOSORT) ?: [];
 
             foreach ($paths as $p) {
-
-                if (!$package = $this->load($p)) {
+                if (!($package = $this->load($p))) {
                     continue;
                 }
 

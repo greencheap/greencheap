@@ -1,9 +1,10 @@
-<?php foreach ($widgets as $widget) : ?>
+<?php foreach ($widgets as $widget): ?>
 <div>
 
     <h3><?= $widget->title ?></h3>
 
-    <?= $widget->get('result') ?>
+    <?= $widget->get("result") ?>
 
 </div>
-<?php endforeach ?>
+<?php endforeach;
+?>

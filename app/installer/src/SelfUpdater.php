@@ -12,12 +12,12 @@ class SelfUpdater
     /**
      * @var array
      */
-    protected $cleanFolder = ['app'];
+    protected $cleanFolder = ["app"];
 
     /**
      * @var array
      */
-    protected $ignoreFolder = ['packages', 'storage'];
+    protected $ignoreFolder = ["packages", "storage"];
 
     /**
      * @var string
@@ -36,10 +36,9 @@ class SelfUpdater
      */
     public function __construct(OutputInterface $output = null)
     {
-        $this->output = $output ?: new StreamOutput(fopen('php://output', 'w'));
+        $this->output = $output ?: new StreamOutput(fopen("php://output", "w"));
 
-        if (PHP_SAPI != 'cli') {
-
+        if (PHP_SAPI != "cli") {
             ob_implicit_flush(true);
             @ob_end_flush();
 
@@ -59,69 +58,71 @@ class SelfUpdater
             $path = App::path();
 
             if (!file_exists($file)) {
-                throw new \RuntimeException('File not found.');
+                throw new \RuntimeException("File not found.");
             }
 
-            $this->output->write('Preparing update...');
+            $this->output->write("Preparing update...");
             $fileList = $this->getFileList($file);
-            unset($fileList[array_search('.htaccess', $fileList)]);
+            unset($fileList[array_search(".htaccess", $fileList)]);
 
-            $fileList = array_values(array_filter($fileList, function ($file) {
-                foreach ($this->ignoreFolder as $ignore) {
-                    if(str_starts_with($file, $ignore)) {
-                        return false;
+            $fileList = array_values(
+                array_filter($fileList, function ($file) {
+                    foreach ($this->ignoreFolder as $ignore) {
+                        if (str_starts_with($file, $ignore)) {
+                            return false;
+                        }
                     }
-                }
 
-                return true;
-            }));
+                    return true;
+                })
+            );
 
             if ($this->isWritable($fileList, $path) !== true) {
-                throw new \RuntimeException(array_reduce($fileList, function ($carry, $file) {
-                    return $carry . sprintf("'%s' not writable\n", $file);
-                }));
+                throw new \RuntimeException(
+                    array_reduce($fileList, function ($carry, $file) {
+                        return $carry . sprintf("'%s' not writable\n", $file);
+                    })
+                );
             }
 
             $requirements = include "zip://{$file}#app/installer/requirements.php";
             if ($failed = $requirements->getFailedRequirements()) {
-
-                throw new \RuntimeException(array_reduce($failed, function ($carry, $problem) {
-                    return $carry . "\n" . $problem->getHelpText();
-                }));
-
+                throw new \RuntimeException(
+                    array_reduce($failed, function ($carry, $problem) {
+                        return $carry . "\n" . $problem->getHelpText();
+                    })
+                );
             }
 
-            $this->output->writeln('<info>done.</info>');
-            $this->output->write('Entering update mode...');
+            $this->output->writeln("<info>done.</info>");
+            $this->output->write("Entering update mode...");
 
             $this->setUpdateMode(true);
-            $this->output->writeln('<info>done.</info>');
+            $this->output->writeln("<info>done.</info>");
 
-            $this->output->write('Extracting files...');
+            $this->output->write("Extracting files...");
             $this->extract($file, $fileList, $path);
-            $this->output->writeln('<info>done.</info>');
+            $this->output->writeln("<info>done.</info>");
 
-            $this->output->write('Removing old files...');
+            $this->output->write("Removing old files...");
             foreach ($this->cleanup($fileList, $path) as $file) {
                 $this->writeln(sprintf('<error>\'%s\’ could not be removed</error>', $file));
             }
 
             unlink($file);
-            $this->output->writeln('<info>done.</info>');
+            $this->output->writeln("<info>done.</info>");
 
-            $this->output->write('Deactivating update mode...');
+            $this->output->write("Deactivating update mode...");
             $this->setUpdateMode(false);
-            $this->output->writeln('<info>done.</info>');
+            $this->output->writeln("<info>done.</info>");
 
-            if (function_exists('opcache_reset')) {
+            if (function_exists("opcache_reset")) {
                 opcache_reset();
             }
-
         } catch (\Exception $e) {
             @unlink($file);
             throw $e;
         }
-
     }
 
     /**
@@ -134,9 +135,8 @@ class SelfUpdater
     {
         $list = [];
 
-        $zip = new \ZipArchive;
+        $zip = new \ZipArchive();
         if ($zip->open($file) === true) {
-
             for ($i = 0; $i < $zip->numFiles; $i++) {
                 $list[] = $zip->getNameIndex($i);
             }
@@ -144,7 +144,7 @@ class SelfUpdater
 
             return $list;
         } else {
-            throw new \RuntimeException('Can not build file list.');
+            throw new \RuntimeException("Can not build file list.");
         }
     }
 
@@ -164,7 +164,7 @@ class SelfUpdater
         }
 
         foreach ($fileList as $file) {
-            $file = $path . '/' . $file;
+            $file = $path . "/" . $file;
 
             while (!file_exists($file)) {
                 $file = dirname($file);
@@ -178,7 +178,6 @@ class SelfUpdater
         return $notWritable ?: true;
     }
 
-
     /**
      * Extracts an archive.
      *
@@ -188,13 +187,12 @@ class SelfUpdater
      */
     protected function extract($file, $fileList, $path)
     {
-        $zip = new \ZipArchive;
+        $zip = new \ZipArchive();
         if ($zip->open($file) === true) {
-
             $zip->extractTo($path, $fileList);
             $zip->close();
         } else {
-            throw new \RuntimeException('Package extraction failed.');
+            throw new \RuntimeException("Package extraction failed.");
         }
     }
 
@@ -226,9 +224,9 @@ class SelfUpdater
     {
         $errorList = [];
 
-        foreach (array_diff(@scandir($path . '/' . $dir) ?: [], ['..', '.']) as $file) {
-            $file = ($dir ? $dir . '/' : '') . $file;
-            $realPath = $path . '/' . $file;
+        foreach (array_diff(@scandir($path . "/" . $dir) ?: [], ["..", "."]) as $file) {
+            $file = ($dir ? $dir . "/" : "") . $file;
+            $realPath = $path . "/" . $file;
 
             if (is_dir($realPath)) {
                 array_merge($errorList, $this->doCleanup($fileList, $file, $path));
@@ -236,7 +234,7 @@ class SelfUpdater
                 if (!in_array($file, $fileList)) {
                     @rmdir($realPath);
                 }
-            } else if (!in_array($file, $fileList) && !unlink($realPath)) {
+            } elseif (!in_array($file, $fileList) && !unlink($realPath)) {
                 $errorList[] = $file;
             }
         }

@@ -27,7 +27,7 @@ class UrlHelper extends Helper
      *
      * @see get()
      */
-    public function __invoke($path = '', $parameters = [], $referenceType = UrlGenerator::ABSOLUTE_PATH)
+    public function __invoke($path = "", $parameters = [], $referenceType = UrlGenerator::ABSOLUTE_PATH)
     {
         return $this->provider->get($path, $parameters, $referenceType);
     }
@@ -53,6 +53,6 @@ class UrlHelper extends Helper
      */
     public function getName()
     {
-        return 'url';
+        return "url";
     }
 }

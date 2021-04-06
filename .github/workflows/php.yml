@@ -1,26 +1,24 @@
 name: PHP Composer
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
 
 jobs:
-  build:
+    build:
+        runs-on: ubuntu-latest
 
-    runs-on: ubuntu-latest
+        steps:
+            - name: Run Test Php Cs Fixer
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: "7.4"
+                  tools: php-cs-fixer, phpunit
 
-    steps:
-      
-    - name: Run Test Php Cs Fixer
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '7.4'
-        tools: php-cs-fixer, phpunit
+        # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
+        # Docs: https://getcomposer.org/doc/articles/scripts.md
 
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
-
-    # - name: Run test suite
-    #   run: composer run-script test
+        # - name: Run test suite
+        #   run: composer run-script test

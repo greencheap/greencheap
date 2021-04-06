@@ -8,17 +8,16 @@ class SlugifyTest extends \PHPUnit_Framework_TestCase
 {
     public function testFilter()
     {
-        $filter = new SlugifyFilter;
+        $filter = new SlugifyFilter();
 
         $values = [
-            'PAGEKIT'                  => 'greencheap',
+            "PAGEKIT" => "greencheap",
             ":#*\"@+=;!><&.%()/'\\|[]" => "",
-            "  a b ! c   "             => "a-b-c",
+            "  a b ! c   " => "a-b-c",
         ];
 
         foreach ($values as $in => $out) {
             $this->assertEquals($out, $filter->filter($in));
         }
-
     }
 }

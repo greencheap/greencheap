@@ -9,27 +9,27 @@ class MessageBag extends AutoExpireFlashBag
     /**
      * Detailed debug information
      */
-    const DEBUG = 'debug';
+    const DEBUG = "debug";
 
     /**
      * Interesting events
      */
-    const INFO = 'info';
+    const INFO = "info";
 
     /**
      * Exceptional occurrences that are not errors
      */
-    const WARNING = 'warning';
+    const WARNING = "warning";
 
     /**
      * Runtime errors
      */
-    const ERROR = 'error';
+    const ERROR = "error";
 
     /**
      * Success messages
      */
-    const SUCCESS = 'success';
+    const SUCCESS = "success";
 
     /**
      * Constructor.
@@ -37,7 +37,7 @@ class MessageBag extends AutoExpireFlashBag
      * @param string $name
      * @param string $storageKey
      */
-    public function __construct($name = 'messages', $storageKey = '_pk_messages')
+    public function __construct($name = "messages", $storageKey = "_pk_messages")
     {
         parent::__construct($storageKey);
 
@@ -101,12 +101,6 @@ class MessageBag extends AutoExpireFlashBag
      */
     public static function levels()
     {
-        return [
-            self::DEBUG,
-            self::INFO,
-            self::WARNING,
-            self::ERROR,
-            self::SUCCESS
-        ];
+        return [self::DEBUG, self::INFO, self::WARNING, self::ERROR, self::SUCCESS];
     }
 }

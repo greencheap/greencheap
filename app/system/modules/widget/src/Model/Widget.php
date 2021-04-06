@@ -23,7 +23,7 @@ class Widget implements \JsonSerializable
     public $id;
 
     /** @Column */
-    public $title = '';
+    public $title = "";
 
     /** @Column(type="string") */
     public $type;

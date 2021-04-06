@@ -7,12 +7,12 @@ class CompositeExpression implements \Countable
     /**
      * Constant that represents an AND composite expression.
      */
-    const TYPE_AND = 'AND';
+    const TYPE_AND = "AND";
 
     /**
      * Constant that represents an OR composite expression.
      */
-    const TYPE_OR  = 'OR';
+    const TYPE_OR = "OR";
 
     /**
      * The instance type of composite expression.
@@ -101,6 +101,6 @@ class CompositeExpression implements \Countable
             return (string) $this->parts[0];
         }
 
-        return '(' . implode(') ' . $this->type . ' (', $this->parts) . ')';
+        return "(" . implode(") " . $this->type . " (", $this->parts) . ")";
     }
 }

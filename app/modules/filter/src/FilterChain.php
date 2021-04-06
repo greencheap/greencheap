@@ -21,7 +21,7 @@ class FilterChain implements \Countable, FilterInterface
      */
     public function __construct()
     {
-        $this->filters = new \SplPriorityQueue;
+        $this->filters = new \SplPriorityQueue();
     }
 
     /**
@@ -46,9 +46,9 @@ class FilterChain implements \Countable, FilterInterface
     {
         if (!is_callable($callback)) {
             if (!$callback instanceof FilterInterface) {
-                throw new \InvalidArgumentException(sprintf('Expected a valid PHP callback; received "%s"', (is_object($callback) ? get_class($callback) : gettype($callback))));
+                throw new \InvalidArgumentException(sprintf('Expected a valid PHP callback; received "%s"', is_object($callback) ? get_class($callback) : gettype($callback)));
             }
-            $callback = [$callback, 'filter'];
+            $callback = [$callback, "filter"];
         }
         $this->filters->insert($callback, $priority);
 

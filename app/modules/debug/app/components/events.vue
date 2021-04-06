@@ -3,12 +3,10 @@
 </template>
 
 <script>
-
 module.exports = {
-
     section: {
         priority: 15,
-        panel: '#panel-events',
+        panel: "#panel-events",
         template: `
                 <div>
                     <h1>Events</h1>
@@ -81,18 +79,14 @@ module.exports = {
                 </div>`,
     },
 
-    props: ['data'],
+    props: ["data"],
 
     replace: false,
 
     filters: {
-
         short(name) {
-            return name.split('\\').pop();
+            return name.split("\\").pop();
         },
-
     },
-
 };
-
 </script>

@@ -29,7 +29,7 @@ class Factory extends BaseFactory
     public static function createConfig(IOInterface $io = null, $cwd = null)
     {
         $config = new Config(true, $cwd);
-        $config->merge(['config' => static::$config]);
+        $config->merge(["config" => static::$config]);
 
         return $config;
     }

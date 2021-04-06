@@ -27,10 +27,14 @@ class StyleHelper implements HelperInterface, \IteratorAggregate
      */
     public function register(View $view)
     {
-        $view->on('head', function ($event) use ($view) {
-            $view->trigger('styles', [$this->styles]);
-            $event->addResult($this->render());
-        }, 15);
+        $view->on(
+            "head",
+            function ($event) use ($view) {
+                $view->trigger("styles", [$this->styles]);
+                $event->addResult($this->render());
+            },
+            15
+        );
     }
 
     /**
@@ -66,7 +70,7 @@ class StyleHelper implements HelperInterface, \IteratorAggregate
      */
     public function render()
     {
-        $output = '';
+        $output = "";
 
         foreach ($this->styles as $style) {
             if ($source = $style->getSource()) {
@@ -94,6 +98,6 @@ class StyleHelper implements HelperInterface, \IteratorAggregate
      */
     public function getName()
     {
-        return 'style';
+        return "style";
     }
 }

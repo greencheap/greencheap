@@ -62,9 +62,9 @@ class Notifications implements \JsonSerializable
      * @var string[]
      */
     protected static $properties = [
-        'is_read' => 'isRead',
-        'is_read_string' => 'isReadString',
-        'image_url' => 'getImage'
+        "is_read" => "isRead",
+        "is_read_string" => "isReadString",
+        "image_url" => "getImage",
     ];
 
     /**
@@ -73,10 +73,10 @@ class Notifications implements \JsonSerializable
     public function isRead()
     {
         $user = App::user();
-        if(!$user->isAuthenticated()){
+        if (!$user->isAuthenticated()) {
             return false;
         }
-        if(in_array($user->id , $this->read_user)){
+        if (in_array($user->id, $this->read_user)) {
             return true;
         }
         return false;
@@ -85,17 +85,19 @@ class Notifications implements \JsonSerializable
     /**
      * @return string
      */
-    public function isReadString(){
-        if($this->isRead()){
-            return 'read';
+    public function isReadString()
+    {
+        if ($this->isRead()) {
+            return "read";
         }
-        return 'unread';
+        return "unread";
     }
 
     /**
      * @return mixed
      */
-    public function getImage(){
+    public function getImage()
+    {
         return App::url()->getStatic($this->image);
     }
 

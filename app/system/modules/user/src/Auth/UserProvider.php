@@ -45,8 +45,8 @@ class UserProvider implements UserProviderInterface
      */
     public function findByCredentials(array $credentials)
     {
-        if (isset($credentials['password'])) {
-            unset($credentials['password']);
+        if (isset($credentials["password"])) {
+            unset($credentials["password"]);
         }
 
         return User::where($credentials)->first();
@@ -57,6 +57,6 @@ class UserProvider implements UserProviderInterface
      */
     public function validateCredentials(UserInterface $user, array $credentials)
     {
-        return $this->encoder->verify($user->getPassword(), $credentials['password']);
+        return $this->encoder->verify($user->getPassword(), $credentials["password"]);
     }
 }

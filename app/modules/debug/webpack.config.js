@@ -1,12 +1,14 @@
-module.exports = [{
-    entry: {
-        debugbar: './app/debugbar',
+module.exports = [
+    {
+        entry: {
+            debugbar: "./app/debugbar",
+        },
+        output: {
+            filename: "./app/bundle/[name].js",
+            library: "Debugbar",
+        },
+        module: {
+            rules: [{ test: /\.vue$/, use: "vue-loader" }],
+        },
     },
-    output: {
-        filename: './app/bundle/[name].js',
-        library: 'Debugbar',
-    },
-    module: {
-        rules: [{ test: /\.vue$/, use: 'vue-loader' }],
-    },
-}];
+];

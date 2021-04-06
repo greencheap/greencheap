@@ -122,7 +122,7 @@ class Config implements \ArrayAccess, \Countable, \JsonSerializable
     public function merge($values, $replace = false)
     {
         $this->values = Arr::merge($this->values, $values, $replace);
-        $this->dirty  = true;
+        $this->dirty = true;
 
         return $this;
     }
@@ -156,7 +156,7 @@ class Config implements \ArrayAccess, \Countable, \JsonSerializable
      */
     public function dump()
     {
-        return '<?php return '.var_export($this->values, true).';';
+        return "<?php return " . var_export($this->values, true) . ";";
     }
 
     /**

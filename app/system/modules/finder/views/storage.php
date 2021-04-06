@@ -1,4 +1,4 @@
-<?php $view->script('panel-finder') ?>
+<?php $view->script("panel-finder"); ?>
 
 <div id="storage">
     <panel-finder root="<?= htmlentities($root) ?>" mode="<?= $mode ?>"></panel-finder>

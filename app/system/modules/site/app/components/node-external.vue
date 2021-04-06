@@ -1,9 +1,9 @@
 <template>
     <div class="uk-form-horizontal">
         <div class="uk-margin">
-            <label for="form-url" class="uk-form-label">{{ 'Url' | trans }}</label>
+            <label for="form-url" class="uk-form-label">{{ "Url" | trans }}</label>
             <div class="uk-form-controls">
-                <input v-model="node.link" type="url" class="uk-input uk-form-width-large" required="Invalid url.">
+                <input v-model="node.link" type="url" class="uk-input uk-form-width-large" required="Invalid url." />
             </div>
         </div>
 
@@ -12,18 +12,16 @@
 </template>
 
 <script>
-
 export default {
-
     section: {
-        label: 'Settings',
+        label: "Settings",
         priority: 0,
-        active: 'external',
+        active: "external",
     },
 
-    props: ['node', 'roles', 'form'],
+    props: ["node", "roles", "form"],
 
-    inject: ['$components'],
+    inject: ["$components"],
 
     created() {
         _.extend(this.$options.components, this.$components);
@@ -35,10 +33,7 @@ export default {
 
     events: {
         // eslint-disable-next-line func-names
-        'save:node': function () {
-
-        },
+        "save:node": function () {},
     },
 };
-
 </script>

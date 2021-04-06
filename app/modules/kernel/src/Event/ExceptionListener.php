@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ExceptionListener implements EventSubscriberInterface
 {
-
     protected $controller;
     protected $logger;
 
@@ -48,23 +47,20 @@ class ExceptionListener implements EventSubscriberInterface
         $request = $this->duplicateRequest($exception, $request);
 
         try {
-
             $response = $event->getKernel()->handle($request);
-
         } catch (\Exception $e) {
-
-            $this->logException($e, sprintf('Exception thrown when handling an exception (%s: %s at %s line %s)', get_class($e), $e->getMessage(), $e->getFile(), $e->getLine()));
+            $this->logException($e, sprintf("Exception thrown when handling an exception (%s: %s at %s line %s)", get_class($e), $e->getMessage(), $e->getFile(), $e->getLine()));
 
             $handling = false;
-            $wrapper  = $e;
+            $wrapper = $e;
 
             while ($prev = $wrapper->getPrevious()) {
-                if ($exception === $wrapper = $prev) {
+                if ($exception === ($wrapper = $prev)) {
                     throw $e;
                 }
             }
 
-            $prev = new \ReflectionProperty('Exception', 'previous');
+            $prev = new \ReflectionProperty("Exception", "previous");
             $prev->setAccessible(true);
             $prev->setValue($wrapper, $exception);
 
@@ -82,7 +78,7 @@ class ExceptionListener implements EventSubscriberInterface
     public function subscribe(): array
     {
         return [
-            'exception' => ['onException', -100]
+            "exception" => ["onException", -100],
         ];
     }
 
@@ -96,9 +92,9 @@ class ExceptionListener implements EventSubscriberInterface
     {
         if ($this->logger !== null) {
             if (!$exception instanceof HttpException || $exception->getCode() >= 500) {
-                $this->logger->critical($message, ['exception' => $exception]);
+                $this->logger->critical($message, ["exception" => $exception]);
             } else {
-                $this->logger->error($message, ['exception' => $exception]);
+                $this->logger->error($message, ["exception" => $exception]);
             }
         }
     }
@@ -113,13 +109,13 @@ class ExceptionListener implements EventSubscriberInterface
     protected function duplicateRequest(\Exception $exception, Request $request): Request
     {
         $attributes = [
-            '_controller' => $this->controller,
-            'exception'   => FlattenException::create($exception),
-            'logger'      => $this->logger
+            "_controller" => $this->controller,
+            "exception" => FlattenException::create($exception),
+            "logger" => $this->logger,
         ];
 
         $request = $request->duplicate(null, null, $attributes);
-        $request->setMethod('GET');
+        $request->setMethod("GET");
 
         return $request;
     }

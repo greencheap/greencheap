@@ -19,7 +19,7 @@ interface UserProviderInterface
      * @return UserInterface|null
      */
     public function findByUsername($username);
-    
+
     /**
      * Retrieves a user by the given credentials.
      *

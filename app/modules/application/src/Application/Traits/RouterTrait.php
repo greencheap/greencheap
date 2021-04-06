@@ -38,7 +38,7 @@ trait RouterTrait
      */
     public static function error(mixed $callback, $priority = -8)
     {
-        static::events()->on('exception', new ExceptionListenerWrapper($callback), $priority);
+        static::events()->on("exception", new ExceptionListenerWrapper($callback), $priority);
     }
 
     /**
@@ -49,7 +49,7 @@ trait RouterTrait
      * @return mixed
      * @see Router::redirect()
      */
-    public static function redirect($url = '', $parameters = [], $status = 302, $headers = []): mixed
+    public static function redirect($url = "", $parameters = [], $status = 302, $headers = []): mixed
     {
         return static::router()->redirect($url, $parameters, $status, $headers);
     }
@@ -64,15 +64,10 @@ trait RouterTrait
      */
     public static function forward($name, $parameters = [])
     {
-        if (!$request = static::request()) {
-            throw new \RuntimeException('No Request set.');
+        if (!($request = static::request())) {
+            throw new \RuntimeException("No Request set.");
         }
 
-        return static::kernel()->handle(
-            Request::create(
-                static::router()->generate($name, $parameters), 'GET', [],
-                $request->cookies->all(), [],
-                $request->server->all()
-            ));
+        return static::kernel()->handle(Request::create(static::router()->generate($name, $parameters), "GET", [], $request->cookies->all(), [], $request->server->all()));
     }
 }

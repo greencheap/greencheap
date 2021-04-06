@@ -30,7 +30,7 @@ class Container implements \ArrayAccess
             $this->offsetSet($name, $value);
         }
 
-        if (in_array('GreenCheap\Application\Traits\StaticTrait', class_uses($this))) {
+        if (in_array("GreenCheap\Application\Traits\StaticTrait", class_uses($this))) {
             static::$instance = $this;
         }
     }

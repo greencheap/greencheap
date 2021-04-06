@@ -31,7 +31,7 @@ class AnnotationLoader implements LoaderInterface
     /**
      * @var string
      */
-    protected $routeAnnotation = 'GreenCheap\Routing\Annotation\Route';
+    protected $routeAnnotation = "GreenCheap\Routing\Annotation\Route";
 
     /**
      * Constructor.
@@ -62,11 +62,9 @@ class AnnotationLoader implements LoaderInterface
         $globals = $this->getGlobals($class);
 
         foreach ($class->getMethods() as $method) {
-
             $this->routeIndex = 0;
 
-            if ($method->isPublic() && 'Action' == substr($method->name, -6)) {
-
+            if ($method->isPublic() && "Action" == substr($method->name, -6)) {
                 $count = count($routes);
 
                 foreach ($this->getAnnotationReader()->getMethodAnnotations($method) as $annotation) {
@@ -98,15 +96,15 @@ class AnnotationLoader implements LoaderInterface
         $name = $annotation->getName() ?: $this->getDefaultRouteName($method);
         $path = $annotation->getPath() ?: $this->getDefaultRoutePath($method);
 
-        $routes[] = (new Route(rtrim($globals['path'].$path, '/')))
-            ->setName($globals['name'].'/'.$name)
-            ->setDefaults(array_replace($globals['defaults'], $annotation->getDefaults(), ['_controller' => $class->name.'::'.$method->name]))
-            ->setRequirements(array_replace($globals['requirements'], $annotation->getRequirements()))
-            ->setOptions(array_replace($globals['options'], $annotation->getOptions()))
-            ->setHost($annotation->getHost() ?: $globals['host'])
-            ->setSchemes(array_replace($globals['schemes'], $annotation->getSchemes()))
-            ->setMethods(array_replace($globals['methods'], $annotation->getMethods()))
-            ->setCondition($annotation->getCondition() ?: $globals['condition']);
+        $routes[] = (new Route(rtrim($globals["path"] . $path, "/")))
+            ->setName($globals["name"] . "/" . $name)
+            ->setDefaults(array_replace($globals["defaults"], $annotation->getDefaults(), ["_controller" => $class->name . "::" . $method->name]))
+            ->setRequirements(array_replace($globals["requirements"], $annotation->getRequirements()))
+            ->setOptions(array_replace($globals["options"], $annotation->getOptions()))
+            ->setHost($annotation->getHost() ?: $globals["host"])
+            ->setSchemes(array_replace($globals["schemes"], $annotation->getSchemes()))
+            ->setMethods(array_replace($globals["methods"], $annotation->getMethods()))
+            ->setCondition($annotation->getCondition() ?: $globals["condition"]);
     }
 
     /**
@@ -116,21 +114,21 @@ class AnnotationLoader implements LoaderInterface
     protected function getGlobals(\ReflectionClass $class)
     {
         $globals = [
-            'name'         => '',
-            'path'         => '',
-            'defaults'     => [],
-            'requirements' => [],
-            'options'      => [],
-            'host'         => '',
-            'schemes'      => [],
-            'methods'      => [],
-            'condition'    => ''
+            "name" => "",
+            "path" => "",
+            "defaults" => [],
+            "requirements" => [],
+            "options" => [],
+            "host" => "",
+            "schemes" => [],
+            "methods" => [],
+            "condition" => "",
         ];
 
         if ($annotation = $this->getAnnotationReader()->getClassAnnotation($class, $this->routeAnnotation)) {
             foreach (array_keys($globals) as $option) {
-                $method = 'get'.ucfirst($option);
-                if (null !== $value = $annotation->$method()) {
+                $method = "get" . ucfirst($option);
+                if (null !== ($value = $annotation->$method())) {
                     $globals[$option] = $value;
                 }
             }
@@ -148,7 +146,7 @@ class AnnotationLoader implements LoaderInterface
     {
         if (!$this->reader) {
             $this->reader = new SimpleAnnotationReader();
-            $this->reader->addNamespace('GreenCheap\Routing\Annotation');
+            $this->reader->addNamespace("GreenCheap\Routing\Annotation");
         }
 
         return $this->reader;
@@ -162,10 +160,10 @@ class AnnotationLoader implements LoaderInterface
      */
     protected function getDefaultRoutePath(\ReflectionMethod $method)
     {
-        $action = strtolower('/'.$this->parseControllerActionName($method));
+        $action = strtolower("/" . $this->parseControllerActionName($method));
 
-        if ($action == '/index') {
-            $action = '';
+        if ($action == "/index") {
+            $action = "";
         }
 
         return $action;
@@ -179,8 +177,8 @@ class AnnotationLoader implements LoaderInterface
      */
     protected function getDefaultRouteName(\ReflectionMethod $method)
     {
-        if ('index' === $action = strtolower($this->parseControllerActionName($method))) {
-            $action = '';
+        if ("index" === ($action = strtolower($this->parseControllerActionName($method)))) {
+            $action = "";
         }
 
         $name = "/{$action}";
@@ -191,7 +189,7 @@ class AnnotationLoader implements LoaderInterface
 
         $this->routeIndex++;
 
-        return trim($name, '/');
+        return trim($name, "/");
     }
 
     /**
@@ -204,7 +202,7 @@ class AnnotationLoader implements LoaderInterface
     protected function parseControllerActionName(\ReflectionMethod $method)
     {
         if (!preg_match('/([a-zA-Z0-9]+)Action$/', $method->name, $matches)) {
-            throw new \LogicException(sprintf('Unable to retrieve action name. The controller class method %s does not follow the naming convention. (e.g. indexAction)', $method->name));
+            throw new \LogicException(sprintf("Unable to retrieve action name. The controller class method %s does not follow the naming convention. (e.g. indexAction)", $method->name));
         }
 
         return $matches[1];

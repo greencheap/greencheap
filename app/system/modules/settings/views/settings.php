@@ -1,4 +1,4 @@
-<?php $view->script('settings', 'app/system/modules/settings/app/bundle/settings.js', ['vue']) ?>
+<?php $view->script("settings", "app/system/modules/settings/app/bundle/settings.js", ["vue"]); ?>
 
 <form id="settings" class="uk-form-horizontal" @submit.prevent="save" v-cloak>
 

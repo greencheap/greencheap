@@ -47,8 +47,8 @@ class AssetManager implements \IteratorAggregate
      */
     public function __construct(AssetFactory $factory = null, $cache = null)
     {
-        $this->factory    = $factory ?: new AssetFactory;
-        $this->registered = new AssetCollection;
+        $this->factory = $factory ?: new AssetFactory();
+        $this->registered = new AssetCollection();
 
         if ($cache) {
             $this->cache = $cache;
@@ -108,8 +108,8 @@ class AssetManager implements \IteratorAggregate
     {
         unset($this->queue[$name]);
 
-        foreach($this->lazy as &$dependencies) {
-            if (false !== $index = array_search($name, $dependencies)) {
+        foreach ($this->lazy as &$dependencies) {
+            if (false !== ($index = array_search($name, $dependencies))) {
                 unset($dependencies[$index]);
             }
         }
@@ -144,8 +144,8 @@ class AssetManager implements \IteratorAggregate
         $this->registered->add($asset = $this->factory->create($name, $source, $dependencies, $options));
 
         foreach ($asset->getDependencies() as $dependency) {
-            if ($dependency[0] === '~') {
-                $this->lazy[ltrim($dependency, '~')][] = $name;
+            if ($dependency[0] === "~") {
+                $this->lazy[ltrim($dependency, "~")][] = $name;
             }
         }
 
@@ -176,7 +176,7 @@ class AssetManager implements \IteratorAggregate
      */
     public function combine($name, $pattern, $filters = [])
     {
-        $this->combine[$name] = compact('pattern', 'filters');
+        $this->combine[$name] = compact("pattern", "filters");
 
         return $this;
     }
@@ -239,13 +239,11 @@ class AssetManager implements \IteratorAggregate
         $unresolved[$name] = $asset;
 
         foreach ($asset->getDependencies() as $dependency) {
-
-            if ($dependency[0] === '~' && !isset($resolved[$dependency = ltrim($dependency, '~')])) {
+            if ($dependency[0] === "~" && !isset($resolved[($dependency = ltrim($dependency, "~"))])) {
                 continue;
             }
 
             if (!isset($resolved[$dependency])) {
-
                 if (isset($unresolved[$dependency])) {
                     throw new \RuntimeException(sprintf('Circular asset dependency "%s > %s" detected.', $name, $dependency));
                 }
@@ -260,7 +258,7 @@ class AssetManager implements \IteratorAggregate
         unset($unresolved[$name]);
 
         if (isset($this->lazy[$name])) {
-            foreach($this->lazy[$name] as $dependency) {
+            foreach ($this->lazy[$name] as $dependency) {
                 if ($d = $this->registered->get($dependency)) {
                     $this->resolveDependencies($d, $resolved, $unresolved);
                 }
@@ -282,7 +280,7 @@ class AssetManager implements \IteratorAggregate
     {
         extract($options);
 
-        $combine = new AssetCollection;
+        $combine = new AssetCollection();
         $pattern = $this->globToRegex($pattern);
 
         foreach ($assets as $asset) {
@@ -291,9 +289,9 @@ class AssetManager implements \IteratorAggregate
             }
         }
 
-        $file = strtr($this->cache, ['%name%' => $name]);
+        $file = strtr($this->cache, ["%name%" => $name]);
 
-        if ($names = $combine->names() and $file = $this->doCache($combine, $file, $filters)) {
+        if (($names = $combine->names()) and ($file = $this->doCache($combine, $file, $filters))) {
             $assets->remove(array_slice($names, 1));
             $assets->replace(array_shift($names), $this->factory->create($name, $file));
         }
@@ -314,9 +312,8 @@ class AssetManager implements \IteratorAggregate
         $filters = $this->filters->get($filters);
 
         if (count($assets)) {
-
-            $salt = array_merge([$_SERVER['SCRIPT_NAME']], array_keys($filters));
-            $file = preg_replace('/(.*?)(\.[^\.]+)?$/i', '$1-'.$assets->hash(implode(',', $salt)).'$2', $file, 1);
+            $salt = array_merge([$_SERVER["SCRIPT_NAME"]], array_keys($filters));
+            $file = preg_replace('/(.*?)(\.[^\.]+)?$/i', '$1-' . $assets->hash(implode(",", $salt)) . '$2', $file, 1);
 
             if (!file_exists($file)) {
                 file_put_contents($file, $assets->dump($filters));
@@ -336,35 +333,34 @@ class AssetManager implements \IteratorAggregate
      */
     protected function globToRegex($glob)
     {
-        $regex  = '';
-        $group  = 0;
+        $regex = "";
+        $group = 0;
         $escape = false;
 
         for ($i = 0; $i < strlen($glob); $i++) {
-
             $c = $glob[$i];
 
-            if ('.' === $c || '(' === $c || ')' === $c || '|' === $c || '+' === $c || '^' === $c || '$' === $c) {
+            if ("." === $c || "(" === $c || ")" === $c || "|" === $c || "+" === $c || "^" === $c || '$' === $c) {
                 $regex .= "\\$c";
-            } elseif ('*' === $c) {
-                $regex .= $escape ? '\\*' : '.*';
-            } elseif ('?' === $c) {
-                $regex .= $escape ? '\\?' : '.';
-            } elseif ('{' === $c) {
-                $regex .= $escape ? '\\{' : '(';
+            } elseif ("*" === $c) {
+                $regex .= $escape ? "\\*" : ".*";
+            } elseif ("?" === $c) {
+                $regex .= $escape ? "\\?" : ".";
+            } elseif ("{" === $c) {
+                $regex .= $escape ? "\\{" : "(";
                 if (!$escape) {
                     ++$group;
                 }
-            } elseif ('}' === $c && $group) {
-                $regex .= $escape ? '}' : ')';
+            } elseif ("}" === $c && $group) {
+                $regex .= $escape ? "}" : ")";
                 if (!$escape) {
                     --$group;
                 }
-            } elseif (',' === $c && $group) {
-                $regex .= $escape ? ',' : '|';
-            } elseif ('\\' === $c) {
+            } elseif ("," === $c && $group) {
+                $regex .= $escape ? "," : "|";
+            } elseif ("\\" === $c) {
                 if ($escape) {
-                    $regex .= '\\\\';
+                    $regex .= "\\\\";
                     $escape = false;
                 } else {
                     $escape = true;
@@ -377,6 +373,6 @@ class AssetManager implements \IteratorAggregate
             $escape = false;
         }
 
-        return '#^'.$regex.'$#';
+        return "#^" . $regex . '$#';
     }
 }

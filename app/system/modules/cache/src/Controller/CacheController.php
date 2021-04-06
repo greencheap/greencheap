@@ -14,7 +14,6 @@ use JetBrains\PhpStorm\ArrayShape;
  */
 class CacheController
 {
-
     /**
      * @Request({"caches": "array"}, csrf=true)
      * @param $caches
@@ -23,8 +22,8 @@ class CacheController
     #[ArrayShape(['message' => "string"])]
     public function clearAction($caches): array
     {
-        App::module('system/cache')->clearCache($caches);
+        App::module("system/cache")->clearCache($caches);
 
-        return ['message' => 'success'];
+        return ["message" => "success"];
     }
 }

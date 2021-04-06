@@ -26,12 +26,12 @@ class ModuleLoader implements LoaderInterface
      */
     public function load($module)
     {
-        $class = $module[is_string($module['main']) ? 'main' : 'class'];
+        $class = $module[is_string($module["main"]) ? "main" : "class"];
 
         $module = new $class($module);
         $module->main($this->app);
 
-        if (is_a($module, 'GreenCheap\Event\EventSubscriberInterface')) {
+        if (is_a($module, "GreenCheap\Event\EventSubscriberInterface")) {
             $this->app->subscribe($module);
         }
 

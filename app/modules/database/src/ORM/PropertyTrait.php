@@ -18,8 +18,7 @@ trait PropertyTrait
     public function __get($name)
     {
         if ($descriptor = static::getPropertyDescriptor($name)) {
-
-            $get = $descriptor['get'];
+            $get = $descriptor["get"];
 
             if (is_string($get)) {
                 $get = [$this, $get];
@@ -28,9 +27,7 @@ trait PropertyTrait
             }
 
             return call_user_func($get);
-
         } else {
-
             trigger_error(sprintf('Undefined property: %s::$%s', __CLASS__, $name), E_USER_NOTICE);
         }
     }
@@ -44,8 +41,7 @@ trait PropertyTrait
     public function __set($name, $value)
     {
         if ($descriptor = static::getPropertyDescriptor($name)) {
-
-            $set = $descriptor['set'];
+            $set = $descriptor["set"];
 
             if (is_string($set)) {
                 $set = [$this, $set];
@@ -58,9 +54,7 @@ trait PropertyTrait
             } elseif ($set === true) {
                 $this->$name = $value;
             }
-
         } else {
-
             $this->$name = $value;
         }
     }
@@ -68,7 +62,8 @@ trait PropertyTrait
     /**
      * Clones the object properties.
      */
-    public function __clone() {
+    public function __clone()
+    {
         foreach (static::$_properties as $name => $value) {
             $this->$name = $this->__get($name);
         }
@@ -118,14 +113,14 @@ trait PropertyTrait
      */
     public static function defineProperty($name, $get, $set = null)
     {
-        $descriptor = is_array($get) ? $get : compact('get', 'set');
+        $descriptor = is_array($get) ? $get : compact("get", "set");
 
         if (isset($descriptor[0])) {
-            $descriptor['get'] = $descriptor[0];
+            $descriptor["get"] = $descriptor[0];
         }
 
         if (isset($descriptor[1])) {
-            $descriptor['set'] = $descriptor[1];
+            $descriptor["set"] = $descriptor[1];
         }
 
         unset($descriptor[0], $descriptor[1]);

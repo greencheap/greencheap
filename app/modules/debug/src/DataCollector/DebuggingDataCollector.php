@@ -11,11 +11,11 @@ class DebuggingDataCollector implements DataCollectorInterface
     /**
      * Constructor.
      *
-     * 
+     *
      */
     public function __construct($debugArray)
     {
-       $this->debugArray = $debugArray ?: false;
+        $this->debugArray = $debugArray ?: false;
     }
 
     /**
@@ -23,11 +23,11 @@ class DebuggingDataCollector implements DataCollectorInterface
      */
     public function collect()
     {
-        if(!$this->debugArray){
-            return ['message' , 'Successful'];
+        if (!$this->debugArray) {
+            return ["message", "Successful"];
         }
         return [
-            'object' => $this->debugArray
+            "object" => $this->debugArray,
         ];
     }
 
@@ -36,6 +36,6 @@ class DebuggingDataCollector implements DataCollectorInterface
      */
     public function getName()
     {
-        return 'debugging';
+        return "debugging";
     }
 }

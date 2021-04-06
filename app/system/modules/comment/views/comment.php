@@ -1,20 +1,26 @@
-<?php if($app['config']->get('system/user')->get('registration') !== 'admin'): ?>
+<?php if ($app["config"]->get("system/user")->get("registration") !== "admin"): ?>
     <?php
-    $view->data('$comment_service', array_merge([
-        'config' => $config ?? $app['comment.config'],
-        'draft' => $app['comment.draft'],
-        'user_id' => $app['user']->id,
-        'user_config' => $app['config']->get('system/user'),
-        'getCommentStatus' => $app['config']->get('system/comment')->get('approved_admin') && !$app['user']->isAdministrator() ? 0:1,
-        'isAuthCanComment' => $app['user']->isAuthenticated() || $app['user']->isAdministrator(),
-        'isAccessCanComment' => $app['user']->hasPermission('comment: write comment') || $app['user']->isAdministrator(),
-        'isRemoveCanComment' => $app['user']->hasPermission('comment: manage own remove'),
-        'isRemoveCanAllComment' => $app['user']->hasPermission('comment: manage all remove comment') || $app['user']->isAdministrator(),
-        'redirectUrl' => $app['view']->url($service['type_url']['url'], [$service['type_url']['key'] => $service['own_id']])
-    ] , compact('service')));
+    $view->data(
+        '$comment_service',
+        array_merge(
+            [
+                "config" => $config ?? $app["comment.config"],
+                "draft" => $app["comment.draft"],
+                "user_id" => $app["user"]->id,
+                "user_config" => $app["config"]->get("system/user"),
+                "getCommentStatus" => $app["config"]->get("system/comment")->get("approved_admin") && !$app["user"]->isAdministrator() ? 0 : 1,
+                "isAuthCanComment" => $app["user"]->isAuthenticated() || $app["user"]->isAdministrator(),
+                "isAccessCanComment" => $app["user"]->hasPermission("comment: write comment") || $app["user"]->isAdministrator(),
+                "isRemoveCanComment" => $app["user"]->hasPermission("comment: manage own remove"),
+                "isRemoveCanAllComment" => $app["user"]->hasPermission("comment: manage all remove comment") || $app["user"]->isAdministrator(),
+                "redirectUrl" => $app["view"]->url($service["type_url"]["url"], [$service["type_url"]["key"] => $service["own_id"]]),
+            ],
+            compact("service")
+        )
+    );
 
-    $view->script('comment_service' , 'system/comment:app/bundle/service.js' , ['uikit' , 'vue']);
-    $view->style('comment_service' , 'system/comment:css/comment.css');
+    $view->script("comment_service", "system/comment:app/bundle/service.js", ["uikit", "vue"]);
+    $view->style("comment_service", "system/comment:css/comment.css");
     ?>
     <div id="comment_service" class="uk-margin-large-top" v-cloak>
         <div v-if="!isAuthCanComment">
@@ -114,4 +120,5 @@
             </ul>
         </div>
     </div>
-<?php endif ?>
+<?php endif;
+?>

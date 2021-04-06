@@ -18,7 +18,6 @@ use GreenCheap\Auth\Exception\AuthException;
 use GreenCheap\Event\EventSubscriberInterface;
 use GreenCheap\User\Annotation\Access;
 
-
 class AccessListener implements EventSubscriberInterface
 {
     /**
@@ -45,7 +44,7 @@ class AccessListener implements EventSubscriberInterface
     {
         if (!$this->reader) {
             $this->reader = new SimpleAnnotationReader();
-            $this->reader->addNamespace('GreenCheap\User\Annotation');
+            $this->reader->addNamespace("GreenCheap\User\Annotation");
         }
 
         if (!$route->getControllerClass()) {
@@ -64,9 +63,8 @@ class AccessListener implements EventSubscriberInterface
             }
 
             if ($admin = $annot->getAdmin() !== null) {
-
-                $route->setPath('admin'.rtrim($route->getPath(), '/'));
-                $permission = 'system: access admin area';
+                $route->setPath("admin" . rtrim($route->getPath(), "/"));
+                $permission = "system: access admin area";
 
                 if ($admin) {
                     $access[] = $permission;
@@ -79,7 +77,7 @@ class AccessListener implements EventSubscriberInterface
         }
 
         if ($access) {
-            $route->setDefault('_access', array_unique($access));
+            $route->setDefault("_access", array_unique($access));
         }
     }
 
@@ -91,8 +89,8 @@ class AccessListener implements EventSubscriberInterface
      */
     public function onAuthorize(AuthorizeEvent $event)
     {
-        if (str_starts_with(App::request()->get('redirect'), App::url('@system', [], true)) && !$event->getUser()->hasAccess('system: access admin area')) {
-            throw new AuthException(__('You do not have access to the administration area of this site.'));
+        if (str_starts_with(App::request()->get("redirect"), App::url("@system", [], true)) && !$event->getUser()->hasAccess("system: access admin area")) {
+            throw new AuthException(__("You do not have access to the administration area of this site."));
         }
     }
 
@@ -101,16 +99,16 @@ class AccessListener implements EventSubscriberInterface
      */
     public function onLateRequest($event, $request)
     {
-        if (!$access = $request->attributes->get('_access')) {
+        if (!($access = $request->attributes->get("_access"))) {
             return;
         }
 
         foreach ($access as $expression) {
             if (!App::user()->hasAccess($expression)) {
                 if (!App::user()->isAuthenticated()) {
-                    App::abort(401, __('Unauthorized'));
+                    App::abort(401, __("Unauthorized"));
                 } else {
-                    App::abort(403, __('Insufficient User Rights.'));
+                    App::abort(403, __("Insufficient User Rights."));
                 }
             }
         }
@@ -121,18 +119,18 @@ class AccessListener implements EventSubscriberInterface
      */
     public function onRequest($event, $request)
     {
-        if ($request->isXmlHttpRequest() || App::auth()->getUser() || !in_array('system: access admin area', $request->attributes->get('_access', []))) {
+        if ($request->isXmlHttpRequest() || App::auth()->getUser() || !in_array("system: access admin area", $request->attributes->get("_access", []))) {
             return;
         }
 
         $params = [];
 
         // redirect to default URL for POST requests and don't explicitly redirect the default URL
-        if ('POST' !== $request->getMethod() && $request->attributes->get('_route') != '@system') {
-            $params['redirect'] = App::url()->current();
+        if ("POST" !== $request->getMethod() && $request->attributes->get("_route") != "@system") {
+            $params["redirect"] = App::url()->current();
         }
 
-        $event->setResponse(App::response()->redirect('@system/login', $params));
+        $event->setResponse(App::response()->redirect("@system/login", $params));
     }
 
     /**
@@ -141,12 +139,9 @@ class AccessListener implements EventSubscriberInterface
     public function subscribe()
     {
         return [
-            'route.configure' => 'onConfigureRoute',
-            'auth.authorize' => 'onAuthorize',
-            'request' => [
-                ['onLateRequest', -100],
-                ['onRequest', -50]
-            ]
+            "route.configure" => "onConfigureRoute",
+            "auth.authorize" => "onAuthorize",
+            "request" => [["onLateRequest", -100], ["onRequest", -50]],
         ];
     }
 }

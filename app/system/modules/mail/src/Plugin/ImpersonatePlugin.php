@@ -16,7 +16,7 @@ class ImpersonatePlugin implements \Swift_Events_SendListener
     public function __construct($address, $name)
     {
         $this->address = $address;
-        $this->name    = $name;
+        $this->name = $name;
     }
 
     /**

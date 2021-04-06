@@ -1,19 +1,18 @@
 const _ = Vue.util;
 
 export default {
-
     bind(el, binding, vnode) {
         binding.def.update(el, binding, vnode);
     },
 
     update(el, binding, vnode) {
-        const buttons = (el.getAttribute('buttons') || '').split(',');
+        const buttons = (el.getAttribute("buttons") || "").split(",");
 
         let options = {
             title: false,
             labels: {
-                ok: buttons[0] || vnode.context.$trans('Ok'),
-                cancel: buttons[1] || vnode.context.$trans('Cancel'),
+                ok: buttons[0] || vnode.context.$trans("Ok"),
+                cancel: buttons[1] || vnode.context.$trans("Cancel"),
             },
             stack: true,
         };
@@ -24,24 +23,26 @@ export default {
         // }
 
         // vue-confirm="'Text...?'"
-        if (typeof binding.value === 'string') {
+        if (typeof binding.value === "string") {
             options.text = binding.value;
         }
 
         // vue-confirm="{title:'Title', text:'Text...?'}"
-        if (typeof binding.value === 'object') {
+        if (typeof binding.value === "object") {
             options = _.extend(options, binding.value);
         }
 
         const handler = vnode.data.on.click.fns;
 
         vnode.data.on.click.fns = function (e) {
-            const modal = UIkit.modal.confirm(vnode.context.$trans(binding.value), options).then(() => {
-                handler(e);
-            }, () => {});
+            const modal = UIkit.modal.confirm(vnode.context.$trans(binding.value), options).then(
+                () => {
+                    handler(e);
+                },
+                () => {}
+            );
         };
     },
 
     unbind(el, binding, vnode) {},
-
 };

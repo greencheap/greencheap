@@ -27,10 +27,14 @@ class ScriptHelper implements HelperInterface, \IteratorAggregate
      */
     public function register(View $view)
     {
-        $view->on('head', function ($event) use ($view) {
-            $view->trigger('scripts', [$this->scripts]);
-            $event->addResult($this->render());
-        }, 5);
+        $view->on(
+            "head",
+            function ($event) use ($view) {
+                $view->trigger("scripts", [$this->scripts]);
+                $event->addResult($this->render());
+            },
+            5
+        );
     }
 
     /**
@@ -66,14 +70,13 @@ class ScriptHelper implements HelperInterface, \IteratorAggregate
      */
     public function render()
     {
-        $output = '';
+        $output = "";
 
         foreach ($this->scripts as $script) {
             if ($source = $script->getSource()) {
-
-                $attributes = '';
-                foreach (['async', 'defer'] as $attribute) {
-                    $attributes .= $script->getOption($attribute) ? ' ' . $attribute : '';
+                $attributes = "";
+                foreach (["async", "defer"] as $attribute) {
+                    $attributes .= $script->getOption($attribute) ? " " . $attribute : "";
                 }
 
                 $output .= sprintf("        <script src=\"%s\"%s></script>\n", $source, $attributes);
@@ -100,6 +103,6 @@ class ScriptHelper implements HelperInterface, \IteratorAggregate
      */
     public function getName()
     {
-        return 'script';
+        return "script";
     }
 }

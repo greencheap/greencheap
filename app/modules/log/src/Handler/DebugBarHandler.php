@@ -15,18 +15,13 @@ class DebugBarHandler extends AbstractHandler implements DataCollectorInterface
     /**
      * {@inheritdoc}
      */
-    public function handle(array $record):bool
+    public function handle(array $record): bool
     {
-        if ($record['level'] < $this->level) {
+        if ($record["level"] < $this->level) {
             return false;
         }
 
-        $keys = [
-            'message',
-            'level',
-            'level_name',
-            'channel'
-        ];
+        $keys = ["message", "level", "level_name", "channel"];
 
         $this->records[] = array_intersect_key($record, array_flip($keys));
 
@@ -38,7 +33,7 @@ class DebugBarHandler extends AbstractHandler implements DataCollectorInterface
      */
     public function collect()
     {
-        return ['records' => $this->records];
+        return ["records" => $this->records];
     }
 
     /**
@@ -46,6 +41,6 @@ class DebugBarHandler extends AbstractHandler implements DataCollectorInterface
      */
     public function getName()
     {
-        return 'log';
+        return "log";
     }
 }

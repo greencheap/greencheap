@@ -18,12 +18,12 @@ class HasOne extends Relation
     {
         parent::__construct($manager, $metadata, $mapping);
 
-        $this->keyFrom = $mapping['keyFrom'] ? $mapping['keyFrom'] : $metadata->getIdentifier();
-        $this->keyTo   = $mapping['keyTo'];
+        $this->keyFrom = $mapping["keyFrom"] ? $mapping["keyFrom"] : $metadata->getIdentifier();
+        $this->keyTo = $mapping["keyTo"];
 
         foreach ($this->targetMetadata->getRelationMappings() as $mapping) {
-            if ($mapping['type'] == 'BelongsTo' && $mapping['targetEntity'] == $this->metadata->getClass()) {
-                $this->belongsTo = $mapping['name'];
+            if ($mapping["type"] == "BelongsTo" && $mapping["targetEntity"] == $this->metadata->getClass()) {
+                $this->belongsTo = $mapping["name"];
                 break;
             }
         }
@@ -36,7 +36,7 @@ class HasOne extends Relation
     {
         $this->initRelation($entities);
 
-        if (!$keys = $this->getKeys($entities)) {
+        if (!($keys = $this->getKeys($entities))) {
             return;
         }
 

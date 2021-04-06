@@ -23,44 +23,37 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Templating\TemplateNameParser;
 
 return [
+    "name" => "view",
 
-    'name' => 'view',
+    "include" => "modules/*/index.php",
 
-    'include' => 'modules/*/index.php',
+    "require" => ["view/twig"],
 
-    'require' => [
-
-        'view/twig'
-
-    ],
-
-    'main' => function ($app) {
-
-        $app['view'] = function ($app) {
-            return new View(new PrefixEventDispatcher('view.', $app['events']));
+    "main" => function ($app) {
+        $app["view"] = function ($app) {
+            return new View(new PrefixEventDispatcher("view.", $app["events"]));
         };
 
-        $app['date'] = function ($app) {
+        $app["date"] = function ($app) {
             return new Date();
         };
 
-        $app['assets'] = function () {
+        $app["assets"] = function () {
             return new AssetFactory();
         };
 
-        $app['styles'] = function ($app) {
-            return new AssetManager($app['assets']);
+        $app["styles"] = function ($app) {
+            return new AssetManager($app["assets"]);
         };
 
-        $app['scripts'] = function ($app) {
-            return new AssetManager($app['assets']);
+        $app["scripts"] = function ($app) {
+            return new AssetManager($app["assets"]);
         };
 
-        $app['module']->addLoader(function ($module) use ($app) {
-
-            if (isset($module['views'])) {
-                $app->extend('view', function ($view) use ($module) {
-                    foreach ((array) $module['views'] as $name => $path) {
+        $app["module"]->addLoader(function ($module) use ($app) {
+            if (isset($module["views"])) {
+                $app->extend("view", function ($view) use ($module) {
+                    foreach ((array) $module["views"] as $name => $path) {
                         $view->map($name, $path);
                     }
                     return $view;
@@ -71,107 +64,88 @@ return [
         });
     },
 
-    'events' => [
+    "events" => [
+        "controller" => [
+            function ($event) use ($app) {
+                $view = $app["view"];
+                $layout = true;
+                $result = $event->getControllerResult();
 
-        'controller' => [function ($event) use ($app) {
+                if (is_array($result) && isset($result['$view'])) {
+                    foreach ($result as $key => $value) {
+                        if ($key === '$view') {
+                            if (isset($value["name"])) {
+                                $name = $value["name"];
+                                unset($value["name"]);
+                            }
 
-            $view = $app['view'];
-            $layout = true;
-            $result = $event->getControllerResult();
+                            if (isset($value["layout"])) {
+                                $layout = $value["layout"];
+                                unset($value["layout"]);
+                            }
 
-            if (is_array($result) && isset($result['$view'])) {
-
-                foreach ($result as $key => $value) {
-                    if ($key === '$view') {
-
-                        if (isset($value['name'])) {
-                            $name = $value['name'];
-                            unset($value['name']);
+                            $app->on("view.meta", function ($event, $meta) use ($value) {
+                                $meta($value);
+                            });
+                        } elseif ($key[0] === '$') {
+                            $view->data($key, $value);
                         }
+                    }
 
-                        if (isset($value['layout'])) {
-                            $layout = $value['layout'];
-                            unset($value['layout']);
-                        }
-
-                        $app->on('view.meta', function ($event, $meta) use ($value) {
-                            $meta($value);
-                        });
-
-                    } elseif ($key[0] === '$') {
-
-                        $view->data($key, $value);
-
+                    if (isset($name)) {
+                        $response = $result = $view->render($name, $result);
                     }
                 }
 
-                if (isset($name)) {
-                    $response = $result = $view->render($name, $result);
+                if (!is_string($result)) {
+                    return;
                 }
-            }
 
-            if (!is_string($result)) {
-                return;
-            }
-
-            if (is_string($layout)) {
-                $view->map('layout', $layout);
-            }
-
-            if ($layout) {
-
-                $view->section('content', (string) $result);
-
-                if (null !== $result = $view->render('layout')) {
-                    $response = $result;
+                if (is_string($layout)) {
+                    $view->map("layout", $layout);
                 }
-            }
 
-            if (isset($response)) {
-                $event->setResponse(new Response($response));
-            }
+                if ($layout) {
+                    $view->section("content", (string) $result);
 
-        }, 50],
+                    if (null !== ($result = $view->render("layout"))) {
+                        $response = $result;
+                    }
+                }
 
-        'view.init' => [function ($event, $view) use ($app) {
+                if (isset($response)) {
+                    $event->setResponse(new Response($response));
+                }
+            },
+            50,
+        ],
 
-            $view->addEngine(new PhpEngine(null, isset($app['locator']) ? new FilesystemLoader($app['locator']) : null));
+        "view.init" => [
+            function ($event, $view) use ($app) {
+                $view->addEngine(new PhpEngine(null, isset($app["locator"]) ? new FilesystemLoader($app["locator"]) : null));
 
-            if (isset($app['twig'])) {
-                $view->addEngine(new TwigEngine($app['twig'], new TemplateNameParser()));
-            }
+                if (isset($app["twig"])) {
+                    $view->addEngine(new TwigEngine($app["twig"], new TemplateNameParser()));
+                }
 
-            $view->addGlobal('app', $app);
-            $view->addGlobal('view', $view);
+                $view->addGlobal("app", $app);
+                $view->addGlobal("view", $view);
 
-            $view->addHelpers([
-                new DataHelper(),
-                new DeferredHelper($app['events']),
-                new AvatarHelper(),
-                new MapHelper(),
-                new MetaHelper(),
-                new ScriptHelper($app['scripts']),
-                new SectionHelper(),
-                new StyleHelper($app['styles']),
-                new UrlHelper($app['url'])
-            ]);
+                $view->addHelpers([new DataHelper(), new DeferredHelper($app["events"]), new AvatarHelper(), new MapHelper(), new MetaHelper(), new ScriptHelper($app["scripts"]), new SectionHelper(), new StyleHelper($app["styles"]), new UrlHelper($app["url"])]);
 
-            if (isset($app['csrf'])) {
-                $view->addHelper(new TokenHelper($app['csrf']));
-            }
+                if (isset($app["csrf"])) {
+                    $view->addHelper(new TokenHelper($app["csrf"]));
+                }
 
-            if (isset($app['markdown'])) {
-                $view->addHelper(new MarkdownHelper($app['markdown']));
-            }
-
-        }, 50]
-
+                if (isset($app["markdown"])) {
+                    $view->addHelper(new MarkdownHelper($app["markdown"]));
+                }
+            },
+            50,
+        ],
     ],
 
-    'autoload' => [
-
-        'GreenCheap\\View\\' => 'src'
-
-    ]
-
+    "autoload" => [
+        "GreenCheap\\View\\" => "src",
+    ],
 ];

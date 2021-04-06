@@ -9,61 +9,61 @@ final class Events
      *
      * @var string
      */
-    const INIT = 'init';
+    const INIT = "init";
 
     /**
      * This event occurs before an entity is saved.
      *
      * @var string
      */
-    const SAVING = 'saving';
+    const SAVING = "saving";
 
     /**
      * This event occurs after an entity is saved.
      *
      * @var string
      */
-    const SAVED = 'saved';
+    const SAVED = "saved";
 
     /**
      * This event occurs before a new entity is saved.
      *
      * @var string
      */
-    const CREATING = 'creating';
+    const CREATING = "creating";
 
     /**
      * This event occurs after a new entity is saved.
      *
      * @var string
      */
-    const CREATED = 'created';
+    const CREATED = "created";
 
     /**
      * This event occurs before an existing entity is updated.
      *
      * @var string
      */
-    const UPDATING = 'updating';
+    const UPDATING = "updating";
 
     /**
      * This event occurs after an existing entity is updated.
      *
      * @var string
      */
-    const UPDATED = 'updated';
+    const UPDATED = "updated";
 
     /**
      * This event occurs before an existing entity is deleted.
      *
      * @var string
      */
-    const DELETING = 'deleting';
+    const DELETING = "deleting";
 
     /**
      * This event occurs after an existing entity is deleted.
      *
      * @var string
      */
-    const DELETED = 'deleted';
+    const DELETED = "deleted";
 }

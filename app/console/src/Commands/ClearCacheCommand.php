@@ -11,19 +11,19 @@ class ClearCacheCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected $name = 'clearcache';
+    protected $name = "clearcache";
 
     /**
      * {@inheritdoc}
      */
-    protected $description = 'Clears the system cache';
+    protected $description = "Clears the system cache";
 
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output):int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        foreach ((array) glob($this->container['path.cache'] . '/*.cache') as $file) {
+        foreach ((array) glob($this->container["path.cache"] . "/*.cache") as $file) {
             @unlink($file);
         }
         return 0;

@@ -11,18 +11,18 @@ class Markdown
     protected $options;
 
     protected static $defaults = [
-        'gfm'          => true,
-        'tables'       => true,
-        'breaks'       => false,
-        'pedantic'     => false,
-        'sanitize'     => false,
-        'smartLists'   => false,
-        'silent'       => false,
-        'highlight'    => false,
-        'langPrefix'   => 'lang-',
-        'smartypants'  => false,
-        'headerPrefix' => '',
-        'xhtml'        => false
+        "gfm" => true,
+        "tables" => true,
+        "breaks" => false,
+        "pedantic" => false,
+        "sanitize" => false,
+        "smartLists" => false,
+        "silent" => false,
+        "highlight" => false,
+        "langPrefix" => "lang-",
+        "smartypants" => false,
+        "headerPrefix" => "",
+        "xhtml" => false,
     ];
 
     /**
@@ -32,8 +32,8 @@ class Markdown
      */
     public function __construct(array $options = [])
     {
-        if (!isset($options['renderer'])) {
-            $options['renderer'] = new Renderer;
+        if (!isset($options["renderer"])) {
+            $options["renderer"] = new Renderer();
         }
 
         $this->options = array_merge(static::$defaults, $options);
@@ -49,7 +49,7 @@ class Markdown
     public function parse($text, array $options = [])
     {
         $options = array_merge($this->options, $options);
-        $options['renderer']->init($options);
+        $options["renderer"]->init($options);
 
         $this->lexer = new BlockLexer($options);
         $this->parser = new Parser($options);
@@ -66,8 +66,8 @@ class Markdown
      */
     public static function escape($text, $encode = false)
     {
-        $text = preg_replace(!$encode ? '/&(?!#?\w+;)/':'/&/', '&amp;', $text);
-        $text = str_replace(['<', '>', '"', '\''], ['&lt;', '&gt;', '&quot;', '&#39;'], $text);
+        $text = preg_replace(!$encode ? "/&(?!#?\w+;)/" : "/&/", "&amp;", $text);
+        $text = str_replace(["<", ">", '"', '\''], ["&lt;", "&gt;", "&quot;", "&#39;"], $text);
 
         return $text;
     }

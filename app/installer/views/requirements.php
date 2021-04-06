@@ -20,14 +20,14 @@
                 <div class="uk-panel uk-width-xlarge uk-margin">
                     <h1 class="uk-h3 uk-margin-small uk-text-bold uk-text-uppercase">System Requirements</h1>
                     <p class="uk-margin uk-text-italic">Please fix the following issues to proceed.</p>
-                    <?php foreach ($failed as $req) : ?>
+                    <?php foreach ($failed as $req): ?>
                         <p>
-                            <span class="uk-label uk-label-danger">Error</span> <?php echo $req->getTestMessage() ?>
+                            <span class="uk-label uk-label-danger">Error</span> <?php echo $req->getTestMessage(); ?>
                         </p>
                         <p>
-                            <span class="uk-label">Fix</span> <?php echo $req->getHelpHtml() ?>
+                            <span class="uk-label">Fix</span> <?php echo $req->getHelpHtml(); ?>
                         </p>
-                    <?php endforeach ?>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>

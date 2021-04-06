@@ -1,4 +1,4 @@
-<?php $view->script('system_comment' , 'system/comment:app/bundle/index.js' , 'vue') ?>
+<?php $view->script("system_comment", "system/comment:app/bundle/index.js", "vue"); ?>
 <div id="app" v-cloak>
     <div class="uk-margin uk-flex uk-flex-between uk-flex-wrap" >
         <div class="uk-flex uk-flex-middle uk-flex-wrap" >

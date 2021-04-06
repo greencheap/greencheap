@@ -28,8 +28,8 @@ class UserListener implements EventSubscriberInterface
     public function subscribe()
     {
         return [
-            'auth.login' => 'onUserLogin',
-            'model.role.deleted' => 'onRoleDelete'
+            "auth.login" => "onUserLogin",
+            "model.role.deleted" => "onRoleDelete",
         ];
     }
 }

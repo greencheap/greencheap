@@ -13,8 +13,8 @@ class BelongsTo extends Relation
     {
         parent::__construct($manager, $metadata, $mapping);
 
-        $this->keyFrom = $mapping['keyFrom'];
-        $this->keyTo   = $mapping['keyTo'] ? $mapping['keyTo'] :  $this->targetMetadata->getIdentifier();
+        $this->keyFrom = $mapping["keyFrom"];
+        $this->keyTo = $mapping["keyTo"] ? $mapping["keyTo"] : $this->targetMetadata->getIdentifier();
     }
 
     /**
@@ -24,7 +24,7 @@ class BelongsTo extends Relation
     {
         $this->initRelation($entities);
 
-        if (!$keys = $this->getKeys($entities)) {
+        if (!($keys = $this->getKeys($entities))) {
             return;
         }
 

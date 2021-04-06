@@ -44,10 +44,9 @@ class RoleApiController
     public function saveAction($data, $id = 0): mixed
     {
         // is new ?
-        if (!$role = Role::find($id)) {
-
+        if (!($role = Role::find($id))) {
             if ($id) {
-                return App::jsonabort(404, __('Role not found.'));
+                return App::jsonabort(404, __("Role not found."));
             }
 
             $role = Role::create();
@@ -55,7 +54,7 @@ class RoleApiController
 
         $role->save($data);
 
-        return ['message' => 'success', 'role' => $role];
+        return ["message" => "success", "role" => $role];
     }
 
     /**
@@ -71,7 +70,7 @@ class RoleApiController
             $role->delete();
         }
 
-        return ['message' => 'success'];
+        return ["message" => "success"];
     }
 
     /**
@@ -84,10 +83,10 @@ class RoleApiController
     public function bulkSaveAction($roles = []): array
     {
         foreach ($roles as $data) {
-            $this->saveAction($data, isset($data['id']) ? $data['id'] : 0);
+            $this->saveAction($data, isset($data["id"]) ? $data["id"] : 0);
         }
 
-        return ['message' => 'success'];
+        return ["message" => "success"];
     }
 
     /**
@@ -103,6 +102,6 @@ class RoleApiController
             $this->deleteAction($id);
         }
 
-        return ['message' => 'success'];
+        return ["message" => "success"];
     }
 }

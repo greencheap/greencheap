@@ -20,13 +20,12 @@ class SystemMenu implements \IteratorAggregate, \JsonSerializable
     public function getItems()
     {
         foreach ($this->items as $item) {
-
-            if ($item['active'] !== true) {
+            if ($item["active"] !== true) {
                 continue;
             }
 
-            while ($item = $this->getItem($item['parent'])) {
-                $item['active'] = true;
+            while ($item = $this->getItem($item["parent"])) {
+                $item["active"] = true;
             }
         }
 
@@ -51,31 +50,31 @@ class SystemMenu implements \IteratorAggregate, \JsonSerializable
      */
     public function addItem($id, array $item)
     {
-        $meta  = App::user()->get('admin.menu', []);
-        $route = App::request()->attributes->get('_route');
+        $meta = App::user()->get("admin.menu", []);
+        $route = App::request()->attributes->get("_route");
 
         $item = new ArrObject($item, [
-            'id' => $id,
-            'label' => $id,
-            'parent' => 'root',
-            'priority' => 0,
-            'icon' => App::url()->getStatic('app/system/modules/theme/assets/images/picture-icon.svg')
+            "id" => $id,
+            "label" => $id,
+            "parent" => "root",
+            "priority" => 0,
+            "icon" => App::url()->getStatic("app/system/modules/theme/assets/images/picture-icon.svg"),
         ]);
 
-        if (!App::user()->hasAccess($item['access'])) {
+        if (!App::user()->hasAccess($item["access"])) {
             return;
         }
 
         if (isset($meta[$id])) {
-            $item['priority'] = $meta[$id];
+            $item["priority"] = $meta[$id];
         }
 
-        if ($item['icon']) {
-            $item['icon'] = App::url()->getStatic($item['icon']);
+        if ($item["icon"]) {
+            $item["icon"] = App::url()->getStatic($item["icon"]);
         }
 
-        $item['active'] = (bool) preg_match('#^'.str_replace('*', '.*', $item['active'] ?: $item['url']).'$#', $route);
-        $item['url'] = App::url($item['url']);
+        $item["active"] = (bool) preg_match("#^" . str_replace("*", ".*", $item["active"] ?: $item["url"]) . '$#', $route);
+        $item["url"] = App::url($item["url"]);
 
         $this->items[$id] = $item;
     }

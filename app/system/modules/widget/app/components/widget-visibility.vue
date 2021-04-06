@@ -1,7 +1,7 @@
 <template>
     <div class="uk-form-horizontal">
         <div class="uk-margin">
-            <label class="uk-form-label">{{ 'Pages' | trans }}</label>
+            <label class="uk-form-label">{{ "Pages" | trans }}</label>
             <div v-if="config.menus" class="uk-form-controls uk-form-controls-text">
                 <input-tree v-model="widget.nodes" :active.sync="widget.nodes" />
             </div>
@@ -10,11 +10,9 @@
 </template>
 
 <script>
-
 export default {
-
     section: {
-        label: 'Visibility',
+        label: "Visibility",
         priority: 100,
     },
 
@@ -24,8 +22,6 @@ export default {
         };
     },
 
-    props: ['widget', 'config', 'form'],
-
+    props: ["widget", "config", "form"],
 };
-
 </script>

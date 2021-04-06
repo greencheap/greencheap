@@ -16,7 +16,7 @@ class StringResponseListener implements EventSubscriberInterface
     {
         $result = $event->getControllerResult();
 
-        if (!(null === $result || is_array($result) || $result instanceof Response || (is_object($result) && !method_exists($result, '__toString')))) {
+        if (!(null === $result || is_array($result) || $result instanceof Response || (is_object($result) && !method_exists($result, "__toString")))) {
             $event->setResponse(new Response((string) $result));
         }
     }
@@ -27,7 +27,7 @@ class StringResponseListener implements EventSubscriberInterface
     public function subscribe()
     {
         return [
-            'controller' => ['onController', 10],
+            "controller" => ["onController", 10],
         ];
     }
 }

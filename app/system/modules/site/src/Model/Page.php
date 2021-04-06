@@ -25,5 +25,5 @@ class Page implements \JsonSerializable
     public $title;
 
     /** @Column */
-    public $content = '';
+    public $content = "";
 }

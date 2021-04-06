@@ -39,7 +39,7 @@ class MetadataManager
      *
      * @var string $prefix
      */
-    protected $prefix = 'Metadata.';
+    protected $prefix = "Metadata.";
 
     /**
      * Constructor.
@@ -49,7 +49,7 @@ class MetadataManager
     public function __construct(Connection $connection, EventDispatcherInterface $events)
     {
         $this->connection = $connection;
-        $this->events     = $events;
+        $this->events = $events;
     }
 
     /**
@@ -112,12 +112,10 @@ class MetadataManager
     public function get($class)
     {
         $class = new \ReflectionClass($class);
-        $name  = $class->getName();
+        $name = $class->getName();
 
         if (!isset($this->metadata[$name])) {
-
             if ($this->cache) {
-
                 $hash = filemtime($class->getFileName());
                 foreach ($class->getTraits() as $trait) {
                     $hash += filemtime($trait->getFileName());
@@ -129,14 +127,13 @@ class MetadataManager
                     $current = $parent;
                 }
 
-                $id = sprintf('%s%s.%s', $this->prefix, $hash, $name);
+                $id = sprintf("%s%s.%s", $this->prefix, $hash, $name);
 
                 if ($config = $this->cache->fetch($id)) {
                     $this->metadata[$name] = new Metadata($this, $name, $config);
                 } else {
                     $this->cache->save($id, $this->load($class)->getConfig());
                 }
-
             } else {
                 $this->load($class);
             }
@@ -157,7 +154,6 @@ class MetadataManager
         $parent = null;
 
         foreach ($this->getParentClasses($class) as $class) {
-
             $name = $class->getName();
 
             if (isset($this->metadata[$name])) {
@@ -168,30 +164,27 @@ class MetadataManager
             $config = [];
 
             if ($parent) {
-
                 foreach ($parent->getFields() as $field) {
-
-                    if (!isset($field['inherited']) && !$parent->isMappedSuperclass()) {
-                        $field['inherited'] = $parent->getClass();
+                    if (!isset($field["inherited"]) && !$parent->isMappedSuperclass()) {
+                        $field["inherited"] = $parent->getClass();
                     }
 
-                    $config['fields'][$field['name']] = $field;
+                    $config["fields"][$field["name"]] = $field;
                 }
 
                 foreach ($parent->getRelationMappings() as $relation) {
-
-                    if (!isset($relation['inherited']) && !$parent->isMappedSuperclass()) {
-                        $relation['inherited'] = $parent->getClass();
+                    if (!isset($relation["inherited"]) && !$parent->isMappedSuperclass()) {
+                        $relation["inherited"] = $parent->getClass();
                     }
 
-                    $config['relations'][$relation['name']] = $relation;
+                    $config["relations"][$relation["name"]] = $relation;
                 }
 
                 if ($identifier = $parent->getIdentifier()) {
-                    $config['identifier'] = $identifier;
+                    $config["identifier"] = $identifier;
                 }
 
-                $config['events'] = $parent->getEvents();
+                $config["events"] = $parent->getEvents();
             }
 
             $this->metadata[$name] = $parent = new Metadata($this, $name, $this->loader->load($class, $config));
@@ -211,7 +204,6 @@ class MetadataManager
         $parents = [$class];
 
         while ($parent = $class->getParentClass()) {
-
             if (!$this->loader->isTransient($parent)) {
                 array_unshift($parents, $parent);
             }
@@ -231,7 +223,7 @@ class MetadataManager
     {
         foreach ($metadata->getEvents() as $event => $methods) {
             foreach ($methods as $method) {
-                $this->events->on($metadata->getEventPrefix().'.'.$event, [$metadata->getClass(), $method]);
+                $this->events->on($metadata->getEventPrefix() . "." . $event, [$metadata->getClass(), $method]);
             }
         }
     }

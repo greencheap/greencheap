@@ -8,21 +8,19 @@ class StringTest extends \PHPUnit_Framework_TestCase
 {
     public function testFilter()
     {
-        $filter = new StringFilter;
+        $filter = new StringFilter();
 
         $values = [
-            23                  => "23",
-            "23"                => "23",
-            '"23"'              => '"23"',
-            '{"foo": "23"}'     => '{"foo": "23"}',
-            "whateverthisis"    => "whateverthisis",
-            "!'#+*§$%&/()=?"    => "!'#+*§$%&/()=?",
-            'äöü'               => "äöü" // unicode support please
+            23 => "23",
+            "23" => "23",
+            '"23"' => '"23"',
+            '{"foo": "23"}' => '{"foo": "23"}',
+            "whateverthisis" => "whateverthisis",
+            "!'#+*§$%&/()=?" => "!'#+*§$%&/()=?",
+            "äöü" => "äöü", // unicode support please
         ];
         foreach ($values as $in => $out) {
             $this->assertSame($filter->filter($in), $out);
         }
-
     }
-
 }

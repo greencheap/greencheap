@@ -26,21 +26,20 @@ class RouterListener implements EventSubscriberInterface
     public function __construct($matcher, LoggerInterface $logger = null)
     {
         if (!$matcher instanceof UrlMatcherInterface && !$matcher instanceof RequestMatcherInterface) {
-            throw new \InvalidArgumentException('Matcher must either implement UrlMatcherInterface or RequestMatcherInterface.');
+            throw new \InvalidArgumentException("Matcher must either implement UrlMatcherInterface or RequestMatcherInterface.");
         }
 
         $this->matcher = $matcher;
-        $this->logger  = $logger;
+        $this->logger = $logger;
     }
 
     public function onRequest($event, $request)
     {
-        if ($request->attributes->has('_controller')) {
+        if ($request->attributes->has("_controller")) {
             return;
         }
 
         try {
-
             if ($this->matcher instanceof RequestMatcherInterface) {
                 $parameters = $this->matcher->matchRequest($request);
             } else {
@@ -48,26 +47,22 @@ class RouterListener implements EventSubscriberInterface
             }
 
             if (null !== $this->logger) {
-                $this->logger->info(sprintf('Matched route "%s" (parameters: %s)', $parameters['_route'], $this->parametersToString($parameters)));
+                $this->logger->info(sprintf('Matched route "%s" (parameters: %s)', $parameters["_route"], $this->parametersToString($parameters)));
             }
 
             $request->attributes->add($parameters);
-            unset($parameters['_route'], $parameters['_controller']);
-            $request->attributes->set('_route_params', $parameters);
-
+            unset($parameters["_route"], $parameters["_controller"]);
+            $request->attributes->set("_route_params", $parameters);
         } catch (ResourceNotFoundException $e) {
-
             $message = sprintf('No route found for "%s %s"', $request->getMethod(), $request->getPathInfo());
 
-            if ($referer = $request->headers->get('referer')) {
+            if ($referer = $request->headers->get("referer")) {
                 $message .= sprintf(' (from "%s")', $referer);
             }
 
             throw new NotFoundHttpException(htmlspecialchars($message), $e);
-
         } catch (MethodNotAllowedException $e) {
-
-            $message = sprintf('No route found for "%s %s": Method Not Allowed (Allow: %s)', $request->getMethod(), $request->getPathInfo(), implode(', ', $e->getAllowedMethods()));
+            $message = sprintf('No route found for "%s %s": Method Not Allowed (Allow: %s)', $request->getMethod(), $request->getPathInfo(), implode(", ", $e->getAllowedMethods()));
 
             throw new MethodNotAllowedHttpException(htmlspecialchars($message), $e);
         }
@@ -78,16 +73,16 @@ class RouterListener implements EventSubscriberInterface
         $pieces = [];
 
         foreach ($parameters as $key => $val) {
-            $pieces[] = sprintf('"%s": "%s"', $key, (is_string($val) ? $val : json_encode($val)));
+            $pieces[] = sprintf('"%s": "%s"', $key, is_string($val) ? $val : json_encode($val));
         }
 
-        return implode(', ', $pieces);
+        return implode(", ", $pieces);
     }
 
     public function subscribe()
     {
         return [
-            'request' => ['onRequest', 100]
+            "request" => ["onRequest", 100],
         ];
     }
 }

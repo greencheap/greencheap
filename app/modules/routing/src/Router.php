@@ -80,14 +80,17 @@ class Router implements RouterInterface, UrlGeneratorInterface
     public function __construct(ResourceInterface $resource, LoaderInterface $loader, RequestStack $stack, array $options = [])
     {
         $this->resource = $resource;
-        $this->loader   = $loader;
-        $this->stack    = $stack;
-        $this->context  = new Context();
-        $this->options  = array_replace([
-            'cache'     => null,
-            'matcher'   => 'Symfony\Component\Routing\Matcher\UrlMatcher',
-            'generator' => 'GreenCheap\Routing\Generator\UrlGenerator'
-        ], $options);
+        $this->loader = $loader;
+        $this->stack = $stack;
+        $this->context = new Context();
+        $this->options = array_replace(
+            [
+                "cache" => null,
+                "matcher" => "Symfony\Component\Routing\Matcher\UrlMatcher",
+                "generator" => "GreenCheap\Routing\Generator\UrlGenerator",
+            ],
+            $options
+        );
     }
 
     /**
@@ -178,22 +181,19 @@ class Router implements RouterInterface, UrlGeneratorInterface
     public function getMatcher(): UrlMatcher
     {
         if (!$this->matcher) {
-            if ($cache = $this->getCache('%s/%s.matcher.cache')) {
+            if ($cache = $this->getCache("%s/%s.matcher.cache")) {
+                $class = sprintf("UrlMatcher%s", $cache["key"]);
 
-                $class = sprintf('UrlMatcher%s', $cache['key']);
-
-                if (!$cache['fresh']) {
-                    $options = ['class' => $class, 'base_class' => $this->options['matcher']];
-                    $this->writeCache($cache['file'], (new PhpMatcherDumper($this->getRouteCollection()))->dump($options));
+                if (!$cache["fresh"]) {
+                    $options = ["class" => $class, "base_class" => $this->options["matcher"]];
+                    $this->writeCache($cache["file"], (new PhpMatcherDumper($this->getRouteCollection()))->dump($options));
                 }
 
-                require_once $cache['file'];
+                require_once $cache["file"];
 
                 $this->matcher = new $class($this->context);
-
             } else {
-
-                $class = $this->options['matcher'];
+                $class = $this->options["matcher"];
 
                 $this->matcher = new $class($this->getRouteCollection(), $this->context);
             }
@@ -210,22 +210,19 @@ class Router implements RouterInterface, UrlGeneratorInterface
     public function getGenerator()
     {
         if (!$this->generator) {
-            if ($cache = $this->getCache('%s/%s.generator.cache')) {
+            if ($cache = $this->getCache("%s/%s.generator.cache")) {
+                $class = sprintf("UrlGenerator%s", $cache["key"]);
 
-                $class = sprintf('UrlGenerator%s', $cache['key']);
-
-                if (!$cache['fresh']) {
-                    $options = ['class' => $class, 'base_class' => $this->options['generator']];
-                    $this->writeCache($cache['file'], (new UrlGeneratorDumper($this->getRouteCollection()))->dump($options));
+                if (!$cache["fresh"]) {
+                    $options = ["class" => $class, "base_class" => $this->options["generator"]];
+                    $this->writeCache($cache["file"], (new UrlGeneratorDumper($this->getRouteCollection()))->dump($options));
                 }
 
-                require_once $cache['file'];
+                require_once $cache["file"];
 
                 $this->generator = new $class($this->context);
-
             } else {
-
-                $class = $this->options['generator'];
+                $class = $this->options["generator"];
 
                 $this->generator = new $class($this->getRouteCollection(), $this->context);
             }
@@ -243,15 +240,12 @@ class Router implements RouterInterface, UrlGeneratorInterface
      * @param  array   $headers
      * @return RedirectResponse
      */
-    public function redirect($url = '', $parameters = [], $status = 302, $headers = [])
+    public function redirect($url = "", $parameters = [], $status = 302, $headers = [])
     {
         try {
-
             $url = $this->generate($url, $parameters);
-
         } catch (RouteNotFoundException $e) {
-
-            if (filter_var($url, FILTER_VALIDATE_URL) === false && strpos($url, '/') !== 0) {
+            if (filter_var($url, FILTER_VALIDATE_URL) === false && strpos($url, "/") !== 0) {
                 $url = "{$this->getRequest()->getBaseUrl()}/$url";
             }
         }
@@ -272,8 +266,8 @@ class Router implements RouterInterface, UrlGeneratorInterface
             $params = $resolver->match($params);
         }
 
-        if (false !== $pos = strpos($params['_route'], '?')) {
-            $params['_route'] = substr($params['_route'], 0, $pos);
+        if (false !== ($pos = strpos($params["_route"], "?"))) {
+            $params["_route"] = substr($params["_route"], 0, $pos);
         }
 
         return $params;
@@ -286,24 +280,21 @@ class Router implements RouterInterface, UrlGeneratorInterface
     {
         $generator = $this->getGenerator();
 
-        if ($fragment = strstr($name, '#')) {
-            $name = strstr($name, '#', true);
+        if ($fragment = strstr($name, "#")) {
+            $name = strstr($name, "#", true);
         }
 
-        if ($query = substr(strstr($name, '?'), 1)) {
+        if ($query = substr(strstr($name, "?"), 1)) {
             parse_str($query, $params);
-            $name       = strstr($name, '?', true);
+            $name = strstr($name, "?", true);
             $parameters = array_replace($parameters, $params);
         }
 
-        if ($referenceType !== self::LINK_URL
-            && ($props = $generator->getRouteProperties($generator->generate($name, $parameters, 'link')) or $props = $generator->getRouteProperties($name))
-            && $resolver = $this->getResolver($props[1])
-        ) {
+        if ($referenceType !== self::LINK_URL && (($props = $generator->getRouteProperties($generator->generate($name, $parameters, "link"))) or ($props = $generator->getRouteProperties($name))) && ($resolver = $this->getResolver($props[1]))) {
             $parameters = $resolver->generate($parameters);
         }
 
-        return $generator->generate($name, $parameters, $referenceType).$fragment;
+        return $generator->generate($name, $parameters, $referenceType) . $fragment;
     }
 
     /**
@@ -314,18 +305,18 @@ class Router implements RouterInterface, UrlGeneratorInterface
      */
     protected function getCache($file)
     {
-        if (!$this->options['cache']) {
+        if (!$this->options["cache"]) {
             return null;
         }
 
         if (!$this->cache) {
-            $this->cache = ['key' => sha1(serialize($this->resource).serialize($this->options)), 'modified' => $this->resource->getModified()];
+            $this->cache = ["key" => sha1(serialize($this->resource) . serialize($this->options)), "modified" => $this->resource->getModified()];
         }
 
-        $file  = sprintf($file, $this->options['cache'], $this->cache['key']);
-        $fresh = file_exists($file) && (!$this->cache['modified'] || filemtime($file) >= $this->cache['modified']);
+        $file = sprintf($file, $this->options["cache"], $this->cache["key"]);
+        $fresh = file_exists($file) && (!$this->cache["modified"] || filemtime($file) >= $this->cache["modified"]);
 
-        return array_merge(compact('fresh', 'file'), $this->cache);
+        return array_merge(compact("fresh", "file"), $this->cache);
     }
 
     /**
@@ -350,15 +341,14 @@ class Router implements RouterInterface, UrlGeneratorInterface
      */
     protected function getResolver(array $parameters = [])
     {
-        $resolver = isset($parameters['_resolver']) ? $parameters['_resolver'] : false;
+        $resolver = isset($parameters["_resolver"]) ? $parameters["_resolver"] : false;
 
         if (!isset($this->resolver[$resolver])) {
-
-            if (!is_subclass_of($resolver, 'GreenCheap\Routing\ParamsResolverInterface')) {
+            if (!is_subclass_of($resolver, "GreenCheap\Routing\ParamsResolverInterface")) {
                 return null;
             }
 
-            $this->resolver[$resolver] = new $resolver;
+            $this->resolver[$resolver] = new $resolver();
         }
 
         return $this->resolver[$resolver];

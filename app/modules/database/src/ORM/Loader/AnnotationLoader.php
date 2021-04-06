@@ -30,7 +30,7 @@ class AnnotationLoader implements LoaderInterface
     /**
      * @var string
      */
-    protected $namespace = 'GreenCheap\Database\ORM\Annotation';
+    protected $namespace = "GreenCheap\Database\ORM\Annotation";
 
     /**
      * {@inheritdoc}
@@ -38,67 +38,59 @@ class AnnotationLoader implements LoaderInterface
     public function load(\ReflectionClass $class, array $config = [])
     {
         /* @var $annotation Entity */
-        if ($annotation = $this->getAnnotation($class, 'Entity')) {
+        if ($annotation = $this->getAnnotation($class, "Entity")) {
+            $config["table"] = $annotation->tableClass ?: strtolower($class->getShortName());
+            $config["eventPrefix"] = $annotation->eventPrefix;
 
-            $config['table']           = $annotation->tableClass ?: strtolower($class->getShortName());
-            $config['eventPrefix']     = $annotation->eventPrefix;
-
-        // @MappedSuperclass
-        } elseif ($annotation = $this->getAnnotation($class, 'MappedSuperclass')) {
-
-            $config['isMappedSuperclass'] = true;
-
+            // @MappedSuperclass
+        } elseif ($annotation = $this->getAnnotation($class, "MappedSuperclass")) {
+            $config["isMappedSuperclass"] = true;
         } else {
-            throw new \Exception(sprintf('No @Entity annotation found for class %s', $class->getName()));
+            throw new \Exception(sprintf("No @Entity annotation found for class %s", $class->getName()));
         }
 
         foreach ($class->getProperties() as $property) {
-
             $name = $property->getName();
 
-            if (!$property->isPrivate() && isset($config['isMappedSuperclass']) || isset($config['fields'][$name]['inherited']) || isset($config['relations'][$name]['inherited'])) {
+            if ((!$property->isPrivate() && isset($config["isMappedSuperclass"])) || isset($config["fields"][$name]["inherited"]) || isset($config["relations"][$name]["inherited"])) {
                 continue;
             }
 
             /* @var $annotation Column */
-            if ($annotation = $this->getAnnotation($property, 'Column')) {
+            if ($annotation = $this->getAnnotation($property, "Column")) {
+                $field = compact("name");
 
-                $field = compact('name');
-
-                if (isset($config['fields'][$name])) {
+                if (isset($config["fields"][$name])) {
                     throw new \Exception(sprintf('Duplicate field mapping detected, "%s" already exists.', $name));
                 }
 
                 if ($annotation->type) {
-                    $field['type'] = $annotation->type;
+                    $field["type"] = $annotation->type;
                 }
 
                 if ($annotation->name) {
-                    $field['column'] = $annotation->name;
+                    $field["column"] = $annotation->name;
                 }
 
-                if ($this->getAnnotation($property, 'Id')) {
-                    $field['id'] = true;
+                if ($this->getAnnotation($property, "Id")) {
+                    $field["id"] = true;
                 }
 
-                $config['fields'][$name] = $field;
-
+                $config["fields"][$name] = $field;
             } else {
-
                 /* @var $annotation BelongsTo|HasMany|HasOne|ManyToMany */
-                foreach (['BelongsTo', 'HasOne', 'HasMany', 'ManyToMany'] as $type) {
+                foreach (["BelongsTo", "HasOne", "HasMany", "ManyToMany"] as $type) {
                     if ($annotation = $this->getAnnotation($property, $type)) {
-
-                        if (isset($config['fields'][$name]) || isset($config['relations'][$name])) {
+                        if (isset($config["fields"][$name]) || isset($config["relations"][$name])) {
                             throw new \Exception(sprintf('Duplicate relation mapping detected, "%s" already exists.', $name));
                         }
 
                         /* @var $order OrderBy */
-                        if (property_exists($annotation, 'orderBy') && $order = $this->getAnnotation($property, 'OrderBy')) {
+                        if (property_exists($annotation, "orderBy") && ($order = $this->getAnnotation($property, "OrderBy"))) {
                             $annotation->orderBy = $order->value;
                         }
 
-                        $config['relations'][$name] = array_merge(compact('name', 'type'), (array) $annotation);
+                        $config["relations"][$name] = array_merge(compact("name", "type"), (array) $annotation);
 
                         break;
                     }
@@ -107,7 +99,6 @@ class AnnotationLoader implements LoaderInterface
         }
 
         foreach ($class->getMethods() as $method) {
-
             $name = $method->getName();
 
             if (!$method->isPublic() || $method->getDeclaringClass()->getName() != $class->getName()) {
@@ -115,9 +106,9 @@ class AnnotationLoader implements LoaderInterface
             }
 
             // @Saving, @Saved, @Updating, @Updated, @Deleting, @Deleted, @Created, @Creating, @Init
-            foreach (['Saving', 'Saved', 'Updating', 'Updated', 'Deleting', 'Deleted', 'Created', 'Creating', 'Init'] as $event) {
+            foreach (["Saving", "Saved", "Updating", "Updated", "Deleting", "Deleted", "Created", "Creating", "Init"] as $event) {
                 if ($annotation = $this->getAnnotation($method, $event)) {
-                    $config['events'][lcfirst($event)][] = $name;
+                    $config["events"][lcfirst($event)][] = $name;
                 }
             }
         }
@@ -130,7 +121,7 @@ class AnnotationLoader implements LoaderInterface
      */
     public function isTransient(\ReflectionClass $class)
     {
-        return !$this->getAnnotation($class, 'Entity') && !$this->getAnnotation($class, 'MappedSuperclass');
+        return !$this->getAnnotation($class, "Entity") && !$this->getAnnotation($class, "MappedSuperclass");
     }
 
     /**

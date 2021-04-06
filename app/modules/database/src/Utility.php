@@ -81,7 +81,7 @@ class Utility
      */
     public function tablesExist($tables)
     {
-        $tables = array_map([$this, 'replacePrefix'], (array) $tables);
+        $tables = array_map([$this, "replacePrefix"], (array) $tables);
 
         return $this->manager->tablesExist($tables);
     }
@@ -252,7 +252,8 @@ class Utility
      * @return Schema
      * @throws \Doctrine\DBAL\Exception
      */
-    public function migrate() {
+    public function migrate()
+    {
         $diff = Comparator::compareSchemas($this->manager->createSchema(), $this->schema);
 
         foreach ($diff->toSaveSql($this->connection->getDatabasePlatform()) as $query) {

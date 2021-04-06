@@ -12,7 +12,7 @@ class Atom extends Item
      */
     public function setId($id)
     {
-        return $this->setElement('id', Feed\Atom::uuid($id, 'urn:uuid:'));
+        return $this->setElement("id", Feed\Atom::uuid($id, "urn:uuid:"));
     }
 
     /**
@@ -29,7 +29,7 @@ class Atom extends Item
      */
     protected function removeNamespace($name)
     {
-        return str_starts_with($name, 'atom:') ? substr($name, 5) : $name;
+        return str_starts_with($name, "atom:") ? substr($name, 5) : $name;
     }
 
     /**
@@ -37,7 +37,7 @@ class Atom extends Item
      */
     public function setDescription($description)
     {
-        return $this->setElement('summary', $description);
+        return $this->setElement("summary", $description);
     }
 
     /**
@@ -45,7 +45,7 @@ class Atom extends Item
      */
     public function setContent($content)
     {
-        return $this->setElement('content', $content, ['type' => 'html']);
+        return $this->setElement("content", $content, ["type" => "html"]);
     }
 
     /**
@@ -53,7 +53,7 @@ class Atom extends Item
      */
     public function setDate(\DateTimeInterface $date)
     {
-        return $this->setElement('updated', date(\DATE_ATOM, $date->getTimestamp()));
+        return $this->setElement("updated", date(\DATE_ATOM, $date->getTimestamp()));
     }
 
     /**
@@ -61,7 +61,7 @@ class Atom extends Item
      */
     public function setAuthor($name, $email = null, $uri = null)
     {
-        return $this->setElement('author', array_filter(compact('name', 'email', 'uri')));
+        return $this->setElement("author", array_filter(compact("name", "email", "uri")));
     }
 
     /**
@@ -69,9 +69,7 @@ class Atom extends Item
      */
     public function setLink($link)
     {
-        return $this
-            ->setElement('link', '', ['href' => $link])
-            ->setId($link);
+        return $this->setElement("link", "", ["href" => $link])->setId($link);
     }
 
     /**
@@ -79,12 +77,18 @@ class Atom extends Item
      */
     public function addEnclosure($url, $length, $type, $multiple = true)
     {
-        return $this->addElement('atom:link', '', [
-            'length' => $length,
-            'type'   => $type,
-            'href'   => $url,
-            'rel'    => 'enclosure'
-        ], false, $multiple);
+        return $this->addElement(
+            "atom:link",
+            "",
+            [
+                "length" => $length,
+                "type" => $type,
+                "href" => $url,
+                "rel" => "enclosure",
+            ],
+            false,
+            $multiple
+        );
     }
 
     /**

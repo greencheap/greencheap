@@ -33,7 +33,7 @@ trait ElementsTrait
     public function addElements(array $elements)
     {
         foreach ($elements as $name => $value) {
-            if (method_exists($this, $method = 'set'.$name)) {
+            if (method_exists($this, $method = "set" . $name)) {
                 if (is_array($value)) {
                     call_user_func_array([$this, $method], $value);
                 } else {
@@ -52,6 +52,6 @@ trait ElementsTrait
      */
     public function getElements()
     {
-        return call_user_func_array('array_merge', array_values($this->elements));
+        return call_user_func_array("array_merge", array_values($this->elements));
     }
 }

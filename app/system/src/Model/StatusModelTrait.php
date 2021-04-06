@@ -9,10 +9,10 @@ trait StatusModelTrait
      * @var array
      */
     public static $statuses = [
-        'STATUS_TRASH'          => 0,
-        'STATUS_DRAFT'          => 1,
-        'STATUS_UNPUBLISHED'    => 2,
-        'STATUS_PUBLISHED'      => 3
+        "STATUS_TRASH" => 0,
+        "STATUS_DRAFT" => 1,
+        "STATUS_UNPUBLISHED" => 2,
+        "STATUS_PUBLISHED" => 3,
     ];
 
     /**
@@ -23,13 +23,13 @@ trait StatusModelTrait
     /**
      * @return array
      */
-    public static function getStatuses():array
+    public static function getStatuses(): array
     {
         return [
-            self::getStatus('STATUS_TRASH') => __('Pending Review'),
-            self::getStatus('STATUS_DRAFT') => __('Draft'),
-            self::getStatus('STATUS_UNPUBLISHED') => __('Unpublished'),
-            self::getStatus('STATUS_PUBLISHED') => __('Published')
+            self::getStatus("STATUS_TRASH") => __("Pending Review"),
+            self::getStatus("STATUS_DRAFT") => __("Draft"),
+            self::getStatus("STATUS_UNPUBLISHED") => __("Unpublished"),
+            self::getStatus("STATUS_PUBLISHED") => __("Published"),
         ];
     }
 
@@ -42,5 +42,4 @@ trait StatusModelTrait
     {
         return Arr::get((array) self::$statuses, $key, $default);
     }
-
 }

@@ -1,26 +1,24 @@
 <?php
 
 return [
-
-    'installer' => [
-        'enabled' => true
+    "installer" => [
+        "enabled" => true,
     ],
 
-    'application' => [
-        'debug' => true,
-        'beta' => false, 
+    "application" => [
+        "debug" => true,
+        "beta" => false,
     ],
 
-    'session' => [
-        'storage' => 'array'
+    "session" => [
+        "storage" => "array",
     ],
 
-    'system/cache' => [
-        'storage' => 'array'
+    "system/cache" => [
+        "storage" => "array",
     ],
 
-    'project' => [
-        'env' => 'dev' 
-    ]
-
+    "project" => [
+        "env" => "dev",
+    ],
 ];

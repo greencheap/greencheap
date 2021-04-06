@@ -1,30 +1,25 @@
-Markdown
-========
+# Markdown
 
 PHP Markdown parser and compiler.
 
-
 ### Usage
 
-
 ```php
-
 use Pagekit\Markdown\Markdown;
 
-$options = array(
-    'gfm'         => true,
-    'tables'      => true,
-    'breaks'      => false,
-    'pedantic'    => false,
-    'sanitize'    => true,
-    'smartLists'  => true,
-    'smartypants' => false
-);
+$options = [
+    "gfm" => true,
+    "tables" => true,
+    "breaks" => false,
+    "pedantic" => false,
+    "sanitize" => true,
+    "smartLists" => true,
+    "smartypants" => false,
+];
 
 $markdown = new Markdown($options);
-$markdown->render('**markdown**');
+$markdown->render("**markdown**");
 ```
-
 
 ## Credits
 

@@ -32,7 +32,7 @@ class DatabaseDataCollector extends DoctrineCollector
     {
         $driver = $this->connection->getDriver()->getName();
 
-        return array_replace(compact('driver'), parent::collect());
+        return array_replace(compact("driver"), parent::collect());
     }
 
     /**
@@ -40,6 +40,6 @@ class DatabaseDataCollector extends DoctrineCollector
      */
     public function getName()
     {
-        return 'database';
+        return "database";
     }
 }

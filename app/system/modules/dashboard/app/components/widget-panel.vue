@@ -22,10 +22,8 @@
 </template>
 
 <script>
-
 export default {
-
-    name: 'panel',
+    name: "panel",
 
     props: { widget: {} },
 
@@ -39,37 +37,30 @@ export default {
         this.$options.components = this.$parent.$parent.$options.components;
     },
 
-
     computed: {
-
         type() {
             return this.$root.getType(this.widget.type);
         },
 
         isEdit() {
             return this.$root.getEdit;
-        }
-
+        },
     },
 
     methods: {
-
         edit() {
-            this.$set(this, 'editing', true);
+            this.$set(this, "editing", true);
         },
 
         save() {
             this.$root.save(this.widget);
-            this.$set(this, 'editing', false);
+            this.$set(this, "editing", false);
         },
 
         remove() {
             this.editing = false;
             this.$root.remove(this.widget.unix_id);
         },
-
     },
-
 };
-
 </script>

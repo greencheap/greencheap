@@ -27,7 +27,9 @@ class DashboardModule extends Module
      */
     public function getWidgets()
     {
-        return App::config()->get('system/dashboard', $this->config('defaults'))->toArray();
+        return App::config()
+            ->get("system/dashboard", $this->config("defaults"))
+            ->toArray();
     }
 
     /**
@@ -37,6 +39,6 @@ class DashboardModule extends Module
      */
     public function saveWidgets(array $widgets)
     {
-        App::config()->set('system/dashboard', $widgets);
+        App::config()->set("system/dashboard", $widgets);
     }
 }

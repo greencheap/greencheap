@@ -3,21 +3,15 @@
 use GreenCheap\Feed\FeedFactory;
 
 return [
+    "name" => "feed",
 
-    'name' => 'feed',
-
-    'main' => function ($app) {
-
-        $app['feed'] = function () {
-            return new FeedFactory;
+    "main" => function ($app) {
+        $app["feed"] = function () {
+            return new FeedFactory();
         };
-
     },
 
-    'autoload' => [
-
-        'GreenCheap\\Feed\\' => 'src'
-
-    ]
-
+    "autoload" => [
+        "GreenCheap\\Feed\\" => "src",
+    ],
 ];

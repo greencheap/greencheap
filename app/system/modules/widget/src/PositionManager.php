@@ -44,8 +44,8 @@ class PositionManager implements \JsonSerializable
      */
     public function all()
     {
-        array_walk($this->positions, function(&$position, $name) {
-            $position['assigned'] = $this->config->get("_positions.$name", []);
+        array_walk($this->positions, function (&$position, $name) {
+            $position["assigned"] = $this->config->get("_positions.$name", []);
         });
 
         return $this->positions;
@@ -59,7 +59,7 @@ class PositionManager implements \JsonSerializable
      */
     public function register($name, $label)
     {
-        $this->positions[$name] = compact('name', 'label');
+        $this->positions[$name] = compact("name", "label");
     }
 
     /**
@@ -71,12 +71,12 @@ class PositionManager implements \JsonSerializable
     public function find($id)
     {
         foreach ($this->all() as $name => $position) {
-            if (in_array($id, $position['assigned'])) {
+            if (in_array($id, $position["assigned"])) {
                 return $name;
             }
         }
 
-        return '';
+        return "";
     }
 
     /**
@@ -87,7 +87,7 @@ class PositionManager implements \JsonSerializable
      */
     public function assign($position, $id)
     {
-        $positions = $this->config->get('_positions', []);
+        $positions = $this->config->get("_positions", []);
 
         if (!is_array($id) && $position === $this->find($id)) {
             return;
@@ -103,7 +103,7 @@ class PositionManager implements \JsonSerializable
             $positions[$position][] = $id;
         }
 
-        $this->config->set('_positions', $positions);
+        $this->config->set("_positions", $positions);
     }
 
     /**

@@ -69,14 +69,14 @@ abstract class Relation
      */
     public function __construct(EntityManager $manager, Metadata $metadata, array $mapping)
     {
-        $this->manager  = $manager;
+        $this->manager = $manager;
         $this->metadata = $metadata;
 
-        if (!$this->name = $mapping['name']) {
+        if (!($this->name = $mapping["name"])) {
             throw new \InvalidArgumentException('The parameter "name" may not be omitted in relations.');
         }
-        $this->targetEntity   = $mapping['targetEntity'];
-        $this->targetMetadata = $manager->getMetadata($mapping['targetEntity']);
+        $this->targetEntity = $mapping["targetEntity"];
+        $this->targetMetadata = $manager->getMetadata($mapping["targetEntity"]);
     }
 
     /**
@@ -107,9 +107,9 @@ abstract class Relation
      * @param  string   $key
      * @return array
      */
-    protected function getKeys(array $entities, $key = null) {
-
-        $key  = $key ?: $this->keyFrom;
+    protected function getKeys(array $entities, $key = null)
+    {
+        $key = $key ?: $this->keyFrom;
         $keys = [];
 
         foreach ($entities as $entity) {
@@ -132,7 +132,6 @@ abstract class Relation
         $identifier = $this->targetMetadata->getIdentifier();
 
         foreach ($targets as $target) {
-
             $id = $this->targetMetadata->getValue($target, $this->keyTo, true);
 
             foreach ($entities as $entity) {

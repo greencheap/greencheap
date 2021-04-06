@@ -13,61 +13,55 @@ class SystemModule extends Module
      */
     public function main(App $app)
     {
-        $app['system'] = $this;
-        $app['isAdmin'] = false;
+        $app["system"] = $this;
+        $app["isAdmin"] = false;
 
-        $app->factory('finder', function () {
+        $app->factory("finder", function () {
             return Finder::create();
         });
 
-        $app->extend('assets', function ($factory) use ($app) {
-
-            $secret = $this->config['secret'];
-            $version = substr(sha1($app['version'] . $secret), 0, 4);
+        $app->extend("assets", function ($factory) use ($app) {
+            $secret = $this->config["secret"];
+            $version = substr(sha1($app["version"] . $secret), 0, 4);
             $factory->setVersion($version);
 
             return $factory;
-
         });
 
-        $theme = $this->config('site.theme');
+        $theme = $this->config("site.theme");
 
-        $app['module']->addLoader(function ($module) use ($app, $theme) {
+        $app["module"]->addLoader(function ($module) use ($app, $theme) {
+            if (in_array($module["name"], $this->config["extensions"])) {
+                $module["type"] = "extension";
 
-            if (in_array($module['name'], $this->config['extensions'])) {
+                $app["locator"]->add("{$module["name"]}:", $module["path"]);
+                $app["locator"]->add("views:{$module["name"]}", "{$module["path"]}/views");
+            } elseif ($module["name"] == $theme) {
+                $module["type"] = "theme";
 
-                $module['type'] = 'extension';
-
-                $app['locator']->add("{$module['name']}:", $module['path']);
-                $app['locator']->add("views:{$module['name']}", "{$module['path']}/views");
-
-            } else if ($module['name'] == $theme) {
-
-                $module['type'] = 'theme';
-
-                $app['locator']->add('theme:', $module['path']);
-                $app['locator']->add('views:', "{$module['path']}/views");
+                $app["locator"]->add("theme:", $module["path"]);
+                $app["locator"]->add("views:", "{$module["path"]}/views");
             }
 
             return $module;
         });
 
-        foreach (array_merge($this->config['extensions'], (array) $theme) as $module) {
+        foreach (array_merge($this->config["extensions"], (array) $theme) as $module) {
             try {
-                $app['module']->load($module);
+                $app["module"]->load($module);
             } catch (\RuntimeException $e) {
                 $module = ucfirst($module);
-                $app['log']->error("[$module exception]: {$e->getMessage()}");
+                $app["log"]->error("[$module exception]: {$e->getMessage()}");
             }
         }
 
-        if (!$app['theme'] = $app->module($theme)) {
-            $app['theme'] = new Module([
-                'name' => 'theme-default',
-                'type' => 'theme',
-                'path' => '',
-                'config' => [],
-                'layout' => 'views:system/blank.php'
+        if (!($app["theme"] = $app->module($theme))) {
+            $app["theme"] = new Module([
+                "name" => "theme-default",
+                "type" => "theme",
+                "path" => "",
+                "config" => [],
+                "layout" => "views:system/blank.php",
             ]);
         }
     }
@@ -82,11 +76,10 @@ class SystemModule extends Module
         static $menu;
 
         if (!$menu) {
-
             $menu = new SystemMenu();
 
             foreach (App::module() as $module) {
-                foreach ((array) $module->get('menu') as $id => $item) {
+                foreach ((array) $module->get("menu") as $id => $item) {
                     $menu->addItem($id, $item);
                 }
             }

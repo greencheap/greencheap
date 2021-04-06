@@ -10,29 +10,26 @@ class PageListener implements EventSubscriberInterface
 {
     public function onNodeSave($event, $request)
     {
-        if (null === $node = $request->get('node')
-            or null === $data = $request->get('page')
-            or 'page' !== @$node['type']
-        ) {
+        if (null === ($node = ($request->get("node") or null === ($data = $request->get("page")))) or "page" !== @$node["type"]) {
             return;
         }
 
-        $page = $this->getPage(@$node['id']);
+        $page = $this->getPage(@$node["id"]);
         $page->save($data);
 
-        $node['data']['defaults'] = ['id' => $page->id];
-        $node['link'] = '@page/'.$page->id;
+        $node["data"]["defaults"] = ["id" => $page->id];
+        $node["link"] = "@page/" . $page->id;
 
-        $request->request->set('node', $node);
+        $request->request->set("node", $node);
     }
 
     public function onNodeDeleted($event, $node)
     {
-        if ('page' !== $node->type) {
+        if ("page" !== $node->type) {
             return;
         }
 
-        $page = $this->getPage($node->get('defaults.id', 0));
+        $page = $this->getPage($node->get("defaults.id", 0));
 
         if ($page->id) {
             $page->delete();
@@ -41,12 +38,12 @@ class PageListener implements EventSubscriberInterface
 
     public function onRouteConfigure($event, $route, $routes)
     {
-        if ($route->getName() === '@page') {
-            $routes->remove('@page');
-            $route->setName('@page/'.$route->getDefault('id'));
+        if ($route->getName() === "@page") {
+            $routes->remove("@page");
+            $route->setName("@page/" . $route->getDefault("id"));
             $routes->add($route->getName(), $route);
             // Custom Symfony 4
-            $route->setOption('utf8', true);
+            $route->setOption("utf8", true);
         }
     }
 
@@ -56,10 +53,10 @@ class PageListener implements EventSubscriberInterface
     public function subscribe()
     {
         return [
-            'before@site/api/node/save' => 'onNodeSave',
-            'before@site/api/node/save_1' => 'onNodeSave',
-            'model.node.deleted' => 'onNodeDeleted',
-            'route.configure' => 'onRouteConfigure'
+            "before@site/api/node/save" => "onNodeSave",
+            "before@site/api/node/save_1" => "onNodeSave",
+            "model.node.deleted" => "onNodeDeleted",
+            "route.configure" => "onRouteConfigure",
         ];
     }
 
@@ -71,7 +68,7 @@ class PageListener implements EventSubscriberInterface
      */
     protected function getPage($id)
     {
-        if (!$id or !$page = Page::find($id)) {
+        if (!$id or !($page = Page::find($id))) {
             $page = Page::create();
         }
 

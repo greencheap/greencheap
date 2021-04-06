@@ -11,17 +11,17 @@ class TranslationFetchCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected $name = 'translation:fetch';
+    protected $name = "translation:fetch";
 
     /**
      * {@inheritdoc}
      */
-    protected $description = 'Fetches current translation files from languages repository';
+    protected $description = "Fetches current translation files from languages repository";
 
     /**
      * {@inheritdoc}
      */
-    protected function initialize(InputInterface $input, OutputInterface $output):void
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         parent::initialize($input, $output);
     }
@@ -29,14 +29,14 @@ class TranslationFetchCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output):int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $tmp  = '/tmp/greencheap-languages';
-        $repo = 'git@github.com:greencheap/languages.git';
+        $tmp = "/tmp/greencheap-languages";
+        $repo = "git@github.com:greencheap/languages.git";
 
         // if cloned repo exists? rm
-        if(file_exists($tmp)) {
-            exec(sprintf('rm -rf %s', $tmp));
+        if (file_exists($tmp)) {
+            exec(sprintf("rm -rf %s", $tmp));
         }
 
         // git clone to tmp
@@ -44,30 +44,25 @@ class TranslationFetchCommand extends Command
 
         // foreach resource:
         //$resources = ['system', 'blog', 'theme-one'];
-        $resources = ['system'];
+        $resources = ["system"];
 
         // mv translation files to correct folder
         foreach ($resources as $resource) {
             $from = sprintf("%s/%s/*", $tmp, $resource);
 
-            if($to = $this->getPath($resource)) {
-
-                $this->info("[${resource}] Moving languages files to: ".$to);
-                exec(sprintf('rsync -av %s %s', $from, $to));
-
+            if ($to = $this->getPath($resource)) {
+                $this->info("[${resource}] Moving languages files to: " . $to);
+                exec(sprintf("rsync -av %s %s", $from, $to));
             } else {
-
                 $this->error("[$resource] Package not found. Skipping.");
-
             }
         }
 
         // rm git repo from tmp
-        exec(sprintf('rm -rf %s', $tmp));
+        exec(sprintf("rm -rf %s", $tmp));
 
         return 0;
     }
-
 
     /**
      * Returns the extension path.
@@ -75,17 +70,14 @@ class TranslationFetchCommand extends Command
      * @param $resource
      * @return mixed
      */
-    protected function getPath($resource):mixed
+    protected function getPath($resource): mixed
     {
-        $vendor = 'greencheap';
+        $vendor = "greencheap";
 
         if ($resource == "system") {
-            $path = sprintf('%s/app/system', $this->container['path']);
+            $path = sprintf("%s/app/system", $this->container["path"]);
         } else {
-            $path = sprintf('%s/%s/%s',
-                $this->container['path.packages'],
-                $vendor,
-                $resource);
+            $path = sprintf("%s/%s/%s", $this->container["path.packages"], $vendor, $resource);
         }
 
         if (!is_dir($path)) {

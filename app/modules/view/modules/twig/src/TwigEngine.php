@@ -63,7 +63,7 @@ class TwigEngine implements EngineInterface, StreamingEngineInterface
     {
         $template = $this->parser->parse($name);
 
-        return 'twig' === $template->get('engine');
+        return "twig" === $template->get("engine");
     }
 
     /**

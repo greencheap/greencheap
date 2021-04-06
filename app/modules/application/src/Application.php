@@ -30,13 +30,13 @@ class Application extends Container
     {
         parent::__construct($values);
 
-        $this['events'] = function () {
+        $this["events"] = function () {
             return new EventDispatcher();
         };
 
-        $this['module'] = function () {
+        $this["module"] = function () {
             return new ModuleManager($this);
-         };
+        };
     }
 
     /**
@@ -45,10 +45,8 @@ class Application extends Container
     public function boot()
     {
         if (!$this->booted) {
-
             $this->booted = true;
-            $this->trigger('boot', [$this]);
-
+            $this->trigger("boot", [$this]);
         }
     }
 
@@ -67,10 +65,10 @@ class Application extends Container
             $this->boot();
         }
 
-        $response = $this['kernel']->handle($request);
+        $response = $this["kernel"]->handle($request);
         $response->send();
 
-        $this['kernel']->terminate($request, $response);
+        $this["kernel"]->terminate($request, $response);
     }
 
     /**
@@ -80,6 +78,6 @@ class Application extends Container
      */
     public function inConsole()
     {
-        return PHP_SAPI == 'cli';
+        return PHP_SAPI == "cli";
     }
 }

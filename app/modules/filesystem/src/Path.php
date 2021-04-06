@@ -13,43 +13,41 @@ class Path
      */
     public static function parse($path, $option = null)
     {
-        $root = '';
-        $path = strtr($path, '\\', '/');
+        $root = "";
+        $path = strtr($path, "\\", "/");
 
-        if (preg_match('@^(?:/|[a-z]:/?|[a-z]+://)@i', $path, $parts)) {
+        if (preg_match("@^(?:/|[a-z]:/?|[a-z]+://)@i", $path, $parts)) {
             $root = $parts[0];
             $path = substr($path, strlen($root));
         }
 
         $parts = [];
 
-        foreach (array_filter(explode('/', $path), 'strlen') as $part) {
-            if ('..' == $part) {
-
+        foreach (array_filter(explode("/", $path), "strlen") as $part) {
+            if (".." == $part) {
                 if (count($parts)) {
                     array_pop($parts);
                     continue;
                 } elseif (!$root) {
                     continue;
                 }
-
-            } elseif ('.' != $part) {
+            } elseif ("." != $part) {
                 $parts[] = $part;
             }
         }
 
-        $path = implode('/', $parts);
-        $info = compact('root', 'path');
+        $path = implode("/", $parts);
+        $info = compact("root", "path");
 
-        $info['dirname']  = $root.substr($path, 0, strrpos($path, '/'));
-        $info['pathname'] = $root.$path;
-        $info['protocol'] = strpos($root, '://') ? substr($root, 0, -3) : 'file';
+        $info["dirname"] = $root . substr($path, 0, strrpos($path, "/"));
+        $info["pathname"] = $root . $path;
+        $info["protocol"] = strpos($root, "://") ? substr($root, 0, -3) : "file";
 
         if ($option === null) {
             return $info;
         }
 
-        return array_key_exists($option, $info) ? $info[$option] : '';
+        return array_key_exists($option, $info) ? $info[$option] : "";
     }
 
     /**
@@ -60,7 +58,7 @@ class Path
      */
     public static function isAbsolute($path)
     {
-        return self::parse($path, 'root') !== '';
+        return self::parse($path, "root") !== "";
     }
 
     /**
@@ -71,6 +69,6 @@ class Path
      */
     public static function isRelative($path)
     {
-        return self::parse($path, 'root') === '';
+        return self::parse($path, "root") === "";
     }
 }

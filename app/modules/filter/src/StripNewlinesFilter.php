@@ -12,6 +12,6 @@ class StripNewlinesFilter extends AbstractFilter
      */
     public function filter($value)
     {
-        return str_replace(["\n", "\r"], '', (string) $value);
+        return str_replace(["\n", "\r"], "", (string) $value);
     }
 }

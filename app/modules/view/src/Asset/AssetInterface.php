@@ -75,7 +75,7 @@ interface AssetInterface
      * @param  string $salt
      * @return string
      */
-    public function hash($salt = '');
+    public function hash($salt = "");
 
     /**
      * Applies filters and returns the asset as a string.

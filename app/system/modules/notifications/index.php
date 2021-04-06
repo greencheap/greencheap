@@ -2,17 +2,17 @@
 return [
     "name" => "system/notifications",
 
-    "main" => function(){},
+    "main" => function () {},
 
-    'autoload' => [
-        'GreenCheap\\Notifications\\' => 'src'
+    "autoload" => [
+        "GreenCheap\\Notifications\\" => "src",
     ],
 
-    'routes' => [
-        'notifications' => [
-            'name' => '@notifications',
-            'controller' => 'GreenCheap\\Notifications\\Controller\\ApiNotifications'
-        ]
-    ]
-]
+    "routes" => [
+        "notifications" => [
+            "name" => "@notifications",
+            "controller" => "GreenCheap\\Notifications\\Controller\\ApiNotifications",
+        ],
+    ],
+];
 ?>

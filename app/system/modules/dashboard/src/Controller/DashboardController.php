@@ -22,19 +22,19 @@ class DashboardController
     /**
      * @var string
      */
-    protected string $api = 'http://api.openweathermap.org/data/2.5';
+    protected string $api = "http://api.openweathermap.org/data/2.5";
 
     /**
      * @var string
      */
-    protected string $apiKey = '08c012f513db564bd6d4bae94b73cc94';
+    protected string $apiKey = "08c012f513db564bd6d4bae94b73cc94";
 
     /**
      * Constructor.
      */
     public function __construct()
     {
-        $this->dashboard = App::module('system/dashboard');
+        $this->dashboard = App::module("system/dashboard");
     }
 
     /**
@@ -45,12 +45,12 @@ class DashboardController
     {
         return [
             '$view' => [
-                'title' => __('Dashboard'),
-                'name' => 'system/dashboard:views/index.php'
+                "title" => __("Dashboard"),
+                "name" => "system/dashboard:views/index.php",
             ],
             '$data' => [
-                'widgets' => array_values($this->dashboard->getWidgets())
-            ]
+                "widgets" => array_values($this->dashboard->getWidgets()),
+            ],
         ];
     }
 
@@ -73,7 +73,8 @@ class DashboardController
      */
     #[deprecated]
     public function deleteAction($id)
-    {}
+    {
+    }
 
     /**
      * @Request({"data": "array", "action": "string",})
@@ -85,15 +86,15 @@ class DashboardController
     {
         $url = $this->api;
 
-        if ($action === 'weather') {
-            $url .= '/weather';
-        } elseif ($action === 'find') {
-            $url .= '/find';
+        if ($action === "weather") {
+            $url .= "/weather";
+        } elseif ($action === "find") {
+            $url .= "/find";
         }
 
-        $data['APPID'] = $this->apiKey;
-        $url .= '?' . http_build_query($data);
+        $data["APPID"] = $this->apiKey;
+        $url .= "?" . http_build_query($data);
 
-        return App::response(file_get_contents((string) $url), 200, ['Content-Type' => 'application/json']);
+        return App::response(file_get_contents((string) $url), 200, ["Content-Type" => "application/json"]);
     }
 }

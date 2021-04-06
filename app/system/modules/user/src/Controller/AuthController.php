@@ -24,23 +24,23 @@ class AuthController
      * @param string $redirect
      * @return mixed
      */
-    public function loginAction($redirect = ''): mixed
+    public function loginAction($redirect = ""): mixed
     {
         if (!$redirect) {
-            $redirect = App::url(App::config('system/user')['login_redirect']);
+            $redirect = App::url(App::config("system/user")["login_redirect"]);
         }
 
-		if (App::user()->isAuthenticated()) {
+        if (App::user()->isAuthenticated()) {
             return $this->redirect($redirect);
-		}
+        }
 
         return [
             '$view' => [
-                'title' => __('Login'),
-                'name' => 'system/user/login.php'
+                "title" => __("Login"),
+                "name" => "system/user/login.php",
             ],
-            'last_username' => App::session()->get(Auth::LAST_USERNAME),
-            'redirect' => $redirect
+            "last_username" => App::session()->get(Auth::LAST_USERNAME),
+            "redirect" => $redirect,
         ];
     }
 
@@ -50,7 +50,7 @@ class AuthController
      * @param string $redirect
      * @return mixed
      */
-    public function logoutAction($redirect = ''): mixed
+    public function logoutAction($redirect = ""): mixed
     {
         if (($event = App::auth()->logout()) && $event->hasResponse()) {
             return $event->getResponse();
@@ -67,12 +67,11 @@ class AuthController
      * @param string $redirect
      * @return mixed
      */
-    public function authenticateAction($credentials, $remember = false, $redirect = ''): mixed
+    public function authenticateAction($credentials, $remember = false, $redirect = ""): mixed
     {
         try {
-
             if (!App::csrf()->validate()) {
-                throw new CsrfException(__('Invalid token. Please try again.'));
+                throw new CsrfException(__("Invalid token. Please try again."));
             }
 
             App::auth()->authorize($user = App::auth()->authenticate($credentials, false));
@@ -82,18 +81,17 @@ class AuthController
             }
 
             if (App::request()->isXmlHttpRequest()) {
-                return App::response()->json(['csrf' => App::csrf()->generate()]);
+                return App::response()->json(["csrf" => App::csrf()->generate()]);
             } else {
                 return $this->redirect($redirect);
             }
-
         } catch (CsrfException $e) {
             if (App::request()->isXmlHttpRequest()) {
-                return App::response()->json(['csrf' => App::csrf()->generate()], 401);
+                return App::response()->json(["csrf" => App::csrf()->generate()], 401);
             }
             $error = $e->getMessage();
         } catch (BadCredentialsException $e) {
-            $error = __('Invalid username or password.');
+            $error = __("Invalid username or password.");
         } catch (AuthException $e) {
             $error = $e->getMessage();
         }
@@ -113,7 +111,7 @@ class AuthController
     protected function redirect($url): mixed
     {
         do {
-            $url = preg_replace('#^(https?:)?//[^/]+#', '', $url, 1, $count);
+            $url = preg_replace("#^(https?:)?//[^/]+#", "", $url, 1, $count);
         } while ($count);
         return App::redirect($url);
     }

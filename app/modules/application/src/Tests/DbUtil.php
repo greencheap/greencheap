@@ -27,25 +27,22 @@ trait DbUtil
      */
     public function getConnection()
     {
-        if (isset($GLOBALS['db_type'], $GLOBALS['db_username'], $GLOBALS['db_password'],
-                $GLOBALS['db_host'], $GLOBALS['db_name'], $GLOBALS['db_port'],
-                $GLOBALS['tmpdb_type'], $GLOBALS['tmpdb_username'], $GLOBALS['tmpdb_password'],
-                $GLOBALS['tmpdb_host'], $GLOBALS['tmpdb_name'], $GLOBALS['tmpdb_port'])) {
+        if (isset($GLOBALS["db_type"], $GLOBALS["db_username"], $GLOBALS["db_password"], $GLOBALS["db_host"], $GLOBALS["db_name"], $GLOBALS["db_port"], $GLOBALS["tmpdb_type"], $GLOBALS["tmpdb_username"], $GLOBALS["tmpdb_password"], $GLOBALS["tmpdb_host"], $GLOBALS["tmpdb_name"], $GLOBALS["tmpdb_port"])) {
             $realDbParams = [
-                'driver' => $GLOBALS['db_type'],
-                'user' => $GLOBALS['db_username'],
-                'password' => $GLOBALS['db_password'],
-                'host' => $GLOBALS['db_host'],
-                'dbname' => $GLOBALS['db_name'],
-                'port' => $GLOBALS['db_port']
+                "driver" => $GLOBALS["db_type"],
+                "user" => $GLOBALS["db_username"],
+                "password" => $GLOBALS["db_password"],
+                "host" => $GLOBALS["db_host"],
+                "dbname" => $GLOBALS["db_name"],
+                "port" => $GLOBALS["db_port"],
             ];
             $tmpDbParams = [
-                'driver' => $GLOBALS['tmpdb_type'],
-                'user' => $GLOBALS['tmpdb_username'],
-                'password' => $GLOBALS['tmpdb_password'],
-                'host' => $GLOBALS['tmpdb_host'],
-                'dbname' => $GLOBALS['tmpdb_name'],
-                'port' => $GLOBALS['tmpdb_port']
+                "driver" => $GLOBALS["tmpdb_type"],
+                "user" => $GLOBALS["tmpdb_username"],
+                "password" => $GLOBALS["tmpdb_password"],
+                "host" => $GLOBALS["tmpdb_host"],
+                "dbname" => $GLOBALS["tmpdb_name"],
+                "port" => $GLOBALS["tmpdb_port"],
             ];
 
             $realConn = \Doctrine\DBAL\DriverManager::getConnection($realDbParams);
@@ -53,7 +50,6 @@ trait DbUtil
             $platform = $realConn->getDatabasePlatform();
 
             if ($platform->supportsCreateDropDatabase()) {
-
                 $dbname = $realConn->getDatabase();
                 // Connect to tmpdb in order to drop and create the real test db.
                 $tmpConn = \Doctrine\DBAL\DriverManager::getConnection($tmpDbParams);
@@ -64,14 +60,13 @@ trait DbUtil
 
                 $tmpConn->close();
             } else {
-
                 $sm = $realConn->getSchemaManager();
 
                 /* @var $schema Schema */
                 $schema = $sm->createSchema();
                 $stmts = $schema->toDropSql($realConn->getDatabasePlatform());
 
-                foreach ($stmts AS $stmt) {
+                foreach ($stmts as $stmt) {
                     try {
                         $realConn->executeStatement($stmt);
                     } catch (\Exception $e) {
@@ -80,17 +75,17 @@ trait DbUtil
                 }
             }
 
-            $conn = \Doctrine\DBAL\DriverManager::getConnection(array_merge(['wrapperClass' => 'GreenCheap\Database\Connection'], $realDbParams), null, null);
+            $conn = \Doctrine\DBAL\DriverManager::getConnection(array_merge(["wrapperClass" => "GreenCheap\Database\Connection"], $realDbParams), null, null);
         } else {
             $params = [
-                'driver' => 'pdo_sqlite',
-                'memory' => true
+                "driver" => "pdo_sqlite",
+                "memory" => true,
             ];
-            if (isset($GLOBALS['db_path'])) {
-                $params['path'] = $GLOBALS['db_path'];
-                unlink($GLOBALS['db_path']);
+            if (isset($GLOBALS["db_path"])) {
+                $params["path"] = $GLOBALS["db_path"];
+                unlink($GLOBALS["db_path"]);
             }
-            $conn = \Doctrine\DBAL\DriverManager::getConnection(array_merge(['wrapperClass' => 'GreenCheap\Database\Connection'], $params));
+            $conn = \Doctrine\DBAL\DriverManager::getConnection(array_merge(["wrapperClass" => "GreenCheap\Database\Connection"], $params));
         }
 
         return $conn;
@@ -102,12 +97,12 @@ trait DbUtil
     public function getTempConnection()
     {
         $tmpDbParams = [
-            'driver' => $GLOBALS['tmpdb_type'],
-            'user' => $GLOBALS['tmpdb_username'],
-            'password' => $GLOBALS['tmpdb_password'],
-            'host' => $GLOBALS['tmpdb_host'],
-            'dbname' => $GLOBALS['tmpdb_name'],
-            'port' => $GLOBALS['tmpdb_port']
+            "driver" => $GLOBALS["tmpdb_type"],
+            "user" => $GLOBALS["tmpdb_username"],
+            "password" => $GLOBALS["tmpdb_password"],
+            "host" => $GLOBALS["tmpdb_host"],
+            "dbname" => $GLOBALS["tmpdb_name"],
+            "port" => $GLOBALS["tmpdb_port"],
         ];
 
         // Connect to tmpdb in order to drop and create the real test db.
@@ -120,13 +115,11 @@ trait DbUtil
         static $error;
 
         if (!isset($connection) && !isset($error)) {
-
             try {
                 $connection = $this->getConnection();
             } catch (\Exception $e) {
                 $error = $e;
             }
-
         }
 
         if (isset($error)) {

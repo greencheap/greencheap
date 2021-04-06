@@ -43,25 +43,17 @@ class RoutesLoader implements LoaderInterface
         $this->routes = new RouteCollection();
 
         foreach ($routes as $route) {
-
-            if ($route->getOption('controller')) {
-
-                foreach ((array) $route->getOption('controller') as $controller) {
-
+            if ($route->getOption("controller")) {
+                foreach ((array) $route->getOption("controller") as $controller) {
                     if (is_string($controller) && class_exists($controller)) {
                         $this->addController($route, $controller);
                     } else {
                         $this->addRoute($route);
                     }
-
                 }
-
             } else {
-                
                 $this->addRoute($route);
-
             }
-
         }
 
         return $this->routes;
@@ -75,7 +67,7 @@ class RoutesLoader implements LoaderInterface
     protected function addRoute($route)
     {
         $this->routes->add($route->getName(), $route);
-        $this->events->trigger('route.configure', [$route, $this->routes]);
+        $this->events->trigger("route.configure", [$route, $this->routes]);
     }
 
     /**
@@ -87,18 +79,16 @@ class RoutesLoader implements LoaderInterface
     protected function addController($route, $controller)
     {
         try {
-
             foreach ($this->loader->load($controller) as $r) {
-
-                $this->addRoute($r
-                    ->setName(trim("{$route->getName()}/{$r->getName()}", "/"))
-                    ->setPath(rtrim($route->getPath().$r->getPath(), '/'))
-                    ->addDefaults($route->getDefaults())
-                    ->addRequirements($route->getRequirements())
+                $this->addRoute(
+                    $r
+                        ->setName(trim("{$route->getName()}/{$r->getName()}", "/"))
+                        ->setPath(rtrim($route->getPath() . $r->getPath(), "/"))
+                        ->addDefaults($route->getDefaults())
+                        ->addRequirements($route->getRequirements())
                 );
-
             }
-
-        } catch (\InvalidArgumentException $e) {}
+        } catch (\InvalidArgumentException $e) {
+        }
     }
 }

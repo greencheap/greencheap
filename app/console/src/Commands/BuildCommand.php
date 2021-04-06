@@ -15,61 +15,55 @@ class BuildCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected $name = 'build';
+    protected $name = "build";
 
     /**
      * {@inheritdoc}
      */
-    protected $description = 'Builds a .zip release file';
+    protected $description = "Builds a .zip release file";
 
     /**
      * @var string[]
      */
-    protected $excludes = [
-        '^(tmp|config\.php|greencheap.+\.zip|greencheap.db|.+\.map)',
-        '^app\/assets\/[^\/]+\/(dist\/vue-.+\.js|dist\/jquery\.js|lodash\.js)',
-        '^app\/assets\/(jquery|vue)\/(src|perf|external)',
-        '^app\/vendor\/lusitanian\/oauth\/examples',
-        '^app\/vendor\/maximebf\/debugbar\/src\/DebugBar\/Resources',
-        '^app\/vendor\/nickic\/php-parser\/(grammar|test_old)',
-        '^app\/vendor\/(phpdocumentor|phpspec|phpunit|sebastian|symfony\/yaml)',
-        '^app\/vendor\/[^\/]+\/[^\/]+\/(build|docs?|tests?|changelog|phpunit|upgrade?)',
-        'node_modules'
-    ];
+    protected $excludes = ["^(tmp|config\.php|greencheap.+\.zip|greencheap.db|.+\.map)", "^app\/assets\/[^\/]+\/(dist\/vue-.+\.js|dist\/jquery\.js|lodash\.js)", "^app\/assets\/(jquery|vue)\/(src|perf|external)", "^app\/vendor\/lusitanian\/oauth\/examples", "^app\/vendor\/maximebf\/debugbar\/src\/DebugBar\/Resources", "^app\/vendor\/nickic\/php-parser\/(grammar|test_old)", "^app\/vendor\/(phpdocumentor|phpspec|phpunit|sebastian|symfony\/yaml)", "^app\/vendor\/[^\/]+\/[^\/]+\/(build|docs?|tests?|changelog|phpunit|upgrade?)", "node_modules"];
 
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output):int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $path = $this->container->path();
         $version = $this->container->version();
 
-        $filter = '/' . implode('|', $this->excludes) . '/i';
+        $filter = "/" . implode("|", $this->excludes) . "/i";
         $packages = [
-            'greencheap/blog' => '*',
-            'greencheap/theme-one' => '*'
+            "greencheap/blog" => "*",
+            "greencheap/theme-one" => "*",
         ];
 
         $config = [];
-        foreach (['path.temp', 'path.cache', 'path.vendor', 'path.artifact', 'path.packages', 'system.api'] as $key) {
+        foreach (["path.temp", "path.cache", "path.vendor", "path.artifact", "path.packages", "system.api"] as $key) {
             $config[$key] = $this->container->get($key);
         }
 
         $composer = new Composer($config, $output);
         $composer->install($packages);
 
-        $this->line(sprintf('Starting: webpack'));
+        $this->line(sprintf("Starting: webpack"));
 
-        exec('yarn build --mode=production');
+        exec("yarn build --mode=production");
 
-        $this->line(sprintf('Building Package.'));
+        $this->line(sprintf("Building Package."));
 
-        $finder = Finder::create()->files()->in($path)->ignoreVCS(true)->filter(function ($file) use ($filter) {
-            return !preg_match($filter, $file->getRelativePathname());
-        });
+        $finder = Finder::create()
+            ->files()
+            ->in($path)
+            ->ignoreVCS(true)
+            ->filter(function ($file) use ($filter) {
+                return !preg_match($filter, $file->getRelativePathname());
+            });
 
-        $zip = new \ZipArchive;
+        $zip = new \ZipArchive();
 
         if (true !== $zip->open($zipFile = "{$path}/greencheap-{$version}.zip", \ZipArchive::CREATE | \ZipArchive::OVERWRITE)) {
             $this->abort("Can't open ZIP extension in '{$zipFile}'");
@@ -79,21 +73,21 @@ class BuildCommand extends Command
             $zip->addFile($file->getPathname(), $file->getRelativePathname());
         }
 
-        $zip->addFile("{$path}/.htaccess", '.htaccess');
+        $zip->addFile("{$path}/.htaccess", ".htaccess");
 
-        $zip->addEmptyDir('tmp/');
-        $zip->addEmptyDir('tmp/cache');
-        $zip->addEmptyDir('tmp/temp');
-        $zip->addEmptyDir('tmp/logs');
-        $zip->addEmptyDir('tmp/sessions');
-        $zip->addEmptyDir('tmp/packages');
+        $zip->addEmptyDir("tmp/");
+        $zip->addEmptyDir("tmp/cache");
+        $zip->addEmptyDir("tmp/temp");
+        $zip->addEmptyDir("tmp/logs");
+        $zip->addEmptyDir("tmp/sessions");
+        $zip->addEmptyDir("tmp/packages");
 
         $zip->close();
 
         $name = basename($zipFile);
         $size = filesize($zipFile) / 1024 / 1024;
 
-        $this->line(sprintf('Build: %s (%.2f MB)', $name, $size));
+        $this->line(sprintf("Build: %s (%.2f MB)", $name, $size));
         return 0;
     }
 }

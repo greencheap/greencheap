@@ -5,13 +5,15 @@
         "icons": "cpx './app/system/modules/theme/assets/icons/**/*' node_modules/uikit/custom/icons && cd node_modules/uikit && npm install && yarn compile && cd -",
         "watch": "./node_modules/.bin/webpack --progress --colors --hide-modules --watch",
         "build": "./node_modules/.bin/webpack --progress --display-error-details --hide-modules -p",
-        "build-test": "yarn build && composer archive --format=zip"
+        "build-test": "yarn build && composer archive --format=zip",
+        "lint": "yarn prettier --config .prettierrc.json --write . && yarn webpack"
     },
     "devDependencies": {
         "@babel/core": "~7.13",
         "@babel/plugin-transform-runtime": "~7.13",
         "@babel/preset-env": "~7.13",
         "@babel/runtime": "~7.13",
+        "@prettier/plugin-php": "^0.16.2",
         "babel-eslint": "^10.0.3",
         "babel-loader": "~8.2",
         "cldr-core": "^35.1",

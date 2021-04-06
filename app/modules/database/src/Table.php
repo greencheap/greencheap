@@ -34,7 +34,7 @@ class Table
      *
      * @return self
      */
-    public function addIndex(array $columnNames, $indexName = null, array $flags = array(), array $options = array())
+    public function addIndex(array $columnNames, $indexName = null, array $flags = [], array $options = [])
     {
         if ($indexName) {
             $indexName = $this->connection->replacePrefix($indexName);
@@ -52,7 +52,7 @@ class Table
      *
      * @return self
      */
-    public function addUniqueIndex(array $columnNames, $indexName = null, array $options = array())
+    public function addUniqueIndex(array $columnNames, $indexName = null, array $options = [])
     {
         if ($indexName) {
             $indexName = $this->connection->replacePrefix($indexName);
@@ -70,10 +70,10 @@ class Table
      *
      * @return Column
      */
-    public function addColumn($columnName, $typeName, array $options = array())
+    public function addColumn($columnName, $typeName, array $options = [])
     {
-        if ($this->connection->getDatabasePlatform()->getName() === 'sqlite' && in_array($typeName, ['string', 'text'])) {
-            $options['customSchemaOptions']['collation'] = 'NOCASE';
+        if ($this->connection->getDatabasePlatform()->getName() === "sqlite" && in_array($typeName, ["string", "text"])) {
+            $options["customSchemaOptions"]["collation"] = "NOCASE";
         }
 
         return $this->table->addColumn($columnName, $typeName, $options);

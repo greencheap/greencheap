@@ -13,28 +13,28 @@ class UninstallCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected $name = 'uninstall';
+    protected $name = "uninstall";
 
     /**
      * {@inheritdoc}
      */
-    protected $description = 'Uninstalls a GreenCheap package';
+    protected $description = "Uninstalls a GreenCheap package";
 
     /**
      * {@inheritdoc}
      */
-    protected function configure():void
+    protected function configure(): void
     {
-        $this->addArgument('packages', InputArgument::IS_ARRAY | InputArgument::REQUIRED, '[Package name]');
+        $this->addArgument("packages", InputArgument::IS_ARRAY | InputArgument::REQUIRED, "[Package name]");
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output):int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $updater = new PackageManager($output);
-        $updater->uninstall((array) $this->argument('packages'));
+        $updater->uninstall((array) $this->argument("packages"));
 
         return 0;
     }

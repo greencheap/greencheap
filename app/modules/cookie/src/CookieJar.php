@@ -11,7 +11,7 @@ class CookieJar
      *
      * @var string
      */
-    protected $path = '/';
+    protected $path = "/";
 
     /**
      * The default domain.
@@ -31,7 +31,7 @@ class CookieJar
      * @param string $path
      * @param null   $domain
      */
-    public function setDefaultPathAndDomain($path = '/', $domain = null)
+    public function setDefaultPathAndDomain($path = "/", $domain = null)
     {
         $this->path = $path;
         $this->domain = $domain;

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="<?= str_replace('_', '-', $intl->getLocaleTag()) ?>">
+<html lang="<?= str_replace("_", "-", $intl->getLocaleTag()) ?>">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <?= $view->render('head') ?>
-    <?php $view->script('system_theme', 'system/theme:app/bundle/theme.js', ['uikit', 'vue']) ?>
-    <?php $view->script('system_theme_header', 'system/theme:app/bundle/header.js', 'system_theme') ?>
+    <?= $view->render("head") ?>
+    <?php $view->script("system_theme", "system/theme:app/bundle/theme.js", ["uikit", "vue"]); ?>
+    <?php $view->script("system_theme_header", "system/theme:app/bundle/header.js", "system_theme"); ?>
 </head>
 
 <body>
@@ -88,7 +88,7 @@
 
     <section class="uk-section uk-section-small">
         <div class="uk-container">
-            <?= $view->render('content') ?>
+            <?= $view->render("content") ?>
         </div>
     </section>
 </body>

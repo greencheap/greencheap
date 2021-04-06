@@ -23,11 +23,15 @@ class SectionHelper extends Helper
     {
         parent::register($view);
 
-        $view->on('render', function ($event) {
-            if ($this->exists($name = $event->getTemplate())) {
-                $event->setResult($this->get($name));
-            }
-        }, 10);
+        $view->on(
+            "render",
+            function ($event) {
+                if ($this->exists($name = $event->getTemplate())) {
+                    $event->setResult($this->get($name));
+                }
+            },
+            10
+        );
     }
 
     /**
@@ -48,7 +52,7 @@ class SectionHelper extends Helper
      */
     public function get($name)
     {
-        return isset($this->sections[$name]) ? $this->sections[$name] : '';
+        return isset($this->sections[$name]) ? $this->sections[$name] : "";
     }
 
     /**
@@ -86,7 +90,7 @@ class SectionHelper extends Helper
         }
 
         $this->openSections[] = $name;
-        $this->sections[$name] = '';
+        $this->sections[$name] = "";
 
         ob_start();
         ob_implicit_flush(0);
@@ -101,7 +105,7 @@ class SectionHelper extends Helper
     public function stop($show = false)
     {
         if (!$this->openSections) {
-            throw new \LogicException('No section started.');
+            throw new \LogicException("No section started.");
         }
 
         $name = array_pop($this->openSections);
@@ -118,6 +122,6 @@ class SectionHelper extends Helper
      */
     public function getName()
     {
-        return 'section';
+        return "section";
     }
 }

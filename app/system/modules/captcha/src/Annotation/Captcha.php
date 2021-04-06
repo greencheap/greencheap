@@ -26,8 +26,7 @@ class Captcha
     public function __construct(array $data)
     {
         foreach ($data as $key => $value) {
-
-            if (!method_exists($this, $method = 'set'.$key)) {
+            if (!method_exists($this, $method = "set" . $key)) {
                 throw new \BadMethodCallException(sprintf("Unknown property '%s' on annotation '%s'.", $key, get_class($this)));
             }
 

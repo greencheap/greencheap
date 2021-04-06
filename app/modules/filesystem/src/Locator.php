@@ -21,10 +21,10 @@ class Locator
      */
     public function __construct($path)
     {
-        $path = strtr($path, '\\', '/');
+        $path = strtr($path, "\\", "/");
 
-        if (substr($path, -1) != '/') {
-            $path .= '/';
+        if (substr($path, -1) != "/") {
+            $path .= "/";
         }
 
         $this->path = $path;
@@ -39,12 +39,11 @@ class Locator
      */
     public function add($prefix, $paths)
     {
-        $paths = array_map(function($path) use ($prefix) {
+        $paths = array_map(function ($path) use ($prefix) {
+            $path = strtr($path, "\\", "/");
 
-            $path = strtr($path, '\\', '/');
-
-            if (substr($path, -1) != '/') {
-                $path .= '/';
+            if (substr($path, -1) != "/") {
+                $path .= "/";
             }
 
             return [$prefix, $path];
@@ -63,19 +62,18 @@ class Locator
      */
     public function get($file)
     {
-        $file  = ltrim(strtr($file, '\\', '/'), '/');
-        $paths = array_merge($this->paths, [['', $this->path]]);
+        $file = ltrim(strtr($file, "\\", "/"), "/");
+        $paths = array_merge($this->paths, [["", $this->path]]);
 
         foreach ($paths as $parts) {
-
             list($prefix, $path) = $parts;
 
-            if ($prefix !== '' && strpos($file, $prefix) !== 0) {
+            if ($prefix !== "" && strpos($file, $prefix) !== 0) {
                 continue;
             }
 
             if (($part = substr($file, strlen($prefix))) !== false) {
-                $path .= ltrim($part, '/');
+                $path .= ltrim($part, "/");
             }
 
             if (file_exists($path)) {

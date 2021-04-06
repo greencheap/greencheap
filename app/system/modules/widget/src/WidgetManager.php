@@ -16,7 +16,7 @@ class WidgetManager extends ModuleManager
     {
         parent::__construct($app);
 
-        $this->defaults['class'] = 'GreenCheap\Widget\Model\Type';
+        $this->defaults["class"] = "GreenCheap\Widget\Model\Type";
     }
 
     /**

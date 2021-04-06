@@ -54,7 +54,7 @@ class Metadata
     /**
      * @var string
      */
-    protected $eventPrefix = '';
+    protected $eventPrefix = "";
 
     /**
      * @var \ReflectionClass
@@ -71,7 +71,7 @@ class Metadata
     public function __construct($manager, $class, array $config = [])
     {
         $this->manager = $manager;
-        $this->class   = $class;
+        $this->class = $class;
 
         $this->setConfig($config);
     }
@@ -203,7 +203,7 @@ class Metadata
         $value = $entity->$name;
 
         if ($convert) {
-            $value = Type::getType($this->fields[$name]['type'])->convertToDatabaseValue($value, $this->manager->getConnection()->getDatabasePlatform());
+            $value = Type::getType($this->fields[$name]["type"])->convertToDatabaseValue($value, $this->manager->getConnection()->getDatabasePlatform());
         }
 
         return $value;
@@ -229,7 +229,7 @@ class Metadata
         }
 
         if ($convert && isset($this->fields[$name])) {
-            $value = Type::getType($this->fields[$name]['type'])->convertToPHPValue($value, $this->manager->getConnection()->getDatabasePlatform());
+            $value = Type::getType($this->fields[$name]["type"])->convertToPHPValue($value, $this->manager->getConnection()->getDatabasePlatform());
         }
 
         $entity->$name = $value;
@@ -248,7 +248,7 @@ class Metadata
         $data = [];
 
         foreach ($this->fields as $name => $field) {
-            $key        = $column ? $field['column'] : $name;
+            $key = $column ? $field["column"] : $name;
             $data[$key] = $this->getValue($entity, $name, false, $convert);
         }
 
@@ -309,13 +309,13 @@ class Metadata
     public function getConfig()
     {
         return [
-            'class' => $this->class,
-            'eventPrefix' => $this->eventPrefix,
-            'events' => $this->events,
-            'fields' => $this->fields,
-            'isMappedSuperclass' => $this->isMappedSuperclass,
-            'relations' => $this->relations,
-            'table' => $this->table
+            "class" => $this->class,
+            "eventPrefix" => $this->eventPrefix,
+            "events" => $this->events,
+            "fields" => $this->fields,
+            "isMappedSuperclass" => $this->isMappedSuperclass,
+            "relations" => $this->relations,
+            "table" => $this->table,
         ];
     }
 
@@ -326,15 +326,15 @@ class Metadata
      */
     protected function setConfig(array $config)
     {
-        if (isset($config['fields'])) {
-            foreach ($config['fields'] as $name => $field) {
-                $this->validateField($config['fields'][$name]);
+        if (isset($config["fields"])) {
+            foreach ($config["fields"] as $name => $field) {
+                $this->validateField($config["fields"][$name]);
             }
         }
 
-        if (isset($config['relations'])) {
-            foreach ($config['relations'] as $name => $relation) {
-                $this->validateRelation($config['relations'][$name]);
+        if (isset($config["relations"])) {
+            foreach ($config["relations"] as $name => $relation) {
+                $this->validateRelation($config["relations"][$name]);
             }
         }
         foreach ($config as $property => $value) {
@@ -350,35 +350,34 @@ class Metadata
      */
     protected function validateField(array &$field)
     {
-        if (!isset($field['name']) || strlen($field['name']) == 0) {
+        if (!isset($field["name"]) || strlen($field["name"]) == 0) {
             throw new \Exception(sprintf("The field or association mapping misses the 'name' attribute in entity '%s'.", $this->class));
         }
 
-        if (!isset($field['type'])) {
-            $field['type'] = 'string';
+        if (!isset($field["type"])) {
+            $field["type"] = "string";
         }
 
-        if (!isset($field['column'])) {
-            $field['column'] = $field['name'];
+        if (!isset($field["column"])) {
+            $field["column"] = $field["name"];
         }
 
-        if (isset($this->fieldNames[$field['column']])) {
-            throw new \Exception(sprintf("Duplicate definition of column '%s' on entity '%s' in a field.", $field['column'], $this->class));
+        if (isset($this->fieldNames[$field["column"]])) {
+            throw new \Exception(sprintf("Duplicate definition of column '%s' on entity '%s' in a field.", $field["column"], $this->class));
         }
 
-        $this->fieldNames[$field['column']] = $field['name'];
+        $this->fieldNames[$field["column"]] = $field["name"];
 
-        if (isset($field['id']) && $field['id'] === true) {
-            $this->identifier = $field['name'];
+        if (isset($field["id"]) && $field["id"] === true) {
+            $this->identifier = $field["name"];
         }
 
-        if (Type::hasType($field['type']) && Type::getType($field['type'])->canRequireSQLConversion()) {
-
-            if (isset($field['id']) && $field['id'] === true) {
-                throw new \Exception(sprintf("It is not possible to set id field '%s' to type '%s' in entity class '%s'. The type '%s' requires conversion SQL which is not allowed for identifiers.", $field['name'], $field['type'], $this->class, $field['type']));
+        if (Type::hasType($field["type"]) && Type::getType($field["type"])->canRequireSQLConversion()) {
+            if (isset($field["id"]) && $field["id"] === true) {
+                throw new \Exception(sprintf("It is not possible to set id field '%s' to type '%s' in entity class '%s'. The type '%s' requires conversion SQL which is not allowed for identifiers.", $field["name"], $field["type"], $this->class, $field["type"]));
             }
 
-            $field['requireSQLConversion'] = true;
+            $field["requireSQLConversion"] = true;
         }
     }
 
@@ -390,23 +389,22 @@ class Metadata
      */
     protected function validateRelation(array &$relation)
     {
-        if (isset($relation['targetEntity'])) {
-
+        if (isset($relation["targetEntity"])) {
             $namespace = $this->getReflectionClass()->getNamespaceName();
 
-            if (strlen($namespace) > 0 && !str_contains($relation['targetEntity'], '\\')) {
-                $relation['targetEntity'] = $namespace.'\\'.$relation['targetEntity'];
+            if (strlen($namespace) > 0 && !str_contains($relation["targetEntity"], "\\")) {
+                $relation["targetEntity"] = $namespace . "\\" . $relation["targetEntity"];
             }
 
-            $relation['targetEntity'] = ltrim($relation['targetEntity'], '\\');
+            $relation["targetEntity"] = ltrim($relation["targetEntity"], "\\");
         }
 
-        if (!isset($relation['name']) || strlen($relation['name']) == 0) {
-            throw new \Exception(sprintf("Mandatory attribute 'name' is missing in entity class '%s' for relation type '%s'.", $this->class, $relation['type']));
+        if (!isset($relation["name"]) || strlen($relation["name"]) == 0) {
+            throw new \Exception(sprintf("Mandatory attribute 'name' is missing in entity class '%s' for relation type '%s'.", $this->class, $relation["type"]));
         }
 
-        if (!isset($relation['targetEntity'])) {
-            throw new \Exception(sprintf("Mandatory attribute 'targetEntity' is missing for property '%s' in entity class '%s'.", $relation['name'], $this->class));
+        if (!isset($relation["targetEntity"])) {
+            throw new \Exception(sprintf("Mandatory attribute 'targetEntity' is missing for property '%s' in entity class '%s'.", $relation["name"], $this->class));
         }
     }
 }

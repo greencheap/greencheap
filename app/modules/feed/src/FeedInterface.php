@@ -120,7 +120,7 @@ interface FeedInterface
      * @param  int    $length
      * @return self
      */
-    public function setAtomLink($href, $rel = '', $type = '', $hreflang = '', $title = '', $length = 0);
+    public function setAtomLink($href, $rel = "", $type = "", $hreflang = "", $title = "", $length = 0);
 
     /**
      * Generates the feed.

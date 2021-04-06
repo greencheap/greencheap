@@ -1,30 +1,22 @@
 <?php
 
 return [
+    "name" => "console",
 
-    'name' => 'console',
-
-    'autoload' => [
-
-        'GreenCheap\\Console\\' => 'src'
-
+    "autoload" => [
+        "GreenCheap\\Console\\" => "src",
     ],
 
-    'events' => [
+    "events" => [
+        "console.init" => function ($event, $console) {
+            $namespace = "GreenCheap\\Console\\Commands\\";
 
-        'console.init' => function ($event, $console) {
-
-            $namespace = 'GreenCheap\\Console\\Commands\\';
-
-            foreach (glob(__DIR__ . '/src/Commands/*Command.php') as $file) {
-                $class = $namespace . basename($file, '.php');
-                $console->add(new $class);
+            foreach (glob(__DIR__ . "/src/Commands/*Command.php") as $file) {
+                $class = $namespace . basename($file, ".php");
+                $console->add(new $class());
             }
-
-        }
-
+        },
     ],
 
-    'require' => 'application'
-
+    "require" => "application",
 ];

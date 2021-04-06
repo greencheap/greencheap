@@ -20,7 +20,7 @@ class ResponseListener implements EventSubscriberInterface
      *
      * @param string $charset
      */
-    public function __construct($charset = 'UTF-8')
+    public function __construct($charset = "UTF-8")
     {
         $this->charset = $charset;
     }
@@ -48,7 +48,7 @@ class ResponseListener implements EventSubscriberInterface
     public function subscribe()
     {
         return [
-            'response' => ['onResponse', -10]
+            "response" => ["onResponse", -10],
         ];
     }
 }

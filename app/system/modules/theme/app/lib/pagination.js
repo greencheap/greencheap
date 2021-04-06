@@ -1,10 +1,9 @@
-import UIkit from 'uikit';
-import { $, on, css, attr, addClass, data, removeClass, hasClass, toNodes, append, find, findAll, empty, getIndex, trigger, closest } from 'uikit-util';
+import UIkit from "uikit";
+import { $, on, css, attr, addClass, data, removeClass, hasClass, toNodes, append, find, findAll, empty, getIndex, trigger, closest } from "uikit-util";
 
 let active;
 
-UIkit.component('pagination', {
-
+UIkit.component("pagination", {
     props: {
         items: Number,
         itemsOnPage: Number,
@@ -39,26 +38,25 @@ UIkit.component('pagination', {
         // this._render();
     },
 
-    events: [{
+    events: [
+        {
+            name: "click",
 
-        name: 'click',
+            delegate() {
+                return "a[data-page]";
+            },
 
-        delegate() {
-            return 'a[data-page]';
+            handler(e) {
+                e.preventDefault();
+                this.selectPage(data(closest(e.target, "a[data-page]"), "page"));
+            },
         },
-
-        handler(e) {
-            e.preventDefault();
-            this.selectPage(data(closest(e.target, 'a[data-page]'), 'page'));
-        },
-
-    }, ],
+    ],
 
     methods: {
-
         _getInterval() {
             return {
-                start: Math.ceil(this.currentPage > this.halfDisplayed ? Math.max(Math.min(this.currentPage - this.halfDisplayed, (this.pages - this.displayedPages)), 0) : 0),
+                start: Math.ceil(this.currentPage > this.halfDisplayed ? Math.max(Math.min(this.currentPage - this.halfDisplayed, this.pages - this.displayedPages), 0) : 0),
                 end: Math.ceil(this.currentPage > this.halfDisplayed ? Math.min(this.currentPage + this.halfDisplayed, this.pages) : Math.min(this.displayedPages, this.pages)),
             };
         },
@@ -73,7 +71,7 @@ UIkit.component('pagination', {
             this.render(pages);
 
             this.onSelectPage.apply(this, [pageIndex]);
-            trigger(this.$el, 'select.uk.pagination', [this, pageIndex]);
+            trigger(this.$el, "select.uk.pagination", [this, pageIndex]);
         },
 
         _render() {
@@ -82,7 +80,7 @@ UIkit.component('pagination', {
             let i;
 
             if (this.displayedPages - (interval.end - interval.start) < 0) {
-                return
+                return;
             }
 
             empty($(this.$el));
@@ -96,7 +94,7 @@ UIkit.component('pagination', {
 
                 for (i = 0; i < end; i++) this._append(i);
 
-                if (o.edges < interval.start && (interval.start - o.edges != 1)) {
+                if (o.edges < interval.start && interval.start - o.edges != 1) {
                     append(this.$el, '<li class="uk-disabled"><span>...</span></li>');
                 } else if (interval.start - o.edges == 1) {
                     this._append(o.edges);
@@ -108,7 +106,7 @@ UIkit.component('pagination', {
 
             // Generate end edges
             if (interval.end < this.pages && o.edges > 0) {
-                if (this.pages - o.edges > interval.end && (this.pages - o.edges - interval.end != 1)) {
+                if (this.pages - o.edges > interval.end && this.pages - o.edges - interval.end != 1) {
                     append(this.$el, '<li class="uk-disabled"><span>...</span></li>');
                 } else if (this.pages - o.edges - interval.end == 1) {
                     this._append(interval.end++);
@@ -130,23 +128,21 @@ UIkit.component('pagination', {
             //     return str[0] === '<' || str.match(/^\s*</);
             // }
 
-            pageIndex = pageIndex < 0 ? 0 : (pageIndex < this.pages ? pageIndex : this.pages - 1);
+            pageIndex = pageIndex < 0 ? 0 : pageIndex < this.pages ? pageIndex : this.pages - 1;
             options = Object.assign({ text: pageIndex + 1 }, opts);
 
-            item = (pageIndex == this.currentPage) ? `<li class="uk-active"><span>${options.text}</span></li>` : `<li><a href="#page-${pageIndex + 1}" data-page="${pageIndex}">${options.text}</a></li>`;
+            item = pageIndex == this.currentPage ? `<li class="uk-active"><span>${options.text}</span></li>` : `<li><a href="#page-${pageIndex + 1}" data-page="${pageIndex}">${options.text}</a></li>`;
 
-            if (typeof options.text === 'string') {
+            if (typeof options.text === "string") {
                 let str = String(options.text);
                 // if (isHtml(str)) {
-                item = (pageIndex == this.currentPage) ? `<li class="uk-hidden"><span>${options.text}</span></li>` : item;
+                item = pageIndex == this.currentPage ? `<li class="uk-hidden"><span>${options.text}</span></li>` : item;
                 // }
             }
 
-            if (typeof options.text === 'boolean') return
+            if (typeof options.text === "boolean") return;
 
             append(this.$el, item);
         },
-
     },
-
 });

@@ -1,4 +1,4 @@
-<?php $view->script('permission-index', 'system/user:app/bundle/permission-index.js', 'vue') ?>
+<?php $view->script("permission-index", "system/user:app/bundle/permission-index.js", "vue"); ?>
 
 <div id="permissions" v-cloak>
 

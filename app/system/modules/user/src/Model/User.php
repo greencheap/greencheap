@@ -38,16 +38,16 @@ class User implements UserInterface, \JsonSerializable
     public $id;
 
     /** @Column */
-    public $username = '';
+    public $username = "";
 
     /** @Column */
-    public $password = '';
+    public $password = "";
 
     /** @Column */
-    public $email = '';
+    public $email = "";
 
     /** @Column */
-    public $url = '';
+    public $url = "";
 
     /** @Column(type="datetime") */
     public $registered;
@@ -70,14 +70,15 @@ class User implements UserInterface, \JsonSerializable
     protected $permissions;
 
     protected static $properties = [
-        'avatar' => 'getAvatar'
+        "avatar" => "getAvatar",
     ];
 
     /**
      * @return string
      */
-    public function getAvatar(){
-        if($this->email){
+    public function getAvatar()
+    {
+        if ($this->email) {
             return App::view()->avatar($this->email);
         }
         return false;
@@ -111,14 +112,14 @@ class User implements UserInterface, \JsonSerializable
     {
         $statuses = self::getStatuses();
 
-        return isset($statuses[$this->status]) ? $statuses[$this->status] : __('Unknown');
+        return isset($statuses[$this->status]) ? $statuses[$this->status] : __("Unknown");
     }
 
     public static function getStatuses()
     {
         return [
-            self::STATUS_ACTIVE => __('Active'),
-            self::STATUS_BLOCKED => __('Blocked')
+            self::STATUS_ACTIVE => __("Active"),
+            self::STATUS_BLOCKED => __("Blocked"),
         ];
     }
 
@@ -181,12 +182,10 @@ class User implements UserInterface, \JsonSerializable
     public function hasPermission($permission)
     {
         if ($this->permissions === null) {
-
             $this->permissions = [];
             foreach (self::findRoles($this) as $role) {
                 $this->permissions = array_merge($this->permissions, $role->permissions);
             }
-
         }
 
         return in_array($permission, $this->permissions);
@@ -215,15 +214,23 @@ class User implements UserInterface, \JsonSerializable
             return true;
         }
 
-        if (!preg_match('/[&\(\)\|\!]/', $expression)) {
+        if (!preg_match("/[&\(\)\|\!]/", $expression)) {
             return $this->hasPermission($expression);
         }
 
-        $exp = preg_replace('/[^01&\(\)\|!]/', '', preg_replace_callback('/[a-z_][a-z-_\.:\d\s]*/i', function($permission) use ($user) {
-            return (int) $user->hasPermission(trim($permission[0]));
-        }, $expression));
+        $exp = preg_replace(
+            "/[^01&\(\)\|!]/",
+            "",
+            preg_replace_callback(
+                "/[a-z_][a-z-_\.:\d\s]*/i",
+                function ($permission) use ($user) {
+                    return (int) $user->hasPermission(trim($permission[0]));
+                },
+                $expression
+            )
+        );
 
-        if (!$fn = fn() => $exp) {
+        if (!($fn = fn() => $exp)) {
             throw new \InvalidArgumentException(sprintf('Unable to parse the given access string "%s"', $expression));
         }
 
@@ -233,34 +240,40 @@ class User implements UserInterface, \JsonSerializable
     public function validate()
     {
         if (empty($this->name)) {
-            throw new Exception(__('Name required.'));
+            throw new Exception(__("Name required."));
         }
 
         if (empty($this->password)) {
-            throw new Exception(__('Password required.'));
+            throw new Exception(__("Password required."));
         }
 
         if (!preg_match('/^[a-zA-Z0-9._\-]{3,}$/', $this->username)) {
-            throw new Exception(__('Username is invalid.'));
+            throw new Exception(__("Username is invalid."));
         }
 
         // TODO: email validation differs from email validation in vuejs
         if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            throw new Exception(__('Email is invalid.'));
+            throw new Exception(__("Email is invalid."));
         }
 
-        if (self::where(['id <> :id'], ['id' => $this->id ?: 0])->where(function ($query) {
-            $query->orWhere(['LOWER(username) = :username', 'LOWER(email) = :username'], ['username' => strtolower($this->username)]);
-        })->first()
+        if (
+            self::where(["id <> :id"], ["id" => $this->id ?: 0])
+                ->where(function ($query) {
+                    $query->orWhere(["LOWER(username) = :username", "LOWER(email) = :username"], ["username" => strtolower($this->username)]);
+                })
+                ->first()
         ) {
-            throw new Exception(__('Username not available.'));
+            throw new Exception(__("Username not available."));
         }
 
-        if (self::where(['id <> :id'], ['id' => $this->id ?: 0])->where(function ($query) {
-            $query->orWhere(['LOWER(username) = :email', 'LOWER(email) = :email'], ['email' => strtolower($this->email)]);
-        })->first()
+        if (
+            self::where(["id <> :id"], ["id" => $this->id ?: 0])
+                ->where(function ($query) {
+                    $query->orWhere(["LOWER(username) = :email", "LOWER(email) = :email"], ["email" => strtolower($this->email)]);
+                })
+                ->first()
         ) {
-            throw new Exception(__('Email not available.'));
+            throw new Exception(__("Email not available."));
         }
 
         return true;
@@ -272,6 +285,6 @@ class User implements UserInterface, \JsonSerializable
     public function jsonSerialize()
     {
         $data = [];
-        return $this->toArray($data, ['password', 'activation']);
+        return $this->toArray($data, ["password", "activation"]);
     }
 }

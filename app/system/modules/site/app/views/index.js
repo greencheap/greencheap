@@ -1,43 +1,49 @@
-import { $, on, css, addClass, removeClass, hasClass, toNodes } from 'uikit-util';
-import { VueNestable, VueNestableHandle } from 'vue-nestable';
-import { ValidationObserver, VInput } from 'SystemApp/components/validation.vue';
+import { $, on, css, addClass, removeClass, hasClass, toNodes } from "uikit-util";
+import { VueNestable, VueNestableHandle } from "vue-nestable";
+import { ValidationObserver, VInput } from "SystemApp/components/validation.vue";
 
-import isMobile from 'ismobilejs';
+import isMobile from "ismobilejs";
 
 Vue.ready({
+    name: "site",
 
-    name: 'site',
-
-    el: '#site',
+    el: "#site",
 
     mixins: [Theme.Mixins.Helper],
 
     data() {
         const vm = this;
-        return _.merge({
-            edit: {}, // undefined,
-            menu: this.$session.get('site.menu', {}),
-            menus: [],
-            nodes: [],
-            treedata: [],
-            selected: []
-        }, window.$data);
+        return _.merge(
+            {
+                edit: {}, // undefined,
+                menu: this.$session.get("site.menu", {}),
+                menus: [],
+                nodes: [],
+                treedata: [],
+                selected: [],
+            },
+            window.$data
+        );
     },
 
     created() {
-        this.Menus = this.$resource('api/site/menu{/id}');
-        this.Nodes = this.$resource('api/site/node{/id}');
+        this.Menus = this.$resource("api/site/menu{/id}");
+        this.Nodes = this.$resource("api/site/node{/id}");
 
         const vm = this;
         this.load().then(() => {
-            vm.$set(vm, 'menu', _.find(vm.menus, { id: vm.menu.id }) || vm.menus[0]);
+            vm.$set(vm, "menu", _.find(vm.menus, { id: vm.menu.id }) || vm.menus[0]);
         });
 
-        this.$watch(vm => (vm.menu, vm.nodes, Date.now()), () => {
-            this.tree('update');
-        }, { deep: true });
+        this.$watch(
+            (vm) => (vm.menu, vm.nodes, Date.now()),
+            () => {
+                this.tree("update");
+            },
+            { deep: true }
+        );
 
-        on(window, 'resize', () => {
+        on(window, "resize", () => {
             this.propWidth();
         });
     },
@@ -45,12 +51,11 @@ Vue.ready({
     mounted() {},
 
     methods: {
-
         propWidth() {
-            css(this.$refs['table-header'], {
-                minWidth: '100%',
-                width: this.$refs.nestable.$el.offsetWidth ? this.$refs.nestable.$el.offsetWidth : '100%',
-                opacity: '1',
+            css(this.$refs["table-header"], {
+                minWidth: "100%",
+                width: this.$refs.nestable.$el.offsetWidth ? this.$refs.nestable.$el.offsetWidth : "100%",
+                opacity: "1",
             });
         },
 
@@ -69,25 +74,29 @@ Vue.ready({
 
             updateTree(this.treedata, 0);
 
-            vm.Nodes.save({ id: 'updateOrder' }, {
-                menu: vm.menu.id,
-                nodes: vm.tree('flatten'), // vm.nestableList(this.treedata)
-            }).then(vm.load, () => {
-                vm.$notify('Reorder failed.', 'danger');
+            vm.Nodes.save(
+                { id: "updateOrder" },
+                {
+                    menu: vm.menu.id,
+                    nodes: vm.tree("flatten"), // vm.nestableList(this.treedata)
+                }
+            ).then(vm.load, () => {
+                vm.$notify("Reorder failed.", "danger");
             });
         },
 
         tree(...args) {
-            const [fn, ...props] = arguments; const vm = this;
+            const [fn, ...props] = arguments;
+            const vm = this;
             const methods = {
                 unflatten() {
-                    let [array, parent, tree] = arguments; const
-                        self = this;
+                    let [array, parent, tree] = arguments;
+                    const self = this;
 
-                    tree = typeof tree !== 'undefined' ? tree : [];
-                    parent = typeof parent !== 'undefined' ? parent : { id: 0 };
+                    tree = typeof tree !== "undefined" ? tree : [];
+                    parent = typeof parent !== "undefined" ? parent : { id: 0 };
 
-                    const children = _.filter(array, child => child.parent_id == parent.id);
+                    const children = _.filter(array, (child) => child.parent_id == parent.id);
 
                     if (!_.isEmpty(children)) {
                         if (parent.id == 0) {
@@ -95,7 +104,9 @@ Vue.ready({
                         } else {
                             parent.children = children;
                         }
-                        _.each(children, (child) => { self.unflatten(array, child); });
+                        _.each(children, (child) => {
+                            self.unflatten(array, child);
+                        });
                     }
 
                     return tree;
@@ -103,20 +114,24 @@ Vue.ready({
                 flatten() {
                     const treeStructure = { children: vm.treedata };
 
-                    const flatten = (children, extractChildren, level, order) => Array.prototype.concat.apply(
-                        children.map(x => ({ ...x, level: level || 1, order: x.priority || 0 })),
-                        children.map(x => flatten(extractChildren(x) || [], extractChildren, (level || 1) + 1)),
-                    );
+                    const flatten = (children, extractChildren, level, order) =>
+                        Array.prototype.concat.apply(
+                            children.map((x) => ({ ...x, level: level || 1, order: x.priority || 0 })),
+                            children.map((x) => flatten(extractChildren(x) || [], extractChildren, (level || 1) + 1))
+                        );
 
-                    const extractChildren = x => x.children;
+                    const extractChildren = (x) => x.children;
 
-                    const flat = flatten(extractChildren(treeStructure), extractChildren).map(x => delete x.children && x);
+                    const flat = flatten(extractChildren(treeStructure), extractChildren).map((x) => delete x.children && x);
 
                     return flat;
                 },
                 update() {
-                    let nodes = vm.nodes.map((entry) => { entry.class = 'check-item'; return entry; });
-                    nodes = _(nodes).filter({ menu: vm.menu.id }).sortBy('priority').value();
+                    let nodes = vm.nodes.map((entry) => {
+                        entry.class = "check-item";
+                        return entry;
+                    });
+                    nodes = _(nodes).filter({ menu: vm.menu.id }).sortBy("priority").value();
                     vm.treedata = this.unflatten(nodes);
                     vm.$nextTick(() => {
                         vm.propWidth();
@@ -124,25 +139,25 @@ Vue.ready({
                 },
             };
 
-            return methods[fn] && (typeof methods[fn] === 'function') ? methods[fn](props) : false;
+            return methods[fn] && typeof methods[fn] === "function" ? methods[fn](props) : false;
         },
 
         load() {
             const vm = this;
-            return Vue.Promise.all([
-                this.Menus.query(),
-                this.Nodes.query(),
-            ]).then((responses) => {
-                vm.$set(vm, 'menus', responses[0].data);
-                vm.$set(vm, 'nodes', responses[1].data);
-                vm.$set(vm, 'selected', []);
+            return Vue.Promise.all([this.Menus.query(), this.Nodes.query()]).then(
+                (responses) => {
+                    vm.$set(vm, "menus", responses[0].data);
+                    vm.$set(vm, "nodes", responses[1].data);
+                    vm.$set(vm, "selected", []);
 
-                if (!_.find(vm.menus, { id: vm.menu.id })) {
-                    vm.$set(vm, 'menu', vm.menus[0]);
+                    if (!_.find(vm.menus, { id: vm.menu.id })) {
+                        vm.$set(vm, "menu", vm.menus[0]);
+                    }
+                },
+                () => {
+                    vm.$notify("Loading failed.", "danger");
                 }
-            }, () => {
-                vm.$notify('Loading failed.', 'danger');
-            });
+            );
         },
 
         isActive(menu) {
@@ -150,9 +165,9 @@ Vue.ready({
         },
 
         selectMenu(menu) {
-            this.$set(this, 'selected', []);
-            this.$set(this, 'menu', menu);
-            this.$session.set('site.menu', menu);
+            this.$set(this, "selected", []);
+            this.$set(this, "menu", menu);
+            this.$session.set("site.menu", menu);
         },
 
         removeMenu(e, menu) {
@@ -162,25 +177,25 @@ Vue.ready({
         editMenu(e, menu) {
             if (!menu) {
                 menu = {
-                    id: '',
-                    label: '',
+                    id: "",
+                    label: "",
                 };
             }
 
-            this.$set(this, 'edit', _.merge({ positions: [] }, menu));
+            this.$set(this, "edit", _.merge({ positions: [] }, menu));
             this.$refs.modal.open();
         },
 
         saveMenu(menu) {
             this.Menus.save({ menu }).then(this.load, function (res) {
-                this.$notify(res.data, 'danger');
+                this.$notify(res.data, "danger");
             });
 
             this.cancel();
         },
 
         getMenu(position) {
-            return _.find(this.menus, menu => _.includes(menu.positions, position));
+            return _.find(this.menus, (menu) => _.includes(menu.positions, position));
         },
 
         cancel() {
@@ -194,9 +209,9 @@ Vue.ready({
                 node.status = status;
             });
 
-            this.Nodes.save({ id: 'bulk' }, { nodes }).then(function () {
+            this.Nodes.save({ id: "bulk" }, { nodes }).then(function () {
                 this.load();
-                this.$notify('Page(s) saved.');
+                this.$notify("Page(s) saved.");
             });
         },
 
@@ -206,9 +221,9 @@ Vue.ready({
 
             var updateChilds = function (node) {
                 _.forEach(node.children, (item) => {
-                    const search = _.filter(nodes, e => e.id == item.id);
+                    const search = _.filter(nodes, (e) => e.id == item.id);
                     if (!search.length) {
-                        const key = Object.keys(vm.nodes).find(key => vm.nodes[key].id === item.id);
+                        const key = Object.keys(vm.nodes).find((key) => vm.nodes[key].id === item.id);
                         vm.nodes[key].parent_id = null;
                         nodes.push(vm.nodes[key]);
                     }
@@ -222,30 +237,35 @@ Vue.ready({
                 updateChilds(node);
             });
 
-            this.Nodes.save({ id: 'bulk' }, { nodes }).then(function () {
+            this.Nodes.save({ id: "bulk" }, { nodes }).then(function () {
                 this.load();
-                this.$notify(this.$trans('Pages moved to %menu%.', {
-                    menu: _.find(this.menus.concat({
-                        id: 'trash',
-                        label: this.$trans('Trash'),
-                    }), { 'id': menu}).label,
-                }));
+                this.$notify(
+                    this.$trans("Pages moved to %menu%.", {
+                        menu: _.find(
+                            this.menus.concat({
+                                id: "trash",
+                                label: this.$trans("Trash"),
+                            }),
+                            { id: menu }
+                        ).label,
+                    })
+                );
             });
         },
 
         removeNodes() {
-            if (this.menu.id !== 'trash') {
+            if (this.menu.id !== "trash") {
                 const nodes = this.getSelected();
 
                 nodes.forEach((node) => {
                     node.status = 0;
                 });
 
-                this.moveNodes('trash');
+                this.moveNodes("trash");
             } else {
-                this.Nodes.delete({ id: 'bulk' }, { ids: this.selected }).then(function () {
+                this.Nodes.delete({ id: "bulk" }, { ids: this.selected }).then(function () {
                     this.load();
-                    this.$notify('Page(s) deleted.');
+                    this.$notify("Page(s) deleted.");
                 });
             }
         },
@@ -263,7 +283,7 @@ Vue.ready({
         isSelected(node, children) {
             const vm = this;
             if (_.isArray(node)) {
-                return _.every(node, node => vm.isSelected(node, children), this);
+                return _.every(node, (node) => vm.isSelected(node, children), this);
             }
 
             return this.selected.indexOf(node.id) !== -1 && (!children || !this.tree[node.id] || this.isSelected(this.tree[node.id], true));
@@ -280,7 +300,7 @@ Vue.ready({
         },
 
         label(id) {
-            return _.result(_.find(this.menus, 'id', id), 'label');
+            return _.result(_.find(this.menus, "id", id), "label");
         },
 
         protected(types) {
@@ -288,7 +308,7 @@ Vue.ready({
         },
 
         trash(menus) {
-            return _.reject(menus, { id: 'trash' });
+            return _.reject(menus, { id: "trash" });
         },
 
         divided(menus) {
@@ -296,11 +316,11 @@ Vue.ready({
         },
 
         menuLabel(id) {
-            return this.$trans('(Currently set to: %menu%)', { menu: this.label(id) });
+            return this.$trans("(Currently set to: %menu%)", { menu: this.label(id) });
         },
 
         isFrontpage(node) {
-            return node.url === '/';
+            return node.url === "/";
         },
 
         type(node) {
@@ -308,12 +328,14 @@ Vue.ready({
         },
 
         setFrontpage(node) {
-            this.Nodes.save({ id: 'frontpage' }, { id: node.id }).then(() => {
-                this.load();
-                this.$notify('Frontpage updated.');
-            }).catch(err => {
-                this.$notify(err.data, 'danger')
-            });
+            this.Nodes.save({ id: "frontpage" }, { id: node.id })
+                .then(() => {
+                    this.load();
+                    this.$notify("Frontpage updated.");
+                })
+                .catch((err) => {
+                    this.$notify(err.data, "danger");
+                });
         },
 
         toggleStatus(node) {
@@ -321,17 +343,15 @@ Vue.ready({
 
             this.Nodes.save({ id: node.id }, { node }).then(function () {
                 this.load();
-                this.$notify('Page saved.');
+                this.$notify("Page saved.");
             });
         },
-
     },
 
     computed: {
-
         showDelete() {
             const vm = this;
-            return this.showMove && _.every(this.getSelected(), node => !(vm.getType(node) || {}).protected, this);
+            return this.showMove && _.every(this.getSelected(), (node) => !(vm.getType(node) || {}).protected, this);
         },
 
         showMove() {
@@ -347,7 +367,6 @@ Vue.ready({
         VueNestable,
         VueNestableHandle,
         ValidationObserver,
-        VInput
+        VInput,
     },
-
 });

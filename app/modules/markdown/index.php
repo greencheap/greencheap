@@ -3,21 +3,15 @@
 use GreenCheap\Markdown\Markdown;
 
 return [
+    "name" => "markdown",
 
-    'name' => 'markdown',
-
-    'main' => function ($app) {
-
-        $app['markdown'] = function() {
-            return new Markdown;
+    "main" => function ($app) {
+        $app["markdown"] = function () {
+            return new Markdown();
         };
-
     },
 
-    'autoload' => [
-
-        'GreenCheap\\Markdown\\' => 'src'
-
-    ]
-
+    "autoload" => [
+        "GreenCheap\\Markdown\\" => "src",
+    ],
 ];

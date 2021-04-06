@@ -12,6 +12,6 @@ class AlnumFilter extends AbstractFilter
      */
     public function filter($value)
     {
-        return preg_replace('/[^[:alnum:]]/u', '', (string) $value);
+        return preg_replace("/[^[:alnum:]]/u", "", (string) $value);
     }
 }

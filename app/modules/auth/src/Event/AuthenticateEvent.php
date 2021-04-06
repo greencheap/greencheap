@@ -13,7 +13,7 @@ class AuthenticateEvent extends Event
 
     /**
      * Constructor.
-	 *
+     *
      * @param string $name
      * @param string[]      $credentials
      * @param UserInterface $user

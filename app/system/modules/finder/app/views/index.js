@@ -1,8 +1,7 @@
-import PanelFinder from '../components/panel-finder.vue';
+import PanelFinder from "../components/panel-finder.vue";
 
 Vue.ready({
+    name: "storage",
 
-    name: 'storage',
-
-    el: '#storage',
+    el: "#storage",
 });

@@ -2,4 +2,6 @@
 
 namespace GreenCheap\Filesystem\Exception;
 
-interface ExceptionInterface {}
+interface ExceptionInterface
+{
+}

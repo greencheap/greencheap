@@ -104,7 +104,7 @@ class Mailer implements MailerInterface
      * @param  string  $encryption
      * @throws Swift_TransportException
      */
-    public function testSmtpConnection($host = 'localhost', $port = 25, $username = '', $password = '', $encryption = null)
+    public function testSmtpConnection($host = "localhost", $port = 25, $username = "", $password = "", $encryption = null)
     {
         (new Swift_SmtpTransport($host, $port))
             ->setUsername($username)

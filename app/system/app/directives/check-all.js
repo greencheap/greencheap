@@ -1,27 +1,28 @@
-import util from 'uikit-util';
+import util from "uikit-util";
 
 export default {
-
-    params: ['group'],
+    params: ["group"],
 
     bind(el, binding, vnode) {
         binding.def.update(el, binding, vnode);
     },
 
     update(el, binding, vnode) {
-        const group = binding.value.group ? `${binding.value.group} ` : '';
+        const group = binding.value.group ? `${binding.value.group} ` : "";
         const subSelector = binding.value.selector;
         const selector = group + binding.value.selector;
 
         binding.keypath = binding.rawName.indexOf(binding.arg) ? binding.rawName.slice(binding.rawName.indexOf(binding.arg)) : binding.arg;
         binding.selector = selector;
         binding.checked = false;
-        binding.number = el.getAttribute('number') !== null;
+        binding.number = el.getAttribute("number") !== null;
         binding.selectors = [];
 
         binding.checkall = function (e) {
             e.stopImmediatePropagation();
-            util.findAll(selector, vnode.context.$el).forEach((elem) => { elem.checked = e.target.checked; });
+            util.findAll(selector, vnode.context.$el).forEach((elem) => {
+                elem.checked = e.target.checked;
+            });
             binding.def.selected(true, el, binding, vnode);
         };
 
@@ -33,7 +34,7 @@ export default {
             },
             function (e) {
                 e.stopImmediatePropagation();
-                if (!(util.isInput(e.target) || e.target.tagName == 'A') && !window.getSelection().toString()) {
+                if (!(util.isInput(e.target) || e.target.tagName == "A") && !window.getSelection().toString()) {
                     binding.selectors = Array.from(util.findAll(subSelector, this));
 
                     if (!binding.selectors.length) return;
@@ -53,12 +54,12 @@ export default {
         ];
 
         vnode.context.$nextTick(() => {
-            util.on(el, 'change', binding.checkall);
-            util.on(util.findAll(binding.selector, vnode.context.$el), 'change', binding.handler[0]); // this.$el
-            util.on(util.findAll(`${group}.check-item`, vnode.context.$el), 'click', binding.handler[1]);
+            util.on(el, "change", binding.checkall);
+            util.on(util.findAll(binding.selector, vnode.context.$el), "change", binding.handler[0]); // this.$el
+            util.on(util.findAll(`${group}.check-item`, vnode.context.$el), "click", binding.handler[1]);
         });
 
-        binding.unbindWatcher = vnode.context.$watch('selected', (selected) => {
+        binding.unbindWatcher = vnode.context.$watch("selected", (selected) => {
             util.findAll(binding.selector, vnode.context.$el).forEach((elem) => {
                 elem.checked = selected.indexOf(binding.def.toNumber(elem.value, el, binding, vnode)) !== -1;
             });
@@ -69,17 +70,17 @@ export default {
     },
 
     unbind(el, binding, vnode) {
-        const group = binding.value.group ? `${binding.value.group} ` : '';
+        const group = binding.value.group ? `${binding.value.group} ` : "";
 
-        util.off(el, 'change', binding.checkall);
+        util.off(el, "change", binding.checkall);
 
         if (binding.handler) {
             util.findAll(binding.selector, vnode.context.$el).forEach((elem) => {
-                util.off(elem, 'change', binding.handler[0]);
+                util.off(elem, "change", binding.handler[0]);
             });
 
             util.findAll(`${group}.check-item`, vnode.context.$el).forEach((elem) => {
-                util.off(elem, 'click', binding.handler[1]);
+                util.off(elem, "click", binding.handler[1]);
             });
         }
 
@@ -98,8 +99,9 @@ export default {
     },
 
     selected(update, el, binding, vnode) {
-        const selected = []; const values = []; let
-            value;
+        const selected = [];
+        const values = [];
+        let value;
 
         util.findAll(binding.selector, vnode.context.$el).forEach((elem) => {
             value = binding.def.toNumber(elem.value, el, binding, vnode);
@@ -111,7 +113,7 @@ export default {
         });
 
         if (update) {
-            update = _.get(vnode.context, binding.keypath).filter(value => values.indexOf(value) === -1);
+            update = _.get(vnode.context, binding.keypath).filter((value) => values.indexOf(value) === -1);
             _.set(vnode.context, binding.keypath, update.concat(selected));
         }
 
@@ -127,5 +129,4 @@ export default {
     toNumber(value, el, binding, vnode) {
         return binding.number ? Number(value) : value;
     },
-
 };

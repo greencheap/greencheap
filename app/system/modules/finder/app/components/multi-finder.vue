@@ -48,7 +48,7 @@
                         <div class="uk-modal-header">
                             <h4><span class="uk-margin-small-right uk-icon uk-icon-image" :data-src="$url(multiFinder.icon)" uk-img></span> {{ multiFinder.label }}</h4>
                         </div>
-                        <div class="uk-modal-body" :class="{'uk-padding-remove':!multiFinder.padding}">
+                        <div class="uk-modal-body" :class="{ 'uk-padding-remove': !multiFinder.padding }">
                             <component :is="multiFinder.component" :source.sync="multiFinder.img_meta" :selected.sync="multiFinder.selected" :count.sync="multiFinder.count" v-on:recount="multiReCount"></component>
                         </div>
                         <div v-if="multiFinder" class="uk-modal-footer">
@@ -200,9 +200,9 @@ const MultiFinder = {
             setTimeout(() => (this.isLoad = false), 500);
         },
 
-        multiReCount(val){
-            this.multiFinder.count = val
-        }
+        multiReCount(val) {
+            this.multiFinder.count = val;
+        },
     },
 
     components: {},

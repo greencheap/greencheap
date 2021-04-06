@@ -15,12 +15,12 @@ class MarkdownPlugin implements EventSubscriberInterface
      */
     public function onContentPlugins(ContentEvent $event)
     {
-        if (!$event['markdown']) {
+        if (!$event["markdown"]) {
             return;
         }
 
         $content = $event->getContent();
-        $content = App::markdown()->parse($content, is_array($event['markdown']) ? $event['markdown'] : []);
+        $content = App::markdown()->parse($content, is_array($event["markdown"]) ? $event["markdown"] : []);
 
         $event->setContent($content);
     }
@@ -31,7 +31,7 @@ class MarkdownPlugin implements EventSubscriberInterface
     public function subscribe()
     {
         return [
-            'content.plugins' => ['onContentPlugins', 5]
+            "content.plugins" => ["onContentPlugins", 5],
         ];
     }
 }

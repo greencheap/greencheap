@@ -127,16 +127,15 @@ trait ModelTrait
         $mappings = $metadata->getRelationMappings();
 
         foreach (static::getProperties($this) as $name => $value) {
-
             if (isset($data[$name]) || isset($mappings[$name])) {
                 continue;
             }
 
-            switch ($metadata->getField($name, 'type')) {
-                case 'json_array':
+            switch ($metadata->getField($name, "type")) {
+                case "json_array":
                     $value = $value ?: new \stdClass();
                     break;
-                case 'datetime':
+                case "datetime":
                     $value = $value ? $value->format(\DateTime::ATOM) : null;
                     break;
             }

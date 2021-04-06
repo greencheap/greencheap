@@ -24,9 +24,9 @@ class ConfigLoader implements LoaderInterface
      */
     public function load($module)
     {
-        if (isset($this->values[$module['name']])) {
+        if (isset($this->values[$module["name"]])) {
             $module = array_replace_recursive($module, [
-                'config' => $this->values[$module['name']]
+                "config" => $this->values[$module["name"]],
             ]);
         }
 

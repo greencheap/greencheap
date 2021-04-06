@@ -29,10 +29,8 @@
 </template>
 
 <script>
-
 export default {
-
-    props: ['title', 'value', 'options', 'number'],
+    props: ["title", "value", "options", "number"],
 
     data() {
         return {
@@ -41,26 +39,24 @@ export default {
     },
 
     computed: {
-
         isNumber() {
-            return (typeof this.number !== 'undefined');
+            return typeof this.number !== "undefined";
         },
 
         list() {
-            return [{ value: '', text: this.title }].concat(this.options);
+            return [{ value: "", text: this.title }].concat(this.options);
         },
 
         label() {
-            const list = this.list.concat(_.flatten(_.map(this.list, 'options')));
+            const list = this.list.concat(_.flatten(_.map(this.list, "options")));
             const value = _.find(list, { value: this.select });
             return value ? value.text : this.title;
         },
-
     },
 
     watch: {
         select(value) {
-            this.$emit('input', value);
+            this.$emit("input", value);
         },
 
         value(value) {
@@ -70,10 +66,8 @@ export default {
 
     created() {
         if (this.value === undefined) {
-            this.select = '';
+            this.select = "";
         }
     },
-
 };
-
 </script>

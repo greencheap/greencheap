@@ -8,9 +8,9 @@ class AssetFactory
      * @var array
      */
     protected $types = [
-        'file'   => 'GreenCheap\View\Asset\FileAsset',
-        'string' => 'GreenCheap\View\Asset\StringAsset',
-        'url'    => 'GreenCheap\View\Asset\UrlAsset'
+        "file" => "GreenCheap\View\Asset\FileAsset",
+        "string" => "GreenCheap\View\Asset\StringAsset",
+        "url" => "GreenCheap\View\Asset\UrlAsset",
     ];
 
     /**
@@ -53,25 +53,24 @@ class AssetFactory
         }
 
         if (is_string($options)) {
-            $options = ['type' => $options];
+            $options = ["type" => $options];
         }
 
-        if (!isset($options['type'])) {
-            $options['type'] = 'file';
+        if (!isset($options["type"])) {
+            $options["type"] = "file";
         }
 
-        if ($options['type'] === 'file' && !isset($options['version'])) {
-            $options['version'] = $this->version;
+        if ($options["type"] === "file" && !isset($options["version"])) {
+            $options["version"] = $this->version;
         }
 
-        if (isset($this->types[$options['type']])) {
-
-            $class = $this->types[$options['type']];
+        if (isset($this->types[$options["type"]])) {
+            $class = $this->types[$options["type"]];
 
             return new $class($name, $source, $dependencies, $options);
         }
 
-        throw new \InvalidArgumentException('Unable to determine asset type.');
+        throw new \InvalidArgumentException("Unable to determine asset type.");
     }
 
     /**

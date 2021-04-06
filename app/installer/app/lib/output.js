@@ -1,17 +1,16 @@
 export default {
-
     data() {
         return {
             pkg: {},
             updatePkg: {},
-            output: '',
-            status: 'loading',
+            output: "",
+            status: "loading",
             options: {
                 bgClose: false,
                 escClose: false,
             },
             showOutput: false,
-            filterPhrase: 'Dependency resolution completed',
+            filterPhrase: "Dependency resolution completed",
         };
     },
 
@@ -20,7 +19,6 @@ export default {
     },
 
     methods: {
-
         init(request) {
             this.open();
         },
@@ -28,13 +26,13 @@ export default {
         setOutput(output) {
             // Filtered output
             this.showOutput = true;
-            const lines = output.split('\n');
+            const lines = output.split("\n");
             const match = lines[lines.length - 1].match(/^status=(success|error)$/);
 
             if (match) {
                 this.status = match[1];
                 delete lines[lines.length - 1];
-                this.output = lines.join('\n');
+                this.output = lines.join("\n");
             } else {
                 this.output = output;
             }
@@ -49,7 +47,7 @@ export default {
 
         open() {
             this.$refs.output.open();
-            UIkit.util.on(this.$refs.output.modal.$el, 'hide', this.onClose);
+            UIkit.util.on(this.$refs.output.modal.$el, "hide", this.onClose);
         },
 
         close() {
@@ -64,22 +62,20 @@ export default {
 
         onClose() {
             if (this.cb) {
-                console.log(this)
+                console.log(this);
                 this.cb(this);
             }
 
             this.$destroy();
         },
-
     },
 
     watch: {
         status() {
-            if (this.status !== 'loading') {
+            if (this.status !== "loading") {
                 this.$refs.output.modal.$options.props.bgClose = true;
                 this.$refs.output.modal.$options.props.keyboard = true;
             }
         },
     },
-
 };

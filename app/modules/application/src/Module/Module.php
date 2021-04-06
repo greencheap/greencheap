@@ -41,9 +41,9 @@ class Module implements ModuleInterface, EventSubscriberInterface
      */
     public function __construct(array $options = [])
     {
-        $this->name = $options['name'];
-        $this->path = $options['path'];
-        $this->config = $options['config'];
+        $this->name = $options["name"];
+        $this->path = $options["path"];
+        $this->config = $options["config"];
         $this->options = $options;
     }
 
@@ -52,7 +52,7 @@ class Module implements ModuleInterface, EventSubscriberInterface
      */
     public function main(App $app)
     {
-        $main = $this->options['main'];
+        $main = $this->options["main"];
 
         if ($main instanceof \Closure) {
             $main = $main->bindTo($this, $this);
@@ -92,7 +92,7 @@ class Module implements ModuleInterface, EventSubscriberInterface
      */
     public function subscribe()
     {
-        return isset($this->options['events']) ? $this->options['events'] : [];
+        return isset($this->options["events"]) ? $this->options["events"] : [];
     }
 
     /**
@@ -100,8 +100,8 @@ class Module implements ModuleInterface, EventSubscriberInterface
      */
     public function runMarketplaceFile()
     {
-        if(App::file()->exists($this->path.'/marketplace.json')){
-            $this->marketplace = (array) json_decode(file_get_contents($this->path.'/marketplace.json'));
+        if (App::file()->exists($this->path . "/marketplace.json")) {
+            $this->marketplace = (array) json_decode(file_get_contents($this->path . "/marketplace.json"));
         }
     }
 
@@ -110,7 +110,7 @@ class Module implements ModuleInterface, EventSubscriberInterface
      */
     public function getCompatibleSystemVersion()
     {
-        return $this->getMarketplace('version');
+        return $this->getMarketplace("version");
     }
 
     /**
@@ -130,7 +130,7 @@ class Module implements ModuleInterface, EventSubscriberInterface
      * @todo Version control for package enable
      * @body The version_compare version requires a parameter. Module.php 131
      */
-    public function isCompatibleSystem($version , $version_seconds): bool
+    public function isCompatibleSystem($version, $version_seconds): bool
     {
         $version_seconds = $this->versionCompare($version_seconds);
         /**
@@ -147,7 +147,7 @@ class Module implements ModuleInterface, EventSubscriberInterface
      */
     public function getRequirements()
     {
-        return (array) $this->getMarketplace('requirements');
+        return (array) $this->getMarketplace("requirements");
     }
 
     /**
@@ -156,24 +156,24 @@ class Module implements ModuleInterface, EventSubscriberInterface
      */
     protected function versionCompare($version): array
     {
-        if($version === '*' || !$version){
+        if ($version === "*" || !$version) {
             return [
-                'compare' => '*',
-                'version' => '*'
+                "compare" => "*",
+                "version" => "*",
             ];
         }
-        preg_match('/([<|=|>]+)?([0-9\.]+)/', $version, $matches);
+        preg_match("/([<|=|>]+)?([0-9\.]+)/", $version, $matches);
 
-        if(count($matches) != 3){
+        if (count($matches) != 3) {
             return [
-                'compare' => '>=',
-                'version' => $matches[1]
+                "compare" => ">=",
+                "version" => $matches[1],
             ];
         }
 
         return [
-            'compare' => $matches[1],
-            'version' => $matches[2]
+            "compare" => $matches[1],
+            "version" => $matches[2],
         ];
     }
 }

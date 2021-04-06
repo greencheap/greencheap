@@ -15,8 +15,8 @@ class PregReplaceFilter extends AbstractFilter
     public function __construct()
     {
         $this->options = [
-            'pattern' => null,
-            'replacement' => '',
+            "pattern" => null,
+            "replacement" => "",
         ];
     }
 
@@ -27,7 +27,7 @@ class PregReplaceFilter extends AbstractFilter
      */
     public function getPattern()
     {
-        return $this->options['pattern'];
+        return $this->options["pattern"];
     }
 
     /**
@@ -53,7 +53,7 @@ class PregReplaceFilter extends AbstractFilter
             $this->validatePattern($pattern);
         }
 
-        $this->options['pattern'] = $pattern;
+        $this->options["pattern"] = $pattern;
     }
 
     /**
@@ -63,7 +63,7 @@ class PregReplaceFilter extends AbstractFilter
      */
     public function getReplacement()
     {
-        return $this->options['replacement'];
+        return $this->options["replacement"];
     }
 
     /**
@@ -79,7 +79,7 @@ class PregReplaceFilter extends AbstractFilter
             throw new \InvalidArgumentException(sprintf('%s expects replacement to be array or string; received "%s"', __METHOD__, $replacement));
         }
 
-        $this->options['replacement'] = $replacement;
+        $this->options["replacement"] = $replacement;
     }
 
     /**
@@ -87,11 +87,11 @@ class PregReplaceFilter extends AbstractFilter
      */
     public function filter($value)
     {
-        if ($this->options['pattern'] === null) {
-            throw new \RuntimeException(sprintf('Filter %s does not have a valid pattern set', get_called_class()));
+        if ($this->options["pattern"] === null) {
+            throw new \RuntimeException(sprintf("Filter %s does not have a valid pattern set", get_called_class()));
         }
 
-        return preg_replace($this->options['pattern'], $this->options['replacement'], $value);
+        return preg_replace($this->options["pattern"], $this->options["replacement"], $value);
     }
 
     /**
@@ -107,7 +107,7 @@ class PregReplaceFilter extends AbstractFilter
             return true;
         }
 
-        if (false !== strstr($matches['modifier'], 'e')) {
+        if (false !== strstr($matches["modifier"], "e")) {
             throw new \InvalidArgumentException(sprintf('Pattern for a PregReplace filter may not contain the "e" pattern modifier; received "%s"', $pattern));
         }
     }

@@ -1,4 +1,4 @@
-<?php $view->script('widget-index', 'system/widget:app/bundle/index.js', ['widgets']) ?>
+<?php $view->script("widget-index", "system/widget:app/bundle/index.js", ["widgets"]); ?>
 
 <style media="screen">
     .uk-sortable {

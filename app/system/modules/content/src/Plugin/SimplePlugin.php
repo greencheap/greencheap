@@ -25,15 +25,17 @@ class SimplePlugin implements EventSubscriberInterface
      */
     public function onContentPlugins(ContentEvent $event)
     {
-        $content = preg_replace_callback(self::PLUGIN_CODE, function($matches) use ($event) {
+        $content = preg_replace_callback(
+            self::PLUGIN_CODE,
+            function ($matches) use ($event) {
+                $options = isset($matches[2]) ? json_decode($matches[2], true) : [];
 
-            $options = isset($matches[2]) ? json_decode($matches[2], true) : [];
-
-            if ($callback = $event->getPlugin($matches[1])) {
-                return call_user_func($callback, (array) $options);
-            }
-
-        }, $event->getContent());
+                if ($callback = $event->getPlugin($matches[1])) {
+                    return call_user_func($callback, (array) $options);
+                }
+            },
+            $event->getContent()
+        );
 
         $event->setContent($content);
     }
@@ -44,7 +46,7 @@ class SimplePlugin implements EventSubscriberInterface
     public function subscribe()
     {
         return [
-            'content.plugins' => ['onContentPlugins', 10]
+            "content.plugins" => ["onContentPlugins", 10],
         ];
     }
 }

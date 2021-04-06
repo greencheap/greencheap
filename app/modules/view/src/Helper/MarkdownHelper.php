@@ -37,6 +37,6 @@ class MarkdownHelper extends Helper
      */
     public function getName()
     {
-        return 'markdown';
+        return "markdown";
     }
 }

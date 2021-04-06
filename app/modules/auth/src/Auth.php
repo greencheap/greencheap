@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Auth
 {
-    const LAST_USERNAME     = '_auth.last_username';
+    const LAST_USERNAME = "_auth.last_username";
 
     /**
      * @var EventDispatcherInterface
@@ -54,7 +54,7 @@ class Auth
      */
     public function getUser()
     {
-        if ($this->user === null && $id = $this->handler->read()) {
+        if ($this->user === null && ($id = $this->handler->read())) {
             $this->user = $this->getUserProvider()->find($id);
         }
 
@@ -93,7 +93,7 @@ class Auth
     public function getUserProvider()
     {
         if (!$this->provider) {
-            throw new \RuntimeException('Accessed user provider prior to registering it.');
+            throw new \RuntimeException("Accessed user provider prior to registering it.");
         }
 
         return $this->provider;
@@ -120,9 +120,7 @@ class Auth
     {
         $this->events->trigger(new AuthenticateEvent(AuthEvents::PRE_AUTHENTICATE, $credentials));
 
-        if (!$user = $this->getUserProvider()->findByCredentials($credentials)
-            or !$this->getUserProvider()->validateCredentials($user, $credentials)
-        ) {
+        if (!($user = $this->getUserProvider()->findByCredentials($credentials)) or !$this->getUserProvider()->validateCredentials($user, $credentials)) {
             $this->events->trigger(new AuthenticateEvent(AuthEvents::FAILURE, $credentials, $user));
 
             throw new BadCredentialsException($credentials);

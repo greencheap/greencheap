@@ -41,12 +41,12 @@ class ManyToMany extends Relation
     {
         parent::__construct($manager, $metadata, $mapping);
 
-        $this->keyFrom        = $mapping['keyFrom'] ? $mapping['keyFrom'] : $this->targetMetadata->getIdentifier();
-        $this->keyTo          = $mapping['keyTo'] ? $mapping['keyTo'] : $metadata->getIdentifier();
-        $this->tableThrough   = $mapping['tableThrough'];
-        $this->keyThroughFrom = $mapping['keyThroughFrom'];
-        $this->keyThroughTo   = $mapping['keyThroughTo'];
-        $this->orderBy        = $mapping['orderBy'];
+        $this->keyFrom = $mapping["keyFrom"] ? $mapping["keyFrom"] : $this->targetMetadata->getIdentifier();
+        $this->keyTo = $mapping["keyTo"] ? $mapping["keyTo"] : $metadata->getIdentifier();
+        $this->tableThrough = $mapping["tableThrough"];
+        $this->keyThroughFrom = $mapping["keyThroughFrom"];
+        $this->keyThroughTo = $mapping["keyThroughTo"];
+        $this->orderBy = $mapping["orderBy"];
     }
 
     /**
@@ -56,35 +56,43 @@ class ManyToMany extends Relation
     {
         $this->initRelation($entities, []);
 
-        $keys    = $this->getKeys($entities);
-        $mapping = $this->manager->getConnection()
-            ->executeQuery("SELECT {$this->keyThroughFrom}, {$this->keyThroughTo} FROM {$this->tableThrough} WHERE {$this->keyThroughFrom} IN (".implode(", ", $keys).")")
+        $keys = $this->getKeys($entities);
+        $mapping = $this->manager
+            ->getConnection()
+            ->executeQuery("SELECT {$this->keyThroughFrom}, {$this->keyThroughTo} FROM {$this->tableThrough} WHERE {$this->keyThroughFrom} IN (" . implode(", ", $keys) . ")")
             ->fetchAll(\PDO::FETCH_GROUP | \PDO::FETCH_COLUMN);
 
         $table = $this->tableThrough;
-        $to    = $this->keyThroughTo;
-        $from  = $this->keyThroughFrom;
-        $targets = $query->whereIn($this->keyTo, function($query) use ($keys, $table, $to, $from) {
-            return $query
-                ->select($to)
-                ->from($table)
-                ->whereIn($from, $keys);
-        })->get();
+        $to = $this->keyThroughTo;
+        $from = $this->keyThroughFrom;
+        $targets = $query
+            ->whereIn($this->keyTo, function ($query) use ($keys, $table, $to, $from) {
+                return $query
+                    ->select($to)
+                    ->from($table)
+                    ->whereIn($from, $keys);
+            })
+            ->get();
 
         $metadata = $this->metadata;
         $targetMetadata = $this->targetMetadata;
-        $to    = $this->keyTo;
-        $from  = $this->keyFrom;
+        $to = $this->keyTo;
+        $from = $this->keyFrom;
 
         foreach ($mapping as $id => $targetIds) {
+            $entity = current(
+                array_filter($entities, function ($entity) use ($metadata, $from, $id) {
+                    return $metadata->getValue($entity, $from, true) == $id;
+                })
+            );
 
-            $entity = current(array_filter($entities, function ($entity) use ($metadata, $from, $id) {
-                return $metadata->getValue($entity, $from, true) == $id;
-            }));
-
-            $metadata->setValue($entity, $this->name, array_filter($targets, function ($target) use ($targetMetadata, $to, $targetIds) {
-                return in_array($targetMetadata->getValue($target, $to, true), $targetIds);
-            }));
+            $metadata->setValue(
+                $entity,
+                $this->name,
+                array_filter($targets, function ($target) use ($targetMetadata, $to, $targetIds) {
+                    return in_array($targetMetadata->getValue($target, $to, true), $targetIds);
+                })
+            );
         }
 
         $this->resolveRelations($query, $targets);

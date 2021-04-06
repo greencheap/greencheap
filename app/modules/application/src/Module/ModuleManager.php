@@ -38,10 +38,10 @@ class ModuleManager implements \IteratorAggregate
      * @var array
      */
     protected array $defaults = [
-        'main' => null,
-        'type' => 'module',
-        'class' => 'GreenCheap\Module\Module',
-        'config' => []
+        "main" => null,
+        "type" => "module",
+        "class" => "GreenCheap\Module\Module",
+        "config" => [],
     ];
 
     /**
@@ -103,7 +103,6 @@ class ModuleManager implements \IteratorAggregate
         }
 
         foreach ((array) $modules as $name) {
-
             if (!isset($this->registered[$name])) {
                 throw new \RuntimeException("Undefined module: $name");
             }
@@ -114,7 +113,6 @@ class ModuleManager implements \IteratorAggregate
         $resolved = array_diff_key($resolved, $this->modules);
 
         foreach ($resolved as $name => $module) {
-
             foreach ($this->preLoaders as $loader) {
                 $module = $loader->load($module);
             }
@@ -142,25 +140,23 @@ class ModuleManager implements \IteratorAggregate
         $includes = [];
 
         foreach ((array) $paths as $path) {
-
             $files = glob($this->resolvePath($path, $basePath), GLOB_NOSORT) ?: [];
 
             foreach ($files as $file) {
-
-                if (!is_array($module = include $file) || !isset($module['name'])) {
+                if (!is_array($module = include $file) || !isset($module["name"])) {
                     continue;
                 }
 
                 $module = array_replace($this->defaults, $module);
-                $module['path'] = strtr(dirname($file), '\\', '/');
+                $module["path"] = strtr(dirname($file), "\\", "/");
 
-                if (isset($module['include'])) {
-                    foreach ((array) $module['include'] as $include) {
-                        $includes[] = $this->resolvePath($include, $module['path']);
+                if (isset($module["include"])) {
+                    foreach ((array) $module["include"] as $include) {
+                        $includes[] = $this->resolvePath($include, $module["path"]);
                     }
                 }
 
-                $this->registered[$module['name']] = $module;
+                $this->registered[$module["name"]] = $module;
             }
         }
 
@@ -214,14 +210,13 @@ class ModuleManager implements \IteratorAggregate
      */
     protected function resolveModules(array $module, array &$resolved = [], array &$unresolved = [])
     {
-        $unresolved[$module['name']] = $module;
+        $unresolved[$module["name"]] = $module;
 
-        if (isset($module['require'])) {
-            foreach ((array) $module['require'] as $required) {
+        if (isset($module["require"])) {
+            foreach ((array) $module["require"] as $required) {
                 if (!isset($resolved[$required])) {
-
                     if (isset($unresolved[$required])) {
-                        throw new \RuntimeException(sprintf('Circular requirement "%s > %s" detected.', $module['name'], $required));
+                        throw new \RuntimeException(sprintf('Circular requirement "%s > %s" detected.', $module["name"], $required));
                     }
 
                     if (isset($this->registered[$required])) {
@@ -231,8 +226,8 @@ class ModuleManager implements \IteratorAggregate
             }
         }
 
-        $resolved[$module['name']] = $module;
-        unset($unresolved[$module['name']]);
+        $resolved[$module["name"]] = $module;
+        unset($unresolved[$module["name"]]);
     }
 
     /**
@@ -244,9 +239,9 @@ class ModuleManager implements \IteratorAggregate
      */
     protected function resolvePath($path, $basePath = null)
     {
-        $path = strtr($path, '\\', '/');
+        $path = strtr($path, "\\", "/");
 
-        if (!($path[0] == '/' || (strlen($path) > 3 && ctype_alpha($path[0]) && $path[1] == ':' && $path[2] == '/'))) {
+        if (!($path[0] == "/" || (strlen($path) > 3 && ctype_alpha($path[0]) && $path[1] == ":" && $path[2] == "/"))) {
             $path = "$basePath/$path";
         }
 

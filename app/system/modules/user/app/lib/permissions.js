@@ -1,17 +1,16 @@
 export default {
-
     data() {
         return window.$data;
     },
 
     created() {
-        this.Roles = this.$resource('api/user/role{/id}');
+        this.Roles = this.$resource("api/user/role{/id}");
 
         this.debounced = [];
 
         this.saveCb = _.debounce(() => {
-            this.Roles.save({ id: 'bulk' }, { roles: this.debounced }).then(function () {
-                this.$notify('Permissions saved');
+            this.Roles.save({ id: "bulk" }, { roles: this.debounced }).then(function () {
+                this.$notify("Permissions saved");
             });
 
             this.debounced = [];
@@ -19,17 +18,14 @@ export default {
     },
 
     computed: {
-
         authenticated() {
-            return this.roles.filter(role => role.authenticated)[0];
+            return this.roles.filter((role) => role.authenticated)[0];
         },
-
     },
 
     methods: {
-
         savePermissions(role) {
-            if (!_.find(this.debounced, 'id', role.id)) {
+            if (!_.find(this.debounced, "id", role.id)) {
                 this.debounced.push(role);
             }
 
@@ -51,7 +47,5 @@ export default {
         showFakeCheckbox(role, permission) {
             return role.administrator || (this.isInherited(role, permission) && !this.hasPermission(role, permission));
         },
-
     },
-
 };

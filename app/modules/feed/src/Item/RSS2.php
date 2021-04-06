@@ -12,7 +12,7 @@ class RSS2 extends Item
      */
     public function setId($id)
     {
-        return $this->addElement('guid', $id, ['isPermaLink' => 'true']);
+        return $this->addElement("guid", $id, ["isPermaLink" => "true"]);
     }
 
     /**
@@ -20,7 +20,7 @@ class RSS2 extends Item
      */
     public function setDescription($description)
     {
-        return $this->setElement('description', $description);
+        return $this->setElement("description", $description);
     }
 
     /**
@@ -28,7 +28,7 @@ class RSS2 extends Item
      */
     public function setDate(\DateTimeInterface $date)
     {
-        return $this->setElement('pubDate', date(\DATE_RSS, $date->getTimestamp()));
+        return $this->setElement("pubDate", date(\DATE_RSS, $date->getTimestamp()));
     }
 
     /**
@@ -36,7 +36,7 @@ class RSS2 extends Item
      */
     public function setAuthor($author, $email = null, $uri = null)
     {
-        return $this->setElement('author', $email ? $email.' ('.$author.')' : $author);
+        return $this->setElement("author", $email ? $email . " (" . $author . ")" : $author);
     }
 
     /**
@@ -44,7 +44,7 @@ class RSS2 extends Item
      */
     public function setLink($link)
     {
-        return $this->setElement('link', $link);
+        return $this->setElement("link", $link);
     }
 
     /**
@@ -52,6 +52,6 @@ class RSS2 extends Item
      */
     public function addEnclosure($url, $length, $type, $multiple = true)
     {
-        return $this->addElement('enclosure', '', compact('url', 'length', 'type'), false, $multiple);
+        return $this->addElement("enclosure", "", compact("url", "length", "type"), false, $multiple);
     }
 }

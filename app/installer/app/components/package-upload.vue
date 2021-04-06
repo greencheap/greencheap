@@ -4,7 +4,7 @@
             <div uk-form-custom>
                 <input type="file" name="file" />
                 <button class="uk-button uk-button-primary" type="button" tabindex="-1">
-                    <span v-if="!progress">{{ 'Upload' | trans }}</span>
+                    <span v-if="!progress">{{ "Upload" | trans }}</span>
                     <span v-else><i uk-spinner /> {{ progress }}</span>
                 </button>
             </div>
@@ -15,10 +15,10 @@
 
             <div class="uk-modal-footer uk-text-right">
                 <button class="uk-button uk-button-text uk-margin-right uk-modal-close" type="button">
-                    {{ 'Cancel' | trans }}
+                    {{ "Cancel" | trans }}
                 </button>
                 <button class="uk-button uk-button-primary" @click.prevent="doInstall">
-                    {{ 'Install' | trans }}
+                    {{ "Install" | trans }}
                 </button>
             </div>
         </v-modal>
@@ -26,16 +26,14 @@
 </template>
 
 <script>
-
-import Package from '../lib/package';
-import PackageDetails from './package-details.vue';
+import Package from "../lib/package";
+import PackageDetails from "./package-details.vue";
 
 export default {
-
     mixins: [Package, Theme.Mixins.Helper],
 
     props: {
-        api: { type: String, default: '' },
+        api: { type: String, default: "" },
         packages: Array,
         type: String,
     },
@@ -44,16 +42,16 @@ export default {
         return {
             package: {},
             upload: null,
-            progress: '',
+            progress: "",
         };
     },
 
     mounted() {
         const { type } = this;
         const settings = {
-            url: this.$url.route('admin/system/package/upload'),
-            dataType: 'json',
-            name: 'file',
+            url: this.$url.route("admin/system/package/upload"),
+            dataType: "json",
+            name: "file",
             beforeAll(options) {
                 _.merge(options.params, { _csrf: $greencheap.csrf, type });
             },
@@ -66,13 +64,12 @@ export default {
     },
 
     methods: {
-
         onStart() {
-            this.progress = '1%';
+            this.progress = "1%";
         },
 
         onProgress(percent) {
-            this.progress = `${Math.ceil(percent.loaded / percent.total * 100)}%`;
+            this.progress = `${Math.ceil((percent.loaded / percent.total) * 100)}%`;
         },
 
         onComplete(data) {
@@ -81,52 +78,54 @@ export default {
                 var data = JSON.parse(data.responseText);
             } catch (e) {
                 try {
-                    var data = JSON.parse(data.responseText.substring(data.responseText.lastIndexOf('{'), data.responseText.lastIndexOf('}') + 1));
+                    var data = JSON.parse(data.responseText.substring(data.responseText.lastIndexOf("{"), data.responseText.lastIndexOf("}") + 1));
                     var { message } = data;
                 } catch (e) {
-                    var message = 'Unable load package.';
+                    var message = "Unable load package.";
                 }
-                this.progress = '';
-                this.$notify(message, 'danger');
+                this.progress = "";
+                this.$notify(message, "danger");
                 return;
             }
 
             const vm = this;
 
-            this.progress = '100%';
+            this.progress = "100%";
 
             setTimeout(() => {
-                vm.progress = '';
+                vm.progress = "";
             }, 250);
 
             if (!data.package) {
-                this.$notify(data, 'danger');
+                this.$notify(data, "danger");
                 return;
             }
 
-            this.$set(this, 'upload', data);
-            this.$set(this, 'package', data.package);
+            this.$set(this, "upload", data);
+            this.$set(this, "package", data.package);
 
             this.$refs.modal.open();
         },
 
         doInstall() {
             this.$refs.modal.close();
-            this.install(this.upload.package, this.packages,
+            this.install(
+                this.upload.package,
+                this.packages,
                 (output) => {
-                    if (output.status === 'success') {
+                    if (output.status === "success") {
                         setTimeout(() => {
                             location.reload();
                         }, 300);
                     }
-                }, true);
+                },
+                true
+            );
         },
-
     },
 
     components: {
-        'package-details': PackageDetails,
+        "package-details": PackageDetails,
     },
 };
-
 </script>

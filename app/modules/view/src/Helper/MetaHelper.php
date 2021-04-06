@@ -16,10 +16,14 @@ class MetaHelper implements HelperInterface, \IteratorAggregate
      */
     public function register(View $view)
     {
-        $view->on('head', function ($event) use ($view) {
-            $view->trigger('meta', [$this]);
-            $event->addResult($this->render());
-        }, 20);
+        $view->on(
+            "head",
+            function ($event) use ($view) {
+                $view->trigger("meta", [$this]);
+                $event->addResult($this->render());
+            },
+            20
+        );
     }
 
     /**
@@ -55,7 +59,7 @@ class MetaHelper implements HelperInterface, \IteratorAggregate
      * @param  string $value
      * @return self
      */
-    public function add($name, $value = '')
+    public function add($name, $value = "")
     {
         if ($value) {
             $this->metas[$name] = $value;
@@ -63,21 +67,21 @@ class MetaHelper implements HelperInterface, \IteratorAggregate
 
         return $this;
     }
-    
+
     /**
      * Removes a meta tag.
      *
      * @param  string $name
      * @return self
      */
-	public function remove( $name )
-	{
-		if (isset($this->metas[$name])) {
-			unset($this->metas[$name]);			
-		} 
-        
+    public function remove($name)
+    {
+        if (isset($this->metas[$name])) {
+            unset($this->metas[$name]);
+        }
+
         return $this;
-	}
+    }
 
     /**
      * Renders the meta tags.
@@ -86,33 +90,29 @@ class MetaHelper implements HelperInterface, \IteratorAggregate
      */
     public function render()
     {
-        $output = '';
+        $output = "";
 
         foreach ($this->metas as $name => $value) {
-
-            if (preg_match('/^link:?/i', $name)) {
-
-                if (!isset($value['rel'])) {
-                    $value['rel'] = substr($name, 5);
+            if (preg_match("/^link:?/i", $name)) {
+                if (!isset($value["rel"])) {
+                    $value["rel"] = substr($name, 5);
                 }
 
-                $attributes = '';
+                $attributes = "";
                 foreach ($value as $attr => $val) {
                     $attributes .= sprintf(' %s="%s"', $attr, htmlspecialchars($val));
                 }
                 $output .= sprintf("        <link%s>\n", $attributes);
-
             } else {
-
                 $value = htmlspecialchars($value);
 
-                if ($name == 'title') {
+                if ($name == "title") {
                     $output .= sprintf("        <title>%s</title>\n", $value);
-                } else if ($name == 'base') {
+                } elseif ($name == "base") {
                     $output .= sprintf("        <base href=\"%s\">\n", $value);
-                } else if ($name == 'canonical') {
+                } elseif ($name == "canonical") {
                     $output .= sprintf("        <link rel=\"%s\" href=\"%s\">\n", $name, $value);
-                } elseif (preg_match('/^(og|fb|twitter|article):/i', $name)) {
+                } elseif (preg_match("/^(og|fb|twitter|article):/i", $name)) {
                     $output .= sprintf("        <meta property=\"%s\" content=\"%s\">\n", $name, $value);
                 } else {
                     $output .= sprintf("        <meta name=\"%s\" content=\"%s\">\n", $name, $value);
@@ -138,6 +138,6 @@ class MetaHelper implements HelperInterface, \IteratorAggregate
      */
     public function getName()
     {
-        return 'meta';
+        return "meta";
     }
 }

@@ -6,9 +6,7 @@
             <table class="pf-table pf-table-dropdown">
                 <tbody>
                     <tr>
-                        <td class="uk-text-nowrap">
-                            Request Id
-                        </td>
+                        <td class="uk-text-nowrap">Request Id</td>
                         <td>{{ $root.data.__meta.id }}</td>
                     </tr>
                 </tbody>
@@ -18,12 +16,10 @@
 </template>
 
 <script>
-
 module.exports = {
-
     section: {
         priority: 80,
-        panel: '#panel-requests',
+        panel: "#panel-requests",
         template: `
                 <div>
                     <h1>Requests</h1>
@@ -59,8 +55,6 @@ module.exports = {
 
     replace: false,
 
-    props: ['data'],
-
+    props: ["data"],
 };
-
 </script>

@@ -3,28 +3,23 @@
 use GreenCheap\Auth\Auth;
 
 return [
+    "name" => "system/login",
 
-    'name' => 'system/login',
+    "label" => "Login",
 
-    'label' => 'Login',
+    "icon" => "system/theme:assets/images/user-widget.svg",
 
-    'icon' => 'system/theme:assets/images/user-widget.svg',
-
-    'events' => [
-
-        'view.scripts' => function ($event, $scripts) use ($app) {
-            $scripts->register('widget-login', 'system/user:app/bundle/widget-login.js', ['~widgets', 'input-link']);
-        }
-
+    "events" => [
+        "view.scripts" => function ($event, $scripts) use ($app) {
+            $scripts->register("widget-login", "system/user:app/bundle/widget-login.js", ["~widgets", "input-link"]);
+        },
     ],
 
-    'render' => function ($widget) use ($app) {
+    "render" => function ($widget) use ($app) {
+        $user = $app["user"];
+        $redirect = $widget->get($user->isAuthenticated() ? "redirect_logout" : "redirect_login") ?: $app["url"]->current(true);
+        $last_username = $app["session"]->get(Auth::LAST_USERNAME);
 
-        $user              = $app['user'];
-        $redirect          = $widget->get($user->isAuthenticated() ? 'redirect_logout' : 'redirect_login') ?: $app['url']->current(true);
-        $last_username     = $app['session']->get(Auth::LAST_USERNAME);
-
-        return $app['view']('system/user/widget-login.php', compact('widget', 'user', 'last_username', 'redirect'));
-    }
-
+        return $app["view"]("system/user/widget-login.php", compact("widget", "user", "last_username", "redirect"));
+    },
 ];

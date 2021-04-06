@@ -14,7 +14,7 @@ class PoFileLoader extends ArrayLoader
     /**
      * {@inheritdoc}
      */
-    public function load($resource, $locale, $domain = 'messages')
+    public function load($resource, $locale, $domain = "messages")
     {
         if (!stream_is_local($resource)) {
             throw new InvalidResourceException(sprintf('This is not a local file "%s".', $resource));
@@ -86,11 +86,11 @@ class PoFileLoader extends ArrayLoader
      */
     protected function parse($resource)
     {
-        $stream = fopen($resource, 'r');
+        $stream = fopen($resource, "r");
 
         $defaults = [
-            'ids' => [],
-            'translated' => null,
+            "ids" => [],
+            "translated" => null,
         ];
 
         $messages = [];
@@ -99,7 +99,7 @@ class PoFileLoader extends ArrayLoader
         while ($line = fgets($stream)) {
             $line = trim($line);
 
-            if ($line === '') {
+            if ($line === "") {
                 // Whitespace indicated current item is done
                 $this->addMessage($messages, $item);
                 $item = $defaults;
@@ -108,11 +108,11 @@ class PoFileLoader extends ArrayLoader
                 // TODO: this fails when comments or contexts are added
                 $this->addMessage($messages, $item);
                 $item = $defaults;
-                $item['ids']['singular'] = substr($line, 7, -1);
+                $item["ids"]["singular"] = substr($line, 7, -1);
             } elseif (substr($line, 0, 8) === 'msgstr "') {
-                $item['translated'] = substr($line, 8, -1);
+                $item["translated"] = substr($line, 8, -1);
             } elseif ($line[0] === '"') {
-                $continues = isset($item['translated']) ? 'translated' : 'ids';
+                $continues = isset($item["translated"]) ? "translated" : "ids";
 
                 if (is_array($item[$continues])) {
                     end($item[$continues]);
@@ -121,12 +121,11 @@ class PoFileLoader extends ArrayLoader
                     $item[$continues] .= substr($line, 1, -1);
                 }
             } elseif (substr($line, 0, 14) === 'msgid_plural "') {
-                $item['ids']['plural'] = substr($line, 14, -1);
-            } elseif (substr($line, 0, 7) === 'msgstr[') {
-                $size = strpos($line, ']');
-                $item['translated'][(integer) substr($line, 7, 1)] = substr($line, $size + 3, -1);
+                $item["ids"]["plural"] = substr($line, 14, -1);
+            } elseif (substr($line, 0, 7) === "msgstr[") {
+                $size = strpos($line, "]");
+                $item["translated"][(int) substr($line, 7, 1)] = substr($line, $size + 3, -1);
             }
-
         }
         // save last item
         $this->addMessage($messages, $item);
@@ -147,23 +146,23 @@ class PoFileLoader extends ArrayLoader
      */
     protected function addMessage(array &$messages, array $item)
     {
-        if (is_array($item['translated'])) {
-            $messages[$item['ids']['singular']] = stripslashes($item['translated'][0]);
-            if (isset($item['ids']['plural'])) {
-                $plurals = $item['translated'];
+        if (is_array($item["translated"])) {
+            $messages[$item["ids"]["singular"]] = stripslashes($item["translated"][0]);
+            if (isset($item["ids"]["plural"])) {
+                $plurals = $item["translated"];
                 // PO are by definition indexed so sort by index.
                 ksort($plurals);
                 // Make sure every index is filled.
                 end($plurals);
                 $count = key($plurals);
                 // Fill missing spots with '-'.
-                $empties = array_fill(0, $count+1, '-');
+                $empties = array_fill(0, $count + 1, "-");
                 $plurals += $empties;
                 ksort($plurals);
-                $messages[$item['ids']['plural']] = stripcslashes(implode('|', $plurals));
+                $messages[$item["ids"]["plural"]] = stripcslashes(implode("|", $plurals));
             }
-        } elseif (!empty($item['ids']['singular'])) {
-              $messages[$item['ids']['singular']] = stripslashes($item['translated']);
+        } elseif (!empty($item["ids"]["singular"])) {
+            $messages[$item["ids"]["singular"]] = stripslashes($item["translated"]);
         }
     }
 }

@@ -12,7 +12,7 @@ class SimpleArrayType extends BaseSimpleArrayType
      */
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        if (is_string($value) && $array = @json_decode("[{$value}]")) {
+        if (is_string($value) && ($array = @json_decode("[{$value}]"))) {
             return $array;
         }
 

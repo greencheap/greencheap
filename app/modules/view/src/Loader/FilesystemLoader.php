@@ -26,7 +26,7 @@ class FilesystemLoader implements LoaderInterface
      */
     public function load(TemplateReferenceInterface $template)
     {
-        if (!strpos($template, ':') && $file = $this->locator->get("views:{$template}")) {
+        if (!strpos($template, ":") && ($file = $this->locator->get("views:{$template}"))) {
             return new FileStorage($file);
         } elseif ($file = $this->locator->get($template)) {
             return new FileStorage($file);
@@ -40,7 +40,7 @@ class FilesystemLoader implements LoaderInterface
      */
     public function isFresh(TemplateReferenceInterface $template, $time)
     {
-        if (false === $storage = $this->load($template)) {
+        if (false === ($storage = $this->load($template))) {
             return false;
         }
 

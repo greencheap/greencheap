@@ -18,7 +18,7 @@ class HasMany extends HasOne
     {
         parent::__construct($manager, $metadata, $mapping);
 
-        $this->orderBy = $mapping['orderBy'];
+        $this->orderBy = $mapping["orderBy"];
     }
 
     /**
@@ -28,7 +28,7 @@ class HasMany extends HasOne
     {
         $this->initRelation($entities, []);
 
-        if (!$keys = $this->getKeys($entities)) {
+        if (!($keys = $this->getKeys($entities))) {
             return;
         }
 

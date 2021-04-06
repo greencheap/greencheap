@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\StreamOutput;
 
 class InstallerIO extends ConsoleIO
 {
-    const REGEX = '/((?<=<error>).+(?=<\/error>))|(\[.+Exception\])/';
+    const REGEX = "/((?<=<error>).+(?=<\/error>))|(\[.+Exception\])/";
 
     /**
      * {@inheritdoc}
@@ -19,12 +19,12 @@ class InstallerIO extends ConsoleIO
     public function __construct(InputInterface $input = null, OutputInterface $output = null, HelperSet $helperSet = null)
     {
         $this->input = $input ?: new ArrayInput([]);
-        $this->output = $output ?: new StreamOutput(fopen('php://output', 'w'));
+        $this->output = $output ?: new StreamOutput(fopen("php://output", "w"));
         $this->helperSet = $helperSet ?: new HelperSet();
 
         parent::__construct($this->input, $this->output, $this->helperSet);
 
-        if (PHP_SAPI != 'cli') {
+        if (PHP_SAPI != "cli") {
             ob_implicit_flush(true);
             @ob_end_flush();
         }
@@ -35,7 +35,7 @@ class InstallerIO extends ConsoleIO
      */
     public function writeError($messages, $newline = true, $verbosity = parent::NORMAL)
     {
-        foreach ((array)$messages as $message) {
+        foreach ((array) $messages as $message) {
             if (preg_match(self::REGEX, $message, $matches)) {
                 throw new \RuntimeException($matches[0]);
             }

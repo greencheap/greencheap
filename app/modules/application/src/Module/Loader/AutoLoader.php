@@ -26,8 +26,8 @@ class AutoLoader implements LoaderInterface
      */
     public function load($module)
     {
-        if (isset($module['autoload'])) {
-            foreach ($module['autoload'] as $namespace => $path) {
+        if (isset($module["autoload"])) {
+            foreach ($module["autoload"] as $namespace => $path) {
                 $this->loader->addPsr4($namespace, $this->resolvePath($module, $path));
             }
         }
@@ -44,10 +44,10 @@ class AutoLoader implements LoaderInterface
      */
     protected function resolvePath($module, $path)
     {
-        $path = strtr($path, '\\', '/');
+        $path = strtr($path, "\\", "/");
 
-        if (!($path[0] == '/' || (strlen($path) > 3 && ctype_alpha($path[0]) && $path[1] == ':' && $path[2] == '/'))) {
-            $path = $module['path']."/$path";
+        if (!($path[0] == "/" || (strlen($path) > 3 && ctype_alpha($path[0]) && $path[1] == ":" && $path[2] == "/"))) {
+            $path = $module["path"] . "/$path";
         }
 
         return $path;

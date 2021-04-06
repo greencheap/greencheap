@@ -27,7 +27,7 @@ var Translator = (function (document, undefined) {
         const _suffix = Translator.placeHolderSuffix;
 
         for (_i in placeholders) {
-            const _r = new RegExp(_prefix + _i + _suffix, 'g');
+            const _r = new RegExp(_prefix + _i + _suffix, "g");
 
             if (_r.test(message)) {
                 message = message.replace(_r, placeholders[_i]);
@@ -63,8 +63,7 @@ var Translator = (function (document, undefined) {
 
         if (undefined === _domain || _domain === null) {
             for (let i = 0; i < _domains.length; i++) {
-                if (has_message(_locale, _domains[i], id)
-                    || has_message(localeFallback, _domains[i], id)) {
+                if (has_message(_locale, _domains[i], id) || has_message(localeFallback, _domains[i], id)) {
                     _domain = _domains[i];
 
                     break;
@@ -76,8 +75,10 @@ var Translator = (function (document, undefined) {
             return _messages[_locale][_domain][id];
         }
 
-        let _length; let _parts; let _last; let
-            _lastLength;
+        let _length;
+        let _parts;
+        let _last;
+        let _lastLength;
 
         while (_locale.length > 2) {
             _length = _locale.length;
@@ -183,7 +184,7 @@ var Translator = (function (document, undefined) {
                 _matches = _e.match(_iPluralRegex);
 
                 if (_matches[1]) {
-                    const _ns = _matches[2].split(',');
+                    const _ns = _matches[2].split(",");
                     var _n;
 
                     for (_n in _ns) {
@@ -195,8 +196,7 @@ var Translator = (function (document, undefined) {
                     const _leftNumber = convert_number(_matches[4]);
                     const _rightNumber = convert_number(_matches[5]);
 
-                    if ((_matches[3] === '[' ? number >= _leftNumber : number > _leftNumber)
-                        && (_matches[6] === ']' ? number <= _rightNumber : number < _rightNumber)) {
+                    if ((_matches[3] === "[" ? number >= _leftNumber : number > _leftNumber) && (_matches[6] === "]" ? number <= _rightNumber : number < _rightNumber)) {
                         return _explicitRules[_e];
                     }
                 }
@@ -217,9 +217,10 @@ var Translator = (function (document, undefined) {
      * @api private
      */
     function convert_number(number) {
-        if (number === '-Inf') {
+        if (number === "-Inf") {
             return Number.NEGATIVE_INFINITY;
-        } if (number === '+Inf' || number === 'Inf') {
+        }
+        if (number === "+Inf" || number === "Inf") {
             return Number.POSITIVE_INFINITY;
         }
 
@@ -239,141 +240,141 @@ var Translator = (function (document, undefined) {
     function plural_position(number, locale) {
         let _locale = locale;
 
-        if (_locale === 'pt_BR') {
-            _locale = 'xbr';
+        if (_locale === "pt_BR") {
+            _locale = "xbr";
         }
 
         if (_locale.length > 3) {
-            _locale = _locale.split('_')[0];
+            _locale = _locale.split("_")[0];
         }
 
         switch (_locale) {
-        case 'bo':
-        case 'dz':
-        case 'id':
-        case 'ja':
-        case 'jv':
-        case 'ka':
-        case 'km':
-        case 'kn':
-        case 'ko':
-        case 'ms':
-        case 'th':
-        case 'tr':
-        case 'vi':
-        case 'zh':
-            return 0;
-        case 'af':
-        case 'az':
-        case 'bn':
-        case 'bg':
-        case 'ca':
-        case 'da':
-        case 'de':
-        case 'el':
-        case 'en':
-        case 'eo':
-        case 'es':
-        case 'et':
-        case 'eu':
-        case 'fa':
-        case 'fi':
-        case 'fo':
-        case 'fur':
-        case 'fy':
-        case 'gl':
-        case 'gu':
-        case 'ha':
-        case 'he':
-        case 'hu':
-        case 'is':
-        case 'it':
-        case 'ku':
-        case 'lb':
-        case 'ml':
-        case 'mn':
-        case 'mr':
-        case 'nah':
-        case 'nb':
-        case 'ne':
-        case 'nl':
-        case 'nn':
-        case 'no':
-        case 'om':
-        case 'or':
-        case 'pa':
-        case 'pap':
-        case 'ps':
-        case 'pt':
-        case 'so':
-        case 'sq':
-        case 'sv':
-        case 'sw':
-        case 'ta':
-        case 'te':
-        case 'tk':
-        case 'ur':
-        case 'zu':
-            return (number == 1) ? 0 : 1;
+            case "bo":
+            case "dz":
+            case "id":
+            case "ja":
+            case "jv":
+            case "ka":
+            case "km":
+            case "kn":
+            case "ko":
+            case "ms":
+            case "th":
+            case "tr":
+            case "vi":
+            case "zh":
+                return 0;
+            case "af":
+            case "az":
+            case "bn":
+            case "bg":
+            case "ca":
+            case "da":
+            case "de":
+            case "el":
+            case "en":
+            case "eo":
+            case "es":
+            case "et":
+            case "eu":
+            case "fa":
+            case "fi":
+            case "fo":
+            case "fur":
+            case "fy":
+            case "gl":
+            case "gu":
+            case "ha":
+            case "he":
+            case "hu":
+            case "is":
+            case "it":
+            case "ku":
+            case "lb":
+            case "ml":
+            case "mn":
+            case "mr":
+            case "nah":
+            case "nb":
+            case "ne":
+            case "nl":
+            case "nn":
+            case "no":
+            case "om":
+            case "or":
+            case "pa":
+            case "pap":
+            case "ps":
+            case "pt":
+            case "so":
+            case "sq":
+            case "sv":
+            case "sw":
+            case "ta":
+            case "te":
+            case "tk":
+            case "ur":
+            case "zu":
+                return number == 1 ? 0 : 1;
 
-        case 'am':
-        case 'bh':
-        case 'fil':
-        case 'fr':
-        case 'gun':
-        case 'hi':
-        case 'ln':
-        case 'mg':
-        case 'nso':
-        case 'xbr':
-        case 'ti':
-        case 'wa':
-            return ((number === 0) || (number == 1)) ? 0 : 1;
+            case "am":
+            case "bh":
+            case "fil":
+            case "fr":
+            case "gun":
+            case "hi":
+            case "ln":
+            case "mg":
+            case "nso":
+            case "xbr":
+            case "ti":
+            case "wa":
+                return number === 0 || number == 1 ? 0 : 1;
 
-        case 'be':
-        case 'bs':
-        case 'hr':
-        case 'ru':
-        case 'sr':
-        case 'uk':
-            return ((number % 10 == 1) && (number % 100 != 11)) ? 0 : (((number % 10 >= 2) && (number % 10 <= 4) && ((number % 100 < 10) || (number % 100 >= 20))) ? 1 : 2);
+            case "be":
+            case "bs":
+            case "hr":
+            case "ru":
+            case "sr":
+            case "uk":
+                return number % 10 == 1 && number % 100 != 11 ? 0 : number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20) ? 1 : 2;
 
-        case 'cs':
-        case 'sk':
-            return (number == 1) ? 0 : (((number >= 2) && (number <= 4)) ? 1 : 2);
+            case "cs":
+            case "sk":
+                return number == 1 ? 0 : number >= 2 && number <= 4 ? 1 : 2;
 
-        case 'ga':
-            return (number == 1) ? 0 : ((number == 2) ? 1 : 2);
+            case "ga":
+                return number == 1 ? 0 : number == 2 ? 1 : 2;
 
-        case 'lt':
-            return ((number % 10 == 1) && (number % 100 != 11)) ? 0 : (((number % 10 >= 2) && ((number % 100 < 10) || (number % 100 >= 20))) ? 1 : 2);
+            case "lt":
+                return number % 10 == 1 && number % 100 != 11 ? 0 : number % 10 >= 2 && (number % 100 < 10 || number % 100 >= 20) ? 1 : 2;
 
-        case 'sl':
-            return (number % 100 == 1) ? 0 : ((number % 100 == 2) ? 1 : (((number % 100 == 3) || (number % 100 == 4)) ? 2 : 3));
+            case "sl":
+                return number % 100 == 1 ? 0 : number % 100 == 2 ? 1 : number % 100 == 3 || number % 100 == 4 ? 2 : 3;
 
-        case 'mk':
-            return (number % 10 == 1) ? 0 : 1;
+            case "mk":
+                return number % 10 == 1 ? 0 : 1;
 
-        case 'mt':
-            return (number == 1) ? 0 : (((number === 0) || ((number % 100 > 1) && (number % 100 < 11))) ? 1 : (((number % 100 > 10) && (number % 100 < 20)) ? 2 : 3));
+            case "mt":
+                return number == 1 ? 0 : number === 0 || (number % 100 > 1 && number % 100 < 11) ? 1 : number % 100 > 10 && number % 100 < 20 ? 2 : 3;
 
-        case 'lv':
-            return (number === 0) ? 0 : (((number % 10 == 1) && (number % 100 != 11)) ? 1 : 2);
+            case "lv":
+                return number === 0 ? 0 : number % 10 == 1 && number % 100 != 11 ? 1 : 2;
 
-        case 'pl':
-            return (number == 1) ? 0 : (((number % 10 >= 2) && (number % 10 <= 4) && ((number % 100 < 12) || (number % 100 > 14))) ? 1 : 2);
+            case "pl":
+                return number == 1 ? 0 : number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 12 || number % 100 > 14) ? 1 : 2;
 
-        case 'cy':
-            return (number == 1) ? 0 : ((number == 2) ? 1 : (((number == 8) || (number == 11)) ? 2 : 3));
+            case "cy":
+                return number == 1 ? 0 : number == 2 ? 1 : number == 8 || number == 11 ? 2 : 3;
 
-        case 'ro':
-            return (number == 1) ? 0 : (((number === 0) || ((number % 100 > 0) && (number % 100 < 20))) ? 1 : 2);
+            case "ro":
+                return number == 1 ? 0 : number === 0 || (number % 100 > 0 && number % 100 < 20) ? 1 : 2;
 
-        case 'ar':
-            return (number === 0) ? 0 : ((number == 1) ? 1 : ((number == 2) ? 2 : (((number >= 3) && (number <= 10)) ? 3 : (((number >= 11) && (number <= 99)) ? 4 : 5))));
+            case "ar":
+                return number === 0 ? 0 : number == 1 ? 1 : number == 2 ? 2 : number >= 3 && number <= 10 ? 3 : number >= 11 && number <= 99 ? 4 : 5;
 
-        default:
-            return 0;
+            default:
+                return 0;
         }
     }
 
@@ -402,7 +403,7 @@ var Translator = (function (document, undefined) {
      * @api private
      */
     function get_current_locale() {
-        return document.documentElement.lang.replace('-', '_');
+        return document.documentElement.lang.replace("-", "_");
     }
 
     return {
@@ -428,7 +429,7 @@ var Translator = (function (document, undefined) {
          * @type {String}
          * @api public
          */
-        placeHolderPrefix: '%',
+        placeHolderPrefix: "%",
 
         /**
          * Placeholder suffix.
@@ -436,7 +437,7 @@ var Translator = (function (document, undefined) {
          * @type {String}
          * @api public
          */
-        placeHolderSuffix: '%',
+        placeHolderSuffix: "%",
 
         /**
          * Default domain.
@@ -444,7 +445,7 @@ var Translator = (function (document, undefined) {
          * @type {String}
          * @api public
          */
-        defaultDomain: 'messages',
+        defaultDomain: "messages",
 
         /**
          * Plurar separator.
@@ -452,7 +453,7 @@ var Translator = (function (document, undefined) {
          * @type {String}
          * @api public
          */
-        pluralSeparator: '|',
+        pluralSeparator: "|",
 
         /**
          * Adds a translation entry.
@@ -485,7 +486,6 @@ var Translator = (function (document, undefined) {
             return this;
         },
 
-
         /**
          * Translates the given message.
          *
@@ -497,13 +497,7 @@ var Translator = (function (document, undefined) {
          * @api public
          */
         trans(id, parameters, domain, locale) {
-            const _message = get_message(
-                id,
-                domain,
-                locale,
-                this.locale,
-                this.fallback,
-            );
+            const _message = get_message(id, domain, locale, this.locale, this.fallback);
 
             return replace_placeholders(_message, parameters || {});
         },
@@ -520,22 +514,12 @@ var Translator = (function (document, undefined) {
          * @api public
          */
         transChoice(id, number, parameters, domain, locale) {
-            let _message = get_message(
-                id,
-                domain,
-                locale,
-                this.locale,
-                this.fallback,
-            );
+            let _message = get_message(id, domain, locale, this.locale, this.fallback);
 
             const _number = parseInt(number, 10) || 0;
 
             if (undefined != _message) {
-                _message = pluralize(
-                    _message,
-                    _number,
-                    locale || this.locale || this.fallback,
-                );
+                _message = pluralize(_message, _number, locale || this.locale || this.fallback);
             }
 
             return replace_placeholders(_message, parameters || {});
@@ -549,7 +533,7 @@ var Translator = (function (document, undefined) {
          * @api public
          */
         fromJSON(data) {
-            if (typeof data === 'string') {
+            if (typeof data === "string") {
                 data = JSON.parse(data);
             }
 
@@ -587,14 +571,13 @@ var Translator = (function (document, undefined) {
             this.locale = get_current_locale();
         },
     };
-}(document, undefined));
+})(document, undefined);
 
 export default function (Vue) {
     Vue.prototype.$trans = Translator.trans.bind(Translator);
     Vue.prototype.$transChoice = Translator.transChoice.bind(Translator);
 
-    Object.defineProperty(Vue.prototype, '$locale', {
-
+    Object.defineProperty(Vue.prototype, "$locale", {
         get() {
             return config;
         },
@@ -604,7 +587,6 @@ export default function (Vue) {
             Translator.fromJSON(locale);
             Translator.locale = locale.locale;
         },
-
     });
 
     Vue.prototype.$locale = config;

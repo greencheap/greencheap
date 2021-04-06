@@ -1,4 +1,4 @@
-<?php $view->script('site-index', 'system/site:app/bundle/index.js', ['vue']) ?>
+<?php $view->script("site-index", "system/site:app/bundle/index.js", ["vue"]); ?>
 
 <form id="site" v-cloak>
 

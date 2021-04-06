@@ -1,10 +1,9 @@
-import { ValidationObserver, VInput } from 'SystemApp/components/validation.vue';
+import { ValidationObserver, VInput } from "SystemApp/components/validation.vue";
 
 var Registration = {
+    name: "registration",
 
-    name: 'registration',
-
-    el: '#user-registration',
+    el: "#user-registration",
 
     data() {
         return {
@@ -12,19 +11,20 @@ var Registration = {
             error: null,
             hidePassword: true,
             view: {
-                type: 'icon',
-                containerClass: 'uk-margin',
-                class: 'uk-input uk-form-width-large',
-                icon: () => this.hidePassword ? 'lock' : 'unlock',
-                iconClick: () => { this.hidePassword = !this.hidePassword },
-                iconTag: 'a',
-                iconDir: 'right',
-            }
-        }
+                type: "icon",
+                containerClass: "uk-margin",
+                class: "uk-input uk-form-width-large",
+                icon: () => (this.hidePassword ? "lock" : "unlock"),
+                iconClick: () => {
+                    this.hidePassword = !this.hidePassword;
+                },
+                iconTag: "a",
+                iconDir: "right",
+            },
+        };
     },
 
     methods: {
-
         async valid() {
             const isValid = await this.$refs.observer.validate();
             if (isValid) {
@@ -35,20 +35,21 @@ var Registration = {
         submit() {
             this.error = null;
 
-            this.$http.post('user/registration/register', { user: this.user }).then((res) => {
-                window.location.replace(res.data.redirect);
-            }, function (error) {
-                this.error = error.data;
-            });
+            this.$http.post("user/registration/register", { user: this.user }).then(
+                (res) => {
+                    window.location.replace(res.data.redirect);
+                },
+                function (error) {
+                    this.error = error.data;
+                }
+            );
         },
-
     },
 
     components: {
         ValidationObserver,
-        VInput
-    }
-
+        VInput,
+    },
 };
 
 export default Registration;

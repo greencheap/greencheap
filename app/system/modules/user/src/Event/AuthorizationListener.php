@@ -17,7 +17,7 @@ class AuthorizationListener implements EventSubscriberInterface
      */
     public function onSystemInit()
     {
-        App::auth()->setUserProvider(new UserProvider(App::get('auth.password')));
+        App::auth()->setUserProvider(new UserProvider(App::get("auth.password")));
     }
 
     /**
@@ -25,7 +25,7 @@ class AuthorizationListener implements EventSubscriberInterface
      */
     public function onRequest()
     {
-        if ($user = App::auth()->getUser() and $user->isBlocked()) {
+        if (($user = App::auth()->getUser()) and $user->isBlocked()) {
             App::auth()->logout();
         }
     }
@@ -39,7 +39,7 @@ class AuthorizationListener implements EventSubscriberInterface
     public function onAuthorize(AuthorizeEvent $event)
     {
         if ($event->getUser()->isBlocked()) {
-            throw new AuthException($event->getUser()->login ? __('Your account is blocked.') : __('Your account has not been activated.'));
+            throw new AuthException($event->getUser()->login ? __("Your account is blocked.") : __("Your account has not been activated."));
         }
     }
 
@@ -59,7 +59,7 @@ class AuthorizationListener implements EventSubscriberInterface
     public function onFailure(AuthenticateEvent $event)
     {
         $credentials = $event->getCredentials();
-        App::session()->set(Auth::LAST_USERNAME, $credentials['username']);
+        App::session()->set(Auth::LAST_USERNAME, $credentials["username"]);
     }
 
     /**
@@ -68,14 +68,11 @@ class AuthorizationListener implements EventSubscriberInterface
     public function subscribe()
     {
         return [
-            'request' => [
-                ['onRequest', 0],
-                ['onSystemInit', 50]
-            ],
-            'auth.authorize' => 'onAuthorize',
-            'auth.login'     => ['onLogin', -8],
-            'auth.success'    => 'onSuccess',
-            'auth.failure'    => 'onFailure'
+            "request" => [["onRequest", 0], ["onSystemInit", 50]],
+            "auth.authorize" => "onAuthorize",
+            "auth.login" => ["onLogin", -8],
+            "auth.success" => "onSuccess",
+            "auth.failure" => "onFailure",
         ];
     }
 }

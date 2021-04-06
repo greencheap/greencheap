@@ -58,7 +58,7 @@ class Message extends Swift_Message implements MessageInterface
      */
     public function attachFile($file, $name = null, $mime = null)
     {
-		return $this->prepareAttachment(Swift_Attachment::fromPath($file), $name, $mime);
+        return $this->prepareAttachment(Swift_Attachment::fromPath($file), $name, $mime);
     }
 
     /**
@@ -86,7 +86,7 @@ class Message extends Swift_Message implements MessageInterface
         $attachment = Swift_Image::fromPath($file);
 
         if ($cid) {
-            $attachment->setId(str_starts_with($cid, 'cid:') ? $cid : 'cid:'.$cid);
+            $attachment->setId(str_starts_with($cid, "cid:") ? $cid : "cid:" . $cid);
         }
 
         return $this->embed($attachment);
@@ -102,29 +102,29 @@ class Message extends Swift_Message implements MessageInterface
      */
     public function embedData($data, $name, $contentType = null)
     {
-		return $this->embed(Swift_Image::newInstance($data, $name, $contentType));
+        return $this->embed(Swift_Image::newInstance($data, $name, $contentType));
     }
 
-	/**
-	 * Prepare and attach the given attachment.
-	 *
-	 * @param  Swift_Mime_Attachment $attachment
-	 * @param  string                $name
+    /**
+     * Prepare and attach the given attachment.
+     *
+     * @param  Swift_Mime_Attachment $attachment
+     * @param  string                $name
      * @param  string                $mime
-	 * @return self
-	 */
-	protected function prepareAttachment(Swift_Mime_Attachment $attachment, $name = null, $mime = null)
-	{
-		if (null !== $mime) {
-			$attachment->setContentType($mime);
-		}
+     * @return self
+     */
+    protected function prepareAttachment(Swift_Mime_Attachment $attachment, $name = null, $mime = null)
+    {
+        if (null !== $mime) {
+            $attachment->setContentType($mime);
+        }
 
-		if (null !== $name) {
-			$attachment->setFilename($name);
-		}
+        if (null !== $name) {
+            $attachment->setFilename($name);
+        }
 
-		$this->attach($attachment);
+        $this->attach($attachment);
 
-		return $this;
-	}
+        return $this;
+    }
 }

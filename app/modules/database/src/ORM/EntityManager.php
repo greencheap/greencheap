@@ -40,8 +40,8 @@ class EntityManager
     public function __construct(Connection $connection, MetadataManager $metadata, ?EventDispatcherInterface $events)
     {
         $this->connection = $connection;
-        $this->metadata   = $metadata;
-        $this->events     = $events ?: new PrefixEventDispatcher('model.');
+        $this->metadata = $metadata;
+        $this->events = $events ?: new PrefixEventDispatcher("model.");
 
         static::$instance = $this;
     }
@@ -100,14 +100,14 @@ class EntityManager
      */
     public function exists($entity)
     {
-        $metadata   = $this->getMetadata($entity);
+        $metadata = $this->getMetadata($entity);
         $identifier = $metadata->getIdentifier(true);
 
         if (empty($identifier)) {
             return false;
         }
 
-        return (bool) $this->connection->fetchOne('SELECT 1 FROM '.$metadata->getTable().' WHERE '.$identifier.'='.$this->connection->quote($metadata->getValue($entity, $identifier, true)));
+        return (bool) $this->connection->fetchOne("SELECT 1 FROM " . $metadata->getTable() . " WHERE " . $identifier . "=" . $this->connection->quote($metadata->getValue($entity, $identifier, true)));
     }
 
     /**
@@ -125,9 +125,9 @@ class EntityManager
         }
 
         $metadata = $this->getMetadata(current($entities));
-        $mapping  = $metadata->getRelationMapping($name);
+        $mapping = $metadata->getRelationMapping($name);
 
-        if (!class_exists($class = 'GreenCheap\Database\ORM\\Relation\\'.$mapping['type'])) {
+        if (!class_exists($class = "GreenCheap\Database\ORM\\Relation\\" . $mapping["type"])) {
             throw new \LogicException(sprintf("Unable to find relation class '%s'", $class));
         }
 
@@ -143,31 +143,28 @@ class EntityManager
      */
     public function save(object $entity, array $data = [])
     {
-        $metadata   = $this->getMetadata($entity);
+        $metadata = $this->getMetadata($entity);
         $identifier = $metadata->getIdentifier(true);
 
         $metadata->setValues($entity, $data, false, true);
 
         $this->trigger(Events::SAVING, $metadata, [$entity, $data]);
 
-        if (!$id = $metadata->getValue($entity, $identifier, true)) {
-
+        if (!($id = $metadata->getValue($entity, $identifier, true))) {
             $this->trigger(Events::CREATING, $metadata, [$entity, $data]);
 
-            if($this->connection->getDatabasePlatform() instanceof PostgreSQL100Platform){
+            if ($this->connection->getDatabasePlatform() instanceof PostgreSQL100Platform) {
                 $data = $metadata->getValues($entity, true, true);
-                unset($data['id']);
+                unset($data["id"]);
                 $this->connection->insert($metadata->getTable(), $data);
-            }else{
+            } else {
                 $this->connection->insert($metadata->getTable(), $metadata->getValues($entity, true, true));
             }
 
             $metadata->setValue($entity, $identifier, $this->connection->lastInsertId(), true, true);
 
             $this->trigger(Events::CREATED, $metadata, [$entity, $data]);
-
         } else {
-
             $this->trigger(Events::UPDATING, $metadata, [$entity, $data]);
 
             $this->connection->update($metadata->getTable(), $metadata->getValues($entity, true, true), [$identifier => $id]);
@@ -186,11 +183,10 @@ class EntityManager
      */
     public function delete($entity)
     {
-        $metadata   = $this->getMetadata($entity);
+        $metadata = $this->getMetadata($entity);
         $identifier = $metadata->getIdentifier(true);
 
         if ($value = $metadata->getValue($entity, $identifier, true)) {
-
             $this->trigger(Events::DELETING, $metadata, [$entity]);
 
             $this->connection->delete($metadata->getTable(), [$identifier => $value]);
@@ -198,7 +194,6 @@ class EntityManager
             $this->trigger(Events::DELETED, $metadata, [$entity]);
 
             $metadata->setValue($entity, $identifier, null, true);
-
         } else {
             throw new \InvalidArgumentException("Can't remove entity with empty identifier value.");
         }
@@ -229,7 +224,7 @@ class EntityManager
      */
     public function hydrateAll($statement, Metadata $metadata)
     {
-        $result     = [];
+        $result = [];
         $identifier = $metadata->getIdentifier();
 
         while ($row = $statement->fetch(\PDO::FETCH_ASSOC)) {

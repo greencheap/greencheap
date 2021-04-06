@@ -19,7 +19,7 @@ trait RoleModelTrait
     public static function saving($event, Role $role)
     {
         if (!$role->id) {
-            $role->priority = self::getConnection()->fetchOne('SELECT MAX(priority) + 1 FROM @system_role');
+            $role->priority = self::getConnection()->fetchOne("SELECT MAX(priority) + 1 FROM @system_role");
         }
     }
 }

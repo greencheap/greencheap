@@ -14,7 +14,7 @@ class MenuManager implements \JsonSerializable
     public function __construct(Config $config, array $menus = [])
     {
         $this->config = $config;
-        $this->menus  = $menus;
+        $this->menus = $menus;
     }
 
     /**
@@ -50,14 +50,14 @@ class MenuManager implements \JsonSerializable
         $menus = $this->menus;
 
         foreach ($menus as $id => &$menu) {
-            $menu['positions'] = array_keys($this->config->get('_menus', []), $id);
+            $menu["positions"] = array_keys($this->config->get("_menus", []), $id);
         }
 
         uasort($menus, function ($a, $b) {
-            return strcmp($a['label'], $b['label']);
+            return strcmp($a["label"], $b["label"]);
         });
 
-        return $menus + ['' => ['id' => '', 'label' => __('Not Linked'), 'fixed' => true]];
+        return $menus + ["" => ["id" => "", "label" => __("Not Linked"), "fixed" => true]];
     }
 
     /**
@@ -68,7 +68,7 @@ class MenuManager implements \JsonSerializable
      */
     public function register($name, $label)
     {
-        $this->positions[$name] = compact('name', 'label');
+        $this->positions[$name] = compact("name", "label");
     }
 
     /**
@@ -100,14 +100,14 @@ class MenuManager implements \JsonSerializable
      */
     public function assign($id, array $positions)
     {
-        $menus = $this->config->get('_menus', []);
+        $menus = $this->config->get("_menus", []);
         $menus = array_diff($menus, [$id]);
 
         foreach ($positions as $position) {
             $menus[$position] = $id;
         }
 
-        $this->config->set('_menus', $menus);
+        $this->config->set("_menus", $menus);
     }
 
     /**

@@ -1,25 +1,18 @@
 <table class="uk-table uk-table-hover uk-table-middle uk-margin-remove">
-
     <thead>
         <tr>
             <th class="pk-table-width-minimum">
-                <input v-check-all:$parent.selected="{ selector: 'input[name=name]' }" class="uk-checkbox" type="checkbox">
+                <input v-check-all:$parent.selected="{ selector: 'input[name=name]' }" class="uk-checkbox" type="checkbox" />
             </th>
-            <th>
-                {{ 'Name' | trans }}
-            </th>
-            <th class="pk-table-width-100 uk-text-right">
-                {{ 'Size' | trans }}
-            </th>
-            <th class="pk-table-width-150">
-                {{ 'Modified' | trans }}
-            </th>
+            <th>{{ 'Name' | trans }}</th>
+            <th class="pk-table-width-100 uk-text-right">{{ 'Size' | trans }}</th>
+            <th class="pk-table-width-150">{{ 'Modified' | trans }}</th>
         </tr>
     </thead>
 
     <tbody>
         <tr v-for="folder in filterBy($parent.searched, 'application/folder', 'mime')" class="uk-visible-toggle" :class="{'uk-active': $parent.isSelected(folder.name)}" @click.prevent="$parent.toggleSelect(folder.name)">
-            <td class="uk-table-shrink"><input class="uk-checkbox" type="checkbox" name="name" :value="folder.name" v-model="$parent.selected" @click.stop></td>
+            <td class="uk-table-shrink"><input class="uk-checkbox" type="checkbox" name="name" :value="folder.name" v-model="$parent.selected" @click.stop /></td>
             <td class="pk-table-min-width-200 uk-flex uk-flex-middle">
                 <div class="pk-table-width-50 uk-padding-remove tm-folder-icon">
                     <i uk-icon="icon: folder"></i>
@@ -31,7 +24,7 @@
         </tr>
 
         <tr v-for="file in filterBy($parent.searched, 'application/file', 'mime')" class="uk-visible-toggle" :class="{'uk-active': $parent.isSelected(file.name)}" @click.prevent="$parent.toggleSelect(file.name)">
-            <td class="uk-table-shrink"><input class="uk-checkbox" type="checkbox" name="name" :value="file.name" v-model="$parent.selected" @click.stop></td>
+            <td class="uk-table-shrink"><input class="uk-checkbox" type="checkbox" name="name" :value="file.name" v-model="$parent.selected" @click.stop /></td>
             <td class="pk-table-min-width-200 uk-flex uk-flex-middle">
                 <div class="pk-table-width-50 uk-padding-remove uk-text-center">
                     <div class="uk-cover-container" v-if="$parent.isImage(file.path) && $parent.isFileExt(file.name, 'gif|jpe?g|png|bmp|webp')">
@@ -50,7 +43,4 @@
             <td class="uk-text-nowrap pk-table-width-150">{{ file.lastmodified | relativeDate }}</td>
         </tr>
     </tbody>
-
 </table>
-
-

@@ -19,7 +19,7 @@ class DefaultCsrfProvider implements CsrfProviderInterface
      *
      * @param string $name
      */
-    public function __construct($name = '_csrf')
+    public function __construct($name = "_csrf")
     {
         $this->name = $name;
     }
@@ -29,7 +29,7 @@ class DefaultCsrfProvider implements CsrfProviderInterface
      */
     public function generate()
     {
-        return sha1($this->getSessionId().$this->getSessionToken());
+        return sha1($this->getSessionId() . $this->getSessionToken());
     }
 
     /**

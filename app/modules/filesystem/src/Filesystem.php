@@ -21,14 +21,14 @@ class Filesystem
      */
     public function getUrl($file, $referenceType = UrlGenerator::ABSOLUTE_PATH)
     {
-        if (!$url = $this->getPathInfo($file, 'url')) {
+        if (!($url = $this->getPathInfo($file, "url"))) {
             return false;
         }
 
         if ($referenceType === UrlGenerator::ABSOLUTE_PATH) {
-            $url = strlen($path = parse_url($url, PHP_URL_PATH)) > 1 ? substr($url, strpos($url, $path)) : '/';
+            $url = strlen($path = parse_url($url, PHP_URL_PATH)) > 1 ? substr($url, strpos($url, $path)) : "/";
         } elseif ($referenceType === UrlGenerator::NETWORK_PATH) {
-            $url = substr($url, strpos($url, '//'));
+            $url = substr($url, strpos($url, "//"));
         }
 
         return $url;
@@ -43,7 +43,7 @@ class Filesystem
      */
     public function getPath($file, $local = false)
     {
-        return $this->getPathInfo($file, $local ? 'localpath' : 'pathname') ?: false;
+        return $this->getPathInfo($file, $local ? "localpath" : "pathname") ?: false;
     }
 
     /**
@@ -57,11 +57,11 @@ class Filesystem
     {
         $info = Path::parse($file);
 
-        if ($info['protocol'] != 'file') {
-            $info['url'] = $info['pathname'];
+        if ($info["protocol"] != "file") {
+            $info["url"] = $info["pathname"];
         }
 
-        if ($adapter = $this->getAdapter($info['protocol'])) {
+        if ($adapter = $this->getAdapter($info["protocol"])) {
             $info = $adapter->getPathInfo($info);
         }
 
@@ -69,7 +69,7 @@ class Filesystem
             return $info;
         }
 
-        return array_key_exists($option, $info) ? $info[$option] : '';
+        return array_key_exists($option, $info) ? $info[$option] : "";
     }
 
     /**
@@ -83,8 +83,7 @@ class Filesystem
         $files = (array) $files;
 
         foreach ($files as $file) {
-
-            $file = $this->getPathInfo($file, 'pathname');
+            $file = $this->getPathInfo($file, "pathname");
 
             if (!file_exists($file)) {
                 return false;
@@ -103,14 +102,14 @@ class Filesystem
      */
     public function copy($source, $target)
     {
-        $source = $this->getPathInfo($source, 'pathname');
+        $source = $this->getPathInfo($source, "pathname");
         $target = $this->getPathInfo($target);
 
-        if (!is_file($source) || !$this->makeDir($target['dirname'])) {
+        if (!is_file($source) || !$this->makeDir($target["dirname"])) {
             return false;
         }
 
-        return @copy($source, $target['pathname']);
+        return @copy($source, $target["pathname"]);
     }
 
     /**
@@ -124,17 +123,15 @@ class Filesystem
         $files = (array) $files;
 
         foreach ($files as $file) {
-
-            $file = $this->getPathInfo($file, 'pathname');
+            $file = $this->getPathInfo($file, "pathname");
 
             if (is_dir($file)) {
-
-                if (substr($file, -1) != '/') {
-                    $file .= '/';
+                if (substr($file, -1) != "/") {
+                    $file .= "/";
                 }
 
                 foreach ($this->listDir($file) as $name) {
-                    if (!$this->delete($file.$name)) {
+                    if (!$this->delete($file . $name)) {
                         return false;
                     }
                 }
@@ -142,7 +139,6 @@ class Filesystem
                 if (!@rmdir($file)) {
                     return false;
                 }
-
             } elseif (!@unlink($file)) {
                 return false;
             }
@@ -159,9 +155,9 @@ class Filesystem
      */
     public function listDir($dir)
     {
-        $dir = $this->getPathInfo($dir, 'pathname');
+        $dir = $this->getPathInfo($dir, "pathname");
 
-        return array_diff(scandir($dir) ?: [], ['..', '.']);
+        return array_diff(scandir($dir) ?: [], ["..", "."]);
     }
 
     /**
@@ -174,7 +170,7 @@ class Filesystem
      */
     public function makeDir($dir, $mode = 0777, $recursive = true)
     {
-        $dir = $this->getPathInfo($dir, 'pathname');
+        $dir = $this->getPathInfo($dir, "pathname");
 
         return is_dir($dir) ? true : @mkdir($dir, $mode, $recursive);
     }
@@ -188,29 +184,27 @@ class Filesystem
      */
     public function copyDir($source, $target)
     {
-        $source = $this->getPathInfo($source, 'pathname');
-        $target = $this->getPathInfo($target, 'pathname');
+        $source = $this->getPathInfo($source, "pathname");
+        $target = $this->getPathInfo($target, "pathname");
 
         if (!is_dir($source) || !$this->makeDir($target)) {
             return false;
         }
 
-        if (substr($source, -1) != '/') {
-            $source .= '/';
+        if (substr($source, -1) != "/") {
+            $source .= "/";
         }
 
-        if (substr($target, -1) != '/') {
-            $target .= '/';
+        if (substr($target, -1) != "/") {
+            $target .= "/";
         }
 
         foreach ($this->listDir($source) as $file) {
-            if (is_dir($source.$file)) {
-
-                if (!$this->copyDir($source.$file, $target.$file)) {
+            if (is_dir($source . $file)) {
+                if (!$this->copyDir($source . $file, $target . $file)) {
                     return false;
                 }
-
-            } elseif (!$this->copy($source.$file, $target.$file)) {
+            } elseif (!$this->copy($source . $file, $target . $file)) {
                 return false;
             }
         }

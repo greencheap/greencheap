@@ -1,4 +1,4 @@
-<?php $view->script('settings', 'system/user:app/bundle/settings.js', ['vue', 'input-link']) ?>
+<?php $view->script("settings", "system/user:app/bundle/settings.js", ["vue", "input-link"]); ?>
 
 <div id="settings" class="uk-form-horizontal" v-cloak>
 

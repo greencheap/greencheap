@@ -21,10 +21,13 @@ class UrlGeneratorDumper extends GeneratorDumper
      */
     public function dump(array $options = [])
     {
-        $options = array_merge([
-            'class'      => 'ProjectUrlGenerator',
-            'base_class' => 'Symfony\\Component\\Routing\\Generator\\UrlGenerator',
-        ], $options);
+        $options = array_merge(
+            [
+                "class" => "ProjectUrlGenerator",
+                "base_class" => "Symfony\\Component\\Routing\\Generator\\UrlGenerator",
+            ],
+            $options
+        );
 
         return <<<EOF
 <?php
@@ -34,12 +37,12 @@ use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Psr\Log\LoggerInterface;
 
 /**
- * {$options['class']}
+ * {$options["class"]}
  *
  * This class has been auto-generated
  * by the Symfony Routing Component.
  */
-class {$options['class']} extends {$options['base_class']}
+class {$options["class"]} extends {$options["base_class"]}
 {
     private static \$declaredRoutes = {$this->generateDeclaredRoutes()};
 
@@ -78,9 +81,9 @@ EOF;
             $properties[] = $compiledRoute->getHostTokens();
             $properties[] = $route->getSchemes();
 
-            $routes .= sprintf("        '%s' => %s,\n", $name, str_replace("\n", '', var_export($properties, true)));
+            $routes .= sprintf("        '%s' => %s,\n", $name, str_replace("\n", "", var_export($properties, true)));
         }
-        $routes .= '    )';
+        $routes .= "    )";
 
         return $routes;
     }

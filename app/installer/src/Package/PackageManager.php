@@ -26,10 +26,10 @@ class PackageManager
      */
     public function __construct($output = null)
     {
-        $this->output = $output ?: new StreamOutput(fopen('php://output', 'w'));
+        $this->output = $output ?: new StreamOutput(fopen("php://output", "w"));
 
         $config = [];
-        foreach (['path.temp', 'path.cache', 'path.vendor', 'path.artifact', 'path.packages', 'system.api'] as $key) {
+        foreach (["path.temp", "path.cache", "path.vendor", "path.artifact", "path.packages", "system.api"] as $key) {
             $config[$key] = App::get($key);
         }
 
@@ -50,7 +50,7 @@ class PackageManager
 
         $packages = App::package()->all(null, true);
         foreach ($install as $name => $version) {
-            $moduleAlreadyExisted = isset($previousPackageConfigs[$name]) && App::module($previousPackageConfigs[$name]->get('module'));
+            $moduleAlreadyExisted = isset($previousPackageConfigs[$name]) && App::module($previousPackageConfigs[$name]->get("module"));
 
             if ($moduleAlreadyExisted == true) {
                 $previousPackageConfig = isset($previousPackageConfigs[$name]) ? $previousPackageConfigs[$name] : null;
@@ -68,19 +68,19 @@ class PackageManager
     public function uninstall($uninstall)
     {
         foreach ((array) $uninstall as $name) {
-            if (!$package = App::package($name)) {
-                throw new \RuntimeException(__('Unable to find "%name%".', ['%name%' => $name]));
+            if (!($package = App::package($name))) {
+                throw new \RuntimeException(__('Unable to find "%name%".', ["%name%" => $name]));
             }
 
             $this->disable($package);
             $this->getScripts($package)->uninstall();
-            App::config('system')->remove('packages.' . $package->get('module'));
+            App::config("system")->remove("packages." . $package->get("module"));
 
             if ($this->composer->isInstalled($package->getName())) {
                 $this->composer->uninstall($package->getName());
             } else {
-                if (!$path = $package->get('path')) {
-                    throw new \RuntimeException(__('Package path is missing.'));
+                if (!($path = $package->get("path"))) {
+                    throw new \RuntimeException(__("Package path is missing."));
                 }
 
                 $this->output->writeln(__("Removing package folder."));
@@ -106,19 +106,18 @@ class PackageManager
         }
 
         foreach ($packages as $package) {
-
             // Get the old package config if provided. If there is no old config available, then use the new config (usually fist installation).
             $previousPackageConfig = $package;
             foreach ($previousPackageConfigs as $packageConfig) {
-                if ($packageConfig->get('name') == $package->get('name')) {
+                if ($packageConfig->get("name") == $package->get("name")) {
                     $previousPackageConfig = $packageConfig;
                     break;
                 }
             }
 
-            App::trigger('package.enable', [$package]);
+            App::trigger("package.enable", [$package]);
 
-            if (!$current = App::config('system')->get('packages.' . $previousPackageConfig->get('module'))) {
+            if (!($current = App::config("system")->get("packages." . $previousPackageConfig->get("module")))) {
                 $current = $this->doInstall($package);
             }
 
@@ -128,14 +127,14 @@ class PackageManager
             }
 
             $version = $this->getVersion($package);
-            App::config('system')->set('packages.' . $package->get('module'), $version);
+            App::config("system")->set("packages." . $package->get("module"), $version);
 
             $scripts->enable();
 
-            if ($package->getType() == 'greencheap-theme') {
-                App::config('system')->set('site.theme', $package->get('module'));
-            } elseif ($package->getType() == 'greencheap-extension') {
-                App::config('system')->push('extensions', $package->get('module'));
+            if ($package->getType() == "greencheap-theme") {
+                App::config("system")->set("site.theme", $package->get("module"));
+            } elseif ($package->getType() == "greencheap-extension") {
+                App::config("system")->push("extensions", $package->get("module"));
             }
         }
     }
@@ -152,8 +151,8 @@ class PackageManager
         foreach ($packages as $package) {
             $this->getScripts($package)->disable();
 
-            if ($package->getType() == 'greencheap-extension') {
-                App::config('system')->pull('extensions', $package->get('module'));
+            if ($package->getType() == "greencheap-extension") {
+                App::config("system")->pull("extensions", $package->get("module"));
             }
         }
     }
@@ -165,15 +164,15 @@ class PackageManager
      */
     protected function getScripts($package, $current = null)
     {
-        if (!$scripts = $package->get('extra.scripts')) {
+        if (!($scripts = $package->get("extra.scripts"))) {
             return new PackageScripts(null, $current);
         }
 
-        if (!$path = $package->get('path')) {
-            throw new \RuntimeException(__('Package path is missing.'));
+        if (!($path = $package->get("path"))) {
+            throw new \RuntimeException(__("Package path is missing."));
         }
 
-        return new PackageScripts($path . '/' . $scripts, $current);
+        return new PackageScripts($path . "/" . $scripts, $current);
     }
 
     /**
@@ -185,7 +184,7 @@ class PackageManager
         $this->getScripts($package)->install();
         $version = $this->getVersion($package);
 
-        App::config('system')->set('packages.' . $package->get('module'), $version);
+        App::config("system")->set("packages." . $package->get("module"), $version);
 
         return $version;
     }
@@ -198,29 +197,29 @@ class PackageManager
      */
     protected function getVersion($package)
     {
-        if (!$path = $package->get('path')) {
-            throw new \RuntimeException(__('Package path is missing.'));
+        if (!($path = $package->get("path"))) {
+            throw new \RuntimeException(__("Package path is missing."));
         }
 
-        if (!file_exists($file = $path . '/composer.json')) {
+        if (!file_exists($file = $path . "/composer.json")) {
             throw new \RuntimeException(__('\'composer.json\' is missing.'));
         }
 
         $package = json_decode(file_get_contents($file), true);
-        if (isset($package['version'])) {
-            return $package['version'];
+        if (isset($package["version"])) {
+            return $package["version"];
         }
 
-        if (file_exists(App::get('path.packages') . '/composer/installed.json')) {
+        if (file_exists(App::get("path.packages") . "/composer/installed.json")) {
             $installed = json_decode(file_get_contents($file), true);
 
             foreach ($installed as $package) {
-                if ($package['name'] === $package->getName()) {
-                    return $package['version'];
+                if ($package["name"] === $package->getName()) {
+                    return $package["version"];
                 }
             }
         }
 
-        return '0.0.0';
+        return "0.0.0";
     }
 }

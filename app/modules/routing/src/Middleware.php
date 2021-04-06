@@ -20,17 +20,25 @@ class Middleware
     {
         $this->events = $events;
 
-        $events->on('request', function ($event, $request) {
-            if ($name = $request->attributes->get('_route', '')) {
-                $event->getDispatcher()->trigger('before'.$name, [$request]);
-            }
-        }, 50);
+        $events->on(
+            "request",
+            function ($event, $request) {
+                if ($name = $request->attributes->get("_route", "")) {
+                    $event->getDispatcher()->trigger("before" . $name, [$request]);
+                }
+            },
+            50
+        );
 
-        $events->on('response', function ($event, $request, $response) {
-            if ($name = $request->attributes->get('_route', '')) {
-                $event->getDispatcher()->trigger('after'.$name, [$request, $response]);
-            }
-        }, 50);
+        $events->on(
+            "response",
+            function ($event, $request, $response) {
+                if ($name = $request->attributes->get("_route", "")) {
+                    $event->getDispatcher()->trigger("after" . $name, [$request, $response]);
+                }
+            },
+            50
+        );
     }
 
     /**
@@ -42,7 +50,7 @@ class Middleware
      */
     public function before($name, $callback, $priority)
     {
-        $this->events->on('before'.$name, $callback, $priority);
+        $this->events->on("before" . $name, $callback, $priority);
     }
 
     /**
@@ -54,6 +62,6 @@ class Middleware
      */
     public function after($name, $callback, $priority)
     {
-        $this->events->on('after'.$name, $callback, $priority);
+        $this->events->on("after" . $name, $callback, $priority);
     }
 }

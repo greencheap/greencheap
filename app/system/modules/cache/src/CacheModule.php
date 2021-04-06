@@ -15,45 +15,43 @@ class CacheModule extends Module
      */
     public function main(App $app)
     {
-        foreach ($this->config['caches'] as $name => $config)  {
-            $app[$name] = function() use ($config) {
-
+        foreach ($this->config["caches"] as $name => $config) {
+            $app[$name] = function () use ($config) {
                 $supports = $this->supports();
 
-                if (!isset($config['storage'])) {
-                    throw new RuntimeException('Cache storage missing.');
+                if (!isset($config["storage"])) {
+                    throw new RuntimeException("Cache storage missing.");
                 }
 
-                if ($this->config['nocache']) {
-                    $config['storage'] = 'array';
-                } else if ($config['storage'] == 'auto' || !in_array($config['storage'], $supports)) {
-                    $config['storage'] = end($supports);
+                if ($this->config["nocache"]) {
+                    $config["storage"] = "array";
+                } elseif ($config["storage"] == "auto" || !in_array($config["storage"], $supports)) {
+                    $config["storage"] = end($supports);
                 }
 
-                switch ($config['storage']) {
-
-                    case 'array':
-                        $cache = new ArrayCache;
+                switch ($config["storage"]) {
+                    case "array":
+                        $cache = new ArrayCache();
                         break;
 
-                    case 'apc':
-                        $cache = new ApcuCache;
+                    case "apc":
+                        $cache = new ApcuCache();
                         break;
 
-                    case 'file':
-                        $cache = new FilesystemCache($config['path']);
+                    case "file":
+                        $cache = new FilesystemCache($config["path"]);
                         break;
 
-                    case 'phpfile':
-                        $cache = new PhpFileCache($config['path']);
+                    case "phpfile":
+                        $cache = new PhpFileCache($config["path"]);
                         break;
 
                     default:
-                        throw new RuntimeException('Unknown cache storage.');
+                        throw new RuntimeException("Unknown cache storage.");
                         break;
                 }
 
-                if ($prefix = isset($config['prefix']) ? $config['prefix'] : false) {
+                if ($prefix = isset($config["prefix"]) ? $config["prefix"] : false) {
                     $cache->setNamespace($prefix);
                 }
 
@@ -70,19 +68,19 @@ class CacheModule extends Module
      */
     public static function supports($name = null)
     {
-        $supports = ['phpfile', 'array', 'file'];
+        $supports = ["phpfile", "array", "file"];
 
-        if (extension_loaded('apc') && class_exists('\APCIterator')) {
-            if (!extension_loaded('apcu') || version_compare(phpversion('apcu'), '4.0.2', '>=')) {
-                $supports[] = 'apc';
+        if (extension_loaded("apc") && class_exists("\APCIterator")) {
+            if (!extension_loaded("apcu") || version_compare(phpversion("apcu"), "4.0.2", ">=")) {
+                $supports[] = "apc";
             }
         }
 
-        if (extension_loaded('xcache') && ini_get('xcache.var_size')) {
-            $supports[] = 'xcache';
+        if (extension_loaded("xcache") && ini_get("xcache.var_size")) {
+            $supports[] = "xcache";
         }
 
-        return $name? in_array($name, $supports) : $supports;
+        return $name ? in_array($name, $supports) : $supports;
     }
 
     /**
@@ -90,9 +88,13 @@ class CacheModule extends Module
      */
     public function clearCache(array $options = [])
     {
-        App::on('terminate', function() use ($options) {
-            $this->doClearCache($options);
-        }, -512);
+        App::on(
+            "terminate",
+            function () use ($options) {
+                $this->doClearCache($options);
+            },
+            -512
+        );
     }
 
     /**
@@ -102,24 +104,30 @@ class CacheModule extends Module
     public function doClearCache(array $options = [])
     {
         // clear cache
-        if (empty($options) || @$options['cache']) {
+        if (empty($options) || @$options["cache"]) {
             App::cache()->flushAll();
 
-            foreach ((array) glob(App::get('path.cache') . '/*.cache') as $file) {
+            foreach ((array) glob(App::get("path.cache") . "/*.cache") as $file) {
                 @unlink($file);
                 // opcache
-                if (function_exists('opcache_invalidate')) {
+                if (function_exists("opcache_invalidate")) {
                     opcache_invalidate($file);
                 }
             }
         }
 
         // clear temp folder
-        if (@$options['temp']) {
-            foreach (App::finder()->in(App::get('path.temp'))->depth(0)->ignoreDotFiles(true) as $file) {
+        if (@$options["temp"]) {
+            foreach (
+                App::finder()
+                    ->in(App::get("path.temp"))
+                    ->depth(0)
+                    ->ignoreDotFiles(true)
+                as $file
+            ) {
                 App::file()->delete($file->getPathname());
                 // opcache
-                if (function_exists('opcache_invalidate')) {
+                if (function_exists("opcache_invalidate")) {
                     opcache_invalidate($file);
                 }
             }

@@ -36,7 +36,7 @@ class MoFileLoader extends ArrayLoader
     /**
      * {@inheritdoc}
      */
-    public function load($resource, $locale, $domain = 'messages')
+    public function load($resource, $locale, $domain = "messages")
     {
         if (!stream_is_local($resource)) {
             throw new InvalidResourceException(sprintf('This is not a local file "%s".', $resource));
@@ -72,14 +72,14 @@ class MoFileLoader extends ArrayLoader
      */
     protected function parse($resource)
     {
-        $stream = fopen($resource, 'r');
+        $stream = fopen($resource, "r");
 
         $stat = fstat($stream);
 
-        if ($stat['size'] < self::MO_HEADER_SIZE) {
+        if ($stat["size"] < self::MO_HEADER_SIZE) {
             throw new InvalidResourceException("MO stream content has an invalid format.");
         }
-        $magic = unpack('V1', fread($stream, 4));
+        $magic = unpack("V1", fread($stream, 4));
         $magic = hexdec(substr(dechex(current($magic)), -8));
 
         if ($magic == self::MO_LITTLE_ENDIAN_MAGIC) {
@@ -133,20 +133,20 @@ class MoFileLoader extends ArrayLoader
                 $translated = explode("\000", $translated);
             }
 
-            $ids = ['singular' => $singularId, 'plural' => $pluralId];
-            $item = compact('ids', 'translated');
+            $ids = ["singular" => $singularId, "plural" => $pluralId];
+            $item = compact("ids", "translated");
 
-            if (is_array($item['translated'])) {
-                $messages[$item['ids']['singular']] = stripcslashes($item['translated'][0]);
-                if (isset($item['ids']['plural'])) {
+            if (is_array($item["translated"])) {
+                $messages[$item["ids"]["singular"]] = stripcslashes($item["translated"][0]);
+                if (isset($item["ids"]["plural"])) {
                     $plurals = [];
-                    foreach ($item['translated'] as $plural => $translated) {
-                        $plurals[] = sprintf('{%d} %s', $plural, $translated);
+                    foreach ($item["translated"] as $plural => $translated) {
+                        $plurals[] = sprintf("{%d} %s", $plural, $translated);
                     }
-                    $messages[$item['ids']['plural']] = stripcslashes(implode('|', $plurals));
+                    $messages[$item["ids"]["plural"]] = stripcslashes(implode("|", $plurals));
                 }
-            } elseif (!empty($item['ids']['singular'])) {
-                $messages[$item['ids']['singular']] = stripcslashes($item['translated']);
+            } elseif (!empty($item["ids"]["singular"])) {
+                $messages[$item["ids"]["singular"]] = stripcslashes($item["translated"]);
             }
         }
 
@@ -164,9 +164,9 @@ class MoFileLoader extends ArrayLoader
      */
     protected function readLong($stream, $isBigEndian)
     {
-        $result = unpack($isBigEndian ? 'N1' : 'V1', fread($stream, 4));
+        $result = unpack($isBigEndian ? "N1" : "V1", fread($stream, 4));
         $result = current($result);
 
-        return (integer) substr($result, -8);
+        return (int) substr($result, -8);
     }
 }

@@ -30,11 +30,11 @@ class AuthDataCollector implements DataCollectorInterface
     {
         if (null === $this->auth) {
             return [
-                'enabled' => false,
-                'authenticated' => false,
-                'user_class' => null,
-                'user' => '',
-                'roles' => [],
+                "enabled" => false,
+                "authenticated" => false,
+                "user_class" => null,
+                "user" => "",
+                "roles" => [],
             ];
         }
 
@@ -46,24 +46,23 @@ class AuthDataCollector implements DataCollectorInterface
 
         if (null === $user) {
             return [
-                'enabled' => true,
-                'authenticated' => false,
-                'user_class' => null,
-                'user' => '',
-                'roles' => [],
+                "enabled" => true,
+                "authenticated" => false,
+                "user_class" => null,
+                "user" => "",
+                "roles" => [],
             ];
         }
 
         return [
-            'enabled' => true,
-            'authenticated' => $user->isAuthenticated(),
-            'user_class' => get_class($user),
-            'user' => $user->getUsername(),
-            'roles' => array_map(function ($role) {
+            "enabled" => true,
+            "authenticated" => $user->isAuthenticated(),
+            "user_class" => get_class($user),
+            "user" => $user->getUsername(),
+            "roles" => array_map(function ($role) {
                 return $role->name;
             }, User::findRoles($user)), // TODO interface does not match
         ];
-
     }
 
     /**
@@ -71,6 +70,6 @@ class AuthDataCollector implements DataCollectorInterface
      */
     public function getName()
     {
-        return 'auth';
+        return "auth";
     }
 }

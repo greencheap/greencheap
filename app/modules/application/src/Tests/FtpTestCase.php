@@ -13,20 +13,18 @@ abstract class FtpTestCase extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         try {
-
             $this->connection = $this->getSharedFtpConnection();
-
         } catch (\Exception $e) {
-            $this->markTestSkipped(sprintf('Unable to establish connection. (%s)', $e->getMessage()));
+            $this->markTestSkipped(sprintf("Unable to establish connection. (%s)", $e->getMessage()));
             return;
         }
 
-        $this->mode = $GLOBALS['ftp_mode'] == 'FTP_ASCII' ? FTP_ASCII : FTP_BINARY;
+        $this->mode = $GLOBALS["ftp_mode"] == "FTP_ASCII" ? FTP_ASCII : FTP_BINARY;
 
-        $this->workspace = DIRECTORY_SEPARATOR.time().rand(0, 1000);
+        $this->workspace = DIRECTORY_SEPARATOR . time() . rand(0, 1000);
 
         if (false === @ftp_mkdir($this->connection, $this->workspace)) {
-            $this->markTestSkipped('Unable to create workspace folder');
+            $this->markTestSkipped("Unable to create workspace folder");
             $this->workspace = false;
             return;
         }

@@ -76,7 +76,6 @@ interface NodeInterface extends \IteratorAggregate, \Countable
      */
     public function findChild($hash, $recursive = true);
 
-
     /**
      * Checks if the tree contains the given node.
      *

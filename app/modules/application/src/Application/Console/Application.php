@@ -24,7 +24,7 @@ class Application extends BaseApplication
      * @param Container $container
      * @param string $name
      */
-    public function __construct(Container $container, $name = 'UNKNOWN', $version = 'UNKNOWN')
+    public function __construct(Container $container, $name = "UNKNOWN", $version = "UNKNOWN")
     {
         parent::__construct($name, $version);
 
@@ -32,8 +32,8 @@ class Application extends BaseApplication
 
         $this->container = $container;
 
-        if (isset($container['events'])) {
-            $container['events']->trigger('console.init', [$this]);
+        if (isset($container["events"])) {
+            $container["events"]->trigger("console.init", [$this]);
         }
     }
 
@@ -41,8 +41,8 @@ class Application extends BaseApplication
     {
         $code = parent::run($input, $output);
 
-        if(($code === 0) && (isset($this->container['events']))) {
-            $this->container['events']->trigger(new Event('terminate'));
+        if ($code === 0 && isset($this->container["events"])) {
+            $this->container["events"]->trigger(new Event("terminate"));
         }
 
         return $code;

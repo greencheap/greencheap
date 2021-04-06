@@ -2,26 +2,22 @@
  * URL resolver plugin
  */
 
-import { on } from 'uikit-util';
+import { on } from "uikit-util";
 
 export default {
-
-    name: 'url-plugin',
+    name: "url-plugin",
 
     plugin: true,
 
     created() {
-
         var editor = this.$parent.editor;
 
         if (!editor || !editor.htmleditor) {
             return;
         }
 
-        on(editor.$el, 'renderLate', function () {
-
+        on(editor.$el, "renderLate", function () {
             editor.replaceInPreview(/src=["'](.+?)["']/gi, function (data) {
-
                 var replacement = data.matches[0];
 
                 if (!data.matches[1].match(/^(\/|http:|https:|ftp:)/i)) {
@@ -30,9 +26,6 @@ export default {
 
                 return replacement;
             });
-
         });
-
-    }
-
+    },
 };

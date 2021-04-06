@@ -19,10 +19,10 @@ class InfoController
     {
         return [
             '$view' => [
-                'title' => __('Info'),
-                'name'  => 'system:modules/info/views/info.php'
+                "title" => __("Info"),
+                "name" => "system:modules/info/views/info.php",
             ],
-            '$info' => App::info()->get()
+            '$info' => App::info()->get(),
         ];
     }
 }

@@ -33,8 +33,8 @@ class ApiNotifications
      */
     public function indexAction(): array
     {
-        if($this->user->isAnonymous()){
-            return App::jsonabort(401 , __('Unauthorized'));
+        if ($this->user->isAnonymous()) {
+            return App::jsonabort(401, __("Unauthorized"));
         }
 
         $id = $this->user->id;
@@ -49,10 +49,10 @@ class ApiNotifications
         $query->whereIn('except_user' , $id , true);
         });
          */
-        $query->orderBy('id' , 'desc')->limit(10);
+        $query->orderBy("id", "desc")->limit(10);
         $notifications = $query->get();
 
-        return compact('notifications');
+        return compact("notifications");
     }
 
     /**
@@ -61,21 +61,21 @@ class ApiNotifications
      * @param array $notification
      * @return array
      */
-    public function readAction( array $notification ): array
+    public function readAction(array $notification): array
     {
-        $id = $notification['id'];
-        if( !$query = Notifications::where(compact('id'))->first() ){
-            return App::jsonabort(404 , __('Not Found Notification'));
+        $id = $notification["id"];
+        if (!($query = Notifications::where(compact("id"))->first())) {
+            return App::jsonabort(404, __("Not Found Notification"));
         }
-        if(!is_array($query->read_user && !$query->read_user)){
+        if (!is_array($query->read_user && !$query->read_user)) {
             $query->read_user = [];
         }
         $query->except_group = array_values($query->except_group);
         $query->except_user = array_values($query->except_user);
         $query->read_group = array_values($query->read_group);
-        $query->read_user = array_values(array_merge($query->read_user , [(int) $this->user->id]));
+        $query->read_user = array_values(array_merge($query->read_user, [(int) $this->user->id]));
         $data = $query->save();
-        return compact('data');
+        return compact("data");
     }
 
     /**
@@ -83,10 +83,10 @@ class ApiNotifications
      * @param string $title
      * @param string $image
      */
-    public function setNotificationTestAction( string $title = 'Hello World' , string $image = 'system/notifications:images/update.svg')
+    public function setNotificationTestAction(string $title = "Hello World", string $image = "system/notifications:images/update.svg")
     {
         $query = Notifications::create([
-            'date' => new \DateTime(),
+            "date" => new \DateTime(),
         ]);
 
         $query->title = $title;

@@ -11,7 +11,7 @@ abstract class Item implements ItemInterface
      */
     public function setTitle($title)
     {
-        return $this->setElement('title', $title);
+        return $this->setElement("title", $title);
     }
 
     /**

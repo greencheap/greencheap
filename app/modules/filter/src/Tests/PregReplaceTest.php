@@ -13,7 +13,7 @@ class PregReplaceTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->filter = new PregReplaceFilter;
+        $this->filter = new PregReplaceFilter();
     }
 
     /**
@@ -21,7 +21,7 @@ class PregReplaceTest extends \PHPUnit_Framework_TestCase
      */
     public function testRuntimeException()
     {
-        $this->filter->filter('foo');
+        $this->filter->filter("foo");
     }
 
     /**
@@ -29,7 +29,7 @@ class PregReplaceTest extends \PHPUnit_Framework_TestCase
      */
     public function testModifierE()
     {
-        $this->filter->setPattern('/foo/e');
+        $this->filter->setPattern("/foo/e");
     }
 
     /**
@@ -64,10 +64,6 @@ class PregReplaceTest extends \PHPUnit_Framework_TestCase
 
     public function provider()
     {
-        return [
-            ['/foo/i', '', 'Foobar', 'bar'],
-            [['/foo/', '/bar/'], ['FOO', 'BAR'], 'foobar', 'FOOBAR']
-        ];
+        return [["/foo/i", "", "Foobar", "bar"], [["/foo/", "/bar/"], ["FOO", "BAR"], "foobar", "FOOBAR"]];
     }
-
 }

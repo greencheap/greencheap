@@ -5,7 +5,7 @@ namespace GreenCheap\Util;
 class Arr
 {
     const ARRAY_FILTER_USE_BOTH = 1;
-    const ARRAY_FILTER_USE_KEY  = 2;
+    const ARRAY_FILTER_USE_KEY = 2;
 
     /**
      * Checks if the given key exists.
@@ -24,10 +24,9 @@ class Arr
             return true;
         }
 
-        $parts = explode('.', $key);
+        $parts = explode(".", $key);
 
         foreach ($parts as $part) {
-
             if (!is_array($array) || !array_key_exists($part, $array)) {
                 return false;
             }
@@ -56,10 +55,9 @@ class Arr
             return $array[$key];
         }
 
-        $parts = explode('.', $key);
+        $parts = explode(".", $key);
 
         foreach ($parts as $part) {
-
             if (!is_array($array) || !array_key_exists($part, $array)) {
                 return $default;
             }
@@ -84,17 +82,16 @@ class Arr
             return $array = $value;
         }
 
-        $parts = explode('.', $key);
+        $parts = explode(".", $key);
 
         while (count($parts) > 1) {
-
             $part = array_shift($parts);
 
             if (!isset($array[$part]) || !is_array($array[$part])) {
                 $array[$part] = [];
             }
 
-            $array =& $array[$part];
+            $array = &$array[$part];
         }
 
         $array[array_shift($parts)] = $value;
@@ -110,24 +107,22 @@ class Arr
      */
     public static function remove(array &$array, $keys)
     {
-        $original =& $array;
+        $original = &$array;
 
         foreach ((array) $keys as $key) {
-
-            $parts = explode('.', $key);
+            $parts = explode(".", $key);
 
             while (count($parts) > 1) {
-
                 $part = array_shift($parts);
 
                 if (isset($array[$part]) && is_array($array[$part])) {
-                    $array =& $array[$part];
+                    $array = &$array[$part];
                 }
             }
 
             unset($array[array_shift($parts)]);
 
-            $array =& $original;
+            $array = &$original;
         }
     }
 
@@ -142,13 +137,12 @@ class Arr
     public static function pull(array &$array, $value, $strict = false)
     {
         if ($keys = array_keys($array, $value, $strict)) {
-
             foreach ($keys as $key) {
                 unset($array[$key]);
             }
 
             $new = array_values($array);
-            $array =& $new;
+            $array = &$new;
         }
 
         return $array;
@@ -170,15 +164,13 @@ class Arr
 
         foreach ($array2 as $key => $value) {
             if (isset($array1[$key])) {
-
                 if (is_int($key)) {
                     $array1[] = $value;
-                } else if (is_array($value) && is_array($array1[$key])) {
+                } elseif (is_array($value) && is_array($array1[$key])) {
                     $array1[$key] = static::merge($array1[$key], $value);
                 } else {
                     $array1[$key] = $value;
                 }
-
             } else {
                 $array1[$key] = $value;
             }
@@ -197,14 +189,13 @@ class Arr
      */
     public static function filter(array $array, callable $callback, $flag = 1)
     {
-        if (version_compare(PHP_VERSION, '5.6.0') >= 0) {
+        if (version_compare(PHP_VERSION, "5.6.0") >= 0) {
             return array_filter($array, $callback, $flag);
         }
 
         $filtered = [];
 
         foreach ($array as $key => $value) {
-
             $args = [$value];
 
             if ($flag === static::ARRAY_FILTER_USE_BOTH) {
@@ -264,15 +255,15 @@ class Arr
      * @param  string $path
      * @return array
      */
-    public static function flatten(array $array, $path = '')
+    public static function flatten(array $array, $path = "")
     {
         $results = [];
 
         foreach ($array as $key => $value) {
             if (is_array($value)) {
-                $results = array_merge($results, self::flatten($value, $path.$key.'.'));
+                $results = array_merge($results, self::flatten($value, $path . $key . "."));
             } else {
-                $results[$path.$key] = $value;
+                $results[$path . $key] = $value;
             }
         }
 
@@ -290,18 +281,16 @@ class Arr
         $result = [];
 
         foreach ($array as $key => $value) {
-
-            $values =& $result;
-            $keys = explode('.', $key);
+            $values = &$result;
+            $keys = explode(".", $key);
             while (count($keys) > 1) {
-
                 $key = array_shift($keys);
 
                 if (!isset($values[$key]) || !is_array($values[$key])) {
                     $values[$key] = [];
                 }
 
-                $values =& $values[$key];
+                $values = &$values[$key];
             }
 
             $values[array_shift($keys)] = $value;

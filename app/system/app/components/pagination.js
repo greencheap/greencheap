@@ -1,5 +1,4 @@
 export default {
-
     template: '<ul class="uk-pagination uk-flex-center"></ul>',
 
     props: {
@@ -20,13 +19,15 @@ export default {
 
         options: {
             type: Object,
-            default: function() {return {}}
+            default: function () {
+                return {};
+            },
         },
 
         name: {
-            default: '',
-            type: String
-        }
+            default: "",
+            type: String,
+        },
     },
 
     data() {
@@ -36,37 +37,41 @@ export default {
     },
 
     created() {
-
         var name = this.name || this.$parent.$options.name || this.$parent.$options._componentTag;
 
         this.key = `${name}.pagination`;
 
         if (this.page === null && this.$session.get(this.key)) {
-            this.$set(this, 'page', this.$session.get(this.key));
+            this.$set(this, "page", this.$session.get(this.key));
         }
 
         if (this.replaceState) {
-            this.$state('page', this.page);
+            this.$state("page", this.page);
         }
     },
 
     mounted() {
         const vm = this;
 
-        this.pagination = UIkit.pagination(this.$el, _.extend({
-            pages: this.pages,
-            currentPage: this.page || 0
-        }, this.options));
+        this.pagination = UIkit.pagination(
+            this.$el,
+            _.extend(
+                {
+                    pages: this.pages,
+                    currentPage: this.page || 0,
+                },
+                this.options
+            )
+        );
 
-        UIkit.util.on(this.pagination.$el, 'select.uk.pagination', (e, pagination, page) => {
-            vm.$emit('input', Number(page));
+        UIkit.util.on(this.pagination.$el, "select.uk.pagination", (e, pagination, page) => {
+            vm.$emit("input", Number(page));
         });
     },
 
     watch: {
-
         value(page) {
-            this.$set(this, 'page', page);
+            this.$set(this, "page", page);
         },
 
         page(page) {
@@ -78,7 +83,5 @@ export default {
             if (!this.pages) this.page = 0;
             this.pagination.render(pages);
         },
-
     },
-
 };

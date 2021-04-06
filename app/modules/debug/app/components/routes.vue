@@ -7,7 +7,7 @@
                 <tbody>
                     <tr>
                         <td>Route</td>
-                        <td>{{ data.route ? data.route : 'n/a' }}</td>
+                        <td>{{ data.route ? data.route : "n/a" }}</td>
                     </tr>
                     <template v-if="active">
                         <tr>
@@ -16,7 +16,9 @@
                         </tr>
                         <tr>
                             <td>Controller</td>
-                            <td><abbr :title="active.controller">{{ active.controller | short }}</abbr></td>
+                            <td>
+                                <abbr :title="active.controller">{{ active.controller | short }}</abbr>
+                            </td>
                         </tr>
                     </template>
                 </tbody>
@@ -26,12 +28,10 @@
 </template>
 
 <script>
-
 module.exports = {
-
     section: {
         priority: 20,
-        panel: '#panel-routes',
+        panel: "#panel-routes",
         template: `
                 <div>
                     <h1>Routes</h1>
@@ -54,32 +54,26 @@ module.exports = {
                 </div>`,
     },
 
-    props: ['data'],
+    props: ["data"],
 
     replace: false,
 
     computed: {
-
         active() {
             return this.data.routes.filter(function (route) {
                 return route.name === this.data.route;
             }, this)[0];
         },
-
     },
 
     filters: {
-
         str(methods) {
-            return methods.length ? `(${methods})` : '';
+            return methods.length ? `(${methods})` : "";
         },
 
         short(controller) {
-            return controller.split('\\').pop();
+            return controller.split("\\").pop();
         },
-
     },
-
 };
-
 </script>

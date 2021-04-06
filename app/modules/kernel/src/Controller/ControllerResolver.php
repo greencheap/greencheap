@@ -24,7 +24,7 @@ class ControllerResolver
      */
     public function getController(Request $request)
     {
-        if (!$controller = $request->attributes->get('_controller')) {
+        if (!($controller = $request->attributes->get("_controller"))) {
             if (null !== $this->logger) {
                 $this->logger->warning('Unable to look for the controller as the "_controller" parameter is missing');
             }
@@ -37,15 +37,15 @@ class ControllerResolver
         }
 
         if (is_object($controller)) {
-            if (method_exists($controller, '__invoke')) {
+            if (method_exists($controller, "__invoke")) {
                 return $controller;
             }
 
             throw new \InvalidArgumentException(sprintf('Controller "%s" for URI "%s" is not callable.', get_class($controller), $request->getPathInfo()));
         }
 
-        if (!str_contains($controller, ':')) {
-            if (method_exists($controller, '__invoke')) {
+        if (!str_contains($controller, ":")) {
+            if (method_exists($controller, "__invoke")) {
                 return $this->instantiateController($controller);
             } elseif (function_exists($controller)) {
                 return $controller;
@@ -71,13 +71,13 @@ class ControllerResolver
             $reflactionClass = new \ReflectionClass($controller[0]);
         } elseif (is_object($controller) && !$controller instanceof \Closure) {
             $r = new \ReflectionObject($controller);
-            $r = $r->getMethod('__invoke');
+            $r = $r->getMethod("__invoke");
             $reflactionClass = new \ReflectionClass($controller);
         } else {
             $r = new \ReflectionFunction($controller);
             $reflactionClass = new \ReflectionClass($controller);
         }
-        return $this->doGetArguments($request, $controller, $r->getParameters() , $reflactionClass);
+        return $this->doGetArguments($request, $controller, $r->getParameters(), $reflactionClass);
     }
 
     /**
@@ -87,7 +87,7 @@ class ControllerResolver
      * @param $reflactionClass
      * @return array
      */
-    protected function doGetArguments(Request $request, $controller, array $parameters , $reflactionClass): array
+    protected function doGetArguments(Request $request, $controller, array $parameters, $reflactionClass): array
     {
         $attributes = $request->attributes->all();
         $arguments = [];
@@ -100,7 +100,7 @@ class ControllerResolver
                 $arguments[] = $param->getDefaultValue();
             } else {
                 if (is_array($controller)) {
-                    $repr = sprintf('%s::%s()', get_class($controller[0]), $controller[1]);
+                    $repr = sprintf("%s::%s()", get_class($controller[0]), $controller[1]);
                 } elseif (is_object($controller)) {
                     $repr = get_class($controller);
                 } else {
@@ -123,11 +123,11 @@ class ControllerResolver
      */
     protected function createController($controller)
     {
-        if (false === strpos($controller, '::')) {
+        if (false === strpos($controller, "::")) {
             throw new \InvalidArgumentException(sprintf('Unable to find controller "%s".', $controller));
         }
 
-        list($class, $method) = explode('::', $controller, 2);
+        list($class, $method) = explode("::", $controller, 2);
 
         if (!class_exists($class)) {
             throw new \InvalidArgumentException(sprintf('Class "%s" does not exist.', $class));

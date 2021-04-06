@@ -20,10 +20,10 @@ class FileAdapter implements AdapterInterface
      * @param string $path;
      * @param string $url;
      */
-    public function __construct($path, $url = '')
+    public function __construct($path, $url = "")
     {
-        $this->path = strtr($path, '\\', '/');
-        $this->url  = $url;
+        $this->path = strtr($path, "\\", "/");
+        $this->url = $url;
     }
 
     /**
@@ -39,22 +39,21 @@ class FileAdapter implements AdapterInterface
      */
     public function getPathInfo(array $info)
     {
-        $info['localpath'] = $info['pathname'];
+        $info["localpath"] = $info["pathname"];
 
-        if ($info['root'] === '') {
-
+        if ($info["root"] === "") {
             $path = $this->path;
 
-            if (substr($path, -1) != '/') {
-                $path .= '/';
+            if (substr($path, -1) != "/") {
+                $path .= "/";
             }
 
-            $info['localpath'] = $path.$info['path'];
+            $info["localpath"] = $path . $info["path"];
         }
 
-        if ($info['localpath'] and file_exists($info['localpath'])) {
-            if (str_starts_with($info['localpath'], $this->path)) {
-                $info['url'] = $this->url.strtr(rawurlencode(substr($info['localpath'], strlen($this->path))), ['%2F' => '/']);
+        if ($info["localpath"] and file_exists($info["localpath"])) {
+            if (str_starts_with($info["localpath"], $this->path)) {
+                $info["url"] = $this->url . strtr(rawurlencode(substr($info["localpath"], strlen($this->path))), ["%2F" => "/"]);
             }
         }
 

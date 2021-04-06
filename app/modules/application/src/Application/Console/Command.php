@@ -98,7 +98,9 @@ class Command extends BaseCommand
      */
     public function argument($key = null)
     {
-        if (is_null($key)) return $this->input->getArguments();
+        if (is_null($key)) {
+            return $this->input->getArguments();
+        }
 
         return $this->input->getArgument($key);
     }
@@ -111,7 +113,9 @@ class Command extends BaseCommand
      */
     public function option($key = null)
     {
-        if (is_null($key)) return $this->input->getOptions();
+        if (is_null($key)) {
+            return $this->input->getOptions();
+        }
 
         return $this->input->getOption($key);
     }
@@ -125,7 +129,7 @@ class Command extends BaseCommand
      */
     public function confirm($question, $default = true)
     {
-        $helper = $this->getHelperSet()->get('question');
+        $helper = $this->getHelperSet()->get("question");
         $question = new ConfirmationQuestion("<question>$question</question>", $default);
 
         return $helper->ask($this->input, $this->output, $question);
@@ -140,7 +144,7 @@ class Command extends BaseCommand
      */
     public function ask($question, $default = null)
     {
-        $helper = $this->getHelperSet()->get('question');
+        $helper = $this->getHelperSet()->get("question");
         $question = new Question("<question>$question</question>", $default);
 
         return $helper->ask($this->input, $this->output, $question);
@@ -155,7 +159,7 @@ class Command extends BaseCommand
      */
     public function secret($question, $fallback = true)
     {
-        $helper = $this->getHelperSet()->get('question');
+        $helper = $this->getHelperSet()->get("question");
         $question = new Question("<question>$question</question>");
         $question->setHidden(true);
         $question->setHiddenFallback($fallback);
@@ -221,6 +225,6 @@ class Command extends BaseCommand
     public function abort($string)
     {
         $this->error($string);
-        exit;
+        exit();
     }
 }

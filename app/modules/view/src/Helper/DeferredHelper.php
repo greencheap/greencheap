@@ -37,28 +37,31 @@ class DeferredHelper implements HelperInterface
      */
     public function register(View $view)
     {
-        $view->on('render', function ($event) {
+        $view->on(
+            "render",
+            function ($event) {
+                $name = $event->getTemplate();
 
-            $name = $event->getTemplate();
+                if (isset($this->placeholder[$name])) {
+                    $this->deferred[$name] = clone $event;
 
-            if (isset($this->placeholder[$name])) {
+                    $event->setResult($this->placeholder[$name]);
+                    $event->stopPropagation();
+                }
+            },
+            15
+        );
 
-                $this->deferred[$name] = clone $event;
-
-                $event->setResult($this->placeholder[$name]);
-                $event->stopPropagation();
-            }
-
-        }, 15);
-
-        $this->events->on('response', function ($e, $request, $response) use ($view) {
-
-            foreach ($this->deferred as $name => $event) {
-                $view->trigger($event->setName($name), [$view]);
-                $response->setContent(str_replace($this->placeholder[$name], $event->getResult(), $response->getContent()));
-            }
-
-        }, 10);
+        $this->events->on(
+            "response",
+            function ($e, $request, $response) use ($view) {
+                foreach ($this->deferred as $name => $event) {
+                    $view->trigger($event->setName($name), [$view]);
+                    $response->setContent(str_replace($this->placeholder[$name], $event->getResult(), $response->getContent()));
+                }
+            },
+            10
+        );
     }
 
     /**
@@ -68,7 +71,7 @@ class DeferredHelper implements HelperInterface
      */
     public function __invoke($name)
     {
-        $this->placeholder[$name] = sprintf('<!-- %s -->', uniqid());
+        $this->placeholder[$name] = sprintf("<!-- %s -->", uniqid());
     }
 
     /**
@@ -76,6 +79,6 @@ class DeferredHelper implements HelperInterface
      */
     public function getName()
     {
-        return 'defer';
+        return "defer";
     }
 }

@@ -1,22 +1,21 @@
-import SiteCode from '../components/site-code.vue';
-import SiteMeta from '../components/site-meta.vue';
-import SiteGeneral from '../components/site-general.vue';
-import SiteMaintenance from '../components/site-maintenance.vue';
+import SiteCode from "../components/site-code.vue";
+import SiteMeta from "../components/site-meta.vue";
+import SiteGeneral from "../components/site-general.vue";
+import SiteMaintenance from "../components/site-maintenance.vue";
 
-import { ValidationObserver, VInput } from 'SystemApp/components/validation.vue';
+import { ValidationObserver, VInput } from "SystemApp/components/validation.vue";
 
 window.Site = {
+    name: "site-settings",
 
-    name: 'site-settings',
-
-    el: '#settings',
+    el: "#settings",
 
     mixins: [Theme.Mixins.Helper, Theme.Mixins.Elements],
 
     provide: {
-        '$components': {
-            'v-input': VInput
-        }
+        $components: {
+            "v-input": VInput,
+        },
     },
 
     data() {
@@ -24,14 +23,13 @@ window.Site = {
     },
 
     created() {
-        this.$theme.$tabs('leftTab', '#settings .uk-nav', { connect: '.settings-tab', state: true });
+        this.$theme.$tabs("leftTab", "#settings .uk-nav", { connect: ".settings-tab", state: true });
     },
 
     computed: {
-
         sections() {
             const sections = [];
-            const hash = window.location.hash.replace('#', '');
+            const hash = window.location.hash.replace("#", "");
 
             _.forIn(this.$options.components, (component, name) => {
                 const { section } = component;
@@ -45,11 +43,9 @@ window.Site = {
 
             return sections;
         },
-
     },
 
     methods: {
-
         async submit() {
             const isValid = await this.$refs.observer.validate();
             if (isValid) {
@@ -58,25 +54,26 @@ window.Site = {
         },
 
         save() {
-            this.$trigger('save:settings', this.config);
+            this.$trigger("save:settings", this.config);
 
-            this.$http.post('admin/system/settings/config', { name: 'system/site', config: this.config }).then(function() {
-                this.$notify('Settings saved.');
-            }, function(res) {
-                this.$notify(res.data, 'danger');
-            });
+            this.$http.post("admin/system/settings/config", { name: "system/site", config: this.config }).then(
+                function () {
+                    this.$notify("Settings saved.");
+                },
+                function (res) {
+                    this.$notify(res.data, "danger");
+                }
+            );
         },
-
     },
 
     components: {
-        'site-code': SiteCode,
-        'site-meta': SiteMeta,
-        'site-general': SiteGeneral,
-        'site-maintenance': SiteMaintenance,
-        'validation-observer': ValidationObserver
+        "site-code": SiteCode,
+        "site-meta": SiteMeta,
+        "site-general": SiteGeneral,
+        "site-maintenance": SiteMaintenance,
+        "validation-observer": ValidationObserver,
     },
-
 };
 
 Vue.ready(window.Site);

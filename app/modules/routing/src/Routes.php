@@ -22,7 +22,7 @@ class Routes implements \IteratorAggregate, ResourceInterface
     /**
      * @var string
      */
-    protected $prefix = '@';
+    protected $prefix = "@";
 
     /**
      * @var int
@@ -53,7 +53,7 @@ class Routes implements \IteratorAggregate, ResourceInterface
      */
     public function get($path, $callback)
     {
-        return $this->match($path, $callback)->setMethods('GET');
+        return $this->match($path, $callback)->setMethods("GET");
     }
 
     /**
@@ -65,7 +65,7 @@ class Routes implements \IteratorAggregate, ResourceInterface
      */
     public function post($path, $callback)
     {
-        return $this->match($path, $callback)->setMethods('POST');
+        return $this->match($path, $callback)->setMethods("POST");
     }
 
     /**
@@ -77,7 +77,7 @@ class Routes implements \IteratorAggregate, ResourceInterface
      */
     public function match($path, $callback)
     {
-        return $this->add(['path' => $path, 'controller' => $callback]);
+        return $this->add(["path" => $path, "controller" => $callback]);
     }
 
     /**
@@ -101,9 +101,9 @@ class Routes implements \IteratorAggregate, ResourceInterface
      */
     public function alias($path, $name, array $defaults = [])
     {
-        $path = preg_replace('/^[^\/]/', '/$0', $path);
+        $path = preg_replace("/^[^\/]/", '/$0', $path);
 
-        return $this->aliases[$name] = $this->createRoute(compact('name', 'path', 'defaults'));
+        return $this->aliases[$name] = $this->createRoute(compact("name", "path", "defaults"));
     }
 
     /**
@@ -116,9 +116,9 @@ class Routes implements \IteratorAggregate, ResourceInterface
      */
     public function redirect($path, $redirect, array $defaults = [])
     {
-        $defaults['_redirect'] = $redirect;
+        $defaults["_redirect"] = $redirect;
 
-        return $this->add(compact('path', 'defaults'));
+        return $this->add(compact("path", "defaults"));
     }
 
     /**
@@ -171,26 +171,25 @@ class Routes implements \IteratorAggregate, ResourceInterface
      */
     protected function createRoute(array $config)
     {
-        $name = isset($config['name']) ? $config['name'] : $this->generateRouteName($config);
-        $defaults = isset($config['defaults']) ? $config['defaults'] : [];
-        $requirements = isset($config['requirements']) ? $config['requirements'] : [];
-        $options = isset($config['options']) ? $config['options'] : [];
-        $host = isset($config['host']) ? $config['host'] : '';
-        $schemes = isset($config['schemes']) ? $config['schemes'] : [];
-        $methods = isset($config['methods']) ? $config['methods'] : [];
-        $condition = isset($config['condition']) ? $config['condition'] : '';
+        $name = isset($config["name"]) ? $config["name"] : $this->generateRouteName($config);
+        $defaults = isset($config["defaults"]) ? $config["defaults"] : [];
+        $requirements = isset($config["requirements"]) ? $config["requirements"] : [];
+        $options = isset($config["options"]) ? $config["options"] : [];
+        $host = isset($config["host"]) ? $config["host"] : "";
+        $schemes = isset($config["schemes"]) ? $config["schemes"] : [];
+        $methods = isset($config["methods"]) ? $config["methods"] : [];
+        $condition = isset($config["condition"]) ? $config["condition"] : "";
 
-        $options['controller'] = isset($config['controller']) ? $config['controller'] : '';
+        $options["controller"] = isset($config["controller"]) ? $config["controller"] : "";
 
-        if (!is_string($options['controller']) && is_callable($options['controller'])) {
-            $this->callbacks[$name] = $options['controller'];
-            unset($options['controller']);
-        } elseif ($options['controller']) {
-            foreach((array) $options['controller'] as $controller) {
-
+        if (!is_string($options["controller"]) && is_callable($options["controller"])) {
+            $this->callbacks[$name] = $options["controller"];
+            unset($options["controller"]);
+        } elseif ($options["controller"]) {
+            foreach ((array) $options["controller"] as $controller) {
                 if (is_callable($controller)) {
                     $refl = new \ReflectionMethod($controller);
-                    $defaults['_controller'] = $controller;
+                    $defaults["_controller"] = $controller;
                 } else {
                     $refl = new \ReflectionClass($controller);
                 }
@@ -199,7 +198,7 @@ class Routes implements \IteratorAggregate, ResourceInterface
             }
         }
 
-        return (new Route($config['path'], $defaults, $requirements, $options, $host, $schemes, $methods, $condition))->setName($name);
+        return (new Route($config["path"], $defaults, $requirements, $options, $host, $schemes, $methods, $condition))->setName($name);
     }
 
     /**
@@ -210,9 +209,9 @@ class Routes implements \IteratorAggregate, ResourceInterface
      */
     protected function generateRouteName(array $config)
     {
-        $name = ltrim($config['path'], '/');
-        $name = trim(str_replace(array(':', '|', '-'), '_', $name), '_');
-        $name = preg_replace('/[^a-z0-9A-Z_.\/]+/', '', $name);
-        return $this->prefix.$name;
+        $name = ltrim($config["path"], "/");
+        $name = trim(str_replace([":", "|", "-"], "_", $name), "_");
+        $name = preg_replace("/[^a-z0-9A-Z_.\/]+/", "", $name);
+        return $this->prefix . $name;
     }
 }

@@ -24,17 +24,17 @@ class WidgetApiController
         $positions = App::position()->all();
 
         foreach ($positions as &$position) {
-            $position['widgets'] = [];
+            $position["widgets"] = [];
 
-            foreach ($position['assigned'] as $id) {
+            foreach ($position["assigned"] as $id) {
                 if (isset($widgets[$id])) {
-                    $position['widgets'][] = $widgets[$id];
+                    $position["widgets"][] = $widgets[$id];
                     unset($widgets[$id]);
                 }
             }
         }
 
-        return ['positions' => array_values($positions), 'unassigned' => array_values($widgets)];
+        return ["positions" => array_values($positions), "unassigned" => array_values($widgets)];
     }
 
     /**
@@ -44,8 +44,8 @@ class WidgetApiController
      */
     public function getAction($id): mixed
     {
-        if (!$widget = Widget::find($id)) {
-           return App::jsonabort(404, 'Widget not found.');
+        if (!($widget = Widget::find($id))) {
+            return App::jsonabort(404, "Widget not found.");
         }
 
         return $widget;
@@ -62,7 +62,7 @@ class WidgetApiController
     {
         App::position()->assign($position, $ids);
 
-        return ['message' => 'success'];
+        return ["message" => "success"];
     }
 
     /**
@@ -77,17 +77,17 @@ class WidgetApiController
     {
         if (!$id) {
             $widget = Widget::create();
-        } else if (!$widget = Widget::find($id)) {
-            return App::jsonabort(404, 'Widget not found.');
+        } elseif (!($widget = Widget::find($id))) {
+            return App::jsonabort(404, "Widget not found.");
         }
 
-        if (empty($data['title'])) {
-            return App::jsonabort(400, 'Widget title empty.');
+        if (empty($data["title"])) {
+            return App::jsonabort(400, "Widget title empty.");
         }
 
         $widget->save($data);
 
-        return ['message' => 'success', 'widget' => $widget, 'data' => $data];
+        return ["message" => "success", "widget" => $widget, "data" => $data];
     }
 
     /**
@@ -99,13 +99,13 @@ class WidgetApiController
     #[ArrayShape(['message' => "string"])]
     public function deleteAction($id): mixed
     {
-        if (!$widget = Widget::find($id)) {
-            App::jsonabort(404, 'Widget not found.');
+        if (!($widget = Widget::find($id))) {
+            App::jsonabort(404, "Widget not found.");
         }
 
         $widget->delete();
 
-        return ['message' => 'success'];
+        return ["message" => "success"];
     }
 
     /**
@@ -122,12 +122,12 @@ class WidgetApiController
                 $copy = clone $widget;
                 $copy->id = null;
                 $copy->status = 0;
-                $copy->title = $widget->title.' - '.__('Copy');
+                $copy->title = $widget->title . " - " . __("Copy");
                 $copy->save();
             }
         }
 
-        return ['message' => 'success'];
+        return ["message" => "success"];
     }
 
     /**
@@ -140,10 +140,10 @@ class WidgetApiController
     public function bulkSaveAction($widgets = []): array
     {
         foreach ($widgets as $data) {
-            $this->saveAction($data, isset($data['id']) ? $data['id'] : 0);
+            $this->saveAction($data, isset($data["id"]) ? $data["id"] : 0);
         }
 
-        return ['message' => 'success'];
+        return ["message" => "success"];
     }
 
     /**
@@ -159,6 +159,6 @@ class WidgetApiController
             $this->deleteAction($id);
         }
 
-        return ['message' => 'success'];
+        return ["message" => "success"];
     }
 }

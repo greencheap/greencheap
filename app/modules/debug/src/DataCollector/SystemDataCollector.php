@@ -35,6 +35,6 @@ class SystemDataCollector implements DataCollectorInterface
      */
     public function getName()
     {
-        return 'system';
+        return "system";
     }
 }

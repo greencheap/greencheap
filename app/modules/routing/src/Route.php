@@ -9,7 +9,7 @@ class Route extends BaseRoute
     /**
      * @var string
      */
-    protected $name = '';
+    protected $name = "";
 
     /**
      * Returns the routes name.
@@ -29,7 +29,7 @@ class Route extends BaseRoute
      */
     public function setName($name)
     {
-        $this->name = trim((string) $name, '/');
+        $this->name = trim((string) $name, "/");
 
         return $this;
     }
@@ -41,10 +41,10 @@ class Route extends BaseRoute
      */
     public function getController()
     {
-        $controller = $this->getDefault('_controller');
+        $controller = $this->getDefault("_controller");
 
         if (is_string($controller)) {
-            return explode('::', $controller, 2);
+            return explode("::", $controller, 2);
         }
 
         return $controller;

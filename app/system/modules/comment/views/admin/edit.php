@@ -1,4 +1,4 @@
-<?php $view->script('system_comment_edit' , 'system/comment:app/bundle/edit.js' , 'vue') ?>
+<?php $view->script("system_comment_edit", "system/comment:app/bundle/edit.js", "vue"); ?>
 
 <section id="app" v-cloak>
     <div class="uk-clearfix">

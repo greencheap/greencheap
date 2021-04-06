@@ -25,9 +25,15 @@ class ResponseListener implements EventSubscriberInterface
             return;
         }
 
-        $response->setContent(preg_replace_callback(self::REGEX_URL, function ($matches) {
-            return sprintf(' %s="%s"', $matches['attr'], App::url($matches['url']));
-        }, $content));
+        $response->setContent(
+            preg_replace_callback(
+                self::REGEX_URL,
+                function ($matches) {
+                    return sprintf(' %s="%s"', $matches["attr"], App::url($matches["url"]));
+                },
+                $content
+            )
+        );
     }
 
     /**
@@ -36,7 +42,7 @@ class ResponseListener implements EventSubscriberInterface
     public function subscribe()
     {
         return [
-            'response' => ['onResponse', -20]
+            "response" => ["onResponse", -20],
         ];
     }
 }

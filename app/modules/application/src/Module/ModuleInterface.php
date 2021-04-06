@@ -47,7 +47,7 @@ interface ModuleInterface
      * @param $version_seconds
      * @return boolean
      */
-    public function isCompatibleSystem($version , $version_seconds);
+    public function isCompatibleSystem($version, $version_seconds);
 
     /**
      * @return mixed

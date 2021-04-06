@@ -42,7 +42,7 @@ class Package implements PackageInterface
      */
     public function getName()
     {
-        return $this->get('name');
+        return $this->get("name");
     }
 
     /**
@@ -50,7 +50,7 @@ class Package implements PackageInterface
      */
     public function getType()
     {
-        return $this->get('type');
+        return $this->get("type");
     }
 
     /**

@@ -38,7 +38,7 @@ class ConfigManager implements \IteratorAggregate
     public function __construct(Connection $connection, array $config)
     {
         $this->connection = $connection;
-        $this->table      = $config['table'];
+        $this->table = $config["table"];
     }
 
     /**
@@ -97,12 +97,11 @@ class ConfigManager implements \IteratorAggregate
         $this->configs[$name] = $config;
 
         if ($config->dirty()) {
-
-            $data = ['name' => $name, 'value' => json_encode($config, JSON_UNESCAPED_UNICODE)];
+            $data = ["name" => $name, "value" => json_encode($config, JSON_UNESCAPED_UNICODE)];
 
             if ($this->connection->getDatabasePlatform() instanceof MySqlPlatform) {
                 $this->connection->executeQuery("INSERT INTO {$this->table} (name, value) VALUES (:name, :value) ON DUPLICATE KEY UPDATE value = :value", $data);
-            } elseif (!$this->connection->update($this->table, $data, compact('name'))) {
+            } elseif (!$this->connection->update($this->table, $data, compact("name"))) {
                 $this->connection->insert($this->table, $data);
             }
         }
@@ -116,7 +115,7 @@ class ConfigManager implements \IteratorAggregate
      */
     public function remove(string $name)
     {
-        $this->connection->delete($this->table, compact('name'));
+        $this->connection->delete($this->table, compact("name"));
     }
 
     /**
@@ -136,11 +135,10 @@ class ConfigManager implements \IteratorAggregate
      */
     protected function fetch(string $name)
     {
-
         if ($this->cache === null) {
             $this->cache = $this->connection->executeQuery("SELECT name, value FROM {$this->table}")->fetchAll(\PDO::FETCH_COLUMN | \PDO::FETCH_UNIQUE);
         }
-        if (isset($this->cache[$name]) && $values = @json_decode($this->cache[$name], true)) {
+        if (isset($this->cache[$name]) && ($values = @json_decode($this->cache[$name], true))) {
             return $this->configs[$name] = new Config($values);
         }
     }

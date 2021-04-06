@@ -1,11 +1,10 @@
-import { ValidationObserver, VInput } from 'SystemApp/components/validation.vue';
-import UserSettings from '../../components/user-settings.vue';
+import { ValidationObserver, VInput } from "SystemApp/components/validation.vue";
+import UserSettings from "../../components/user-settings.vue";
 
 window.User = {
+    name: "user-edit",
 
-    name: 'user-edit',
-
-    el: '#user-edit',
+    el: "#user-edit",
 
     mixins: [Theme.Mixins.Helper],
 
@@ -14,19 +13,19 @@ window.User = {
     },
 
     provide: {
-        '$components': {
-            'v-input': VInput
-        }
+        $components: {
+            "v-input": VInput,
+        },
     },
 
-    watch:{
-        'user.data.avatar':{
-            handler(){
+    watch: {
+        "user.data.avatar": {
+            handler() {
                 this.save();
                 return;
             },
-            deep:false
-        }
+            deep: false,
+        },
     },
 
     created() {
@@ -38,15 +37,14 @@ window.User = {
             }
         });
 
-        this.$set(this, 'sections', _.sortBy(sections, 'priority'));
+        this.$set(this, "sections", _.sortBy(sections, "priority"));
     },
 
     mounted() {
-        this.tab = UIkit.tab(this.$refs.tab, { connect: '#user-content' });
+        this.tab = UIkit.tab(this.$refs.tab, { connect: "#user-content" });
     },
 
     methods: {
-
         async submit() {
             const isValid = await this.$refs.observer.validate();
             if (isValid) {
@@ -59,35 +57,36 @@ window.User = {
             const data = { user: this.user };
             const vm = this;
 
-            this.$trigger('save:user', data);
+            this.$trigger("save:user", data);
 
-            this.$resource('api/user{/id}').save({ id: this.user.id }, data).then(function (res) {
-                if (!this.user.id) {
-                    window.history.replaceState({}, '', this.$url.route('admin/user/edit', { id: res.data.user.id }));
-                }
+            this.$resource("api/user{/id}")
+                .save({ id: this.user.id }, data)
+                .then(
+                    function (res) {
+                        if (!this.user.id) {
+                            window.history.replaceState({}, "", this.$url.route("admin/user/edit", { id: res.data.user.id }));
+                        }
 
-                this.$set(this, 'user', res.data.user);
+                        this.$set(this, "user", res.data.user);
 
-                this.$notify('User saved.');
-
-            }, function (res) {
-                this.$notify(res.data, 'danger');
-            }).then(function() {
-                setTimeout(() => {
-                    vm.processing = false;
-                }, 500);
-            });
+                        this.$notify("User saved.");
+                    },
+                    function (res) {
+                        this.$notify(res.data, "danger");
+                    }
+                )
+                .then(function () {
+                    setTimeout(() => {
+                        vm.processing = false;
+                    }, 500);
+                });
         },
-
     },
 
     components: {
-
         ValidationObserver,
         settings: UserSettings,
-
     },
-
 };
 
 Vue.ready(window.User);

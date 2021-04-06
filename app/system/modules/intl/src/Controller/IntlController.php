@@ -17,19 +17,23 @@ class IntlController
      */
     public function indexAction($locale = null): mixed
     {
-        $intl = App::module('system/intl');
+        $intl = App::module("system/intl");
         $intl->loadLocale($locale);
 
         $messages = $intl->getFormats($locale) ?: [];
-        $messages['locale'] = $locale;
-        $messages['translations'] = [$locale => App::translator()->getCatalogue($locale)->all()];
+        $messages["locale"] = $locale;
+        $messages["translations"] = [
+            $locale => App::translator()
+                ->getCatalogue($locale)
+                ->all(),
+        ];
         $messages = json_encode($messages);
 
         $request = App::request();
 
         $json = $request->isXmlHttpRequest();
 
-        $response = ($json ? App::response()->json() : App::response('', 200, ['Content-Type' => 'application/javascript']));
+        $response = $json ? App::response()->json() : App::response("", 200, ["Content-Type" => "application/javascript"]);
         $response->setETag(md5($json . $messages))->setPublic();
 
         if ($response->isNotModified($request)) {

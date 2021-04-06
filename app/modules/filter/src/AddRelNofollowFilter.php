@@ -12,10 +12,14 @@ class AddRelNofollowFilter extends AbstractFilter
      */
     public function filter($value)
     {
-        return preg_replace_callback('|<a (.+?)>|i', function ($matches) {
-            $text = $matches[1];
-            $text = str_replace([' rel="nofollow"', " rel='nofollow'"], '', $text);
-            return "<a $text rel=\"nofollow\">";
-        }, (string) $value);
+        return preg_replace_callback(
+            "|<a (.+?)>|i",
+            function ($matches) {
+                $text = $matches[1];
+                $text = str_replace([' rel="nofollow"', " rel='nofollow'"], "", $text);
+                return "<a $text rel=\"nofollow\">";
+            },
+            (string) $value
+        );
     }
 }

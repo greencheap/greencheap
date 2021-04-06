@@ -15,15 +15,15 @@ class StorageController
      * @return array
      */
     #[ArrayShape(['$view' => "array", 'root' => "mixed", 'mode' => "string"])]
-    public function indexAction():array
+    public function indexAction(): array
     {
         return [
             '$view' => [
-                'title' => __('Storage'),
-                'name'  => 'system:modules/finder/views/storage.php'
+                "title" => __("Storage"),
+                "name" => "system:modules/finder/views/storage.php",
             ],
-            'root' => App::module('system/finder')->config('storage'),
-            'mode' => 'write'
+            "root" => App::module("system/finder")->config("storage"),
+            "mode" => "write",
         ];
     }
 }

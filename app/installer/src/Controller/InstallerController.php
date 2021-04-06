@@ -29,19 +29,19 @@ class InstallerController
     #[ArrayShape(['$view' => "array", '$installer' => "array", 'image' => "array"])]
     public function indexAction(): array
     {
-        $intl = App::module('system/intl');
+        $intl = App::module("system/intl");
         return [
             '$view' => [
-                'title' => __('GreenCheap Installer'),
-                'name' => 'app/installer/views/installer.php',
+                "title" => __("GreenCheap Installer"),
+                "name" => "app/installer/views/installer.php",
             ],
             '$installer' => [
-                'locale' => $intl->getLocale(),
-                'locales' => $intl->getAvailableLanguages(),
-                'sqlite' => class_exists('SQLite3') || (class_exists('PDO') && in_array('sqlite', \PDO::getAvailableDrivers(), true)),
-                'pgsql' => in_array('pgsql', \PDO::getAvailableDrivers(), true)
+                "locale" => $intl->getLocale(),
+                "locales" => $intl->getAvailableLanguages(),
+                "sqlite" => class_exists("SQLite3") || (class_exists("PDO") && in_array("sqlite", \PDO::getAvailableDrivers(), true)),
+                "pgsql" => in_array("pgsql", \PDO::getAvailableDrivers(), true),
             ],
-            'image' => \GreenCheap\System\Controller\AdminController::getUnsplashImages()[array_rand(\GreenCheap\System\Controller\AdminController::getUnsplashImages() , 1)]
+            "image" => \GreenCheap\System\Controller\AdminController::getUnsplashImages()[array_rand(\GreenCheap\System\Controller\AdminController::getUnsplashImages(), 1)],
         ];
     }
 
@@ -66,5 +66,4 @@ class InstallerController
     {
         return $this->installer->install($config, $option, $user);
     }
-
 }

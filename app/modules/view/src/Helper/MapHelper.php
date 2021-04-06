@@ -16,11 +16,15 @@ class MapHelper implements HelperInterface, \IteratorAggregate
      */
     public function register(View $view)
     {
-        $view->on('render', function ($event) {
-            if ($this->has($name = $event->getTemplate())) {
-                $event->setTemplate($this->get($name));
-            }
-        }, 10);
+        $view->on(
+            "render",
+            function ($event) {
+                if ($this->has($name = $event->getTemplate())) {
+                    $event->setTemplate($this->get($name));
+                }
+            },
+            10
+        );
     }
 
     /**
@@ -87,6 +91,6 @@ class MapHelper implements HelperInterface, \IteratorAggregate
      */
     public function getName()
     {
-        return 'map';
+        return "map";
     }
 }

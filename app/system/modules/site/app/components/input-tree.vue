@@ -1,12 +1,16 @@
 <template>
     <div>
-        <label><input v-model="all" class="uk-checkbox" type="checkbox"><span class="uk-margin-small-left">{{ 'All Pages' | trans }}</span></label>
+        <label
+            ><input v-model="all" class="uk-checkbox" type="checkbox" /><span class="uk-margin-small-left">{{ "All Pages" | trans }}</span></label
+        >
 
         <ul class="uk-list">
             <li v-for="(menu, key) in treelist" v-show="menu.list.length" :key="key">
                 <span class="uk-h5">{{ menu.label }}</span>
                 <vue-nestable :value="menu.list">
-                    <label slot-scope="{ item }" :item="item"><input v-model="c_active" class="uk-checkbox" type="checkbox" :value="item.id" number><span class="uk-margin-small-left">{{ item.title }}</span></label>
+                    <label slot-scope="{ item }" :item="item"
+                        ><input v-model="c_active" class="uk-checkbox" type="checkbox" :value="item.id" number /><span class="uk-margin-small-left">{{ item.title }}</span></label
+                    >
                 </vue-nestable>
             </li>
         </ul>
@@ -14,12 +18,10 @@
 </template>
 
 <script>
-
-import { VueNestable } from 'vue-nestable';
+import { VueNestable } from "vue-nestable";
 
 export default {
-
-    name: 'input-tree',
+    name: "input-tree",
 
     props: {
         trash: {
@@ -50,10 +52,9 @@ export default {
     },
 
     watch: {
-
         c_active(active) {
             this.all = !active || !active.length;
-            this.$emit('input', active);
+            this.$emit("input", active);
         },
 
         all(all) {
@@ -61,38 +62,36 @@ export default {
                 this.c_active = [];
             }
         },
-
     },
 
     mounted() {
         const vm = this;
 
-        Vue.Promise.all([
-            this.$http.get('api/site/node'),
-            this.$http.get('api/site/menu'),
-        ])
-            .then((responses) => {
-                vm.$set(vm, 'nodes', responses[0].data);
-                vm.$set(vm, 'menus', vm.trash ? responses[1].data : _.reject(responses[1].data, { id: 'trash' }));
+        Vue.Promise.all([this.$http.get("api/site/node"), this.$http.get("api/site/menu")]).then(
+            (responses) => {
+                vm.$set(vm, "nodes", responses[0].data);
+                vm.$set(vm, "menus", vm.trash ? responses[1].data : _.reject(responses[1].data, { id: "trash" }));
 
                 _.forEach(vm.menus, (menu) => {
-                    const nodes = _(vm.nodes).filter({ menu: menu.id }).sortBy('priority').value();
+                    const nodes = _(vm.nodes).filter({ menu: menu.id }).sortBy("priority").value();
                     vm.treelist.push({ label: menu.label, list: vm.unflatten(nodes) });
                 });
-            }, () => {
-                vm.$notify('Could not load config.', 'danger');
-            });
+            },
+            () => {
+                vm.$notify("Could not load config.", "danger");
+            }
+        );
     },
 
     methods: {
         unflatten() {
-            let [array, parent, tree] = arguments; const
-                self = this;
+            let [array, parent, tree] = arguments;
+            const self = this;
 
-            tree = typeof tree !== 'undefined' ? tree : [];
-            parent = typeof parent !== 'undefined' ? parent : { id: 0 };
+            tree = typeof tree !== "undefined" ? tree : [];
+            parent = typeof parent !== "undefined" ? parent : { id: 0 };
 
-            const children = _.filter(array, child => child.parent_id == parent.id);
+            const children = _.filter(array, (child) => child.parent_id == parent.id);
 
             if (!_.isEmpty(children)) {
                 if (parent.id == 0) {
@@ -100,7 +99,9 @@ export default {
                 } else {
                     parent.children = children;
                 }
-                _.each(children, (child) => { self.unflatten(array, child); });
+                _.each(children, (child) => {
+                    self.unflatten(array, child);
+                });
             }
 
             return tree;
@@ -108,20 +109,25 @@ export default {
     },
 
     computed: {
-
         grouped() {
-            return _(this.nodes).groupBy('menu').mapValues(nodes => _(nodes || {}).sortBy('priority').groupBy('parent_id').value()).value();
+            return _(this.nodes)
+                .groupBy("menu")
+                .mapValues((nodes) =>
+                    _(nodes || {})
+                        .sortBy("priority")
+                        .groupBy("parent_id")
+                        .value()
+                )
+                .value();
         },
-
     },
 
     components: {
-        VueNestable
-    }
+        VueNestable,
+    },
 };
 
-Vue.component('input-tree', (resolve) => {
-    resolve(require('./input-tree.vue'));
+Vue.component("input-tree", (resolve) => {
+    resolve(require("./input-tree.vue"));
 });
-
 </script>

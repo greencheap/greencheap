@@ -38,7 +38,7 @@ exports.compare = function (v1, v2, operator) {
         b: -4,
         RC: -3,
         rc: -3,
-        '#': -2,
+        "#": -2,
         p: 1,
         pl: 1,
     };
@@ -52,18 +52,16 @@ exports.compare = function (v1, v2, operator) {
     // It's also important to not strip spaces because of this.
     //   version_compare('', ' ') == 1
     const prepVersion = function (v) {
-        v = (`${v}`)
-            .replace(/[_\-+]/g, '.');
-        v = v.replace(/([^.\d]+)/g, '.$1.')
-            .replace(/\.{2,}/g, '.');
-        return (!v.length ? [-8] : v.split('.'));
+        v = `${v}`.replace(/[_\-+]/g, ".");
+        v = v.replace(/([^.\d]+)/g, ".$1.").replace(/\.{2,}/g, ".");
+        return !v.length ? [-8] : v.split(".");
     };
     // This converts a version component to a number.
     // Empty component becomes 0.
     // Non-numerical component becomes a negative number.
     // Numerical component becomes itself as an integer.
     const numVersion = function (v) {
-        return !v ? 0 : (isNaN(v) ? vm[v] || -7 : parseInt(v, 10));
+        return !v ? 0 : isNaN(v) ? vm[v] || -7 : parseInt(v, 10);
     };
     v1 = prepVersion(v1);
     v2 = prepVersion(v2);
@@ -90,28 +88,28 @@ exports.compare = function (v1, v2, operator) {
     // "No operator" seems to be treated as "<."
     // Any other values seem to make the function return null.
     switch (operator) {
-    case '>':
-    case 'gt':
-        return (compare > 0);
-    case '>=':
-    case 'ge':
-        return (compare >= 0);
-    case '<=':
-    case 'le':
-        return (compare <= 0);
-    case '==':
-    case '=':
-    case 'eq':
-        return (compare === 0);
-    case '<>':
-    case '!=':
-    case 'ne':
-        return (compare !== 0);
-    case '':
-    case '<':
-    case 'lt':
-        return (compare < 0);
-    default:
-        return null;
+        case ">":
+        case "gt":
+            return compare > 0;
+        case ">=":
+        case "ge":
+            return compare >= 0;
+        case "<=":
+        case "le":
+            return compare <= 0;
+        case "==":
+        case "=":
+        case "eq":
+            return compare === 0;
+        case "<>":
+        case "!=":
+        case "ne":
+            return compare !== 0;
+        case "":
+        case "<":
+        case "lt":
+            return compare < 0;
+        default:
+            return null;
     }
 };

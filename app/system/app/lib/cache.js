@@ -1,10 +1,9 @@
-import storage from 'JSONStorage';
+import storage from "JSONStorage";
 
 export default function (bucket, adapter) {
-    const db = storage.select(bucket, adapter || 'local');
+    const db = storage.select(bucket, adapter || "local");
 
     return {
-
         set(key, value, minutes) {
             if (minutes) {
                 return db.setex(key, minutes * 60, value);
@@ -23,6 +22,5 @@ export default function (bucket, adapter) {
         flush() {
             return db.flushdb.apply(db, arguments);
         },
-
     };
 }

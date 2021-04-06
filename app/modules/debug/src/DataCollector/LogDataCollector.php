@@ -17,16 +17,11 @@ class LogDataCollector extends AbstractHandler implements DataCollectorInterface
      */
     public function handle(array $record)
     {
-        if ($record['level'] < $this->level) {
+        if ($record["level"] < $this->level) {
             return false;
         }
 
-        $keys = [
-            'message',
-            'level',
-            'level_name',
-            'channel'
-        ];
+        $keys = ["message", "level", "level_name", "channel"];
 
         $this->messages[] = array_intersect_key($record, array_flip($keys));
 
@@ -38,7 +33,7 @@ class LogDataCollector extends AbstractHandler implements DataCollectorInterface
      */
     public function collect()
     {
-        return ['messages' => $this->messages];
+        return ["messages" => $this->messages];
     }
 
     /**
@@ -46,6 +41,6 @@ class LogDataCollector extends AbstractHandler implements DataCollectorInterface
      */
     public function getName()
     {
-        return 'log';
+        return "log";
     }
 }

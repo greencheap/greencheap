@@ -13,9 +13,8 @@ class UrlGenerator extends BaseUrlGenerator implements UrlGeneratorInterface
     {
         $link = $name;
 
-        if ($params = array_intersect_key($parameters, array_flip(isset($defaults['_variables']) ? $defaults['_variables'] : $variables))) {
-
-            $link .= '?'.http_build_query($params);
+        if ($params = array_intersect_key($parameters, array_flip(isset($defaults["_variables"]) ? $defaults["_variables"] : $variables))) {
+            $link .= "?" . http_build_query($params);
 
             if ($properties = $this->getRouteProperties($link)) {
                 list($variables, $defaults, $requirements, $tokens, $hostTokens, $requiredSchemes) = $properties;
@@ -37,7 +36,7 @@ class UrlGenerator extends BaseUrlGenerator implements UrlGeneratorInterface
      */
     public function getRouteProperties($name)
     {
-        if (!$route = $this->routes->get($name)) {
+        if (!($route = $this->routes->get($name))) {
             return null;
         }
 

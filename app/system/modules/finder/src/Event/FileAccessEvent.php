@@ -33,22 +33,21 @@ class FileAccessEvent extends Event
      * @param  string $mode ('r', 'read', 'w', 'write', '-', 'deny'
      * @return $this
      */
-    public function path($pattern, $mode = 'r')
+    public function path($pattern, $mode = "r")
     {
         switch ($mode) {
-
-            case 'r':
-            case 'read':
+            case "r":
+            case "read":
                 $this->readPaths[] = $this->toRegex($pattern);
                 break;
 
-            case 'w':
-            case 'write':
+            case "w":
+            case "write":
                 $this->writePaths[] = $this->toRegex($pattern);
                 break;
 
-            case '-':
-            case 'deny':
+            case "-":
+            case "deny":
                 $this->notPaths[] = $this->toRegex($pattern);
                 break;
         }
@@ -58,29 +57,29 @@ class FileAccessEvent extends Event
 
     public function mode($path)
     {
-        if (defined('PHP_WINDOWS_VERSION_MAJOR')) {
-            $path = strtr($path, '\\', '/');
+        if (defined("PHP_WINDOWS_VERSION_MAJOR")) {
+            $path = strtr($path, "\\", "/");
         }
 
         foreach ($this->notPaths as $regex) {
             if (preg_match($regex, $path)) {
-                return '-';
+                return "-";
             }
         }
 
         foreach ($this->writePaths as $regex) {
             if (preg_match($regex, $path)) {
-                return 'w';
+                return "w";
             }
         }
 
         foreach ($this->readPaths as $regex) {
             if (preg_match($regex, $path)) {
-                return 'r';
+                return "r";
             }
         }
 
-        return '-';
+        return "-";
     }
 
     /**
@@ -97,10 +96,10 @@ class FileAccessEvent extends Event
             $end = substr($m[1], -1);
 
             if ($start === $end) {
-                return !preg_match('/[*?[:alnum:] \\\\]/', $start);
+                return !preg_match("/[*?[:alnum:] \\\\]/", $start);
             }
 
-            foreach (array(array('{', '}'), array('(', ')'), array('[', ']'), array('<', '>')) as $delimiters) {
+            foreach ([["{", "}"], ["(", ")"], ["[", "]"], ["<", ">"]] as $delimiters) {
                 if ($start === $delimiters[0] && $end === $delimiters[1]) {
                     return true;
                 }
@@ -126,6 +125,6 @@ class FileAccessEvent extends Event
      */
     protected function toRegex($str)
     {
-        return $this->isRegex($str) ? $str : '~'.preg_quote($str, '~').'~';
+        return $this->isRegex($str) ? $str : "~" . preg_quote($str, "~") . "~";
     }
 }

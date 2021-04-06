@@ -24,7 +24,7 @@ class EventDispatcher implements EventDispatcherInterface
      *
      * @param string $event
      */
-    public function __construct($event = 'GreenCheap\Event\Event')
+    public function __construct($event = "GreenCheap\Event\Event")
     {
         $this->event = $event;
     }
@@ -65,7 +65,6 @@ class EventDispatcher implements EventDispatcherInterface
     public function subscribe(EventSubscriberInterface $subscriber)
     {
         foreach ($subscriber->subscribe() as $event => $params) {
-
             if (is_string($params)) {
                 $this->on($event, [$subscriber, $params]);
             } elseif (is_callable($params)) {
@@ -83,7 +82,6 @@ class EventDispatcher implements EventDispatcherInterface
                     }
                 }
             }
-
         }
     }
 
@@ -119,7 +117,6 @@ class EventDispatcher implements EventDispatcherInterface
         array_unshift($arguments, $e);
 
         foreach ($this->getListeners($e->getName()) as $listener) {
-
             call_user_func_array($listener, $arguments);
 
             if ($e->isPropagationStopped()) {
@@ -192,7 +189,7 @@ class EventDispatcher implements EventDispatcherInterface
 
         if (isset($this->listeners[$event])) {
             krsort($this->listeners[$event]);
-            $sorted = call_user_func_array('array_merge', $this->listeners[$event]);
+            $sorted = call_user_func_array("array_merge", $this->listeners[$event]);
         }
 
         return $this->sorted[$event] = $sorted;

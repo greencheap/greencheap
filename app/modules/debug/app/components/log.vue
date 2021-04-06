@@ -3,12 +3,10 @@
 </template>
 
 <script>
-
 module.exports = {
-
     section: {
         priority: 70,
-        panel: '#panel-log',
+        panel: "#panel-log",
         template: `
                 <div>
                     <h1>Logs</h1>
@@ -32,8 +30,6 @@ module.exports = {
 
     replace: false,
 
-    props: ['data'],
-
+    props: ["data"],
 };
-
 </script>

@@ -5,21 +5,17 @@
 </template>
 
 <script>
-
 export default {
-
-    props: ['node', 'roles'],
+    props: ["node", "roles"],
 
     section: {
-        label: 'Settings',
+        label: "Settings",
     },
 
-    inject: ['$components'],
+    inject: ["$components"],
 
     created() {
         _.extend(this.$options.components, this.$components);
     },
-
 };
-
 </script>

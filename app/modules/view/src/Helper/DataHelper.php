@@ -24,10 +24,14 @@ class DataHelper implements HelperInterface
      */
     public function register(View $view)
     {
-        $view->on('head', function ($event) use ($view) {
-            $view->trigger('data', [$this]);
-            $event->addResult($this->render());
-        }, 10);
+        $view->on(
+            "head",
+            function ($event) use ($view) {
+                $view->trigger("data", [$this]);
+                $event->addResult($this->render());
+            },
+            10
+        );
     }
 
     /**
@@ -65,7 +69,7 @@ class DataHelper implements HelperInterface
     public function add($name, $value)
     {
         if (isset($this->data[$name]) && is_array($this->data[$name])) {
-           $value = array_replace_recursive($this->data[$name], $value);
+            $value = array_replace_recursive($this->data[$name], $value);
         }
 
         $this->data[$name] = $value;
@@ -78,7 +82,7 @@ class DataHelper implements HelperInterface
      */
     public function render()
     {
-        $output = '';
+        $output = "";
 
         foreach ($this->data as $name => $value) {
             $output .= sprintf("        <script>var %s = %s;</script>\n", $name, json_encode($value, $this->encodingOptions));
@@ -92,6 +96,6 @@ class DataHelper implements HelperInterface
      */
     public function getName()
     {
-        return 'data';
+        return "data";
     }
 }

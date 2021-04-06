@@ -12,7 +12,7 @@ class JsonResponseListener implements EventSubscriberInterface
      */
     public function onRequest($event, $request)
     {
-        if ('json' === $request->getContentType() && $data = @json_decode($request->getContent(), true)) {
+        if ("json" === $request->getContentType() && ($data = @json_decode($request->getContent(), true))) {
             $request->request->replace($data);
         }
     }
@@ -24,7 +24,7 @@ class JsonResponseListener implements EventSubscriberInterface
     {
         $result = $event->getControllerResult();
 
-        if (is_array($result) || is_a($result, '\JsonSerializable')) {
+        if (is_array($result) || is_a($result, "\JsonSerializable")) {
             $event->setResponse(new JsonResponse($result));
         }
     }
@@ -35,8 +35,8 @@ class JsonResponseListener implements EventSubscriberInterface
     public function subscribe()
     {
         return [
-            'request'    => ['onRequest', 130],
-            'controller' => ['onController', 20]
+            "request" => ["onRequest", 130],
+            "controller" => ["onController", 20],
         ];
     }
 }

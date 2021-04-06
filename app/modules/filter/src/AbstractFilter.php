@@ -31,7 +31,7 @@ abstract class AbstractFilter implements FilterInterface
     public function setOptions(array $options)
     {
         foreach ($options as $key => $value) {
-            if (method_exists($this, $method = 'set'.$key)) {
+            if (method_exists($this, $method = "set" . $key)) {
                 $this->$method($value);
             } elseif (array_key_exists($key, $this->options)) {
                 $this->options[$key] = $value;

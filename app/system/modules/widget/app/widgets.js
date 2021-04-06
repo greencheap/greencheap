@@ -1,5 +1,4 @@
 var Widgets = {
-
     data() {
         return {
             widgets: [],
@@ -7,7 +6,7 @@ var Widgets = {
     },
 
     created() {
-        this.resource = this.$resource('api/site/widget{/id}');
+        this.resource = this.$resource("api/site/widget{/id}");
     },
 
     components: {
@@ -15,7 +14,6 @@ var Widgets = {
          * Moved to widget/app/views/edit.js
          */
     },
-
 };
 
 export default Widgets;

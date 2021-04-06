@@ -32,9 +32,12 @@ class QueryBuilder
      */
     public function __construct(EntityManager $manager, Metadata $metadata)
     {
-        $this->manager  = $manager;
+        $this->manager = $manager;
         $this->metadata = $metadata;
-        $this->query    = $manager->getConnection()->createQueryBuilder()->from($metadata->getTable());
+        $this->query = $manager
+            ->getConnection()
+            ->createQueryBuilder()
+            ->from($metadata->getTable());
     }
 
     /**
@@ -61,7 +64,6 @@ class QueryBuilder
     public function first()
     {
         if ($entity = $this->manager->hydrateOne($this->query->limit(1)->execute(), $this->metadata)) {
-
             foreach ($this->getRelations() as $name => $query) {
                 $this->manager->related($entity, $name, $query);
             }
@@ -87,22 +89,19 @@ class QueryBuilder
         $relations = [];
 
         foreach ($related as $name => $constraints) {
-
             // no constrains
             if (is_numeric($name)) {
                 list($name, $constraints) = [$constraints, function () {}];
             }
 
             // is nested ?
-            if (str_contains($name, '.')) {
-
+            if (str_contains($name, ".")) {
                 $progress = [];
 
-                foreach (explode('.', $name) as $part) {
-
+                foreach (explode(".", $name) as $part) {
                     $progress[] = $part;
 
-                    if (!isset($relations[$last = implode('.', $progress)])) {
+                    if (!isset($relations[($last = implode(".", $progress))])) {
                         $relations[$last] = function () {};
                     }
                 }
@@ -126,10 +125,9 @@ class QueryBuilder
         $relations = [];
 
         foreach ($this->relations as $name => $constraints) {
-            if (!str_contains($name, '.')) {
-
+            if (!str_contains($name, ".")) {
                 $mapping = $this->metadata->getRelationMapping($name);
-                $query   = call_user_func("{$mapping['targetEntity']}::query");
+                $query = call_user_func("{$mapping["targetEntity"]}::query");
 
                 if ($nested = $this->getNestedRelations($name)) {
                     $query->related($nested);
@@ -153,7 +151,7 @@ class QueryBuilder
     public function getNestedRelations($relation)
     {
         $nested = [];
-        $prefix = $relation.'.';
+        $prefix = $relation . ".";
 
         foreach ($this->relations as $name => $constraints) {
             if ($prefix == substr($name, 0, strlen($prefix))) {

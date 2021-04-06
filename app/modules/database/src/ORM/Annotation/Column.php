@@ -12,5 +12,5 @@ final class Column implements Annotation
     public $name;
 
     /** @var mixed */
-    public $type = 'string';
+    public $type = "string";
 }

@@ -56,7 +56,7 @@ class WrappedListener
     {
         $this->called = true;
 
-        $e = $this->stopwatch->start($this->name, 'event_listener');
+        $e = $this->stopwatch->start($this->name, "event_listener");
 
         $args = func_get_args();
 

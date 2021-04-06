@@ -14,7 +14,6 @@ use Symfony\Component\Console\Output\StreamOutput;
  */
 class UpdateController
 {
-
     /**
      * @return array[]
      */
@@ -23,9 +22,9 @@ class UpdateController
     {
         return [
             '$view' => [
-                'title' => __('Update System'),
-                'name' => 'installer:views/update.php'
-            ]
+                "title" => __("Update System"),
+                "name" => "installer:views/update.php",
+            ],
         ];
     }
 
@@ -36,11 +35,11 @@ class UpdateController
      */
     public function downloadAction($constraint): array
     {
-        $url = App::get('system.api').'/api/brain/download/'.$constraint;
-        $file = tempnam(App::get('path.temp'), 'update_');
+        $url = App::get("system.api") . "/api/brain/download/" . $constraint;
+        $file = tempnam(App::get("path.temp"), "update_");
 
-        App::session()->set('system.update', $file);
-        if (!$hi = file_put_contents($file, @fopen($url, 'r'))) {
+        App::session()->set("system.update", $file);
+        if (!($hi = file_put_contents($file, @fopen($url, "r")))) {
             App::jsonabort(500, $hi);
         }
         return [];
@@ -52,27 +51,24 @@ class UpdateController
      */
     public function updateAction()
     {
-        if (!$file = App::session()->get('system.update')) {
-            App::abort(400, __('You may not call this step directly.'));
+        if (!($file = App::session()->get("system.update"))) {
+            App::abort(400, __("You may not call this step directly."));
         }
-        App::session()->remove('system.update');
+        App::session()->remove("system.update");
 
         return App::response()->stream(function () use ($file) {
-            $output = new StreamOutput(fopen('php://output', 'w'));
+            $output = new StreamOutput(fopen("php://output", "w"));
             try {
-
                 if (!file_exists($file) || !is_file($file)) {
-                    throw new \RuntimeException('File does not exist.');
+                    throw new \RuntimeException("File does not exist.");
                 }
 
                 $updater = new SelfUpdater($output);
                 $updater->update($file);
-
             } catch (\Exception $e) {
                 $output->writeln(sprintf("\n<error>%s</error>", $e->getMessage()));
                 $output->write("status=error");
             }
-
         });
     }
 }

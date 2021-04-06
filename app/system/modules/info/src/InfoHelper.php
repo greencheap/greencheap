@@ -21,24 +21,24 @@ class InfoHelper
      */
     public function get()
     {
-        $server = new ServerBag($GLOBALS['_SERVER']);
+        $server = new ServerBag($GLOBALS["_SERVER"]);
 
-        $info                  = [];
-        $info['php']           = php_uname();
+        $info = [];
+        $info["php"] = php_uname();
 
-        if ($pdo = App::db()->getWrappedConnection() and $pdo instanceof Connection) {
-            $info['dbdriver']  = $pdo->getAttribute(\PDO::ATTR_DRIVER_NAME);
-            $info['dbversion'] = $pdo->getAttribute(\PDO::ATTR_SERVER_VERSION);
-            $info['dbclient']  = $pdo->getAttribute(\PDO::ATTR_CLIENT_VERSION);
+        if (($pdo = App::db()->getWrappedConnection()) and $pdo instanceof Connection) {
+            $info["dbdriver"] = $pdo->getAttribute(\PDO::ATTR_DRIVER_NAME);
+            $info["dbversion"] = $pdo->getAttribute(\PDO::ATTR_SERVER_VERSION);
+            $info["dbclient"] = $pdo->getAttribute(\PDO::ATTR_CLIENT_VERSION);
         }
 
-        $info['phpversion']    = phpversion();
-        $info['server']        = $server->get('SERVER_SOFTWARE', getenv('SERVER_SOFTWARE'));
-        $info['sapi_name']     = php_sapi_name();
-        $info['version']       = App::version();
-        $info['useragent']     = $server->get('HTTP_USER_AGENT');
-        $info['extensions']    = implode(", ", get_loaded_extensions());
-        $info['directories']   = $this->getDirectories();
+        $info["phpversion"] = phpversion();
+        $info["server"] = $server->get("SERVER_SOFTWARE", getenv("SERVER_SOFTWARE"));
+        $info["sapi_name"] = php_sapi_name();
+        $info["version"] = App::version();
+        $info["useragent"] = $server->get("HTTP_USER_AGENT");
+        $info["extensions"] = implode(", ", get_loaded_extensions());
+        $info["directories"] = $this->getDirectories();
 
         return $info;
     }
@@ -52,25 +52,24 @@ class InfoHelper
     {
         // -TODO-
 
-        $directories = [
-            App::get('path.storage'),
-            App::get('path.temp'),
-            App::get('path.packages'),
-            App::get('config.file')
-        ];
+        $directories = [App::get("path.storage"), App::get("path.temp"), App::get("path.packages"), App::get("config.file")];
 
         $result = [];
 
         foreach ($directories as $directory) {
-
             $result[$this->getRelativePath($directory)] = is_writable($directory);
 
             if (is_dir($directory)) {
-                foreach (App::finder()->depth('< 2')->in($directory)->directories() as $dir) {
+                foreach (
+                    App::finder()
+                        ->depth("< 2")
+                        ->in($directory)
+                        ->directories()
+                    as $dir
+                ) {
                     if (!is_writable($dir->getPathname())) {
                         $result[$this->getRelativePath($dir->getPathname())] = false;
                     }
-
                 }
             }
         }
@@ -87,7 +86,7 @@ class InfoHelper
     protected function getRelativePath($path)
     {
         if (str_starts_with($path, App::path())) {
-            $path = ltrim(str_replace('\\', '/', substr($path, strlen(App::path()))), '/');
+            $path = ltrim(str_replace("\\", "/", substr($path, strlen(App::path()))), "/");
         }
 
         return $path;

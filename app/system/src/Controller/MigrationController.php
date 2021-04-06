@@ -23,7 +23,7 @@ class MigrationController
     public function __construct()
     {
         $system = App::system();
-        $this->scripts = new PackageScripts($system->path.'/scripts.php', $system->config('version'));
+        $this->scripts = new PackageScripts($system->path . "/scripts.php", $system->config("version"));
     }
 
     /**
@@ -34,16 +34,16 @@ class MigrationController
     public function indexAction($redirect = null): array
     {
         if (!$this->scripts->hasUpdates()) {
-            return App::redirect($redirect ?: '@system');
+            return App::redirect($redirect ?: "@system");
         }
 
         return [
             '$view' => [
-                'title' => __('Update GreenCheap'),
-                'name' => 'system/theme:views/migration.php',
-                'layout' => false
+                "title" => __("Update GreenCheap"),
+                "name" => "system/theme:views/migration.php",
+                "layout" => false,
             ],
-            'redirect' => $redirect
+            "redirect" => $redirect,
         ];
     }
 
@@ -56,19 +56,19 @@ class MigrationController
     {
         if ($updates = $this->scripts->hasUpdates()) {
             $this->scripts->update();
-            $message =  __('Your GreenCheap database has been updated successfully.');
+            $message = __("Your GreenCheap database has been updated successfully.");
         } else {
-            $message =  __('Your database is up to date.');
+            $message = __("Your database is up to date.");
         }
 
-        App::config('system')->set('version', App::version());
+        App::config("system")->set("version", App::version());
 
         if ($redirect) {
             App::message()->success($message);
             return App::redirect($redirect);
         }
         return App::response()->json([
-            'status' => $message
+            "status" => $message,
         ]);
     }
 }

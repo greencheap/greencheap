@@ -15,7 +15,7 @@ class ExtensionTranslateCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected $name = 'extension:translate';
+    protected $name = "extension:translate";
 
     /**
      * {@inheritdoc}
@@ -27,22 +27,22 @@ class ExtensionTranslateCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure():void
+    protected function configure(): void
     {
-        $this->addArgument('extension', InputArgument::OPTIONAL, 'Extension name');
+        $this->addArgument("extension", InputArgument::OPTIONAL, "Extension name");
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output):int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $extension = $this->argument('extension') ?: 'system';
-        $files     = $this->getFiles($path = $this->getPath($extension), $extension);
+        $extension = $this->argument("extension") ?: "system";
+        $files = $this->getFiles($path = $this->getPath($extension), $extension);
         $languages = "$path/languages";
 
         $app = $this->container;
-        $this->visitor = new PhpNodeVisitor($app['view']->getEngine());
+        $this->visitor = new PhpNodeVisitor($app["view"]->getEngine());
 
         $this->line("Extracting strings for extension '$extension'");
 
@@ -62,14 +62,12 @@ class ExtensionTranslateCommand extends Command
         foreach ($files as $file) {
             $strings = $this->extractStrings($file);
             foreach ($strings as $domain => $messages) {
-                if(array_key_exists($domain, $result)) {
-
+                if (array_key_exists($domain, $result)) {
                     // custom merge (array_merge would create duplicates from numeric keys)
                     foreach ($messages as $key => $value) {
                         $result[$domain][$key] = $key;
                     }
                     // $result[$domain] = array_merge($result[$domain], $messages);
-
                 } else {
                     $result[$domain] = $messages;
                 }
@@ -81,13 +79,11 @@ class ExtensionTranslateCommand extends Command
         $this->line("\n");
 
         // remove strings already present in system "messages"
-        if ($extension != 'system') {
-
-            $messages = require($this->getPath('system').'/languages/en_GB/messages.php');
+        if ($extension != "system") {
+            $messages = require $this->getPath("system") . "/languages/en_GB/messages.php";
 
             foreach ($result as $domain => $strings) {
-
-                if ('messages' != $domain) {
+                if ("messages" != $domain) {
                     continue;
                 }
 
@@ -111,7 +107,7 @@ class ExtensionTranslateCommand extends Command
      *               Example:
      *               ['messages' = ['Hello' => 'Hello', 'Apple' => 'Apple'], 'customdomain' => ['One' => 'One']]
      */
-    protected function extractStrings($file):array
+    protected function extractStrings($file): array
     {
         $content = file_get_contents($file);
 
@@ -121,7 +117,7 @@ class ExtensionTranslateCommand extends Command
         // vue matches {{ 'foo' | trans [args] }}
         preg_match_all('/({{\s*(\'|")((?:(?!\2).)+)\2\s*\|\s*trans\s+([^\s]+\s+((\'|")((?:(?!\6).)+)\6))?.*}})/', $content, $matches);
         foreach ($matches[3] as $i => $string) {
-            $domain = $matches[7][$i] ?: 'messages';
+            $domain = $matches[7][$i] ?: "messages";
 
             $pairs[] = [$domain, $string];
         }
@@ -129,7 +125,7 @@ class ExtensionTranslateCommand extends Command
         // vue matches {{ 'foo' | transChoice [args] }}
         preg_match_all('/({{\s*(\'|")((?:(?!\2).)+)\2\s*\|\s*transChoice\s+([^\s]+\s+[^\s]+\s+((\'|")((?:(?!\6).)+)\6))?.*}})/', $content, $matches);
         foreach ($matches[3] as $i => $string) {
-            $domain = $matches[7][$i] ?: 'messages';
+            $domain = $matches[7][$i] ?: "messages";
 
             $pairs[] = [$domain, $string];
         }
@@ -139,7 +135,7 @@ class ExtensionTranslateCommand extends Command
         // $transChoice('foo'[, args])
         preg_match_all('/\$trans(Choice)?\((\'|")((?:(?!\2).)+)\2/', $content, $matches);
         foreach ($matches[3] as $i => $string) {
-            $domain = 'messages'; // TODO: allow custom domain
+            $domain = "messages"; // TODO: allow custom domain
 
             $pairs[] = [$domain, $string];
         }
@@ -176,18 +172,20 @@ class ExtensionTranslateCommand extends Command
      * @param $extension
      * @return mixed
      */
-    protected function getFiles(string $path, $extension):mixed
+    protected function getFiles(string $path, $extension): mixed
     {
-        $files = Finder::create()->files()->in($path);
+        $files = Finder::create()
+            ->files()
+            ->in($path);
 
         if ($extension == "system") {
             // add installer files
-            $files->in($this->container->path().'/app/installer');
+            $files->in($this->container->path() . "/app/installer");
         }
 
-        $files->exclude('node_modules');
+        $files->exclude("node_modules");
 
-        return $files->name('*.{php,vue,js,html,twig}');
+        return $files->name("*.{php,vue,js,html,twig}");
     }
 
     /**
@@ -196,14 +194,14 @@ class ExtensionTranslateCommand extends Command
      * @param string $path
      * @return mixed
      */
-    protected function getPath(string $path):mixed
+    protected function getPath(string $path): mixed
     {
-        if ($path == 'system') {
+        if ($path == "system") {
             // system module
-            $root = $this->container->path().'/app';
+            $root = $this->container->path() . "/app";
         } else {
             // extensions
-            $root = $this->container->path().'/packages';
+            $root = $this->container->path() . "/packages";
         }
 
         if (!is_dir($path = "$root/$path")) {
@@ -220,21 +218,18 @@ class ExtensionTranslateCommand extends Command
      * @param string $extension
      * @param string $path
      */
-    protected function writeTranslationFile($messages, $extension, $path):void
+    protected function writeTranslationFile($messages, $extension, $path): void
     {
         foreach ($messages as $domain => $strings) {
-
             $data = $this->getHeader($extension, $domain);
 
             foreach ($strings as $string) {
-
                 $string = str_replace('"', '\"', $string);
-                $data .= "msgid \"".$string."\"\nmsgstr \"\"\n\n";
-
+                $data .= "msgid \"" . $string . "\"\nmsgstr \"\"\n\n";
             }
 
-            $refFile = $path.'/'.$domain.'.pot';
-            if (!file_exists($refFile) || !($compare = preg_replace('/^"POT-Creation-Date: (.*)$/im', '', [file_get_contents($refFile), $data]) and $compare[0] === $compare[1])) {
+            $refFile = $path . "/" . $domain . ".pot";
+            if (!file_exists($refFile) || !(($compare = preg_replace('/^"POT-Creation-Date: (.*)$/im', "", [file_get_contents($refFile), $data])) and $compare[0] === $compare[1])) {
                 file_put_contents($refFile, $data);
             }
         }
@@ -247,10 +242,10 @@ class ExtensionTranslateCommand extends Command
      * @param  string $domain
      * @return string
      */
-    protected function getHeader($extension, $domain):string
+    protected function getHeader($extension, $domain): string
     {
         $version = $this->getApplication()->getVersion();
-        $date    = date("Y-m-d H:iO");
+        $date = date("Y-m-d H:iO");
 
         return <<<EOD
 msgid ""

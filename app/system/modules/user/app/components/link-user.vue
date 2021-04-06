@@ -1,22 +1,22 @@
 <template>
     <div class="uk-margin">
-        <label for="form-link-user" class="uk-form-label">{{ 'View' | trans }}</label>
+        <label for="form-link-user" class="uk-form-label">{{ "View" | trans }}</label>
         <div class="uk-form-controls">
             <select id="form-link-user" v-model="url" class="uk-width-1-1 uk-select">
                 <option value="@user/login">
-                    {{ 'User Login' | trans }}
+                    {{ "User Login" | trans }}
                 </option>
                 <option value="@user/logout">
-                    {{ 'User Logout' | trans }}
+                    {{ "User Logout" | trans }}
                 </option>
                 <option value="@user/registration">
-                    {{ 'User Registration' | trans }}
+                    {{ "User Registration" | trans }}
                 </option>
                 <option value="@user/profile">
-                    {{ 'User Profile' | trans }}
+                    {{ "User Profile" | trans }}
                 </option>
                 <option value="@user/resetpassword">
-                    {{ 'User Password Reset' | trans }}
+                    {{ "User Password Reset" | trans }}
                 </option>
             </select>
         </div>
@@ -24,23 +24,21 @@
 </template>
 
 <script>
-
 var LinkUser = {
-
     link: {
-        label: 'User',
+        label: "User",
     },
 
-    props: ['link'],
+    props: ["link"],
 
     data() {
         return {
-            url: '',
+            url: "",
         };
     },
 
     created() {
-        this.url = '@user/login';
+        this.url = "@user/login";
     },
 
     watch: {
@@ -48,12 +46,9 @@ var LinkUser = {
             this.$parent.link = url;
         },
     },
-
-
 };
 
 export default LinkUser;
 
-window.Links.default.components['link-user'] = LinkUser;
-
+window.Links.default.components["link-user"] = LinkUser;
 </script>

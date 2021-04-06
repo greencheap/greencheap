@@ -24,12 +24,10 @@
 </template>
 
 <script>
-
 module.exports = {
-
     section: {
         priority: 50,
-        panel: '#panel-database',
+        panel: "#panel-database",
         template: `
                 <div>
                     <h1>Queries</h1>
@@ -53,12 +51,10 @@ module.exports = {
 
     replace: false,
 
-    props: ['data'],
+    props: ["data"],
 
     filters: {
-        json: value => JSON.stringify(value, null, 2),
+        json: (value) => JSON.stringify(value, null, 2),
     },
-
 };
-
 </script>

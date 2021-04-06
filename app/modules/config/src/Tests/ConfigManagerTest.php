@@ -161,25 +161,12 @@ class ConfigManagerTest extends \PHPUnit_Framework_TestCase
 
     protected function getConnection()
     {
-        $mock = $this
-            ->getMockBuilder('GreenCheap\Database\Connection')
+        $mock = $this->getMockBuilder("GreenCheap\Database\Connection")
             ->disableOriginalConstructor()
-            ->setMethods(
-                [
-                    'fetchAssoc',
-                    'fetchAll',
-                    'executeQuery',
-                    'getDatabasePlatform',
-                    'update',
-                    'insert',
-                    'delete',
-                    'isConnected',
-                ]
-            )
+            ->setMethods(["fetchAssoc", "fetchAll", "executeQuery", "getDatabasePlatform", "update", "insert", "delete", "isConnected"])
             ->getMock();
 
-        $mock->method('isConnected')
-             ->will($this->returnValue(true));
+        $mock->method("isConnected")->will($this->returnValue(true));
 
         return $mock;
     }
@@ -194,6 +181,6 @@ class ConfigManagerTest extends \PHPUnit_Framework_TestCase
         $connection = $connection ?: $this->getConnection();
         $cache = $cache ?: $this->getCache();
 
-        return new ConfigManager($connection, $cache, 'test');
+        return new ConfigManager($connection, $cache, "test");
     }
 }

@@ -15,9 +15,9 @@ class AvatarHelper extends Helper
      * @return String containing either just a URL or a complete image tag
      * @source https://gravatar.com/site/implement/images/php/
      */
-    public function __invoke($email, $s = 80, $d = 'mp', $r = 'g', $img = false, $atts = array())
+    public function __invoke($email, $s = 80, $d = "mp", $r = "g", $img = false, $atts = [])
     {
-        return $this->get_gravatar($email , $s , $d , $r , $img , $atts);
+        return $this->get_gravatar($email, $s, $d, $r, $img, $atts);
     }
 
     /**
@@ -32,15 +32,17 @@ class AvatarHelper extends Helper
      * @return String containing either just a URL or a complete image tag
      * @source https://gravatar.com/site/implement/images/php/
      */
-    public function get_gravatar( $email, $s = 80, $d = 'mp', $r = 'g', $img = false, $atts = array() ) {
-        $url = 'https://www.gravatar.com/avatar/';
-        $url .= md5( strtolower( trim( $email ) ) );
+    public function get_gravatar($email, $s = 80, $d = "mp", $r = "g", $img = false, $atts = [])
+    {
+        $url = "https://www.gravatar.com/avatar/";
+        $url .= md5(strtolower(trim($email)));
         $url .= "?s=$s&d=$d&r=$r";
-        if ( $img ) {
+        if ($img) {
             $url = '<img src="' . $url . '"';
-            foreach ( $atts as $key => $val )
-                $url .= ' ' . $key . '="' . $val . '"';
-            $url .= ' />';
+            foreach ($atts as $key => $val) {
+                $url .= " " . $key . '="' . $val . '"';
+            }
+            $url .= " />";
         }
         return $url;
     }
@@ -50,6 +52,6 @@ class AvatarHelper extends Helper
      */
     public function getName()
     {
-        return 'avatar';
+        return "avatar";
     }
 }

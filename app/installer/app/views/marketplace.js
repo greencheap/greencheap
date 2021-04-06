@@ -1,42 +1,45 @@
-import Version from '../lib/version';
+import Version from "../lib/version";
 
 const marketplace = {
-    el: '#marketplace',
-    name: 'Marketplace',
+    el: "#marketplace",
+    name: "Marketplace",
     data() {
-        return _.merge({
-            pkgs: false,
-            config: {
-                filter: this.$session.get('pkgs-front.filter', { order: 'download_count desc', type: 'greencheap-extension' }),
+        return _.merge(
+            {
+                pkgs: false,
+                config: {
+                    filter: this.$session.get("pkgs-front.filter", { order: "download_count desc", type: "greencheap-extension" }),
+                },
+                pages: 0,
+                count: "",
+                modalpkg: false,
+                client: window.$client,
+                output: "",
+                isLoader: true,
+                status: "",
             },
-            pages: 0,
-            count: '',
-            modalpkg: false,
-            client: window.$client,
-            output: '',
-            isLoader: true,
-            status: '',
-        }, window.$data);
+            window.$data
+        );
     },
 
     mixins: [
         // eslint-disable-next-line global-require
-        require('../../../system/app/lib/client'),
+        require("../../../system/app/lib/client"),
     ],
 
     mounted() {
-        this.$watch('config.page', this.load, { immediate: true });
+        this.$watch("config.page", this.load, { immediate: true });
     },
 
     watch: {
-        'config.filter': {
+        "config.filter": {
             handler(filter) {
                 if (this.config.page) {
                     this.config.page = 0;
                 } else {
                     this.load();
                 }
-                this.$session.set('pkgs-front.filter', filter);
+                this.$session.set("pkgs-front.filter", filter);
             },
             deep: true,
         },
@@ -50,14 +53,19 @@ const marketplace = {
                         }
                         return false;
                     });
-                    this.pkgs[key] = _.merge({
-                        installed: controll ? {
-                            name: controll.name,
-                            version: controll.version,
-                            type: controll.type,
-                            update: this.checkVersion(pkg.version, controll.version, '>'),
-                        } : false,
-                    }, this.pkgs[key]);
+                    this.pkgs[key] = _.merge(
+                        {
+                            installed: controll
+                                ? {
+                                      name: controll.name,
+                                      version: controll.version,
+                                      type: controll.type,
+                                      update: this.checkVersion(pkg.version, controll.version, ">"),
+                                  }
+                                : false,
+                        },
+                        this.pkgs[key]
+                    );
                 });
             },
             deep: true,
@@ -66,16 +74,19 @@ const marketplace = {
 
     methods: {
         load() {
-            this.clientResource('marketplace/getfilters', {
-                filter: this.config.filter, page: this.config.page,
-            }).then((res) => {
-                const { data } = res;
-                this.$set(this, 'pkgs', data.packages);
-                this.$set(this, 'pages', data.pages);
-                this.$set(this, 'count', data.count);
-            }).catch((err) => {
-                this.$notify(err.body.error, 'danger');
-            });
+            this.clientResource("marketplace/getfilters", {
+                filter: this.config.filter,
+                page: this.config.page,
+            })
+                .then((res) => {
+                    const { data } = res;
+                    this.$set(this, "pkgs", data.packages);
+                    this.$set(this, "pages", data.pages);
+                    this.$set(this, "count", data.count);
+                })
+                .catch((err) => {
+                    this.$notify(err.body.error, "danger");
+                });
         },
 
         setType(type) {
@@ -87,7 +98,7 @@ const marketplace = {
         },
 
         openModal(pkg) {
-            this.$set(this, 'modalpkg', pkg);
+            this.$set(this, "modalpkg", pkg);
             this.$refs.modalDeatil.open();
         },
 
@@ -97,50 +108,59 @@ const marketplace = {
 
         downloadPackage(e) {
             e.target.innerHTML = `<span class="uk-margin-right" uk-spinner></span>${e.target.text}`;
-            this.$http.get('admin/system/package/downloadpackage', {
-                params: {
-                    id: this.modalpkg.id,
-                    type: this.modalpkg.type,
-                },
-            }).then((res) => {
-                const pkg = res.data.package;
-                this.doInstall(pkg);
-            }).catch((err) => {
-                this.$notify(err.bodyText, 'danger');
-            });
+            this.$http
+                .get("admin/system/package/downloadpackage", {
+                    params: {
+                        id: this.modalpkg.id,
+                        type: this.modalpkg.type,
+                    },
+                })
+                .then((res) => {
+                    const pkg = res.data.package;
+                    this.doInstall(pkg);
+                })
+                .catch((err) => {
+                    this.$notify(err.bodyText, "danger");
+                });
         },
 
         doInstall(pkg, packages, onClose, packagist) {
             const self = this;
-            return this.$http.post('admin/system/package/install', { package: pkg, packagist: Boolean(packagist) }, {
-                progress(e) {
-                    if (e.lengthComputable) {
-                        self.$refs.modalDeatil.close();
-                        self.$refs.installDetail.open();
-                        self.output += 'Starting\n\n';
+            return this.$http
+                .post(
+                    "admin/system/package/install",
+                    { package: pkg, packagist: Boolean(packagist) },
+                    {
+                        progress(e) {
+                            if (e.lengthComputable) {
+                                self.$refs.modalDeatil.close();
+                                self.$refs.installDetail.open();
+                                self.output += "Starting\n\n";
+                            }
+                        },
                     }
-                },
-            }).then((res) => {
-                const patt = new RegExp('^status=(.+)', 'gm');
-                this.setOutput(res.bodyText);
-                const getStatusTest = patt.exec(res.bodyText);
-                this.status = getStatusTest[1];
-                this.isLoader = false;
-                
-            }).catch((err) => {
-                this.$notify(err.data, 'danger');
-                this.close();
-            });
+                )
+                .then((res) => {
+                    const patt = new RegExp("^status=(.+)", "gm");
+                    this.setOutput(res.bodyText);
+                    const getStatusTest = patt.exec(res.bodyText);
+                    this.status = getStatusTest[1];
+                    this.isLoader = false;
+                })
+                .catch((err) => {
+                    this.$notify(err.data, "danger");
+                    this.close();
+                });
         },
 
         setOutput(output) {
-            const lines = output.split('\n');
+            const lines = output.split("\n");
             const match = lines[lines.length - 1].match(/^status=(success|error)$/);
             if (match) {
                 // eslint-disable-next-line prefer-destructuring
                 this.status = match[1];
                 delete lines[lines.length - 1];
-                this.output += lines.join('\n');
+                this.output += lines.join("\n");
             } else {
                 this.output += output;
             }
@@ -153,9 +173,9 @@ const marketplace = {
         },
 
         enablePkg() {
-            return this.$http.post('admin/system/package/enable', { name: this.modalpkg.package_name }).then(() => {
+            return this.$http.post("admin/system/package/enable", { name: this.modalpkg.package_name }).then(() => {
                 this.$notify(this.$trans('"%title%" enabled.', { title: this.modalpkg.title }));
-                document.location.assign(this.$url(`admin/system/package/${this.modalpkg.type === 'greencheap-theme' ? 'themes' : 'extensions'}`));
+                document.location.assign(this.$url(`admin/system/package/${this.modalpkg.type === "greencheap-theme" ? "themes" : "extensions"}`));
             }, this.error);
         },
     },

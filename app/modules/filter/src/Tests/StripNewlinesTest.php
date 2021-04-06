@@ -11,7 +11,7 @@ class StripNewlinesTest extends \PHPUnit_Framework_TestCase
      */
     public function testFilter($input, $output)
     {
-        $filter = new StripNewlinesFilter;
+        $filter = new StripNewlinesFilter();
 
         $this->assertEquals($output, $filter->filter($input));
     }
@@ -21,15 +21,6 @@ class StripNewlinesTest extends \PHPUnit_Framework_TestCase
      */
     public function provideNewLineStrings()
     {
-        return [
-            ['', ''],
-            ["\n", ''],
-            ["\r", ''],
-            ["\r\n", ''],
-            ['\n', '\n'],
-            ['\r', '\r'],
-            ['\r\n', '\r\n'],
-            ["These newlines should\nbe removed by\r\nthe filter", 'These newlines shouldbe removed bythe filter']
-        ];
+        return [["", ""], ["\n", ""], ["\r", ""], ["\r\n", ""], ['\n', '\n'], ['\r', '\r'], ['\r\n', '\r\n'], ["These newlines should\nbe removed by\r\nthe filter", "These newlines shouldbe removed bythe filter"]];
     }
 }

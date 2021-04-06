@@ -26,8 +26,8 @@ class ConfigureRouteListener implements EventSubscriberInterface
      */
     public function __construct(Reader $reader = null)
     {
-        $this->reader    = $reader;
-        $this->namespace = 'GreenCheap\Routing\Annotation';
+        $this->reader = $reader;
+        $this->namespace = "GreenCheap\Routing\Annotation";
     }
 
     /**
@@ -41,13 +41,10 @@ class ConfigureRouteListener implements EventSubscriberInterface
 
         $reader = $this->getReader();
 
-        foreach (['_request' => 'Request'] as $name => $class) {
-
+        foreach (["_request" => "Request"] as $name => $class) {
             $class = "{$this->namespace}\\$class";
 
-            if (($annotation = $reader->getClassAnnotation($route->getControllerClass(), $class) or $annotation = $reader->getMethodAnnotation($route->getControllerMethod(), $class))
-                and $data = $annotation->getData()
-            ) {
+            if ((($annotation = $reader->getClassAnnotation($route->getControllerClass(), $class)) or ($annotation = $reader->getMethodAnnotation($route->getControllerMethod(), $class))) and ($data = $annotation->getData())) {
                 $route->setDefault($name, $data);
             }
         }
@@ -59,7 +56,7 @@ class ConfigureRouteListener implements EventSubscriberInterface
     public function subscribe()
     {
         return [
-            'route.configure' => 'onConfigureRoute'
+            "route.configure" => "onConfigureRoute",
         ];
     }
 

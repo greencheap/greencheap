@@ -3,17 +3,13 @@
 </template>
 
 <script>
-
 module.exports = {
-
     section: {
         priority: 10,
     },
 
     replace: false,
 
-    props: ['data'],
-
+    props: ["data"],
 };
-
 </script>

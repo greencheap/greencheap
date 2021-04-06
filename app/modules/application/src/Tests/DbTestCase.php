@@ -11,11 +11,9 @@ abstract class DbTestCase extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         try {
-
             $this->connection = $this->getSharedConnection();
-
         } catch (\Exception $e) {
-            $this->markTestSkipped(sprintf('Unable to establish connection. (%s)', $e->getMessage()));
+            $this->markTestSkipped(sprintf("Unable to establish connection. (%s)", $e->getMessage()));
             return;
         }
     }

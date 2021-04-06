@@ -1,10 +1,9 @@
-import UIkit from 'uikit';
-import { $, on, css, attr, addClass, removeClass, hasClass, toNodes, append, find, findAll, empty, getIndex, trigger } from 'uikit-util';
+import UIkit from "uikit";
+import { $, on, css, attr, addClass, removeClass, hasClass, toNodes, append, find, findAll, empty, getIndex, trigger } from "uikit-util";
 
 let active;
 
-UIkit.component('autocomplete', {
-
+UIkit.component("autocomplete", {
     props: {
         minLength: Number,
         delay: Number,
@@ -19,13 +18,13 @@ UIkit.component('autocomplete', {
 
     data: {
         minLength: 3,
-        param: 'search',
-        method: 'post',
+        param: "search",
+        method: "post",
         delay: 300,
-        loadingClass: 'uk-loading',
+        loadingClass: "uk-loading",
         flipDropdown: false,
-        skipClass: 'uk-skip',
-        hoverClass: 'uk-active',
+        skipClass: "uk-skip",
+        hoverClass: "uk-active",
         source: null,
         renderer: null,
         template: '<ul class="uk-nav uk-nav-autocomplete uk-autocomplete-results">{{~items}}<li data-value="{{$item.value}}"><a>{{$item.value}}</a></li>{{/items}}</ul>',
@@ -36,26 +35,24 @@ UIkit.component('autocomplete', {
     },
 
     created() {
-
         this.template = this.rtemplate(this.template);
         this.dropdown = $('<div class="uk-dropdown"></div>');
-        attr(this.dropdown, 'aria-expanded', 'false');
-
+        attr(this.dropdown, "aria-expanded", "false");
     },
 
     connected() {
         const $this = this;
 
-        this.isSelect = false,
-            this.trigger = this.debounce(function(e) {
+        (this.isSelect = false),
+            (this.trigger = this.debounce(function (e) {
                 if (this.isSelect) {
                     return (this.isSelect = false);
                 }
 
                 $this.handle();
-            }, this.delay);
+            }, this.delay));
 
-        on(document, 'click', (e) => {
+        on(document, "click", (e) => {
             if (active && e.target != active.input[0]) {
                 active.hide();
             }
@@ -66,17 +63,18 @@ UIkit.component('autocomplete', {
         // this.dropdown = $('<div class="uk-dropdown"></div>');
         append(this.$el, this.dropdown);
         // attr(this.dropdown, 'aria-expanded', 'false');
-        attr(find('input', this.$el), 'autocomplete', 'off');
-        this.input = find('input', this.$el);
+        attr(find("input", this.$el), "autocomplete", "off");
+        this.input = find("input", this.$el);
 
         this.triggercomplete = this.trigger;
     },
 
-    events: [{
-            name: 'keydown',
+    events: [
+        {
+            name: "keydown",
 
             delegate() {
-                return 'input';
+                return "input";
             },
 
             handler(e) {
@@ -92,11 +90,11 @@ UIkit.component('autocomplete', {
                             break;
                         case 38: // up
                             e.preventDefault();
-                            this.pick('prev', true);
+                            this.pick("prev", true);
                             break;
                         case 40: // down
                             e.preventDefault();
-                            this.pick('next', true);
+                            this.pick("next", true);
                             break;
                         case 27:
                         case 9: // esc, tab
@@ -110,10 +108,10 @@ UIkit.component('autocomplete', {
         },
 
         {
-            name: 'keyup',
+            name: "keyup",
 
             delegate() {
-                return 'input';
+                return "input";
             },
 
             handler(e) {
@@ -122,10 +120,10 @@ UIkit.component('autocomplete', {
         },
 
         {
-            name: 'click',
+            name: "click",
 
             delegate() {
-                return '.uk-autocomplete-results > *';
+                return ".uk-autocomplete-results > *";
             },
 
             handler(e) {
@@ -134,25 +132,23 @@ UIkit.component('autocomplete', {
         },
 
         {
-            name: 'mouseover',
+            name: "mouseover",
 
             delegate() {
-                return '.uk-autocomplete-results > *';
+                return ".uk-autocomplete-results > *";
             },
 
             handler(e) {
-                if (e.target.parentNode.tagName.toLowerCase() != 'li') return;
+                if (e.target.parentNode.tagName.toLowerCase() != "li") return;
                 this.pick($(e.target.parentNode));
             },
         },
     ],
 
     methods: {
-
         handle() {
             const $this = this;
-            const
-                old = this.value;
+            const old = this.value;
 
             this.value = this.input.value;
 
@@ -167,11 +163,10 @@ UIkit.component('autocomplete', {
 
         debounce(func, wait, immediate) {
             let timeout;
-            return function() {
+            return function () {
                 const context = this;
-                const
-                    args = arguments;
-                const later = function() {
+                const args = arguments;
+                const later = function () {
                     timeout = null;
                     if (!immediate) func.apply(context, args);
                 };
@@ -184,22 +179,22 @@ UIkit.component('autocomplete', {
 
         pick(item, scrollinview) {
             const $this = this;
-            const items = findAll(`>:not(.${this.skipClass})`, find('.uk-autocomplete-results', $(this.dropdown)));
+            const items = findAll(`>:not(.${this.skipClass})`, find(".uk-autocomplete-results", $(this.dropdown)));
             let selected = false;
 
-            if (typeof item !== 'string' && !hasClass($(item), this.skipClass)) {
+            if (typeof item !== "string" && !hasClass($(item), this.skipClass)) {
                 selected = item;
-            } else if (item == 'next' || item == 'prev') {
+            } else if (item == "next" || item == "prev") {
                 if (this.selected) {
                     const index = getIndex(this.selected, items);
 
-                    if (item == 'next') {
+                    if (item == "next") {
                         selected = toNodes(items)[index + 1 < items.length ? index + 1 : 0];
                     } else {
                         selected = toNodes(items)[index - 1 < 0 ? items.length - 1 : index - 1];
                     }
                 } else {
-                    selected = !this.selected ? items[0] : items[getIndex((item == 'next') ? 'next' : 'previous', items)];
+                    selected = !this.selected ? items[0] : items[getIndex(item == "next" ? "next" : "previous", items)];
                 }
 
                 selected = $(selected);
@@ -232,11 +227,11 @@ UIkit.component('autocomplete', {
 
             const data = Object.assign({}, this.selected.dataset);
 
-            trigger(this.$el, 'select', [this, data]);
+            trigger(this.$el, "select", [this, data]);
 
             if (data.value) {
                 this.input.value = data.value;
-                trigger(this.input, 'change');
+                trigger(this.input, "change");
             }
 
             this.hide();
@@ -250,7 +245,7 @@ UIkit.component('autocomplete', {
             this.visible = true;
 
             // addClass($(this.$el), 'uk-open');
-            addClass($(this.dropdown), 'uk-open');
+            addClass($(this.dropdown), "uk-open");
 
             if (active && active !== this) {
                 active.hide();
@@ -259,7 +254,7 @@ UIkit.component('autocomplete', {
             active = this;
 
             // Update aria
-            attr($(this.dropdown), 'aria-expanded', 'true');
+            attr($(this.dropdown), "aria-expanded", "true");
 
             return this;
         },
@@ -268,21 +263,21 @@ UIkit.component('autocomplete', {
             if (!this.visible) return;
             this.visible = false;
             // removeClass($(this.$el), 'uk-open');
-            removeClass($(this.dropdown), 'uk-open');
+            removeClass($(this.dropdown), "uk-open");
 
             if (active === this) {
                 active = false;
             }
 
             // Update aria
-            attr($(this.dropdown), 'aria-expanded', 'false');
+            attr($(this.dropdown), "aria-expanded", "false");
 
             return this;
         },
 
         request() {
             const $this = this;
-            const release = function(data) {
+            const release = function (data) {
                 if (data) {
                     $this.render(data);
                 }
@@ -295,15 +290,13 @@ UIkit.component('autocomplete', {
             if (this.source) {
                 const { source } = this;
 
-                switch (typeof(this.source)) {
-                    case 'function':
-
+                switch (typeof this.source) {
+                    case "function":
                         this.source.apply(this, [release]);
 
                         break;
 
-                    case 'object':
-
+                    case "object":
                         if (source.length) {
                             const items = [];
 
@@ -318,8 +311,7 @@ UIkit.component('autocomplete', {
 
                         break;
 
-                    case 'string':
-
+                    case "string":
                         var params = {};
 
                         params[this.param] = this.value;
@@ -328,7 +320,7 @@ UIkit.component('autocomplete', {
                             url: this.source,
                             data: params,
                             type: this.method,
-                            dataType: 'json',
+                            dataType: "json",
                         }).done((json) => {
                             release(json || []);
                         });
@@ -355,14 +347,17 @@ UIkit.component('autocomplete', {
                 append(this.dropdown, this.template({ items: data }));
                 this.show();
 
-                this.trigger('show');
+                this.trigger("show");
             }
 
             return this;
         },
 
         rtemplate(str, data) {
-            const tokens = str.replace(/\n/g, '\\n').replace(/\{\{\{\s*(.+?)\s*\}\}\}/g, '{{!$1}}').split(/(\{\{\s*(.+?)\s*\}\})/g);
+            const tokens = str
+                .replace(/\n/g, "\\n")
+                .replace(/\{\{\{\s*(.+?)\s*\}\}\}/g, "{{!$1}}")
+                .split(/(\{\{\s*(.+?)\s*\}\})/g);
             let i = 0;
             let toc;
             let cmd;
@@ -370,8 +365,7 @@ UIkit.component('autocomplete', {
             let val;
             let fn;
             const output = [];
-            let
-                openblocks = 0;
+            let openblocks = 0;
 
             while (i < tokens.length) {
                 toc = tokens[i];
@@ -383,27 +377,27 @@ UIkit.component('autocomplete', {
                     prop = toc.substring(toc.match(/^(\^|\#|\!|\~|\:)/) ? 1 : 0);
 
                     switch (cmd) {
-                        case '~':
+                        case "~":
                             output.push(`for(var $i=0;$i<${prop}.length;$i++) { var $item = ${prop}[$i];`);
                             openblocks++;
                             break;
-                        case ':':
+                        case ":":
                             output.push(`for(var $key in ${prop}) { var $val = ${prop}[$key];`);
                             openblocks++;
                             break;
-                        case '#':
+                        case "#":
                             output.push(`if(${prop}) {`);
                             openblocks++;
                             break;
-                        case '^':
+                        case "^":
                             output.push(`if(!${prop}) {`);
                             openblocks++;
                             break;
-                        case '/':
-                            output.push('}');
+                        case "/":
+                            output.push("}");
                             openblocks--;
                             break;
-                        case '!':
+                        case "!":
                             output.push(`__ret.push(${prop});`);
                             break;
                         default:
@@ -416,18 +410,9 @@ UIkit.component('autocomplete', {
                 i += 1;
             }
 
-            fn = new Function('$data', [
-                'var __ret = [];',
-                'try {',
-                'with($data){', (!openblocks ? output.join('') : '__ret = ["Not all blocks are closed correctly."]'), '};',
-                '}catch(e){__ret = [e.message];}',
-                'return __ret.join("").replace(/\\n\\n/g, "\\n");',
-                "function escape(html) { return String(html).replace(/&/g, '&amp;').replace(/\"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');}",
-            ].join('\n'));
+            fn = new Function("$data", ["var __ret = [];", "try {", "with($data){", !openblocks ? output.join("") : '__ret = ["Not all blocks are closed correctly."]', "};", "}catch(e){__ret = [e.message];}", 'return __ret.join("").replace(/\\n\\n/g, "\\n");', "function escape(html) { return String(html).replace(/&/g, '&amp;').replace(/\"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');}"].join("\n"));
 
             return data ? fn(data) : fn;
         },
-
     },
-
 });

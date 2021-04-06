@@ -11,11 +11,11 @@ class Zip implements ArchiveInterface
      */
     public static function extract($archive, $path)
     {
-        if (!class_exists('ZipArchive')) {
-            throw new RuntimeException('You need the zip extension enabled');
+        if (!class_exists("ZipArchive")) {
+            throw new RuntimeException("You need the zip extension enabled");
         }
 
-        $zip = new \ZipArchive;
+        $zip = new \ZipArchive();
 
         if (true !== ($error = $zip->open($archive))) {
             return $error;

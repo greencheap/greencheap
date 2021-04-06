@@ -88,17 +88,17 @@
                 <tr>
                     <td valign="top" align="center" style="font-size: 16px; line-height: 24px; font-family: Helvetica, Arial, sans-serif; color: #666;">
 
-                        <h1 style="margin: 0 0 30px 0; padding-bottom: 25px; border-bottom: 1px solid #e5e5e5; font-size: 34px; line-height: 40px; font-family: Helvetica, Arial, sans-serif; font-weight: normal; color: #333 !important;"><?= __('Hello name!' , compact('name')) ?></h1>
+                        <h1 style="margin: 0 0 30px 0; padding-bottom: 25px; border-bottom: 1px solid #e5e5e5; font-size: 34px; line-height: 40px; font-family: Helvetica, Arial, sans-serif; font-weight: normal; color: #333 !important;"><?= __("Hello name!", compact("name")) ?></h1>
 
                         <p style="margin: 20px 0; text-align: center;"><?= $message ?></p>
 
                         <p style="margin:20px;padding:10px;border:1px solid #fff"><?= $commentInformation ?></p>
 
                         <p style="margin: 40px 0 0 0; text-align: center;">
-                            <a style="padding: 15px 20px; background: #37a5e4; border-radius: 3px; color: #fff; text-decoration: none;" href="<?= $link ?>"><?= __('Read the comment') ?></a>
+                            <a style="padding: 15px 20px; background: #37a5e4; border-radius: 3px; color: #fff; text-decoration: none;" href="<?= $link ?>"><?= __("Read the comment") ?></a>
                         </p>
 
-                        <p style="margin: 50px 0 0 0; padding-top: 30px; border-top: 1px solid #e5e5e5; font-size: 14px; line-height: 20px; font-family: Helvetica, Arial, sans-serif; color: #999;"><a style="color: #777; text-decoration: none;" href="<?= $app['url']->base(0) ?>"><?= $app['url']->base(0) ?></a></p>
+                        <p style="margin: 50px 0 0 0; padding-top: 30px; border-top: 1px solid #e5e5e5; font-size: 14px; line-height: 20px; font-family: Helvetica, Arial, sans-serif; color: #999;"><a style="color: #777; text-decoration: none;" href="<?= $app["url"]->base(0) ?>"><?= $app["url"]->base(0) ?></a></p>
 
                     </td>
                 </tr>

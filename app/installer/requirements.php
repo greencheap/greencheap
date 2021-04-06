@@ -26,11 +26,11 @@ class Requirement
      */
     public function __construct(bool $fulfilled, $testMessage, $helpHtml, $helpText = null, $optional = false)
     {
-        $this->fulfilled = (Boolean) $fulfilled;
+        $this->fulfilled = (bool) $fulfilled;
         $this->testMessage = (string) $testMessage;
         $this->helpHtml = (string) $helpHtml;
         $this->helpText = null === $helpText ? strip_tags($this->helpHtml) : (string) $helpText;
-        $this->optional = (Boolean) $optional;
+        $this->optional = (bool) $optional;
     }
 
     /**
@@ -111,24 +111,17 @@ class PhpIniRequirement extends Requirement
 
         if (is_callable($evaluation)) {
             if (null === $testMessage || null === $helpHtml) {
-                throw new InvalidArgumentException('You must provide the parameters testMessage and helpHtml for a callback evaluation.');
+                throw new InvalidArgumentException("You must provide the parameters testMessage and helpHtml for a callback evaluation.");
             }
 
             $fulfilled = call_user_func($evaluation, $cfgValue);
         } else {
             if (null === $testMessage) {
-                $testMessage = sprintf('%s %s be %s in php.ini',
-                    $cfgName,
-                    $optional ? 'should' : 'must',
-                    $evaluation ? 'enabled' : 'disabled'
-                );
+                $testMessage = sprintf("%s %s be %s in php.ini", $cfgName, $optional ? "should" : "must", $evaluation ? "enabled" : "disabled");
             }
 
             if (null === $helpHtml) {
-                $helpHtml = sprintf('Set <strong>%s</strong> to <strong>%s</strong> in php.ini<a href="#phpini">*</a>.',
-                    $cfgName,
-                    $evaluation ? 'on' : 'off'
-                );
+                $helpHtml = sprintf('Set <strong>%s</strong> to <strong>%s</strong> in php.ini<a href="#phpini">*</a>.', $cfgName, $evaluation ? "on" : "off");
             }
 
             $fulfilled = $evaluation == $cfgValue;
@@ -145,7 +138,7 @@ class PhpIniRequirement extends Requirement
  */
 class RequirementCollection implements IteratorAggregate
 {
-    private $requirements = array();
+    private $requirements = [];
 
     /**
      * Gets the current RequirementCollection as an Iterator.
@@ -256,7 +249,7 @@ class RequirementCollection implements IteratorAggregate
      */
     public function getRequirements()
     {
-        $array = array();
+        $array = [];
         foreach ($this->requirements as $req) {
             if (!$req->isOptional()) {
                 $array[] = $req;
@@ -273,7 +266,7 @@ class RequirementCollection implements IteratorAggregate
      */
     public function getFailedRequirements()
     {
-        $array = array();
+        $array = [];
         foreach ($this->requirements as $req) {
             if (!$req->isFulfilled() && !$req->isOptional()) {
                 $array[] = $req;
@@ -290,7 +283,7 @@ class RequirementCollection implements IteratorAggregate
      */
     public function getRecommendations()
     {
-        $array = array();
+        $array = [];
         foreach ($this->requirements as $req) {
             if ($req->isOptional()) {
                 $array[] = $req;
@@ -307,7 +300,7 @@ class RequirementCollection implements IteratorAggregate
      */
     public function getFailedRecommendations()
     {
-        $array = array();
+        $array = [];
         foreach ($this->requirements as $req) {
             if (!$req->isFulfilled() && $req->isOptional()) {
                 $array[] = $req;
@@ -340,7 +333,7 @@ class RequirementCollection implements IteratorAggregate
      */
     public function getPhpIniConfigPath()
     {
-        return get_cfg_var('cfg_file_path');
+        return get_cfg_var("cfg_file_path");
     }
 }
 
@@ -352,7 +345,7 @@ class RequirementCollection implements IteratorAggregate
  */
 class GreenCheapRequirements extends RequirementCollection
 {
-    const REQUIRED_PHP_VERSION = '7.2.0';
+    const REQUIRED_PHP_VERSION = "7.2.0";
 
     /**
      * Constructor that initializes the requirements.
@@ -363,98 +356,50 @@ class GreenCheapRequirements extends RequirementCollection
 
         $installedPhpVersion = phpversion();
 
-        $this->addPhpIniRequirement('detect_unicode', false);
-        $this->addPhpIniRequirement('allow_url_fopen', true);
+        $this->addPhpIniRequirement("detect_unicode", false);
+        $this->addPhpIniRequirement("allow_url_fopen", true);
 
         $this->addRequirement(
-            version_compare($installedPhpVersion, self::REQUIRED_PHP_VERSION, '>='),
-            sprintf('PHP version must be at least %s (%s installed)', self::REQUIRED_PHP_VERSION, $installedPhpVersion),
-            sprintf('You are running PHP version "<strong>%s</strong>", but GreenCheap needs at least PHP "<strong>%s</strong>" to run.
+            version_compare($installedPhpVersion, self::REQUIRED_PHP_VERSION, ">="),
+            sprintf("PHP version must be at least %s (%s installed)", self::REQUIRED_PHP_VERSION, $installedPhpVersion),
+            sprintf(
+                'You are running PHP version "<strong>%s</strong>", but GreenCheap needs at least PHP "<strong>%s</strong>" to run.
                 Before using GreenCheap, upgrade your PHP installation, preferably to the latest version.',
-                $installedPhpVersion, self::REQUIRED_PHP_VERSION),
-            sprintf('Install PHP %s or newer (installed version is %s)', self::REQUIRED_PHP_VERSION, $installedPhpVersion)
+                $installedPhpVersion,
+                self::REQUIRED_PHP_VERSION
+            ),
+            sprintf("Install PHP %s or newer (installed version is %s)", self::REQUIRED_PHP_VERSION, $installedPhpVersion)
         );
 
-        $this->addRequirement(
-            function_exists('json_encode'),
-            'json_encode() must be available',
-            'Install and enable the <strong>JSON</strong> extension.'
-        );
+        $this->addRequirement(function_exists("json_encode"), "json_encode() must be available", "Install and enable the <strong>JSON</strong> extension.");
 
-        $this->addRequirement(
-            extension_loaded('openssl'),
-            'OpenSSL must be available',
-            'Install and enable the <strong>OpenSSL</strong> extension.'
-        );
+        $this->addRequirement(extension_loaded("openssl"), "OpenSSL must be available", "Install and enable the <strong>OpenSSL</strong> extension.");
 
-        $this->addRequirement(
-            function_exists('session_start'),
-            'session_start() must be available',
-            'Install and enable the <strong>session</strong> extension.'
-        );
+        $this->addRequirement(function_exists("session_start"), "session_start() must be available", "Install and enable the <strong>session</strong> extension.");
 
-        $this->addRequirement(
-            function_exists('ctype_alpha'),
-            'ctype_alpha() must be available',
-            'Install and enable the <strong>ctype</strong> extension.'
-        );
+        $this->addRequirement(function_exists("ctype_alpha"), "ctype_alpha() must be available", "Install and enable the <strong>ctype</strong> extension.");
 
-        $this->addRequirement(
-            function_exists('token_get_all'),
-            'token_get_all() must be available',
-            'Install and enable the <strong>Tokenizer</strong> extension.'
-        );
+        $this->addRequirement(function_exists("token_get_all"), "token_get_all() must be available", "Install and enable the <strong>Tokenizer</strong> extension.");
 
-        $this->addRequirement(
-            function_exists('simplexml_import_dom'),
-            'simplexml_import_dom() must be available',
-            'Install and enable the <strong>SimpleXML</strong> extension.'
-        );
+        $this->addRequirement(function_exists("simplexml_import_dom"), "simplexml_import_dom() must be available", "Install and enable the <strong>SimpleXML</strong> extension.");
 
-        $this->addRequirement(
-            function_exists('dom_import_simplexml'),
-            'dom_import_simplexml() must be available',
-            'Install and enable the <strong>DOM</strong> extension.'
-        );
+        $this->addRequirement(function_exists("dom_import_simplexml"), "dom_import_simplexml() must be available", "Install and enable the <strong>DOM</strong> extension.");
 
-        $this->addRequirement(
-            function_exists('mb_strtolower'),
-            'mb_strtolower() must be available',
-            'Install and enable the <strong>mbstring</strong> extension.'
-        );
+        $this->addRequirement(function_exists("mb_strtolower"), "mb_strtolower() must be available", "Install and enable the <strong>mbstring</strong> extension.");
 
-        $this->addRequirement(
-            defined('PCRE_VERSION'),
-            'PCRE extension must be available',
-            'Install the <strong>PCRE</strong> extension (version 8.0+).'
-        );
+        $this->addRequirement(defined("PCRE_VERSION"), "PCRE extension must be available", "Install the <strong>PCRE</strong> extension (version 8.0+).");
 
-        $this->addRequirement(
-            class_exists('ZipArchive'),
-            'ZipArchive must be available',
-            'Install and enable the <strong>ZIP</strong> extension.'
-        );
+        $this->addRequirement(class_exists("ZipArchive"), "ZipArchive must be available", "Install and enable the <strong>ZIP</strong> extension.");
 
-        $this->addRequirement(
-            class_exists('PDO'),
-            'PDO must be available',
-            'Install and enable the <strong>PDO</strong> extension.'
-        );
+        $this->addRequirement(class_exists("PDO"), "PDO must be available", "Install and enable the <strong>PDO</strong> extension.");
 
-        if (version_compare($installedPhpVersion, '5.6', '>=') && version_compare($installedPhpVersion, '7.0.0', '<')) {
-            $this->addRequirement(!(ini_get('display_startup_errors') === "1" && ini_get('always_populate_raw_post_data') !== "-1"),
-                '\'display_startup_errors\' is enabled and \'always_populate_raw_post_data\' is not set to \'-1\'',
-                'Disable startup errors or set \'always_populate_raw_post_data\' to \'-1\' in php.ini.'
-            );
+        if (version_compare($installedPhpVersion, "5.6", ">=") && version_compare($installedPhpVersion, "7.0.0", "<")) {
+            $this->addRequirement(!(ini_get("display_startup_errors") === "1" && ini_get("always_populate_raw_post_data") !== "-1"), '\'display_startup_errors\' is enabled and \'always_populate_raw_post_data\' is not set to \'-1\'', 'Disable startup errors or set \'always_populate_raw_post_data\' to \'-1\' in php.ini.');
         }
 
-        if (class_exists('PDO')) {
+        if (class_exists("PDO")) {
             $drivers = PDO::getAvailableDrivers();
-            $this->addRequirement(
-                (in_array('mysql', $drivers) || in_array('sqlite', $drivers)),
-                sprintf('PDO should have MySQL or SQLite drivers installed (currently available: %s)', count($drivers) ? implode(', ', $drivers) : 'none'),
-                'Install <strong>PDO drivers</strong>.'
-            );
+            $this->addRequirement(in_array("mysql", $drivers) || in_array("sqlite", $drivers), sprintf("PDO should have MySQL or SQLite drivers installed (currently available: %s)", count($drivers) ? implode(", ", $drivers) : "none"), "Install <strong>PDO drivers</strong>.");
         }
 
         $writable_directories = ["$path/tmp", "$path/tmp/cache", "$path/tmp/logs", "$path/tmp/sessions"];
@@ -465,74 +410,40 @@ class GreenCheapRequirements extends RequirementCollection
         }
 
         foreach ($writable_directories as $dir) {
-            $this->addRequirement(
-                is_writable($dir),
-                "{$dir} directory must be writable",
-                "Change the permissions of the \"<strong>{$dir}</strong>\" directory so that the web server can write into it."
-            );
+            $this->addRequirement(is_writable($dir), "{$dir} directory must be writable", "Change the permissions of the \"<strong>{$dir}</strong>\" directory so that the web server can write into it.");
         }
 
-        $this->addRequirement(
-            file_exists("$path/.htaccess"),
-            ".htaccess does not exist",
-            "Make sure the <strong>.htaccess</strong> file has been uploaded, sometimes hidden files are not uploaded using FTP/SFTP.");
+        $this->addRequirement(file_exists("$path/.htaccess"), ".htaccess does not exist", "Make sure the <strong>.htaccess</strong> file has been uploaded, sometimes hidden files are not uploaded using FTP/SFTP.");
 
-        if (function_exists('opcache_invalidate') && ini_get('opcache.enable')) {
-            $this->addPhpIniRequirement('opcache.load_comments', true, true);
-            $this->addPhpIniRequirement('opcache.save_comments', true, true);
+        if (function_exists("opcache_invalidate") && ini_get("opcache.enable")) {
+            $this->addPhpIniRequirement("opcache.load_comments", true, true);
+            $this->addPhpIniRequirement("opcache.save_comments", true, true);
         }
 
         /* optional recommendations follow */
 
-        $this->addRecommendation(
-            function_exists('curl_init'),
-            'curl_init() should be available',
-            'Install and enable the <strong>cURL</strong> extension.'
-        );
+        $this->addRecommendation(function_exists("curl_init"), "curl_init() should be available", "Install and enable the <strong>cURL</strong> extension.");
 
-        $this->addRecommendation(
-            function_exists('iconv'),
-            'iconv() should be available',
-            'Install and enable the <strong>iconv</strong> extension.'
-        );
+        $this->addRecommendation(function_exists("iconv"), "iconv() should be available", "Install and enable the <strong>iconv</strong> extension.");
 
-        $this->addRecommendation(
-            function_exists('utf8_decode'),
-            'utf8_decode() should be available',
-            'Install and enable the <strong>XML Parser</strong> extension.'
-        );
+        $this->addRecommendation(function_exists("utf8_decode"), "utf8_decode() should be available", "Install and enable the <strong>XML Parser</strong> extension.");
 
-        if (extension_loaded('apcu')) {
-            $this->addRecommendation(
-                version_compare(phpversion('apcu'), '4.0.2', '>='),
-                'APCu version must be at least 4.0.2',
-                'Upgrade your <strong>APCu</strong> extension (4.0.2+).'
-            );
+        if (extension_loaded("apcu")) {
+            $this->addRecommendation(version_compare(phpversion("apcu"), "4.0.2", ">="), "APCu version must be at least 4.0.2", "Upgrade your <strong>APCu</strong> extension (4.0.2+).");
         }
 
-        if (function_exists('apc_store') && ini_get('apc.enabled')) {
-            $this->addRequirement(
-                version_compare(phpversion('apc'), '3.1.13', '>='),
-                'APC version must be at least 3.1.13 when using PHP 5.4',
-                'Upgrade your <strong>APC</strong> extension (3.1.13+).'
-            );
+        if (function_exists("apc_store") && ini_get("apc.enabled")) {
+            $this->addRequirement(version_compare(phpversion("apc"), "3.1.13", ">="), "APC version must be at least 3.1.13 when using PHP 5.4", "Upgrade your <strong>APC</strong> extension (3.1.13+).");
         }
 
-        $accelerator = (function_exists('apc_store') && ini_get('apc.enabled'))
-                        || (function_exists('eaccelerator_put') && ini_get('eaccelerator.enable'))
-                        || (function_exists('opcache_invalidate') && ini_get('opcache.enable'))
-                        || function_exists('xcache_set');
+        $accelerator = (function_exists("apc_store") && ini_get("apc.enabled")) || (function_exists("eaccelerator_put") && ini_get("eaccelerator.enable")) || (function_exists("opcache_invalidate") && ini_get("opcache.enable")) || function_exists("xcache_set");
 
-        $this->addRecommendation(
-            $accelerator,
-            'a PHP accelerator should be installed',
-            'Install and enable a <strong>PHP accelerator</strong> like APC (highly recommended).'
-        );
+        $this->addRecommendation($accelerator, "a PHP accelerator should be installed", "Install and enable a <strong>PHP accelerator</strong> like APC (highly recommended).");
 
-        $this->addPhpIniRecommendation('short_open_tag', false);
-        $this->addPhpIniRecommendation('magic_quotes_gpc', false, true);
-        $this->addPhpIniRecommendation('register_globals', false, true);
-        $this->addPhpIniRecommendation('session.auto_start', false);
+        $this->addPhpIniRecommendation("short_open_tag", false);
+        $this->addPhpIniRecommendation("magic_quotes_gpc", false, true);
+        $this->addPhpIniRecommendation("register_globals", false, true);
+        $this->addPhpIniRecommendation("session.auto_start", false);
     }
 }
 

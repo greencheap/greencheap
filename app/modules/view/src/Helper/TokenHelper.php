@@ -26,7 +26,7 @@ class TokenHelper extends Helper
      *
      * @param string $name
      */
-    public function get($name = '_csrf')
+    public function get($name = "_csrf")
     {
         printf('<input type="hidden" name="%s" value="%s">', $name, $this->provider->generate());
     }
@@ -36,6 +36,6 @@ class TokenHelper extends Helper
      */
     public function getName()
     {
-        return 'token';
+        return "token";
     }
 }

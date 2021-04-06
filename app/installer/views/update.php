@@ -1,4 +1,4 @@
-<?php $view->script('update-system', 'installer:app/bundle/update.js', ['vue']) ?>
+<?php $view->script("update-system", "installer:app/bundle/update.js", ["vue"]); ?>
 
 <div id="app">
     <div v-if="hasUpdate && !finished" class="">

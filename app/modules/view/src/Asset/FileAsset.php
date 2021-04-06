@@ -9,7 +9,7 @@ class FileAsset extends Asset
      */
     public function getContent()
     {
-        if ($this->content === null and $path = $this->getPath()) {
+        if ($this->content === null and ($path = $this->getPath())) {
             $this->content = file_get_contents($path);
         }
 
@@ -19,15 +19,15 @@ class FileAsset extends Asset
     /**
      * {@inheritdoc}
      */
-    public function hash($salt = '')
+    public function hash($salt = "")
     {
-        $time = '';
+        $time = "";
 
         if ($path = $this->getPath()) {
             $time = filemtime($path);
         }
 
-        return hash('crc32b', $this->source.$time.$salt);
+        return hash("crc32b", $this->source . $time . $salt);
     }
 
     /**
@@ -40,6 +40,6 @@ class FileAsset extends Asset
 
     public function __toString()
     {
-        return '';
+        return "";
     }
 }

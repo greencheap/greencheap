@@ -13,18 +13,17 @@ class Renderer
 
     public function code($code, $lang = null, $escaped = null)
     {
-        if ($this->options['highlight']) {
-
-            $out = $this->options['highlight']($code, $lang);
+        if ($this->options["highlight"]) {
+            $out = $this->options["highlight"]($code, $lang);
 
             if ($out != null && $out !== $code) {
                 $escaped = true;
-                $code    = $out;
+                $code = $out;
             }
         }
 
-        $class = $lang ? ' class="'.$this->options['langPrefix'].Markdown::escape($lang, true).'"' : '';
-        $code  = $escaped ? $code : Markdown::escape($code, true);
+        $class = $lang ? ' class="' . $this->options["langPrefix"] . Markdown::escape($lang, true) . '"' : "";
+        $code = $escaped ? $code : Markdown::escape($code, true);
 
         return "<pre><code{$class}>{$code}\n</code></pre>\n";
     }
@@ -39,16 +38,16 @@ class Renderer
         return $html;
     }
 
-    public function heading($text, $level, $raw = '')
+    public function heading($text, $level, $raw = "")
     {
-        $id = $this->options['headerPrefix'].preg_replace('/[^\w]+/m', '-', strtolower($raw));
+        $id = $this->options["headerPrefix"] . preg_replace("/[^\w]+/m", "-", strtolower($raw));
 
         return "<h{$level} id=\"{$id}\">{$text}</h{$level}>\n";
     }
 
     public function hr()
     {
-        return $this->options['xhtml'] ? "<hr/>\n" : "<hr>\n";
+        return $this->options["xhtml"] ? "<hr/>\n" : "<hr>\n";
     }
 
     public function lst($body, $ordered = false)
@@ -73,17 +72,15 @@ class Renderer
 
     public function tablerow($content)
     {
-        return "<tr>\n".$content."</tr>\n";
+        return "<tr>\n" . $content . "</tr>\n";
     }
 
     public function tablecell($content, array $flags = [])
     {
-        $type = $flags['header'] ? 'th' : 'td';
-        $tag = $flags['align']
-          ? '<'.$type.' style="text-align:'.$flags['align'].'">'
-          : '<'.$type.'>';
+        $type = $flags["header"] ? "th" : "td";
+        $tag = $flags["align"] ? "<" . $type . ' style="text-align:' . $flags["align"] . '">' : "<" . $type . ">";
 
-        return $tag.$content."</".$type.">\n";
+        return $tag . $content . "</" . $type . ">\n";
     }
 
     // span level renderer
@@ -104,7 +101,7 @@ class Renderer
 
     public function br()
     {
-        return $this->options['xhtml'] ? '<br/>' : '<br>';
+        return $this->options["xhtml"] ? "<br/>" : "<br>";
     }
 
     public function del($text)
@@ -112,21 +109,21 @@ class Renderer
         return "<del>{$text}</del>";
     }
 
-    public function link($href = '', $title = '', $text = '')
+    public function link($href = "", $title = "", $text = "")
     {
-        if ($this->options['sanitize'] && strpos($href, 'javascript:') === 0) {
-            return '';
+        if ($this->options["sanitize"] && strpos($href, "javascript:") === 0) {
+            return "";
         }
 
-        $title = $title ? " title=\"{$title}\"" : '';
+        $title = $title ? " title=\"{$title}\"" : "";
 
         return "<a href=\"{$href}\"{$title}>{$text}</a>";
     }
 
-    public function image($href = '', $title = '', $text= '')
+    public function image($href = "", $title = "", $text = "")
     {
-        $title = $title ? " title=\"{$title}\"" : '';
-        $close = $this->options['xhtml'] ? '/>' : '>';
+        $title = $title ? " title=\"{$title}\"" : "";
+        $close = $this->options["xhtml"] ? "/>" : ">";
 
         return "<img src=\"{$href}\" alt=\"{$text}\"{$title}{$close}";
     }

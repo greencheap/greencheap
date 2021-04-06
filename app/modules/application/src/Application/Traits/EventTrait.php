@@ -16,11 +16,10 @@ trait EventTrait
             return;
         }
 
-        static::$instance->extend('events', function ($dispatcher) use ($event, $callback, $priority) {
+        static::$instance->extend("events", function ($dispatcher) use ($event, $callback, $priority) {
             $dispatcher->on($event, $callback, $priority);
             return $dispatcher;
         });
-
     }
 
     /**
@@ -38,7 +37,7 @@ trait EventTrait
         }
 
         try {
-            static::$instance->extend('events', function ($dispatcher) use ($subscribers) {
+            static::$instance->extend("events", function ($dispatcher) use ($subscribers) {
                 foreach ($subscribers as $sub) {
                     $dispatcher->subscribe($sub);
                 }

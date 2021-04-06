@@ -50,11 +50,11 @@ class Node implements NodeInterface, \JsonSerializable
     public $type;
 
     /** @Column(type="string") */
-    public $menu = '';
+    public $menu = "";
 
     /** @var array */
     protected static array $properties = [
-        'accessible' => 'isAccessible'
+        "accessible" => "isAccessible",
     ];
 
     /**
@@ -82,6 +82,6 @@ class Node implements NodeInterface, \JsonSerializable
      */
     public function jsonSerialize()
     {
-        return $this->toArray(['url' => $this->getUrl('base')]);
+        return $this->toArray(["url" => $this->getUrl("base")]);
     }
 }

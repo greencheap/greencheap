@@ -19,7 +19,7 @@ class SessionCsrfProvider extends DefaultCsrfProvider
      * @param Session $session
      * @param string  $name
      */
-    public function __construct(Session $session, $name = '_csrf')
+    public function __construct(Session $session, $name = "_csrf")
     {
         parent::__construct($name);
 

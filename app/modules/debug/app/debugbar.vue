@@ -15,19 +15,17 @@
             </a>
         </div>
 
-        <div ref="panel" class="pf-profiler-panel" :style="{display: panel ? 'block' : 'none', height: height}" />
+        <div ref="panel" class="pf-profiler-panel" :style="{ display: panel ? 'block' : 'none', height: height }" />
     </div>
 </template>
 
 <script>
-
-const _ = require('lodash');
+const _ = require("lodash");
 
 const config = window.$debugbar;
 
 module.exports = {
-
-    name: 'debug-bar',
+    name: "debug-bar",
 
     data() {
         return {
@@ -42,40 +40,42 @@ module.exports = {
         const vm = this;
         const sections = {};
 
-        _.forIn(this.$options.components, (component, name) => {
-            if (component.options && component.options.section) {
-                _.set(sections, name, _.merge({ name }, component.options.section));
-            }
-        }, this);
+        _.forIn(
+            this.$options.components,
+            (component, name) => {
+                if (component.options && component.options.section) {
+                    _.set(sections, name, _.merge({ name }, component.options.section));
+                }
+            },
+            this
+        );
 
-        this.sections = _.fromPairs(_.map(_.orderBy(sections, 'priority'), s => [s.name, s]));
+        this.sections = _.fromPairs(_.map(_.orderBy(sections, "priority"), (s) => [s.name, s]));
 
         this.load(config.current).then(function (res) {
-            this.$set(this, 'request', res.data.__meta);
+            this.$set(this, "request", res.data.__meta);
         });
     },
 
     computed: {
-
         height() {
             return `${Math.ceil(window.innerHeight / 2)}px`;
         },
-
     },
 
     methods: {
-
         load(id) {
             // return this.$http.get('_debugbar/{id}', {id: id}).then(function (res) {
-            return this.$http.get('_debugbar/{id}', { params: { id } }).then(function (res) {
-                this.$set(this, 'data', res.data);
+            return this.$http.get("_debugbar/{id}", { params: { id } }).then(function (res) {
+                this.$set(this, "data", res.data);
                 return res;
             });
         },
 
         open(name) {
-            const section = this.sections[name]; var panel; const
-                vm = _.find(this.$children, ['$options.name', name]);
+            const section = this.sections[name];
+            var panel;
+            const vm = _.find(this.$children, ["$options.name", name]);
 
             if (!section.template) {
                 return;
@@ -86,7 +86,7 @@ module.exports = {
             }
 
             var panel = new Vue({
-                name: 'Data',
+                name: "Data",
                 parent: vm,
                 template: section.template,
                 data: this.data[section.name],
@@ -97,7 +97,7 @@ module.exports = {
             panel.$mount();
             UIkit.util.html(this.$refs.panel, panel.$el);
 
-            this.$set(this, 'panel', panel);
+            this.$set(this, "panel", panel);
         },
 
         close() {
@@ -105,11 +105,8 @@ module.exports = {
                 this.panel.$destroy(true);
             }
 
-            this.$set(this, 'panel', null);
+            this.$set(this, "panel", null);
         },
-
     },
-
 };
-
 </script>

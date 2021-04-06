@@ -37,33 +37,36 @@ class PhpMatcherDumper extends CompiledUrlMatcherDumper
      */
     public function dump(array $options = [])
     {
-        $options = array_replace([
-            'class' => 'ProjectUrlMatcher',
-            'base_class' => 'Symfony\\Component\\Routing\\Matcher\\UrlMatcher',
-        ], $options);
+        $options = array_replace(
+            [
+                "class" => "ProjectUrlMatcher",
+                "base_class" => "Symfony\\Component\\Routing\\Matcher\\UrlMatcher",
+            ],
+            $options
+        );
 
         $code = parent::dump();
         $code = preg_replace('#\n    ([^ ].*?) // \$(\w++)$#m', "\n    \$this->$2 = $1", $code);
         $code = str_replace(",\n    $", ";\n    $", $code);
-        $code = substr($code, strpos($code, '$this') - 4, -5).";\n";
-        $code = preg_replace('/^    \$this->\w++ = (?:null|false|\[\n    \]);\n/m', '', $code);
-        $code = str_replace("\n    ", "\n        ", "\n".$code);
+        $code = substr($code, strpos($code, '$this') - 4, -5) . ";\n";
+        $code = preg_replace('/^    \$this->\w++ = (?:null|false|\[\n    \]);\n/m', "", $code);
+        $code = str_replace("\n    ", "\n        ", "\n" . $code);
 
         return <<<EOF
-        <?php
-        use Symfony\Component\Routing\Matcher\Dumper\CompiledUrlMatcherTrait;
-        use Symfony\Component\Routing\RequestContext;
-        /**
-         * This class has been auto-generated
-         * by the Symfony Routing Component.
-         */
-        class {$options['class']} extends {$options['base_class']}
-        {
-            use CompiledUrlMatcherTrait;
-            public function __construct(RequestContext \$context)
-            {
-                \$this->context = \$context;{$code}    }
-        }
-        EOF;
+<?php
+use Symfony\Component\Routing\Matcher\Dumper\CompiledUrlMatcherTrait;
+use Symfony\Component\Routing\RequestContext;
+/**
+ * This class has been auto-generated
+ * by the Symfony Routing Component.
+ */
+class {$options["class"]} extends {$options["base_class"]}
+{
+    use CompiledUrlMatcherTrait;
+    public function __construct(RequestContext \$context)
+    {
+        \$this->context = \$context;{$code}    }
+}
+EOF;
     }
 }

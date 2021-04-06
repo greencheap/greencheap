@@ -6,8 +6,9 @@ export default function (Vue) {
      * Asset provides a promise based assets manager.
      */
     function Asset(assets) {
-        const promises = []; const $url = (this.$url || Vue.url); let
-            _assets = [];
+        const promises = [];
+        const $url = this.$url || Vue.url;
+        let _assets = [];
 
         Object.keys(assets).forEach((type) => {
             if (!Asset[type]) {
@@ -34,10 +35,9 @@ export default function (Vue) {
     }
 
     _.extend(Asset, {
-
         css(url) {
-            return new Vue.Promise(((resolve, reject) => {
-                const link = document.createElement('link');
+            return new Vue.Promise((resolve, reject) => {
+                const link = document.createElement("link");
 
                 link.onload = function () {
                     resolve(url);
@@ -47,16 +47,16 @@ export default function (Vue) {
                 };
 
                 link.href = url;
-                link.type = 'text/css';
-                link.rel = 'stylesheet';
+                link.type = "text/css";
+                link.rel = "stylesheet";
 
-                document.getElementsByTagName('head')[0].appendChild(link);
-            }));
+                document.getElementsByTagName("head")[0].appendChild(link);
+            });
         },
 
         js(url) {
-            return new Vue.Promise(((resolve, reject) => {
-                const script = document.createElement('script');
+            return new Vue.Promise((resolve, reject) => {
+                const script = document.createElement("script");
 
                 script.onload = function () {
                     resolve(url);
@@ -66,12 +66,12 @@ export default function (Vue) {
                 };
                 script.src = url;
 
-                document.getElementsByTagName('head')[0].appendChild(script);
-            }));
+                document.getElementsByTagName("head")[0].appendChild(script);
+            });
         },
 
         image(url) {
-            return new Vue.Promise(((resolve, reject) => {
+            return new Vue.Promise((resolve, reject) => {
                 const img = new Image();
 
                 img.onload = function () {
@@ -82,17 +82,14 @@ export default function (Vue) {
                 };
 
                 img.src = url;
-            }));
+            });
         },
-
     });
 
-    Object.defineProperty(Vue.prototype, '$asset', {
-
+    Object.defineProperty(Vue.prototype, "$asset", {
         get() {
             return _.extend(Asset.bind(this), Asset);
         },
-
     });
 
     Vue.asset = Asset;

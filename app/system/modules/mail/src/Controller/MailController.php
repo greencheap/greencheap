@@ -20,14 +20,11 @@ class MailController
     public function smtpAction($option = []): array
     {
         try {
+            App::mailer()->testSmtpConnection($option["host"], $option["port"], $option["username"], $option["password"], $option["encryption"]);
 
-            App::mailer()->testSmtpConnection($option['host'], $option['port'], $option['username'], $option['password'], $option['encryption']);
-
-            return ['success' => true, 'message' => __('Connection established!')];
-
+            return ["success" => true, "message" => __("Connection established!")];
         } catch (\Exception $e) {
-
-            return ['success' => false, 'message' => sprintf(__('Connection not established! (%s)'), $e->getMessage())];
+            return ["success" => false, "message" => sprintf(__("Connection not established! (%s)"), $e->getMessage())];
         }
     }
 
@@ -41,15 +38,14 @@ class MailController
     public function emailAction($option = []): array
     {
         try {
+            $config = Arr::merge(App::module("system/mail")->config(), $option);
 
-            $config = Arr::merge(App::module('system/mail')->config(), $option);
-
-            $response['success'] = (bool) App::mailer()->create(__('Test email!'), __('Testemail'), $config['from_address'])->send();
-            $response['message'] = $response['success'] ? __('Mail successfully sent!') : __('Mail delivery failed!');
-
+            $response["success"] = (bool) App::mailer()
+                ->create(__("Test email!"), __("Testemail"), $config["from_address"])
+                ->send();
+            $response["message"] = $response["success"] ? __("Mail successfully sent!") : __("Mail delivery failed!");
         } catch (\Exception $e) {
-
-            $response = ['success' => false, 'message' => sprintf(__('Mail delivery failed! (%s)'), $e->getMessage())];
+            $response = ["success" => false, "message" => sprintf(__("Mail delivery failed! (%s)"), $e->getMessage())];
         }
 
         return $response;

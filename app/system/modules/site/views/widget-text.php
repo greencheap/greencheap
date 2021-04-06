@@ -1,1 +1,1 @@
-<?= $app['content']->applyPlugins($widget->get('content'), ['widget' => $widget, 'markdown' => $widget->get('markdown')]);
+<?= $app["content"]->applyPlugins($widget->get("content"), ["widget" => $widget, "markdown" => $widget->get("markdown")])

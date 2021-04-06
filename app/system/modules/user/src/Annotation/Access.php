@@ -28,12 +28,11 @@ class Access
     public function __construct(array $data)
     {
         foreach ($data as $key => $value) {
-
-            if ($key == 'value') {
-                $key = 'expression';
+            if ($key == "value") {
+                $key = "expression";
             }
 
-            if (!method_exists($this, $method = 'set'.$key)) {
+            if (!method_exists($this, $method = "set" . $key)) {
                 throw new BadMethodCallException(sprintf("Unknown property '%s' on annotation '%s'.", $key, get_class($this)));
             }
 

@@ -29,7 +29,7 @@ class ParamFetcher implements ParamFetcherInterface
      */
     public function __construct(FilterManager $filterManager = null)
     {
-        $this->filterManager = $filterManager ?: new FilterManager;
+        $this->filterManager = $filterManager ?: new FilterManager();
     }
 
     /**
@@ -48,12 +48,11 @@ class ParamFetcher implements ParamFetcherInterface
         $this->params = [];
 
         foreach ($params as $name => $type) {
-
             if (is_numeric($name)) {
-                list($name, $type) = [$type, ''];
+                list($name, $type) = [$type, ""];
             }
 
-            $this->params[] = ['name' => $name, 'type' => $type, 'options' => isset($options[$name]) ? $options[$name] : []];
+            $this->params[] = ["name" => $name, "type" => $type, "options" => isset($options[$name]) ? $options[$name] : []];
         }
     }
 
@@ -81,34 +80,25 @@ class ParamFetcher implements ParamFetcherInterface
          */
         extract($this->params[$index]);
 
-        foreach (['query', 'request'] as $bag) {
-
+        foreach (["query", "request"] as $bag) {
             $value = $this->request->$bag->get($name);
 
             if ($value !== null) {
-
-                if ($type == 'array') {
-
+                if ($type == "array") {
                     $value = (array) $value;
-
-                } elseif (strpos($type, '[]') !== false) {
-
+                } elseif (strpos($type, "[]") !== false) {
                     $value = (array) $value;
-                    $filter = $this->filterManager->get(str_replace('[]', '', $type), $options);
+                    $filter = $this->filterManager->get(str_replace("[]", "", $type), $options);
 
-                    array_walk($value, function(&$val) use ($filter, $name) {
-
+                    array_walk($value, function (&$val) use ($filter, $name) {
                         if (is_array($val)) {
                             throw new \RuntimeException(sprintf("Query parameter cannot be a nested array.", $name));
                         }
 
                         $val = $filter->filter($val);
                     });
-
                 } elseif ($type) {
-
                     $value = $this->filterManager->get($type, $options)->filter($value);
-
                 }
 
                 break;

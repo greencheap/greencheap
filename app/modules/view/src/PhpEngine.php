@@ -39,8 +39,8 @@ class PhpEngine extends BasePhpEngine
 
         unset($template, $parameters);
 
-        if (isset($this->parameters['this'])) {
-            throw new \InvalidArgumentException('Invalid parameter (this)');
+        if (isset($this->parameters["this"])) {
+            throw new \InvalidArgumentException("Invalid parameter (this)");
         }
 
         extract($this->parameters, EXTR_SKIP);
@@ -51,7 +51,7 @@ class PhpEngine extends BasePhpEngine
             $this->result = ob_get_clean();
         } elseif ($this->template instanceof StringStorage) {
             ob_start();
-            eval('; ?>'.$this->template.'<?php ;');
+            eval("; ?>" . $this->template . "<?php ;");
             $this->result = ob_get_clean();
         }
 

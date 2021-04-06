@@ -7,7 +7,7 @@ class PrefixEventDispatcher implements EventDispatcherInterface
     /**
      * @var string
      */
-    protected $prefix = '';
+    protected $prefix = "";
 
     /**
      * @var EventDispatcherInterface
@@ -31,7 +31,7 @@ class PrefixEventDispatcher implements EventDispatcherInterface
      */
     public function on($event, $listener, $priority = 0)
     {
-        $this->events->on($this->prefix.$event, $listener, $priority);
+        $this->events->on($this->prefix . $event, $listener, $priority);
     }
 
     /**
@@ -39,7 +39,7 @@ class PrefixEventDispatcher implements EventDispatcherInterface
      */
     public function off($event, $listener = null)
     {
-        $this->events->off($this->prefix.$event, $listener);
+        $this->events->off($this->prefix . $event, $listener);
     }
 
     /**
@@ -64,9 +64,9 @@ class PrefixEventDispatcher implements EventDispatcherInterface
     public function trigger($event, array $arguments = [])
     {
         if (is_string($event)) {
-            $event = $this->prefix.$event;
-        } else if ($event instanceof EventInterface) {
-            $event->setName($this->prefix.$event->getName());
+            $event = $this->prefix . $event;
+        } elseif ($event instanceof EventInterface) {
+            $event->setName($this->prefix . $event->getName());
         }
 
         return $this->events->trigger($event, $arguments);

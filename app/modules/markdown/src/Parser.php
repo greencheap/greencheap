@@ -20,7 +20,7 @@ class Parser
     public function __construct(array $options = [])
     {
         $this->options = $options;
-        $this->renderer = $options['renderer'];
+        $this->renderer = $options["renderer"];
     }
 
     /**
@@ -31,13 +31,13 @@ class Parser
      */
     public function parse($src)
     {
-        $this->inline = new InlineLexer($src['links'], $this->options);
+        $this->inline = new InlineLexer($src["links"], $this->options);
 
-        unset($src['links']);
+        unset($src["links"]);
 
         $this->tokens = array_reverse($src);
 
-        $out = '';
+        $out = "";
 
         while ($this->next()) {
             $out .= $this->tok();
@@ -73,11 +73,11 @@ class Parser
      */
     protected function parseText()
     {
-        $body = $this->token['text'];
+        $body = $this->token["text"];
 
-        while (($token = $this->peek()) && $token['type'] == 'text') {
-          $body .= "\n".$token['text'];
-          $this->next();
+        while (($token = $this->peek()) && $token["type"] == "text") {
+            $body .= "\n" . $token["text"];
+            $this->next();
         }
 
         return $this->inline->output($body);
@@ -90,45 +90,38 @@ class Parser
      */
     protected function tok()
     {
-        $body = '';
+        $body = "";
 
-        switch ($this->token['type']) {
+        switch ($this->token["type"]) {
+            case "space":
+                return "";
 
-            case 'space':
-
-                return '';
-
-            case 'hr':
-
+            case "hr":
                 return $this->renderer->hr();
 
-            case 'heading':
+            case "heading":
+                return $this->renderer->heading($this->inline->output($this->token["text"]), $this->token["depth"], $this->token["text"]);
 
-                return $this->renderer->heading($this->inline->output($this->token['text']), $this->token['depth'], $this->token['text']);
+            case "code":
+                return $this->renderer->code($this->token["text"], @$this->token["lang"], @$this->token["escaped"]);
 
-            case 'code':
+            case "table":
+                $header = "";
+                $cell = "";
 
-                return $this->renderer->code($this->token['text'], @$this->token['lang'], @$this->token['escaped']);
-
-            case 'table':
-
-                $header = '';
-                $cell   = '';
-
-                for ($i = 0; $i < count($this->token['header']); $i++) {
-                    $flags = ['header' => true, 'align' => $this->token['align'][$i]];
-                    $cell .= $this->renderer->tablecell($this->inline->output($this->token['header'][$i]), $flags);
+                for ($i = 0; $i < count($this->token["header"]); $i++) {
+                    $flags = ["header" => true, "align" => $this->token["align"][$i]];
+                    $cell .= $this->renderer->tablecell($this->inline->output($this->token["header"][$i]), $flags);
                 }
 
                 $header .= $this->renderer->tablerow($cell);
 
-                for ($i = 0; $i < count($this->token['cells']); $i++) {
-
-                    $row  = $this->token['cells'][$i];
-                    $cell = '';
+                for ($i = 0; $i < count($this->token["cells"]); $i++) {
+                    $row = $this->token["cells"][$i];
+                    $cell = "";
 
                     for ($j = 0; $j < count($row); $j++) {
-                        $flags = ['header' => false, 'align' => $this->token['align'][$j]];
+                        $flags = ["header" => false, "align" => $this->token["align"][$j]];
                         $cell .= $this->renderer->tablecell($this->inline->output($row[$j]), $flags);
                     }
 
@@ -137,52 +130,45 @@ class Parser
 
                 return $this->renderer->table($header, $body);
 
-            case 'blockquote_start':
-
-                while ($this->next() && $this->token['type'] !== 'blockquote_end') {
+            case "blockquote_start":
+                while ($this->next() && $this->token["type"] !== "blockquote_end") {
                     $body .= $this->tok();
                 }
 
                 return $this->renderer->blockquote($body);
 
-            case 'list_start':
+            case "list_start":
+                $ordered = $this->token["ordered"];
 
-                $ordered = $this->token['ordered'];
-
-                while ($this->next() && $this->token['type'] !== 'list_end') {
+                while ($this->next() && $this->token["type"] !== "list_end") {
                     $body .= $this->tok();
                 }
 
                 return $this->renderer->lst($body, $ordered);
 
-            case 'list_item_start':
-
-                while ($this->next() && $this->token['type'] !== 'list_item_end') {
-                    $body .= ($this->token['type'] === 'text') ? $this->parseText() : $this->tok();
+            case "list_item_start":
+                while ($this->next() && $this->token["type"] !== "list_item_end") {
+                    $body .= $this->token["type"] === "text" ? $this->parseText() : $this->tok();
                 }
 
                 return $this->renderer->listitem($body);
 
-            case 'loose_item_start':
-
-                while ($this->next() && $this->token['type'] !== 'list_item_end') {
+            case "loose_item_start":
+                while ($this->next() && $this->token["type"] !== "list_item_end") {
                     $body .= $this->tok();
                 }
 
                 return $this->renderer->listitem($body);
 
-            case 'html':
-
-                $html = (!$this->token['pre'] && !$this->options['pedantic']) ? $this->inline->output($this->token['text']) : $this->token['text'];
+            case "html":
+                $html = !$this->token["pre"] && !$this->options["pedantic"] ? $this->inline->output($this->token["text"]) : $this->token["text"];
 
                 return $this->renderer->html($html);
 
-            case 'paragraph':
+            case "paragraph":
+                return $this->renderer->paragraph($this->inline->output($this->token["text"]));
 
-                return $this->renderer->paragraph($this->inline->output($this->token['text']));
-
-            case 'text':
-
+            case "text":
                 return $this->renderer->paragraph($this->parseText());
         }
     }

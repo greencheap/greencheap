@@ -1,6 +1,7 @@
-<?php //$view->script('themes', 'installer:app/bundle/themes.js', ['vue', 'uikit-upload', 'editor']); 
+<?php
+//$view->script('themes', 'installer:app/bundle/themes.js', ['vue', 'uikit-upload', 'editor']);
 ?>
-<?php $view->script('themes', 'installer:app/bundle/themes.js', ['vue', 'editor']); ?>
+<?php $view->script("themes", "installer:app/bundle/themes.js", ["vue", "editor"]); ?>
 
 <div id="themes" v-cloak>
 

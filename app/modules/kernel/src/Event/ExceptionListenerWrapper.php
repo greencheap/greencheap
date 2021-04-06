@@ -42,7 +42,7 @@ class ExceptionListenerWrapper
             $callbackReflection = new \ReflectionMethod($this->callback[0], $this->callback[1]);
         } elseif (is_object($this->callback) && !$this->callback instanceof \Closure) {
             $callbackReflection = new \ReflectionObject($this->callback);
-            $callbackReflection = $callbackReflection->getMethod('__invoke');
+            $callbackReflection = $callbackReflection->getMethod("__invoke");
         } else {
             $callbackReflection = new \ReflectionFunction($this->callback);
         }

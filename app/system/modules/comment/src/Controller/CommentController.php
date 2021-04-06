@@ -22,35 +22,37 @@ class CommentController
      * @param int $page
      * @return array
      */
-    public function indexAction(array $filter = [] , int $page = 0):array
+    public function indexAction(array $filter = [], int $page = 0): array
     {
         $db = App::db();
 
-        $roles = $db->createQueryBuilder()
-            ->from('@system_role')
+        $roles = $db
+            ->createQueryBuilder()
+            ->from("@system_role")
             ->get();
 
-        $types = $db->createQueryBuilder()
-            ->select('type')
-            ->from('@system_comments')
-            ->groupBy('type')
+        $types = $db
+            ->createQueryBuilder()
+            ->select("type")
+            ->from("@system_comments")
+            ->groupBy("type")
             ->get();
 
         return [
             '$view' => [
-                'title' => __('Comments'),
-                'name' => 'system:modules/comment/views/admin/index.php'
+                "title" => __("Comments"),
+                "name" => "system:modules/comment/views/admin/index.php",
             ],
             '$data' => [
-                'authors'  => User::findAll(),
-                'canEditAll' => App::user()->hasAccess('comment: manage all comment'),
-                'config' => [
-                    'filter' => (object) $filter,
-                    'page' => $page
+                "authors" => User::findAll(),
+                "canEditAll" => App::user()->hasAccess("comment: manage all comment"),
+                "config" => [
+                    "filter" => (object) $filter,
+                    "page" => $page,
                 ],
-                'statuses' => Comment::getStatuses(),
-                'types' => $types
-            ]
+                "statuses" => Comment::getStatuses(),
+                "types" => $types,
+            ],
         ];
     }
 
@@ -60,25 +62,29 @@ class CommentController
      * @param int $id
      * @return array
      */
-    public function editAction(int $id = 0):array
+    public function editAction(int $id = 0): array
     {
-        if(!$comment = Comment::where(compact('id'))->related('user')->first()){
-            return App::abort(404 , __('Not Found Comment'));
+        if (
+            !($comment = Comment::where(compact("id"))
+                ->related("user")
+                ->first())
+        ) {
+            return App::abort(404, __("Not Found Comment"));
         }
 
-        $module = App::module('system/comment');
+        $module = App::module("system/comment");
 
         return [
             '$view' => [
-                'title' => __('Edit Comment'),
-                'name' => 'system:modules/comment/views/admin/edit.php'
+                "title" => __("Edit Comment"),
+                "name" => "system:modules/comment/views/admin/edit.php",
             ],
             '$data' => [
-                'comment' => $comment,
-                'statuses' => Comment::getStatuses(),
-                'originstatus' => $comment->status,
-                'notify_reply' => $module->get('config.notify_reply'),
-            ]
+                "comment" => $comment,
+                "statuses" => Comment::getStatuses(),
+                "originstatus" => $comment->status,
+                "notify_reply" => $module->get("config.notify_reply"),
+            ],
         ];
     }
 
@@ -86,17 +92,17 @@ class CommentController
      * @Access("comment: manage settings")
      * @Route("/settings" , name="settings")
      */
-    public function settingsAction():array
+    public function settingsAction(): array
     {
-        $module = App::module('system/comment');
+        $module = App::module("system/comment");
         return [
             '$view' => [
-                'title' => __('Settings'),
-                'name' => 'system:modules/comment/views/admin/settings.php'
+                "title" => __("Settings"),
+                "name" => "system:modules/comment/views/admin/settings.php",
             ],
             '$data' => [
-                'config' => $module->get('config')
-            ]
+                "config" => $module->get("config"),
+            ],
         ];
     }
 }

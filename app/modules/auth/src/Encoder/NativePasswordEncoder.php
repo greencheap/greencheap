@@ -12,7 +12,7 @@ class NativePasswordEncoder implements PasswordEncoderInterface
      */
     public function hash($raw)
     {
-        $options = ['cost' => $this->cost];
+        $options = ["cost" => $this->cost];
 
         return password_hash($raw, $this->algorithm, $options);
     }
@@ -23,7 +23,7 @@ class NativePasswordEncoder implements PasswordEncoderInterface
     public function verify($hash, $raw, $salt = null)
     {
         if (null !== $salt) {
-            throw new \InvalidArgumentException('The salt needs to be included with the hash.');
+            throw new \InvalidArgumentException("The salt needs to be included with the hash.");
         }
 
         return password_verify($raw, $hash);

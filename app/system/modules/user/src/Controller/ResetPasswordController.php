@@ -13,7 +13,6 @@ use GreenCheap\User\Model\User;
  */
 class ResetPasswordController
 {
-
     /**
      * @return mixed
      */
@@ -25,10 +24,10 @@ class ResetPasswordController
 
         return [
             '$view' => [
-                'title' => __('Reset'),
-                'name' => 'system/user/reset-request.php',
+                "title" => __("Reset"),
+                "name" => "system/user/reset-request.php",
             ],
-            'error' => ''
+            "error" => "",
         ];
     }
 
@@ -40,56 +39,53 @@ class ResetPasswordController
     public function requestAction($email): mixed
     {
         try {
-
             if (App::user()->isAuthenticated()) {
                 return App::redirect();
             }
 
             if (!App::csrf()->validate()) {
-                throw new Exception(__('Invalid token. Please try again.'));
+                throw new Exception(__("Invalid token. Please try again."));
             }
 
             if (empty($email)) {
-                throw new Exception(__('Enter a valid email address.'));
+                throw new Exception(__("Enter a valid email address."));
             }
 
-            if (!$user = User::findByEmail($email)) {
-                throw new Exception(__('Unknown email address.'));
+            if (!($user = User::findByEmail($email))) {
+                throw new Exception(__("Unknown email address."));
             }
 
             if ($user->isBlocked()) {
-                throw new Exception(__('Your account has not been activated or is blocked.'));
+                throw new Exception(__("Your account has not been activated or is blocked."));
             }
 
-            $key = App::get('auth.random')->generateString(32);
-            $url = App::url('@user/resetpassword/confirm', compact('key'), 0);
+            $key = App::get("auth.random")->generateString(32);
+            $url = App::url("@user/resetpassword/confirm", compact("key"), 0);
 
             try {
-
                 $mail = App::mailer()->create();
-                $mail->setTo($user->email)
-                    ->setSubject(__('Reset password for %site%.', ['%site%' => App::module('system/site')->config('title')]))
-                    ->setBody(App::view('system/user:mails/reset.php', compact('user', 'url', 'mail')), 'text/html')
+                $mail
+                    ->setTo($user->email)
+                    ->setSubject(__("Reset password for %site%.", ["%site%" => App::module("system/site")->config("title")]))
+                    ->setBody(App::view("system/user:mails/reset.php", compact("user", "url", "mail")), "text/html")
                     ->send();
-
             } catch (\Exception $e) {
-                throw new Exception(__('Unable to send confirmation link.'));
+                throw new Exception(__("Unable to send confirmation link."));
             }
 
             $user->activation = $key;
             $user->save();
 
-            App::message()->success(__('Check your email for the confirmation link.'));
+            App::message()->success(__("Check your email for the confirmation link."));
 
-            return App::redirect('@user/login');
-
+            return App::redirect("@user/login");
         } catch (Exception $e) {
             return [
                 '$view' => [
-                    'title' => __('Reset'),
-                    'name' => 'system/user/reset-request.php',
+                    "title" => __("Reset"),
+                    "name" => "system/user/reset-request.php",
                 ],
-                'error' => $e->getMessage()
+                "error" => $e->getMessage(),
             ];
         }
     }
@@ -100,52 +96,48 @@ class ResetPasswordController
      * @param string $password
      * @return array
      */
-    public function confirmAction($activation = '', $password = ''): mixed
+    public function confirmAction($activation = "", $password = ""): mixed
     {
-        if ($activation and $user = User::where(compact('activation'))->first()) {
-
-            App::session()->set('activation', [
-                'key' => $activation,
-                'user' => $user->id,
+        if ($activation and ($user = User::where(compact("activation"))->first())) {
+            App::session()->set("activation", [
+                "key" => $activation,
+                "user" => $user->id,
             ]);
 
             $user->activation = null;
             $user->save();
         }
 
-        if (!$data = App::session()->get('activation') or $data['key'] != $activation) {
-            App::abort(400, __('Invalid key.'));
+        if (!($data = App::session()->get("activation")) or $data["key"] != $activation) {
+            App::abort(400, __("Invalid key."));
         }
 
-        if (!$user = User::find($data['user']) or $user->isBlocked()) {
-            App::abort(400, __('Your account has not been activated or is blocked.'));
+        if (!($user = User::find($data["user"])) or $user->isBlocked()) {
+            App::abort(400, __("Your account has not been activated or is blocked."));
         }
 
-        if ('POST' === App::request()->getMethod()) {
-
+        if ("POST" === App::request()->getMethod()) {
             try {
-
                 if (!App::csrf()->validate()) {
-                    throw new Exception(__('Invalid token. Please try again.'));
+                    throw new Exception(__("Invalid token. Please try again."));
                 }
 
                 if (empty($password)) {
-                    throw new Exception(__('Enter password.'));
+                    throw new Exception(__("Enter password."));
                 }
 
                 if ($password != trim($password)) {
-                    throw new Exception(__('Invalid password.'));
+                    throw new Exception(__("Invalid password."));
                 }
 
                 $user->activation = null;
-                $user->password = App::get('auth.password')->hash($password);
+                $user->password = App::get("auth.password")->hash($password);
                 $user->save();
 
-                App::session()->remove('activation');
-                App::message()->success(__('Your password has been reset.'));
+                App::session()->remove("activation");
+                App::message()->success(__("Your password has been reset."));
 
-                return App::redirect('@user/login');
-
+                return App::redirect("@user/login");
             } catch (Exception $e) {
                 $error = $e->getMessage();
             }
@@ -153,12 +145,11 @@ class ResetPasswordController
 
         return [
             '$view' => [
-                'title' => __('Reset Confirm'),
-                'name' => 'system/user/reset-confirm.php'
+                "title" => __("Reset Confirm"),
+                "name" => "system/user/reset-confirm.php",
             ],
-            'activation' => $activation,
-            'error' => isset($error) ? $error : ''
+            "activation" => $activation,
+            "error" => isset($error) ? $error : "",
         ];
     }
-
 }

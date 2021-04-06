@@ -25,7 +25,7 @@ class NodeApiController
         $query = Node::query();
 
         if (is_string($menu)) {
-            $query->where(['menu' => $menu]);
+            $query->where(["menu" => $menu]);
         }
 
         return array_values($query->get());
@@ -38,8 +38,8 @@ class NodeApiController
      */
     public function getAction($id)
     {
-        if (!$node = Node::find($id)) {
-            return App::jsonabort(404, __('Node not found.'));
+        if (!($node = Node::find($id))) {
+            return App::jsonabort(404, __("Node not found."));
         }
 
         return $node;
@@ -56,18 +56,18 @@ class NodeApiController
     #[ArrayShape(['message' => "string", 'node' => "\GreenCheap\Site\Model\Node"])]
     public function saveAction($data, $id = 0): mixed
     {
-        if (!$node = Node::find($id)) {
+        if (!($node = Node::find($id))) {
             $node = Node::create();
-            unset($data['id']);
+            unset($data["id"]);
         }
 
-        if (!$data['slug'] = App::filter($data['slug'] ?: $data['title'], 'slugify')) {
-            return App::jsonabort(400, __('Invalid slug.'));
+        if (!($data["slug"] = App::filter($data["slug"] ?: $data["title"], "slugify"))) {
+            return App::jsonabort(400, __("Invalid slug."));
         }
 
         $node->save($data);
 
-        return ['message' => 'success', 'node' => $node];
+        return ["message" => "success", "node" => $node];
     }
 
     /**
@@ -80,15 +80,14 @@ class NodeApiController
     public function deleteAction($id): mixed
     {
         if ($node = Node::find($id)) {
-
-            if ($type = App::module('system/site')->getType($node->type) and isset($type['protected']) and $type['protected']) {
-                return App::jsonabort(400, __('Invalid type.'));
+            if (($type = (App::module("system/site")->getType($node->type) and isset($type["protected"]))) and $type["protected"]) {
+                return App::jsonabort(400, __("Invalid type."));
             }
 
             $node->delete();
         }
 
-        return ['message' => 'success'];
+        return ["message" => "success"];
     }
 
     /**
@@ -101,10 +100,10 @@ class NodeApiController
     public function bulkSaveAction($nodes = []): array
     {
         foreach ($nodes as $data) {
-            $this->saveAction($data, isset($data['id']) ? $data['id'] : 0);
+            $this->saveAction($data, isset($data["id"]) ? $data["id"] : 0);
         }
 
-        return ['message' => 'success'];
+        return ["message" => "success"];
     }
 
     /**
@@ -120,7 +119,7 @@ class NodeApiController
             $this->deleteAction($id);
         }
 
-        return ['message' => 'success'];
+        return ["message" => "success"];
     }
 
     /**
@@ -134,18 +133,16 @@ class NodeApiController
     public function updateOrderAction($menu, $nodes = []): array
     {
         foreach ($nodes as $data) {
-
-            if ($node = Node::find($data['id'])) {
-
-                $node->priority  = $data['order'];
-                $node->menu      = $menu;
-                $node->parent_id = $data['parent_id'] ?: 0;
+            if ($node = Node::find($data["id"])) {
+                $node->priority = $data["order"];
+                $node->menu = $menu;
+                $node->parent_id = $data["parent_id"] ?: 0;
 
                 $node->save();
             }
         }
 
-        return ['message' => 'success'];
+        return ["message" => "success"];
     }
 
     /**
@@ -157,15 +154,15 @@ class NodeApiController
     #[ArrayShape(['message' => "string"])]
     public function frontpageAction($id): mixed
     {
-        if (!$node = Node::find($id) or !$type = App::module('system/site')->getType($node->type)) {
-            return App::jsonabort(404, __('Node not found.'));
+        if (!($node = Node::find($id)) or !($type = App::module("system/site")->getType($node->type))) {
+            return App::jsonabort(404, __("Node not found."));
         }
 
-        if (isset($type['frontpage']) and !$type['frontpage']) {
-            return App::jsonabort(400, __('Invalid node type.'));
+        if (isset($type["frontpage"]) and !$type["frontpage"]) {
+            return App::jsonabort(400, __("Invalid node type."));
         }
 
-        App::config('system/site')->set('frontpage', $id);
-        return ['message' => 'success'];
+        App::config("system/site")->set("frontpage", $id);
+        return ["message" => "success"];
     }
 }

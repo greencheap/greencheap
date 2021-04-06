@@ -6,27 +6,17 @@ use GreenCheap\Content\Plugin\SimplePlugin;
 use GreenCheap\Content\Plugin\VideoPlugin;
 
 return [
+    "name" => "system/content",
 
-    'name' => 'system/content',
+    "main" => function ($app) {
+        $app->subscribe(new MarkdownPlugin(), new SimplePlugin(), new VideoPlugin());
 
-    'main' => function ($app) {
-
-        $app->subscribe(
-            new MarkdownPlugin,
-            new SimplePlugin,
-            new VideoPlugin
-        );
-
-        $app['content'] = function() {
-            return new ContentHelper;
+        $app["content"] = function () {
+            return new ContentHelper();
         };
-
     },
 
-    'autoload' => [
-
-        'GreenCheap\\Content\\' => 'src'
-
-    ]
-
+    "autoload" => [
+        "GreenCheap\\Content\\" => "src",
+    ],
 ];

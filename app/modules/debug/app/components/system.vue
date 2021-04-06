@@ -1,16 +1,14 @@
 <template>
     <a title="System Information">
-        <img :src="$url('app/system/modules/theme/assets/images/greencheap-logo.svg')" width="20">
+        <img :src="$url('app/system/modules/theme/assets/images/greencheap-logo.svg')" width="20" />
     </a>
 </template>
 
 <script>
-
 module.exports = {
-
     section: {
         priority: 10,
-        panel: '#panel-system',
+        panel: "#panel-system",
         template: `
             <div>
                 <h1>Information</h1>
@@ -85,17 +83,15 @@ module.exports = {
 
     replace: false,
 
-    props: ['data'],
+    props: ["data"],
 
     computed: {
         VueVersion() {
-            return window.Vue ? Vue.version : '-';
+            return window.Vue ? Vue.version : "-";
         },
         UIkitVersion() {
-            return window.UIkit ? UIkit.version : '-';
+            return window.UIkit ? UIkit.version : "-";
         },
     },
-
 };
-
 </script>

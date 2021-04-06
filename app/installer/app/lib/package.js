@@ -1,39 +1,42 @@
-const Install = Vue.extend(require('./install.vue').default);
-const Uninstall = Vue.extend(require('./uninstall.vue').default);
-const Update = Vue.extend(require('./update.vue').default);
+const Install = Vue.extend(require("./install.vue").default);
+const Uninstall = Vue.extend(require("./uninstall.vue").default);
+const Update = Vue.extend(require("./update.vue").default);
 
 export default {
-
     methods: {
-
         queryUpdates(packages, success) {
-            const pkgs = {}; const
-                options = { emulateJSON: true };
+            const pkgs = {};
+            const options = { emulateJSON: true };
 
             _.each(packages, (pkg) => {
                 pkgs[pkg.name] = pkg.version;
             });
 
-            return this.$http.post(`${this.api}/api/package/update`, {
-                packages: JSON.stringify(pkgs),
-            }, options).then(success, this.error);
+            return this.$http
+                .post(
+                    `${this.api}/api/package/update`,
+                    {
+                        packages: JSON.stringify(pkgs),
+                    },
+                    options
+                )
+                .then(success, this.error);
         },
 
         enable(pkg) {
-            return this.$http.post('admin/system/package/enable', { name: pkg.name }).then(function () {
+            return this.$http.post("admin/system/package/enable", { name: pkg.name }).then(function () {
                 this.$notify(this.$trans('"%title%" enabled.', { title: pkg.title }));
-                Vue.set(pkg, 'enabled', true);
-                document.location.assign(this.$url(`admin/system/package/${pkg.type === 'greencheap-theme' ? 'themes' : 'extensions'}`));
+                Vue.set(pkg, "enabled", true);
+                document.location.assign(this.$url(`admin/system/package/${pkg.type === "greencheap-theme" ? "themes" : "extensions"}`));
             }, this.error);
         },
 
         disable(pkg) {
-            return this.$http.post('admin/system/package/disable', { name: pkg.name })
-                .then(function () {
-                    this.$notify(this.$trans('"%title%" disabled.', { title: pkg.title }));
-                    Vue.set(pkg, 'enabled', false);
-                    document.location.reload();
-                }, this.error);
+            return this.$http.post("admin/system/package/disable", { name: pkg.name }).then(function () {
+                this.$notify(this.$trans('"%title%" disabled.', { title: pkg.title }));
+                Vue.set(pkg, "enabled", false);
+                document.location.reload();
+            }, this.error);
         },
 
         install(pkg, packages, onClose, packagist) {
@@ -52,9 +55,7 @@ export default {
         },
 
         error(message) {
-            this.$notify(message.data, 'danger');
+            this.$notify(message.data, "danger");
         },
-
     },
-
 };

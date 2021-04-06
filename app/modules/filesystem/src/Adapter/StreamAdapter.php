@@ -16,7 +16,7 @@ class StreamAdapter extends FileAdapter
      * @param string $url;
      * @param string $wrapper;
      */
-    public function __construct($path, $url = '', $wrapper = 'GreenCheap\Filesystem\StreamWrapper')
+    public function __construct($path, $url = "", $wrapper = "GreenCheap\Filesystem\StreamWrapper")
     {
         parent::__construct($path, $url);
 
@@ -36,7 +36,7 @@ class StreamAdapter extends FileAdapter
      */
     public function getPathInfo(array $info)
     {
-        $info['root'] = '';
+        $info["root"] = "";
 
         return parent::getPathInfo($info);
     }

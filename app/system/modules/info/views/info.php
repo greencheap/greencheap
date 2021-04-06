@@ -1,4 +1,4 @@
-<?php $view->script('info', 'app/system/modules/info/app/bundle/info.js', 'vue') ?>
+<?php $view->script("info", "app/system/modules/info/app/bundle/info.js", "vue"); ?>
 
 <div id="info" class="pk-grid-large" uk-grid v-cloak>
     <div class="pk-width-sidebar">
