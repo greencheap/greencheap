@@ -79,7 +79,6 @@ return [
         $app['swift.spooltransport'] = function ($app) {
             return new Swift_SpoolTransport($app['swift.spool']);
         };
-
     },
 
     'autoload' => [
@@ -107,7 +106,6 @@ return [
                 } catch (\Exception $e) {
                 }
             }
-
         },
 
         'view.system:modules/settings/views/settings' => function ($event, $view) use ($app) {
@@ -125,7 +123,7 @@ return [
         'port' => 25,
         'username' => null,
         'password' => null,
-        'encryption' => null,
+        'encryption' => "",
         'auth_mode' => null,
         'from_name' => null,
         'from_address' => null
