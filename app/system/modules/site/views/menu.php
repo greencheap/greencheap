@@ -3,10 +3,8 @@
 <?php endif; ?>
 
     <?php foreach ($root->getChildren() as $node): ?>
-    <li class="<?=
-    $node->hasChildren() ? "uk-parent" : ""
-    $node->get("active") ? " uk-active" : ""
-    ?>">
+    <li class="<?= $node->hasChildren() ? "uk-parent" : "" ?>
+    <?= $node->get("active") ? " uk-active" : "" ?>">
         <a href="<?= $node->getUrl() ?>"><?= $node->title ?></a>
 
         <?php if ($node->hasChildren()): ?>
