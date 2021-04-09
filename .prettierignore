@@ -4,3 +4,4 @@
 bundle/
 /app/assets/
 /tmp/
+/app/system/modules/widget/src/PositionHelper.php

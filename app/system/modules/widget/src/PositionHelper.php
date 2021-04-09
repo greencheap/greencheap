@@ -77,7 +77,7 @@ class PositionHelper extends Helper
     protected function getWidgets($position)
     {
         static $widgets,
-            $positions = [];
+        $positions = [];
 
         if (null === $widgets) {
             $widgets = Widget::where(["status" => 1])->get();
@@ -91,7 +91,12 @@ class PositionHelper extends Helper
             $positions[$position] = [];
 
             foreach ($pos["assigned"] as $id) {
-                if (!isset($widgets[$id]) or !($widget = ($widgets[$id] or !$widget->hasAccess(App::user()) or ($nodes = $widget->nodes) and !in_array(App::node()->id, $nodes))) or !($type = App::widget($widget->type))) {
+                if (!isset($widgets[$id])
+                    or !$widget = $widgets[$id]
+                    or !$widget->hasAccess(App::user())
+                    or ($nodes = $widget->nodes and !in_array(App::node()->id, $nodes))
+                    or !$type = App::widget($widget->type)
+                ) {
                     continue;
                 }
 
