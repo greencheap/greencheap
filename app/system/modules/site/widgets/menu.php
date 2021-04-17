@@ -1,33 +1,34 @@
 <?php
 
 return [
-    "name" => "system/menu",
 
-    "label" => "Menu",
+    'name' => 'system/menu',
 
-    "icon" => "system/theme:assets/images/menu-widget.svg",
+    'label' => 'Menu',
 
-    "defaults" => [
-        "start_level" => 1,
-        "depth" => 0,
-        "mode" => "all",
+    'icon' => 'system/theme:assets/images/menu-widget.svg',
+
+    'defaults' => [
+        'start_level' => 1,
+        'depth' => 0,
+        'mode' => 'all'
     ],
 
-    "render" => function ($widget) use ($app) {
-        return $app
-            ->view()
-            ->menu()
-            ->render($widget->get("menu"), "system/site/widget-menu.php", [
-                "start_level" => (int) $widget->get("start_level"),
-                "depth" => $widget->get("depth"),
-                "mode" => $widget->get("mode"),
-                "widget" => $widget,
-            ]);
+    'render' => function ($widget) use ($app) {
+        return $app->view()->menu()->render($widget->get('menu'), 'system/site/widget-menu.php', [
+            'start_level' => (int) $widget->get('start_level'),
+            'depth' => $widget->get('depth'),
+            'mode' => $widget->get('mode'),
+            'widget' => $widget
+        ]);
     },
 
-    "events" => [
-        "view.scripts" => function ($event, $scripts) {
-            $scripts->register("widget-menu", "system/site:app/bundle/widget-menu.js", "~widgets");
-        },
-    ],
+    'events' => [
+
+        'view.scripts' => function ($event, $scripts) {
+            $scripts->register('widget-menu', 'system/site:app/bundle/widget-menu.js', '~widgets');
+        }
+
+    ]
+
 ];

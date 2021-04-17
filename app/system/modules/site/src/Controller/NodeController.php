@@ -26,7 +26,7 @@ class NodeController
      */
     public function __construct()
     {
-        $this->site = App::module("system/site");
+        $this->site = App::module('system/site');
     }
 
     /**
@@ -36,20 +36,20 @@ class NodeController
     public function indexAction(): array
     {
         if ($test = Node::fixOrphanedNodes()) {
-            return App::redirect("@site/page");
+            return App::redirect('@site/page');
         }
 
         return [
             '$view' => [
-                "title" => __("Pages"),
-                "name" => "system/site/admin/index.php",
+                'title' => __('Pages'),
+                'name'  => 'system/site/admin/index.php'
             ],
             '$data' => [
-                "config" => [
-                    "menus" => App::menu()->getPositions(),
+                'config' => [
+                    'menus' => App::menu()->getPositions()
                 ],
-                "types" => array_values($this->site->getTypes()),
-            ],
+                'types' => array_values($this->site->getTypes())
+            ]
         ];
     }
 
@@ -62,36 +62,38 @@ class NodeController
      * @return array
      */
     #[ArrayShape(['$view' => "array", '$data' => "array"])]
-    public function editAction($id = "", $menu = ""): array
+    public function editAction($id = '', $menu = ''): array
     {
         if (is_numeric($id)) {
-            if (!$id or !($node = Node::find($id))) {
-                App::abort(404, "Node not found.");
+
+            if (!$id or !$node = Node::find($id)) {
+                App::abort(404, 'Node not found.');
             }
+
         } else {
-            $node = Node::create(["type" => $id]);
+            $node = Node::create(['type' => $id]);
 
             if ($menu && !App::menu($menu)) {
-                App::abort(404, "Menu not found.");
+                App::abort(404, 'Menu not found.');
             }
 
             $node->menu = $menu;
         }
 
-        if (!($type = $this->site->getType($node->type))) {
-            App::abort(404, "Type not found.");
+        if (!$type = $this->site->getType($node->type)) {
+            App::abort(404, 'Type not found.');
         }
 
         return [
             '$view' => [
-                "title" => __("Pages"),
-                "name" => "system/site/admin/edit.php",
+                'title' => __('Pages'),
+                'name'  => 'system/site/admin/edit.php'
             ],
             '$data' => [
-                "node" => $node,
-                "type" => $type,
-                "roles" => array_values(Role::findAll()),
-            ],
+                'node' => $node,
+                'type' => $type,
+                'roles' => array_values(Role::findAll())
+            ]
         ];
     }
 
@@ -104,12 +106,12 @@ class NodeController
     {
         return [
             '$view' => [
-                "title" => __("Settings"),
-                "name" => "system/site/admin/settings.php",
+                'title' => __('Settings'),
+                'name'  => 'system/site/admin/settings.php'
             ],
             '$data' => [
-                "config" => $this->site->config(["title", "description", "maintenance.", "meta.", "logo", "icons.", "code.", "view."]),
-            ],
+                'config' => $this->site->config(['title', 'description', 'maintenance.', 'meta.', 'logo', 'icons.', 'code.', 'view.'])
+            ]
         ];
     }
 
@@ -123,6 +125,6 @@ class NodeController
     #[ArrayShape(['message' => "string", 'url' => "mixed"])]
     public function linkAction($link): array
     {
-        return ["message" => "success", "url" => App::url($link, [], "base") ?: $link];
+        return ['message' => 'success', 'url' => App::url($link, [], 'base') ?: $link];
     }
 }

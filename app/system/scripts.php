@@ -36,7 +36,7 @@ return [
                 $table->addColumn("title", "string", ["length" => 255]);
                 $table->addColumn("slug", "string", ["length" => 255]);
                 $table->addColumn("path", "string", ["length" => 1023]);
-                $table->addColumn("link", "string", ["length" => 255]);
+                $table->addColumn("link", "string", ["length" => 255, "notnull" => false]);
                 $table->addColumn("type", "string", ["length" => 255]);
                 $table->addColumn("menu", "string", ["length" => 255]);
                 $table->addColumn("roles", "simple_array", ["notnull" => false]);

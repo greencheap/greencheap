@@ -15,23 +15,26 @@ class SiteModule extends Module
      */
     public function main(App $app)
     {
-        $app["node"] = function ($app) {
-            if (($id = $app["request"]->attributes->get("_node")) and ($node = Node::find($id, true))) {
+        $app['node'] = function ($app) {
+
+            if ($id = $app['request']->attributes->get('_node') and $node = Node::find($id, true)) {
                 return $node;
             }
 
             return Node::create();
         };
 
-        $app["menu"] = function ($app) {
-            $menus = new MenuManager($app->config($app["theme"]->name), $this->config("menus"));
+        $app['menu'] = function ($app) {
 
-            foreach ($app["theme"]->get("menus", []) as $name => $label) {
+            $menus = new MenuManager($app->config($app['theme']->name), $this->config('menus'));
+
+            foreach ($app['theme']->get('menus', []) as $name => $label) {
                 $menus->register($name, $label);
             }
 
             return $menus;
         };
+
     }
 
     /**
@@ -51,16 +54,17 @@ class SiteModule extends Module
     public function getTypes()
     {
         if (!$this->types) {
+
             foreach (App::module() as $module) {
-                foreach ((array) $module->get("nodes") as $type => $route) {
+                foreach ((array) $module->get('nodes') as $type => $route) {
                     $this->registerType($type, $route);
                 }
             }
 
-            $this->registerType("link", ["label" => "Link", "frontpage" => false]);
-            $this->registerType("external", ["label" => "External", "frontpage" => false]);
+            $this->registerType('link', ['label' => 'Link', 'frontpage' => false]);
+            $this->registerType('external', ['label' => 'External', 'frontpage' => false]);
 
-            App::trigger("site.types", [$this]);
+            App::trigger('site.types', [$this]);
         }
 
         return $this->types;
@@ -74,23 +78,17 @@ class SiteModule extends Module
      */
     public function registerType($type, array $route)
     {
-        if (
-            isset($route["protected"]) and
-            $route["protected"] and
-            !array_filter(Node::findAll(true), function ($node) use ($type) {
-                return $type === $node->type;
-            })
-        ) {
+        if (isset($route['protected']) and $route['protected'] and !array_filter(Node::findAll(true), function ($node) use ($type) { return $type === $node->type; })) {
             Node::create([
-                "title" => $route["label"],
-                "slug" => App::filter($route["label"], "slugify"),
-                "type" => $type,
-                "status" => 1,
-                "link" => $route["name"],
+                'title' => $route['label'],
+                'slug' => App::filter($route['label'], 'slugify'),
+                'type' => $type,
+                'status' => 1,
+                'link' => $route['name']
             ])->save();
         }
 
-        $route["id"] = $type;
+        $route['id'] = $type;
         $this->types[$type] = $route;
     }
 }

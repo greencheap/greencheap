@@ -1,4 +1,4 @@
-<?php $view->script("site-edit", "system/site:app/bundle/edit.js", ["vue", "editor", "uikit"]); ?>
+<?php $view->script('site-edit', 'system/site:app/bundle/edit.js', ['vue', 'editor', 'uikit']); ?>
 
 <validation-observer tag="form" id="site-edit" ref="observer" @submit.prevent="submit" v-cloak>
 

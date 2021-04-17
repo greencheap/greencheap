@@ -1,19 +1,23 @@
 <?php
 
 return [
-    "name" => "system/text",
 
-    "label" => "Text",
+    'name' => 'system/text',
 
-    "icon" => "system/theme:assets/images/text-widget.svg",
+    'label' => 'Text',
 
-    "render" => function ($widget) use ($app) {
-        return $app["view"]->render("system/site/widget-text.php", compact("widget"));
+    'icon' => 'system/theme:assets/images/text-widget.svg',
+
+    'render' => function ($widget) use ($app) {
+        return $app['view']->render('system/site/widget-text.php', compact('widget'));
     },
 
-    "events" => [
-        "view.scripts" => function ($event, $scripts) {
-            $scripts->register("widget-text", "system/site:app/bundle/widget-text.js", "~widgets");
-        },
-    ],
+    'events' => [
+
+        'view.scripts' => function ($event, $scripts) {
+            $scripts->register('widget-text', 'system/site:app/bundle/widget-text.js', '~widgets');
+        }
+
+    ]
+
 ];

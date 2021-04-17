@@ -45,6 +45,7 @@ export default {
             });
 
             this.$watch("$parent.value", function (value) {
+                console.log("Hello ");
                 if (value != editor.editor.getValue()) {
                     editor.editor.setValue(value);
                 }

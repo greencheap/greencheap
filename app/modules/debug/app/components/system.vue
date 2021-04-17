@@ -1,5 +1,5 @@
 <template>
-    <a title="System Information" style="display: flex; justify-content: center; align-items: center">
+    <a title="System Information" >
         <img :src="$url('app/system/modules/theme/assets/images/greencheap-logo.svg')" width="20" />
     </a>
 </template>

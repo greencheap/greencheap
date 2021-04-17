@@ -1,9 +1,9 @@
-<?php $view->script("site-index", "system/site:app/bundle/index.js", ["vue"]); ?>
+<?php $view->script('site-index', 'system/site:app/bundle/index.js', ['vue']) ?>
 
 <form id="site" v-cloak>
 
     <div class="uk-grid-large" uk-grid>
-        <div class="uk-width-medium@m">
+        <div class="uk-width-medium">
             <div>
                 <ul class="uk-nav uk-nav-default">
                     <li class="uk-visible-toggle uk-flex uk-flex-between" :class="{'uk-active': isActive(menu), 'uk-nav-divider': menu.divider}" v-for="menu in divided(menus)">
@@ -19,9 +19,9 @@
                 </p>
             </div>
         </div>
-        <div class="uk-width-expand@m">
+        <div class="uk-width-expand">
             <div class="uk-margin uk-flex uk-flex-middle uk-flex-between uk-flex-wrap uk-grid-small" uk-grid>
-                <div class="uk-flex uk-flex-middle uk-flex-wrap">
+                <div class="uk-flex uk-flex-middle uk-flex-wrap" >
 
                     <h2 class="uk-h3 uk-margin-remove">{{ menu.label }}</h2>
 
@@ -44,14 +44,14 @@
                 </div>
                 <div class="uk-position-relative">
 
-                    <a class="uk-button uk-button-primary" @click.prevent v-show="menu.id != 'trash'">{{ 'Add' | trans }}</a>
-                    <div uk-dropdown="mode: click">
-                        <ul class="uk-nav uk-dropdown-nav">
-                            <li v-for="type in orderBy(protected(types), 'label')">
-                                <a :href="$url.route('admin/site/page/edit', { id: type.id, menu: menu.id })">{{ type.label | trans }}</a>
-                            </li>
-                        </ul>
-                    </div>
+                        <a class="uk-button uk-button-primary" @click.prevent v-show="menu.id != 'trash'">{{ 'Add' | trans }}</a>
+                        <div uk-dropdown="mode: click">
+                            <ul class="uk-nav uk-dropdown-nav">
+                                <li v-for="type in orderBy(protected(types), 'label')">
+                                    <a :href="$url.route('admin/site/page/edit', { id: type.id, menu: menu.id })">{{ type.label | trans }}</a>
+                                </li>
+                            </ul>
+                        </div>
 
                 </div>
             </div>
@@ -73,7 +73,11 @@
                 </div>
 
                 <vue-nestable v-model="treedata" @change="change" class="pk-table-fake" class-prop="class" ref="nestable" v-show="treedata.length">
-                    <vue-nestable-handle :class="{'uk-active': isSelected(item)}" :data-id="item.id" slot-scope="{ item }" :item="item" v-if="!isMobile">
+                    <vue-nestable-handle :class="{'uk-active': isSelected(item)}" :data-id="item.id"
+                    slot-scope="{ item }"
+                    :item="item"
+                    v-if="!isMobile"
+                    >
 
                         <!-- <div class="pk-table-width-minimum pk-table-collapse uk-flex uk-flex-middle"><div class="uk-nestable-toggle" data-nestable-action="toggle"></div></div> -->
                         <div class="pk-table-width-minimum"><input class="uk-checkbox" type="checkbox" name="id" :value="item.id"></div>
@@ -97,15 +101,15 @@
                         </div>
 
                     </vue-nestable-handle>
-                    <div :class="{'uk-active': isSelected(item)}" :data-id="item.id" slot-scope="{ item }" :item="item" v-else>
+                    <div :class="{'uk-active': isSelected(item)}" :data-id="item.id"
+                    slot-scope="{ item }"
+                    :item="item"
+                    v-else
+                    >
 
                         <vue-nestable-handle :item="item" class="pk-table-width-minimum pk-table-collapse">
                             <span class="uk-icon uk-icon-button" style="background: transparent;">
-                                <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-svg="more-vertical">
-                                    <circle cx="10" cy="3" r="2"></circle>
-                                    <circle cx="10" cy="10" r="2"></circle>
-                                    <circle cx="10" cy="17" r="2"></circle>
-                                </svg>
+                                <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-svg="more-vertical"><circle cx="10" cy="3" r="2"></circle><circle cx="10" cy="10" r="2"></circle><circle cx="10" cy="17" r="2"></circle></svg>
                             </span>
                         </vue-nestable-handle>
                         <div class="pk-table-width-minimum"><input class="uk-checkbox" type="checkbox" name="id" :value="item.id"></div>
@@ -139,39 +143,39 @@
     </div>
 
     <v-modal ref="modal" bg-close>
-
+    
         <validation-observer v-slot="{ invalid, passes }" slim>
-            <div class="uk-form-stacked">
-
-                <div class="uk-modal-header">
-                    <h2 class="uk-modal-title">{{ 'Add Menu' | trans }}</h2>
-                </div>
-
-                <div class="uk-modal-body">
-                    <div class="uk-margin">
-                        <label for="form-name" class="uk-form-label">{{ 'Name' | trans }}</label>
-                        <v-input id="form-name" name="label" type="text" view="class: uk-input" rules="required" v-model.trim="edit.label" message="Invalid name." />
-                    </div>
-
-                    <div class="uk-margin">
-                        <label class="uk-form-label">{{ 'Menu Positions' | trans }}</label>
-                        <div class="uk-form-controls uk-form-controls-text">
-                            <p class="uk-margin-small" v-for="m in config.menus">
-                                <label><input class="uk-checkbox" type="checkbox" :value="m.name" v-model="edit.positions"><span class="uk-margin-small-left">{{ m.label }}</span></label>
-                                <span class="uk-text-muted" v-if="getMenu(m.name) && getMenu(m.name).id != edit.id">{{ menuLabel(edit.id) }}</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="uk-modal-footer uk-text-right">
-                    <button class="uk-button uk-button-text uk-margin-right" type="button" @click.prevent="cancel" autofocus>{{ 'Cancel' | trans }}</button>
-                    <button class="uk-button uk-button-primary" :disabled="invalid || !edit.label" @click.prevent="passes(()=>saveMenu(edit))">{{ 'Save' | trans }}</button>
-                </div>
-
+        <div class="uk-form-stacked">
+        
+            <div class="uk-modal-header">
+                <h2 class="uk-modal-title">{{ 'Add Menu' | trans }}</h2>
             </div>
-        </validation-observer>
 
+            <div class="uk-modal-body">
+                <div class="uk-margin">
+                    <label for="form-name" class="uk-form-label">{{ 'Name' | trans }}</label>
+                    <v-input id="form-name" name="label" type="text" view="class: uk-input" rules="required" v-model.trim="edit.label" message="Invalid name." />
+                </div>
+
+                <div class="uk-margin">
+                    <label class="uk-form-label">{{ 'Menu Positions' | trans }}</label>
+                    <div class="uk-form-controls uk-form-controls-text">
+                        <p class="uk-margin-small" v-for="m in config.menus">
+                            <label><input class="uk-checkbox" type="checkbox" :value="m.name" v-model="edit.positions"><span class="uk-margin-small-left">{{ m.label }}</span></label>
+                            <span class="uk-text-muted" v-if="getMenu(m.name) && getMenu(m.name).id != edit.id">{{ menuLabel(edit.id) }}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="uk-modal-footer uk-text-right">
+                <button class="uk-button uk-button-text uk-margin-right" type="button" @click.prevent="cancel" autofocus>{{ 'Cancel' | trans }}</button>
+                <button class="uk-button uk-button-primary" :disabled="invalid || !edit.label" @click.prevent="passes(()=>saveMenu(edit))">{{ 'Save' | trans }}</button>
+            </div>
+            
+        </div>
+        </validation-observer>
+        
     </v-modal>
 
 </form>

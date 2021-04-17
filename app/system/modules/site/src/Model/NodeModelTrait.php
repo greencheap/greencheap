@@ -39,9 +39,7 @@ trait NodeModelTrait
     public static function findAll($cached = false)
     {
         if (!$cached || null === self::$nodes) {
-            self::$nodes = self::query()
-                ->orderBy("priority")
-                ->get();
+            self::$nodes = self::query()->orderBy('priority')->get();
         }
 
         return self::$nodes;
@@ -54,9 +52,7 @@ trait NodeModelTrait
      */
     public static function findByMenu($menu, $cached = false)
     {
-        return array_filter(self::findAll($cached), function ($node) use ($menu) {
-            return $menu == $node->menu;
-        });
+        return array_filter(self::findAll($cached), function ($node) use ($menu) { return $menu == $node->menu; });
     }
 
     /**
@@ -66,18 +62,16 @@ trait NodeModelTrait
      */
     public static function fixOrphanedNodes(): int
     {
-        if (
-            $orphaned = self::getConnection()
-                ->createQueryBuilder()
-                ->from("@system_node n")
-                ->leftJoin("@system_node c", "c.id = n.parent_id AND c.menu = n.menu")
-                ->where(["n.parent_id <> 0", "c.id IS NULL"])
-                ->execute("n.id")
-                ->fetchAll(\PDO::FETCH_COLUMN)
+        if ($orphaned = self::getConnection()
+            ->createQueryBuilder()
+            ->from('@system_node n')
+            ->leftJoin('@system_node c', 'c.id = n.parent_id AND c.menu = n.menu')
+            ->where(['n.parent_id <> 0', 'c.id IS NULL'])
+            ->execute('n.id')->fetchAll(\PDO::FETCH_COLUMN)
         ) {
             return self::query()
-                ->whereIn("id", $orphaned)
-                ->update(["parent_id" => 0]);
+                ->whereIn('id', $orphaned)
+                ->update(['parent_id' => 0]);
         }
 
         return 0;
@@ -106,22 +100,16 @@ trait NodeModelTrait
         }
 
         // Ensure unique slug
-        while (
-            self::where(["slug = ?", "parent_id= ?"], [$node->slug, $node->parent_id])
-                ->where(function ($query) use ($id) {
-                    if ($id) {
-                        $query->where("id <> ?", [$id]);
-                    }
-                })
-                ->first()
-        ) {
-            $node->slug = preg_replace('/-\d+$/', "", $node->slug) . "-" . $i++;
+        while (self::where(['slug = ?', 'parent_id= ?'], [$node->slug, $node->parent_id])->where(function ($query) use ($id) {
+            if ($id) $query->where('id <> ?', [$id]);
+        })->first()) {
+            $node->slug = preg_replace('/-\d+$/', '', $node->slug).'-'.$i++;
         }
 
         // Update own path
-        $path = "/" . $node->slug;
-        if ($node->parent_id && ($parent = Node::find($node->parent_id)) and $parent->menu == $node->menu) {
-            $path = $parent->path . $path;
+        $path = '/'.$node->slug;
+        if ($node->parent_id && $parent = Node::find($node->parent_id) and $parent->menu == $node->menu) {
+            $path = $parent->path.$path;
         } else {
             // set Parent to 0, if old parent is not found
             $node->parent_id = 0;
@@ -129,20 +117,20 @@ trait NodeModelTrait
 
         // Update children's paths
         if ($id && $path != $node->path) {
-            $db->executeUpdate("UPDATE " . self::getMetadata()->getTable() . " SET path = REPLACE (" . $db->getDatabasePlatform()->getConcatExpression($db->quote("//"), "path") . ", {$db->quote("//" . $node->path)}, {$db->quote($path)})" . " WHERE path LIKE " . $db->quote($node->path . "//%"));
+            $db->executeUpdate(
+                'UPDATE '.self::getMetadata()->getTable()
+                .' SET path = REPLACE ('.$db->getDatabasePlatform()->getConcatExpression($db->quote('//'), 'path').", {$db->quote('//' . $node->path)}, {$db->quote($path)})"
+                .' WHERE path LIKE '.$db->quote($node->path.'//%'));
         }
 
         $node->path = $path;
 
         // Set priority
         if (!$id) {
-            $node->priority =
-                1 +
-                $db
-                    ->createQueryBuilder()
-                    ->select($db->getDatabasePlatform()->getMaxExpression("priority"))
-                    ->from("@system_node")
-                    ->where(["parent_id" => $node->parent_id])
+            $node->priority = 1 + $db->createQueryBuilder()
+                    ->select($db->getDatabasePlatform()->getMaxExpression('priority'))
+                    ->from('@system_node')
+                    ->where(['parent_id' => $node->parent_id])
                     ->execute()
                     ->fetchOne();
         }
@@ -156,7 +144,7 @@ trait NodeModelTrait
     public static function deleting($event, Node $node)
     {
         // Update children's parents
-        foreach (self::where("parent_id = ?", [$node->id])->get() as $child) {
+        foreach (self::where('parent_id = ?', [$node->id])->get() as $child) {
             $child->parent_id = $node->parent_id;
             $child->save();
         }

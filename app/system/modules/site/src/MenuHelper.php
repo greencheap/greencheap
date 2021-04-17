@@ -28,8 +28,8 @@ class MenuHelper extends Helper
      */
     public function __invoke($name, $view = null, array $parameters = [])
     {
-        if (!($name = $this->menus->find($name))) {
-            return "";
+        if (!$name = $this->menus->find($name)) {
+            return '';
         }
 
         return $this->render($name, $view, $parameters);
@@ -61,11 +61,11 @@ class MenuHelper extends Helper
             $view = false;
         }
 
-        if (!($root = $this->getRoot($name, $parameters))) {
-            return "";
+        if (!$root = $this->getRoot($name, $parameters)) {
+            return '';
         }
 
-        return $this->view->render($view ?: "system/site/menu.php", array_replace($parameters, compact("root")));
+        return $this->view->render($view ?: 'system/site/menu.php', array_replace($parameters, compact('root')));
     }
 
     /**
@@ -73,7 +73,7 @@ class MenuHelper extends Helper
      */
     public function getName()
     {
-        return "menu";
+        return 'menu';
     }
 
     /**
@@ -83,21 +83,18 @@ class MenuHelper extends Helper
      */
     public function getRoot($menu, $parameters = [])
     {
-        $parameters = array_replace(
-            [
-                "start_level" => 1,
-                "depth" => PHP_INT_MAX,
-                "mode" => "all",
-            ],
-            $parameters
-        );
+        $parameters = array_replace([
+            'start_level' => 1,
+            'depth' => PHP_INT_MAX,
+            'mode' => 'all'
+        ], $parameters);
 
         $user = App::user();
-        $startLevel = (int) $parameters["start_level"] ?: 1;
-        $maxDepth = $startLevel + ($parameters["depth"] ?: PHP_INT_MAX);
+        $startLevel = (int) $parameters['start_level'] ?: 1;
+        $maxDepth = $startLevel + ($parameters['depth'] ?: PHP_INT_MAX);
 
         $nodes = Node::findByMenu($menu, true);
-        $nodes[0] = new Node(["path" => "/"]);
+        $nodes[0] = new Node(['path' => '/']);
         $nodes[0]->status = 1;
         $nodes[0]->parent_id = null;
 
@@ -106,34 +103,44 @@ class MenuHelper extends Helper
 
         if (!isset($nodes[$node->id])) {
             foreach ($nodes as $node) {
-                if ($node->getUrl("base") === $path) {
+                if ($node->getUrl('base') === $path) {
                     $path = $node->path;
                     break;
                 }
             }
         }
 
-        $path .= "/";
+        $path .= '/';
 
-        $segments = explode("/", $path);
-        $rootPath = count($segments) > $startLevel ? implode("/", array_slice($segments, 0, $startLevel + 1)) . "/" : "/";
+        $segments = explode('/', $path);
+        $rootPath = count($segments) > $startLevel ? implode('/', array_slice($segments, 0, $startLevel + 1)).'/' : '/';
 
         foreach ($nodes as $node) {
-            $depth = substr_count($node->path, "/");
+
+            $depth = substr_count($node->path, '/');
             $parent = isset($nodes[$node->parent_id]) ? $nodes[$node->parent_id] : null;
 
-            $node->set("active", str_starts_with($path, $node->path . "/"));
+            $node->set('active', str_starts_with($path, $node->path . '/'));
 
-            if ($node->status !== 1 || $depth >= $maxDepth || !$node->hasAccess($user) || $node->get("menu_hide") || !($parameters["mode"] == "all" || $node->get("active") || str_starts_with($node->path . "/", $rootPath) || $depth == $startLevel)) {
+            if ($node->status !== 1
+                || $depth >= $maxDepth
+                || !$node->hasAccess($user)
+                || $node->get('menu_hide')
+                || !($parameters['mode'] == 'all'
+                    || $node->get('active')
+                    || str_starts_with($node->path . '/', $rootPath)
+                    || $depth == $startLevel)
+            ) {
                 $node->setParent();
                 continue;
             }
 
             $node->setParent($parent);
 
-            if ($node->get("active") && $depth == $startLevel - 1) {
+            if ($node->get('active') && $depth == $startLevel - 1) {
                 $root = $node;
             }
+
         }
 
         if (!isset($root)) {

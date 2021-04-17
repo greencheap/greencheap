@@ -18,7 +18,7 @@ return [
 
     "events" => [
         "view.scripts" => function ($event, $scripts) use ($app) {
-            $scripts->register("editor", "system/editor:app/bundle/editor.js", ["input-link"]);
+            $scripts->register("editor", "system/editor:app/bundle/editor.js", ["input-link"], ["deferer" => false]);
             $scripts->register(
                 "editor-data",
                 sprintf(

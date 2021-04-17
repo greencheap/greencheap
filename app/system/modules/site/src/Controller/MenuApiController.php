@@ -26,7 +26,7 @@ class MenuApiController
      */
     public function __construct()
     {
-        $this->config = App::config("system/site");
+        $this->config = App::config('system/site');
     }
 
     /**
@@ -36,14 +36,14 @@ class MenuApiController
     {
         $menus = App::menu()->all();
 
-        $menus["trash"] = ["id" => "trash", "label" => __("Trash"), "fixed" => true];
+        $menus['trash'] = ['id' => 'trash', 'label' => __('Trash'), 'fixed' => true];
 
         foreach ($menus as &$menu) {
-            $menu["count"] = Node::where(["menu" => $menu["id"]])->count();
+            $menu['count'] = Node::where(['menu' => $menu['id']])->count();
         }
 
-        if (!$menus["trash"]["count"]) {
-            unset($menus["trash"]);
+        if (!$menus['trash']['count']) {
+            unset($menus['trash']);
         }
 
         return array_values($menus);
@@ -58,28 +58,29 @@ class MenuApiController
     #[ArrayShape(['message' => "string", 'menu' => ""])]
     public function saveAction($menu): array
     {
-        $oldId = isset($menu["id"]) ? trim($menu["id"]) : null;
-        $label = trim($menu["label"]);
+        $oldId = isset($menu['id']) ? trim($menu['id']) : null;
+        $label = trim($menu['label']);
 
-        if (!($id = App::filter($label, "slugify"))) {
-            App::jsonabort(400, __("Invalid id."));
+        if (!$id = App::filter($label, 'slugify')) {
+            App::jsonabort(400, __('Invalid id.'));
         }
 
         if ($id != $oldId) {
-            if ($this->config->has("menus." . $id)) {
-                throw new ConflictException(__("Duplicate Menu Id."));
+
+            if ($this->config->has('menus.'.$id)) {
+                throw new ConflictException(__('Duplicate Menu Id.'));
             }
 
-            $this->config->remove("menus." . $oldId);
+            $this->config->remove('menus.'.$oldId);
 
-            Node::where(["menu = :old"], [":old" => $oldId])->update(["menu" => $id]);
+            Node::where(['menu = :old'], [':old' => $oldId])->update(['menu' => $id]);
         }
 
-        $this->config->merge(["menus" => [$id => compact("id", "label")]]);
+        $this->config->merge(['menus' => [$id => compact('id', 'label')]]);
 
-        App::menu()->assign($id, $menu["positions"]);
+        App::menu()->assign($id, $menu['positions']);
 
-        return ["message" => "success", "menu" => $menu];
+        return ['message' => 'success', 'menu' => $menu];
     }
 
     /**
@@ -91,9 +92,9 @@ class MenuApiController
     #[ArrayShape(['message' => "string"])]
     public function deleteAction($id): array
     {
-        App::config("system/site")->remove("menus." . $id);
-        Node::where(["menu = :id"], [":id" => $id])->update(["menu" => "trash", "status" => 0]);
+        App::config('system/site')->remove('menus.'.$id);
+        Node::where(['menu = :id'], [':id' => $id])->update(['menu' => 'trash', 'status' => 0]);
 
-        return ["message" => "success"];
+        return ['message' => 'success'];
     }
 }
