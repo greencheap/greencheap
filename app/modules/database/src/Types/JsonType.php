@@ -3,16 +3,9 @@
 namespace GreenCheap\Database\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\JsonType as BaseJsonArrayType;
-use JetBrains\PhpStorm\Deprecated;
+use Doctrine\DBAL\Types\JsonType as BaseJsonType;
 
-/**
- * Class JsonArrayType
- * @package GreenCheap\Database\Types
- * @deprecated since 3.1 use GreenCheap\Database\Types\JsonType
- */
-#[Deprecated]
-class JsonArrayType extends BaseJsonArrayType
+class JsonType extends BaseJsonType
 {
     /**
      * {@inheritdoc}

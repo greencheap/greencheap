@@ -50,6 +50,7 @@ $config = [
         };
 
         Type::overrideType(Types::SIMPLE_ARRAY, "\GreenCheap\Database\Types\SimpleArrayType");
+        Type::overrideType(Types::JSON, "\GreenCheap\Database\Types\JsonType");
         Type::overrideType(Types::JSON_ARRAY, "\GreenCheap\Database\Types\JsonArrayType");
     },
 

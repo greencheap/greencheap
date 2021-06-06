@@ -1,3 +1,14 @@
+## 3.3.0 - 06/06/2021
+
+### Added
+- Docker Compose Yml
+
+### Removed
+- Babel Eslint
+
+### Updated
+- UIkit version
+
 ## 3.2.3
 
 ### Updated
