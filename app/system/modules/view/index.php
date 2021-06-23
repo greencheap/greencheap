@@ -55,15 +55,6 @@ return [
                 "url" => $app["router"]->getContext()->getBaseUrl(),
                 "csrf" => $app["csrf"]->generate(),
             ]);
-            /***
-             *  $config = $app->config('system/site');
-                $data->add('$greencheap', [
-                    'url' => $app['router']->getContext()->getBaseUrl(),
-                    'csrf' => $app['csrf']->generate(),
-                    'name' => $config->get('title'),
-                    'project-uri' => $app['router']->getContext()->getBaseUrl() ?: 'www.example.com'
-                ]);
-             */
         },
 
         "view.styles" => function ($event, $styles) {

@@ -17,7 +17,7 @@ class PageController
      * @return array
      */
     #[ArrayShape(['$view' => "array", 'page' => "\GreenCheap\Site\Model\Page", 'node' => "mixed"])]
-    public static function indexAction($id = 0): array
+    public static function indexAction(int $id = 0): array
     {
         if (!$page = Page::find($id)) {
             App::abort(404, __('Page not found.'));

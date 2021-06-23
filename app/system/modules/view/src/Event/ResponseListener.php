@@ -4,6 +4,7 @@ namespace GreenCheap\View\Event;
 
 use GreenCheap\Application as App;
 use GreenCheap\Event\EventSubscriberInterface;
+use JetBrains\PhpStorm\ArrayShape;
 
 class ResponseListener implements EventSubscriberInterface
 {
@@ -39,7 +40,8 @@ class ResponseListener implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
-    public function subscribe()
+    #[ArrayShape(["response" => "array"])]
+    public function subscribe(): array
     {
         return [
             "response" => ["onResponse", -20],

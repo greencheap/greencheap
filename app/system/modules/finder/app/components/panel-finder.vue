@@ -4,51 +4,59 @@
             <div class="uk-flex uk-flex-between uk-flex-wrap">
                 <div class="uk-flex uk-flex-middle uk-flex-wrap">
                     <h2 class="uk-h3 uk-margin-remove">
-                        <span v-if="!selected.length">{{ "{0} %count% Files|{1} %count% File|]1,Inf[ %count% Files" | transChoice(count, { count: count }) }}</span>
+                        <span v-if="!selected.length">{{
+                                "{0} %count% Files|{1} %count% File|]1,Inf[ %count% Files" | transChoice(count, {count: count})
+                            }}</span>
                         <span v-else>{{
-                            "{1} %count% File selected|]1,Inf[ %count% Files selected"
-                                | transChoice(selected.length, {
+                                "{1} %count% File selected|]1,Inf[ %count% Files selected"
+                                    | transChoice(selected.length, {
                                     count: selected.length,
                                 })
-                        }}</span>
+                            }}</span>
                     </h2>
                     <div class="uk-margin-left" v-if="isWritable && selected.length">
                         <ul class="uk-iconnav">
                             <li :class="selected.length !== 1 ? 'uk-disabled' : ''">
-                                <a uk-icon="file-edit" :title="'Rename' | trans" uk-tooltip="delay: 500" @click.prevent="rename" />
+                                <a uk-icon="file-edit" :title="'Rename' | trans" uk-tooltip="delay: 500"
+                                   @click.prevent="rename"/>
                             </li>
                             <li :class="!selected.length ? 'uk-disabled' : ''">
-                                <a v-confirm="'Delete files?'" uk-icon="trash" :title="'Delete' | trans" uk-tooltip="delay: 500" @click.prevent="remove" />
+                                <a v-confirm="'Delete files?'" uk-icon="trash" :title="'Delete' | trans"
+                                   uk-tooltip="delay: 500" @click.prevent="remove"/>
                             </li>
                         </ul>
                     </div>
 
                     <div class="uk-search uk-search-default pk-search">
-                        <span uk-search-icon />
-                        <input v-model="search" class="uk-search-input" type="search" />
+                        <span uk-search-icon/>
+                        <input v-model="search" class="uk-search-input" type="search"/>
                     </div>
                 </div>
                 <div class="uk-flex uk-flex-middle uk-flex-wrap">
                     <div class="uk-margin-right">
                         <ul class="uk-iconnav">
                             <li :class="{ 'uk-active': view == 'template-table' }">
-                                <a uk-icon="table" :title="'Table View' | trans" uk-tooltip="delay: 500" @click.prevent="view = 'template-table'" />
+                                <a uk-icon="table" :title="'Table View' | trans" uk-tooltip="delay: 500"
+                                   @click.prevent="view = 'template-table'"/>
                             </li>
                             <li :class="{ 'uk-active': view == 'template-thumbnail' }">
-                                <a uk-icon="thumbnails" :title="'Thumbnails View' | trans" uk-tooltip="delay: 500" @click.prevent="view = 'template-thumbnail'" />
+                                <a uk-icon="thumbnails" :title="'Thumbnails View' | trans" uk-tooltip="delay: 500"
+                                   @click.prevent="view = 'template-thumbnail'"/>
                             </li>
                         </ul>
                     </div>
 
                     <div class="uk-iconnav">
                         <li>
-                            <a uk-icon="folder" :title="'Add Folder' | trans" uk-tooltip="delay: 500" @click.prevent="createFolder()" />
+                            <a uk-icon="folder" :title="'Add Folder' | trans" uk-tooltip="delay: 500"
+                               @click.prevent="createFolder()"/>
                         </li>
                         <li>
-                            <a class="files-upload uk-icon uk-flex uk-flex-middle" :title="'Upload' | trans" uk-tooltip="delay: 500">
+                            <a class="files-upload uk-icon uk-flex uk-flex-middle" :title="'Upload' | trans"
+                               uk-tooltip="delay: 500">
                                 <div uk-form-custom>
-                                    <input type="file" name="files[]" multiple="multiple" />
-                                    <span uk-icon="upload" />
+                                    <input type="file" name="files[]" multiple="multiple"/>
+                                    <span uk-icon="upload"/>
                                 </div>
                             </a>
                         </li>
@@ -57,7 +65,7 @@
             </div>
 
             <div class="uk-flex uk-flex-middle">
-                <i uk-icon="icon: database; ratio: 1.25" class="uk-margin-small-right" />
+                <i uk-icon="icon: database; ratio: 1.25" class="uk-margin-small-right"/>
                 <ul class="uk-breadcrumb uk-margin-small">
                     <li v-for="(bc, key) in breadcrumbs" :key="key" :class="{ 'uk-active': bc.current }">
                         <span v-if="bc.current">{{ bc.title }}</span>
@@ -66,10 +74,11 @@
                 </ul>
             </div>
 
-            <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden />
+            <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden/>
 
-            <div class="uk-overflow-auto tm-overflow-container" uk-height-viewport="offset-top: true; offset-bottom: 120px">
-                <component :is="view" v-show="count" />
+            <div class="uk-overflow-auto tm-overflow-container"
+                 uk-height-viewport="offset-top: true; offset-bottom: 120px">
+                <component :is="view" v-show="count"/>
                 <h3 v-show="!count" class="uk-h2 uk-text-muted uk-text-center">
                     {{ "No files found." | trans }}
                 </h3>
@@ -83,39 +92,45 @@
                         <div v-if="isWritable && selected.length">
                             <ul class="uk-iconnav">
                                 <li :class="selected.length !== 1 ? 'uk-disabled' : ''">
-                                    <a uk-icon="file-edit" :title="'Rename' | trans" uk-tooltip="delay: 500" @click.prevent="rename" />
+                                    <a uk-icon="file-edit" :title="'Rename' | trans" uk-tooltip="delay: 500"
+                                       @click.prevent="rename"/>
                                 </li>
                                 <li :class="!selected.length ? 'uk-disabled' : ''">
-                                    <a v-confirm="'Delete files?'" uk-icon="trash" :title="'Delete' | trans" uk-tooltip="delay: 500" @click.prevent="remove" />
+                                    <a v-confirm="'Delete files?'" uk-icon="trash" :title="'Delete' | trans"
+                                       uk-tooltip="delay: 500" @click.prevent="remove"/>
                                 </li>
                             </ul>
                         </div>
                         <div class="uk-search uk-search-default pk-search">
-                            <span uk-search-icon />
-                            <input v-model="search" class="uk-search-input" type="search" />
+                            <span uk-search-icon/>
+                            <input v-model="search" class="uk-search-input" type="search"/>
                         </div>
                     </div>
                     <div class="uk-flex uk-flex-middle uk-flex-wrap uk-margin-remove">
                         <div class="uk-margin-right">
                             <ul class="uk-iconnav">
                                 <li :class="{ 'uk-active': view == 'template-table' }">
-                                    <a uk-icon="table" :title="'Table View' | trans" uk-tooltip="delay: 500" @click.prevent="view = 'template-table'" />
+                                    <a uk-icon="table" :title="'Table View' | trans" uk-tooltip="delay: 500"
+                                       @click.prevent="view = 'template-table'"/>
                                 </li>
                                 <li :class="{ 'uk-active': view == 'template-thumbnail' }">
-                                    <a uk-icon="thumbnails" :title="'Thumbnails View' | trans" uk-tooltip="delay: 500" @click.prevent="view = 'template-thumbnail'" />
+                                    <a uk-icon="thumbnails" :title="'Thumbnails View' | trans" uk-tooltip="delay: 500"
+                                       @click.prevent="view = 'template-thumbnail'"/>
                                 </li>
                             </ul>
                         </div>
 
                         <div class="uk-iconnav">
                             <li>
-                                <a uk-icon="folder" :title="'Add Folder' | trans" uk-tooltip="delay: 500" @click.prevent="createFolder()" />
+                                <a uk-icon="folder" :title="'Add Folder' | trans" uk-tooltip="delay: 500"
+                                   @click.prevent="createFolder()"/>
                             </li>
                             <li>
-                                <a class="files-upload uk-icon uk-flex uk-flex-middle" :title="'Upload' | trans" uk-tooltip="delay: 500">
+                                <a class="files-upload uk-icon uk-flex uk-flex-middle" :title="'Upload' | trans"
+                                   uk-tooltip="delay: 500">
                                     <div uk-form-custom>
-                                        <input type="file" name="files[]" multiple="multiple" />
-                                        <span uk-icon="upload" />
+                                        <input type="file" name="files[]" multiple="multiple"/>
+                                        <span uk-icon="upload"/>
                                     </div>
                                 </a>
                             </li>
@@ -124,7 +139,7 @@
                 </div>
 
                 <div class="uk-flex uk-flex-middle">
-                    <i uk-icon="icon: database" class="uk-margin-small-right" />
+                    <i uk-icon="icon: database" class="uk-margin-small-right"/>
                     <ul class="uk-breadcrumb">
                         <li v-for="(bc, key) in breadcrumbs" :key="key" :class="{ 'uk-active': bc.current }">
                             <span v-if="bc.current">{{ bc.title }}</span>
@@ -132,14 +147,15 @@
                         </li>
                     </ul>
                 </div>
-                <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden />
+                <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden/>
             </div>
 
             <div class="uk-modal-body">
                 <div class="tm-finder-modal-container">
-                    <div class="uk-overflow-auto" uk-overflow-auto :class="{ 'uk-flex uk-flex-center uk-flex-middle': !count }">
+                    <div class="uk-overflow-auto" uk-overflow-auto
+                         :class="{ 'uk-flex uk-flex-center uk-flex-middle': !count }">
                         <div class="tm-overflow-container">
-                            <component :is="view" v-show="count" />
+                            <component :is="view" v-show="count"/>
                             <h3 v-show="!count" class="uk-h2 uk-text-muted uk-text-center">
                                 {{ "No files found." | trans }}
                             </h3>
@@ -156,8 +172,8 @@ export default {
     name: "panel-finder",
 
     props: {
-        root: { type: String, default: "/" },
-        mode: { type: String, default: "write" },
+        root: {type: String, default: "/"},
+        mode: {type: String, default: "write"},
         modal: Boolean,
     },
 
@@ -219,7 +235,7 @@ export default {
             this.$set(
                 this,
                 "selected",
-                _.filter(this.selected, (name) => _.find(vm.searched, { name }))
+                _.filter(this.selected, (name) => _.find(vm.searched, {name}))
             );
         },
     },
@@ -227,7 +243,7 @@ export default {
     computed: {
         breadcrumbs() {
             let path = "";
-            const crumbs = [{ path: "/", title: this.$trans("Storage") }] // 'Home'
+            const crumbs = [{path: "/", title: this.$trans("Storage")}] // 'Home'
                 .concat(
                     this.path
                         .substr(1)
@@ -277,7 +293,7 @@ export default {
 
         getSelected() {
             return this.selected.map(function (name) {
-                return _.find(this.items, { name }).url;
+                return _.find(this.items, {name}).url;
             }, this);
         },
 
@@ -297,7 +313,7 @@ export default {
         createFolder() {
             UIkit.modal.prompt(this.$trans("Folder Name"), "", this.modaloptions).then((name) => {
                 if (!name) return;
-                this.command("createfolder", { name });
+                this.command("createfolder", {name});
             });
         },
 
@@ -311,8 +327,8 @@ export default {
             UIkit.modal.prompt(this.$trans("Name"), oldname).then((newname) => {
                 if (!newname) return;
 
-                this.command("rename", { oldname, newname });
-            }, _.extend({ title: this.$trans("Rename") }, this.modaloptions));
+                this.command("rename", {oldname, newname});
+            }, _.extend({title: this.$trans("Rename")}, this.modaloptions));
         },
 
         remove(names) {
@@ -321,7 +337,7 @@ export default {
             }
 
             if (names) {
-                this.command("removefiles", { names });
+                this.command("removefiles", {names});
             }
         },
 
@@ -351,7 +367,7 @@ export default {
         },
 
         command(cmd, params) {
-            return this.resource.save({ cmd }, _.extend({ path: this.path, root: this.getRoot() }, params)).then(
+            return this.resource.save({cmd}, _.extend({path: this.path, root: this.getRoot()}, params)).then(
                 function (res) {
                     this.load();
                     this.$notify(res.data.message, res.data.error ? "danger" : "");
@@ -363,7 +379,7 @@ export default {
         },
 
         load() {
-            return this.resource.get({ path: this.path, root: this.getRoot() }).then(
+            return this.resource.get({path: this.path, root: this.getRoot()}).then(
                 function (res) {
                     this.$set(this, "items", res.data.items || []);
                     this.$set(this, "selected", []);
@@ -415,7 +431,7 @@ export default {
                     } catch (e) {
                         try {
                             var data = JSON.parse(data.responseText.substring(data.responseText.lastIndexOf("{"), data.responseText.lastIndexOf("}") + 1));
-                            var { message } = data;
+                            var {message} = data;
                         } catch (e) {
                             var message = "Unable load file(s).";
                         }
@@ -436,7 +452,7 @@ export default {
 
             UIkit.upload(this.$el.querySelector(".files-upload"), settings);
             UIkit.upload(UIkit.util.parents(this.$el, ".uk-modal").length ? this.$el : UIkit.util.$("html"), settings);
-        },
+        }
     },
 
     components: {
