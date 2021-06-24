@@ -160,7 +160,7 @@ class DatabaseHandler implements HandlerInterface
                 $table->addColumn("user_id", "integer", ["unsigned" => true, "length" => 10, "default" => 0]);
                 $table->addColumn("access", "datetime", ["notnull" => false]);
                 $table->addColumn("status", "smallint");
-                $table->addColumn("data", "json_array", ["notnull" => false]);
+                $table->addColumn("data", "json", ["notnull" => false]); // TODO: json_array update
                 $table->setPrimaryKey(["id"]);
             });
         }
