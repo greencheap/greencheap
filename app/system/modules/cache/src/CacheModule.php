@@ -29,29 +29,15 @@ class CacheModule extends Module
                     $config["storage"] = end($supports);
                 }
 
-                switch ($config["storage"]) {
-                    case "array":
-                        $cache = new ArrayCache();
-                        break;
+                $cache = match ($config["storage"]) {
+                    "array" => new ArrayCache(),
+                    "apc" => new ApcuCache(),
+                    "file" => new FilesystemCache($config["path"]),
+                    "phpfile" => new PhpFileCache($config["path"]),
+                    default => throw new RuntimeException("Unknown cache storage."),
+                };
 
-                    case "apc":
-                        $cache = new ApcuCache();
-                        break;
-
-                    case "file":
-                        $cache = new FilesystemCache($config["path"]);
-                        break;
-
-                    case "phpfile":
-                        $cache = new PhpFileCache($config["path"]);
-                        break;
-
-                    default:
-                        throw new RuntimeException("Unknown cache storage.");
-                        break;
-                }
-
-                if ($prefix = isset($config["prefix"]) ? $config["prefix"] : false) {
+                if ($prefix = $config["prefix"] ?? false) {
                     $cache->setNamespace($prefix);
                 }
 
