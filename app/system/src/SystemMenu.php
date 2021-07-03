@@ -46,7 +46,7 @@ class SystemMenu implements \IteratorAggregate, \JsonSerializable
      * Adds a menu item.
      *
      * @param string $id
-     * @param array  $item
+     * @param array $item
      */
     public function addItem($id, array $item)
     {
@@ -58,7 +58,7 @@ class SystemMenu implements \IteratorAggregate, \JsonSerializable
             "label" => $id,
             "parent" => "root",
             "priority" => 0,
-            "icon" => App::url()->getStatic("app/system/modules/theme/assets/images/picture-icon.svg"),
+            "icon" => App::url()->getStatic("app/system/modules/theme/assets/system-app-icons/default-extension-icons.svg"),
         ]);
 
         if (!App::user()->hasAccess($item["access"])) {
@@ -73,7 +73,7 @@ class SystemMenu implements \IteratorAggregate, \JsonSerializable
             $item["icon"] = App::url()->getStatic($item["icon"]);
         }
 
-        $item["active"] = (bool) preg_match("#^" . str_replace("*", ".*", $item["active"] ?: $item["url"]) . '$#', $route);
+        $item["active"] = (bool)preg_match("#^" . str_replace("*", ".*", $item["active"] ?: $item["url"]) . '$#', $route);
         $item["url"] = App::url($item["url"]);
 
         $this->items[$id] = $item;

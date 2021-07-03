@@ -68,7 +68,7 @@ return [
         "user" => [
             "layout" => "sidebar",
             "label" => "Users",
-            "icon" => "system/user:icon.svg",
+            "icon" => "system/theme:assets/system-app-icons/user.svg",
             "url" => "@user",
             "active" => "@user(/*)?",
             "access" => "user: manage users || user: manage user permissions || system: access settings",

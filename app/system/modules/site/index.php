@@ -73,7 +73,7 @@ return [
         'site' => [
             'layout' => 'sidebar',
             'label' => 'Site',
-            'icon' => 'system/site:icon.svg',
+            'icon' => 'system/theme:assets/system-app-icons/site.svg',
             'url' => '@site/page',
             'access' => 'site: manage site || system: manage widgets || system: manage storage || system: access settings',
             'active' => '@site(/*)?',
