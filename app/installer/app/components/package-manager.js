@@ -50,7 +50,7 @@ export default {
             if (pkg.extra && pkg.extra.icon) {
                 return `${pkg.url}/${pkg.extra.icon}`;
             }
-            return this.$url("app/system/assets/images/placeholder-icon.svg");
+            return this.$url("app/system/modules/theme/assets/system-app-icons/default-extension-icons.svg");
         },
 
         image(pkg) {

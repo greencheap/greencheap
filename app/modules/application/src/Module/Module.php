@@ -127,8 +127,6 @@ class Module implements ModuleInterface, EventSubscriberInterface
 
     /**
      * {@inheritdoc}
-     * @todo Version control for package enable
-     * @body The version_compare version requires a parameter. Module.php 131
      */
     public function isCompatibleSystem($version, $version_seconds): bool
     {

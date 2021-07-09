@@ -135,7 +135,7 @@ class ExtensionTranslateCommand extends Command
         // $transChoice('foo'[, args])
         preg_match_all('/\$trans(Choice)?\((\'|")((?:(?!\2).)+)\2/', $content, $matches);
         foreach ($matches[3] as $i => $string) {
-            $domain = "messages"; // TODO: allow custom domain
+            $domain = "messages";
 
             $pairs[] = [$domain, $string];
         }

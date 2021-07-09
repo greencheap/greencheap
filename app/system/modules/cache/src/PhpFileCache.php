@@ -3,7 +3,14 @@
 namespace GreenCheap\Cache;
 
 use Doctrine\Common\Cache\PhpFileCache as BasePhpFileCache;
+use JetBrains\PhpStorm\Deprecated;
 
+/**
+ * Class PhpFileCache
+ * @package GreenCheap\Cache
+ * @deprecated
+ */
+#[Deprecated]
 class PhpFileCache extends BasePhpFileCache
 {
     /**

@@ -8,6 +8,10 @@
 
 ### Updated
 - UIkit version
+- Doctrine/Dbal dependency updated
+
+### Changed
+- Added json data type instead of json_array used for database.
 
 ## 3.2.3
 

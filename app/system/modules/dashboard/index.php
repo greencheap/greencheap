@@ -24,7 +24,7 @@ return [
         "dashboard" => [
             "layout" => "sidebar",
             "label" => "Dashboard",
-            "icon" => "system/dashboard:icon.svg",
+            "icon" => "system/theme:assets/system-app-icons/dashboard.svg",
             "url" => "@dashboard",
             "active" => "@dashboard*",
             "priority" => 100,

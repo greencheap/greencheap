@@ -1,4 +1,5 @@
 <?php
+
 use Doctrine\DBAL\Schema\Comparator;
 
 return [
@@ -12,7 +13,7 @@ return [
                 $table->addColumn("user_id", "integer", ["unsigned" => true, "length" => 10, "default" => 0]);
                 $table->addColumn("access", "datetime", ["notnull" => false]);
                 $table->addColumn("status", "smallint");
-                $table->addColumn("data", "json_array", ["notnull" => false]);
+                $table->addColumn("data", "json", ["notnull" => false]); // TODO: json_array update
                 $table->setPrimaryKey(["id"]);
             });
         }
@@ -40,7 +41,7 @@ return [
                 $table->addColumn("type", "string", ["length" => 255]);
                 $table->addColumn("menu", "string", ["length" => 255]);
                 $table->addColumn("roles", "simple_array", ["notnull" => false]);
-                $table->addColumn("data", "json_array", ["notnull" => false]);
+                $table->addColumn("data", "json", ["notnull" => false]); // TODO: json_array update
                 $table->setPrimaryKey(["id"]);
             });
         }
@@ -50,7 +51,7 @@ return [
                 $table->addColumn("id", "integer", ["unsigned" => true, "length" => 10, "autoincrement" => true]);
                 $table->addColumn("title", "string", ["length" => 255]);
                 $table->addColumn("content", "text");
-                $table->addColumn("data", "json_array", ["notnull" => false]);
+                $table->addColumn("data", "json", ["notnull" => false]); // TODO: json_array update
                 $table->setPrimaryKey(["id"]);
             });
         }
@@ -93,7 +94,7 @@ return [
                 $table->addColumn("login", "datetime", ["notnull" => false]);
                 $table->addColumn("activation", "string", ["length" => 255, "notnull" => false]);
                 $table->addColumn("roles", "simple_array", ["notnull" => false]);
-                $table->addColumn("data", "json_array", ["notnull" => false]);
+                $table->addColumn("data", "json", ["notnull" => false]); // TODO: json_array update
                 $table->setPrimaryKey(["id"]);
                 $table->addUniqueIndex(["username"], "@SYSTEM_USER_USERNAME");
                 $table->addUniqueIndex(["email"], "@SYSTEM_USER_EMAIL");
@@ -108,7 +109,7 @@ return [
                 $table->addColumn("status", "smallint");
                 $table->addColumn("nodes", "simple_array", ["notnull" => false]);
                 $table->addColumn("roles", "simple_array", ["notnull" => false]);
-                $table->addColumn("data", "json_array", ["notnull" => false]);
+                $table->addColumn("data", "json", ["notnull" => false]); // TODO: json_array update
                 $table->setPrimaryKey(["id"]);
             });
         }
@@ -123,7 +124,7 @@ return [
                 $table->addColumn("read_group", "simple_array", ["notnull" => false]);
                 $table->addColumn("read_user", "simple_array", ["notnull" => false]);
                 $table->addColumn("date", "datetime");
-                $table->addColumn("data", "json_array", ["notnull" => false]);
+                $table->addColumn("data", "json", ["notnull" => false]); // TODO: json_array update
                 $table->setPrimaryKey(["id"]);
             });
         }
@@ -138,7 +139,7 @@ return [
                 $table->addColumn("created", "datetime");
                 $table->addColumn("content", "text");
                 $table->addColumn("status", "smallint");
-                $table->addColumn("data", "json_array", ["notnull" => false]);
+                $table->addColumn("data", "json", ["notnull" => false]); // TODO: json_array update
                 $table->setPrimaryKey(["id"]);
             });
         }
@@ -228,7 +229,7 @@ return [
             if ($util->tableExists("@system_categories") === false) {
                 $table = $util->listTableDetails("@system_categories");
                 if (!$table->hasColumn("type")) {
-                    $app["db"]->executeQuery('ALTER TABLE @system_categories ADD "type" varchar(255) NULL DEFAULT NULL');
+                    $app["db"]->executeQuery("ALTER TABLE @system_categories ADD `type` varchar(255) NULL DEFAULT NULL");
                 }
             }
         },
@@ -241,7 +242,7 @@ return [
                 $fromTable = $util->listTableDetails("@system_comments");
                 if (!$fromTable->hasColumn("data")) {
                     $toTable = clone $fromTable;
-                    $toTable->addColumn("data", "json_array", ["notnull" => false]);
+                    $toTable->addColumn("data", "json", ["notnull" => false]); // TODO: json_array update
                     $comparator = new Comparator();
                     $manager->alterTable($comparator->diffTable($fromTable, $toTable));
                 }
@@ -251,5 +252,43 @@ return [
                 $util->dropTable("@system_categories");
             }
         },
+
+        "3.3.1" => function ($app) {
+            $db = $app["db"];
+
+            if (!$db instanceof GreenCheap\Database\Connection) {
+                return;
+            }
+
+            $util = $db->getUtility();
+            $manager = $util->getSchemaManager();
+
+            $tables = [
+                "@system_comments", "@system_auth", "@system_node", "@system_page", "@system_user", "@system_widget", "@system_notifications"
+            ];
+
+            $modules = [
+                "@blog_post", "@blog_categories", "@docs_post", "@docs_category", "@brain_marketplace", "@atomy_main_packages", "@atomy_main_packages_download", "@atomy_app_store_packages"
+            ];
+
+            foreach (array_merge($tables, $modules) as $tableName) {
+                if ($util->tableExists($tableName)) {
+                    $fromTable = $util->listTableDetails($tableName);
+                    if ($fromTable->hasColumn("data") && $fromTable->getColumn("data")->getType() != "json") {
+                        $toTable = clone $fromTable;
+
+                        $toTable->changeColumn("data", [
+                            "type" => \Doctrine\DBAL\Types\Type::getType("json"),
+                            "notnull" => false,
+                            "platformOptions" => [
+                                "charset" => null
+                            ],
+                        ]);
+                        $comparator = new Comparator;
+                        $manager->alterTable($comparator->diffTable($fromTable, $toTable));
+                    }
+                }
+            }
+        }
     ],
 ];

@@ -7,7 +7,7 @@ return [
 
     "label" => "Login",
 
-    "icon" => "system/theme:assets/images/user-widget.svg",
+    "icon" => "system/theme:assets/widget-app-icons/login.svg",
 
     "events" => [
         "view.scripts" => function ($event, $scripts) use ($app) {

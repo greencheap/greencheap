@@ -34,7 +34,7 @@ return [
             "label" => "Comments",
             "url" => "@comment/page",
             "access" => "comment: access comment",
-            "icon" => "system/comment:icon.svg",
+            "icon" => "system/theme:assets/system-app-icons/comment.svg",
             "priority" => 120,
         ],
         "comment: index" => [

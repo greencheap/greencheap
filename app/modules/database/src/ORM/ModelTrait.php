@@ -45,7 +45,7 @@ trait ModelTrait
     /**
      * Creates a new instance of this model.
      *
-     * @param  array $data
+     * @param array $data
      * @return static
      */
     public static function create($data = [])
@@ -66,8 +66,8 @@ trait ModelTrait
     /**
      * Creates a new QueryBuilder instance and set the WHERE condition.
      *
-     * @param  mixed $condition
-     * @param  array $params
+     * @param mixed $condition
+     * @param array $params
      * @return QueryBuilder
      */
     public static function where($condition, array $params = [])
@@ -117,11 +117,12 @@ trait ModelTrait
     /**
      * Gets model data as array.
      *
-     * @param  array $data
-     * @param  array $ignore
+     * @param array $data
+     * @param array $ignore
      * @return array
+     * @throws \Exception
      */
-    public function toArray(array $data = [], array $ignore = [])
+    public function toArray(array $data = [], array $ignore = []): array
     {
         $metadata = static::getMetadata();
         $mappings = $metadata->getRelationMappings();
@@ -131,14 +132,11 @@ trait ModelTrait
                 continue;
             }
 
-            switch ($metadata->getField($name, "type")) {
-                case "json_array":
-                    $value = $value ?: new \stdClass();
-                    break;
-                case "datetime":
-                    $value = $value ? $value->format(\DateTime::ATOM) : null;
-                    break;
-            }
+            $value = match ($metadata->getField($name, "type")) {
+                "json_array", "json" => $value ?: new \stdClass(),
+                "datetime" => $value ? $value->format(DATE_ATOM) : null,
+                default => $value,
+            };
 
             $data[$name] = $value;
         }

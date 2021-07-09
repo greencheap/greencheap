@@ -6,7 +6,7 @@ return [
 
     'label' => 'Menu',
 
-    'icon' => 'system/theme:assets/images/menu-widget.svg',
+    'icon' => 'system/theme:assets/widget-app-icons/menu.svg',
 
     'defaults' => [
         'start_level' => 1,

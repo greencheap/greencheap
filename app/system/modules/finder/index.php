@@ -70,7 +70,7 @@ return [
         "system: storage" => [
             "label" => "Storage",
             "layout" => "sidebar",
-            "icon" => "system/finder:icon.svg",
+            "icon" => "system/theme:assets/system-app-icons/finder.svg",
             "url" => "@storage",
             "access" => "system: manage storage",
             "priority" => 110,

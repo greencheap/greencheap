@@ -93,7 +93,7 @@ return [
         "marketplace" => [
             "label" => "App Store",
             "layout" => "sidebar",
-            "icon" => "installer:assets/marketplace.svg",
+            "icon" => "system/theme:assets/system-app-icons/appstore.svg",
             "url" => "@system/marketplace",
             "active" => "@system/marketplace*",
             "priority" => 120,

@@ -82,7 +82,6 @@ class ArchiveCommand extends Command
 
     protected function getPackageFilename($name)
     {
-        // TODO: Make this more robust.
         return preg_replace("#[^a-z0-9-_]#i", "-", $name);
     }
 }

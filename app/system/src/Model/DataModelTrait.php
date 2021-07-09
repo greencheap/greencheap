@@ -2,21 +2,28 @@
 
 namespace GreenCheap\System\Model;
 
+use GreenCheap\Database\ORM\Annotation\Column;
 use GreenCheap\Util\Arr;
+use JetBrains\PhpStorm\Pure;
 
+/**
+ * Trait DataModelTrait
+ * @package GreenCheap\System\Model
+ */
 trait DataModelTrait
 {
-    /** @Column(type="json_array") */
+    /** @Column(type="json") */
     public $data;
 
     /**
      * Gets a data value.
      *
-     * @param  string $key
-     * @param  mixed  $default
+     * @param string $key
+     * @param mixed|null $default
      * @return mixed
      */
-    public function get($key, $default = null)
+    #[Pure]
+    public function get(string $key, mixed $default = null): mixed
     {
         return Arr::get((array) $this->data, $key, $default);
     }
@@ -27,7 +34,7 @@ trait DataModelTrait
      * @param string $key
      * @param mixed  $value
      */
-    public function set($key, $value)
+    public function set(string $key, mixed $value)
     {
         if (null === $this->data) {
             $this->data = [];
