@@ -10,7 +10,7 @@
                 <ul class="uk-nav uk-nav-default pk-nav-large" ref="tab">
                     <li v-for="section in orderBy(sections, 'priority')" :key="section.name">
                         <a>
-                            <i class="uk-margin-right" :uk-icon="`icon:${section.icon};ratio:1.3`"></i><span class="uk-text-middle">{{ section.label | trans }}</span>
+                            <i class="uk-margin-right" :uk-icon="`icon:${section.icon};ratio:1`"></i><span class="uk-text-middle">{{ section.label | trans }}</span>
                         </a>
                     </li>
                 </ul>
