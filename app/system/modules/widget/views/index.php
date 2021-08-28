@@ -73,7 +73,7 @@
                             <div class="uk-modal-dialog uk-margin-auto-vertical">
                                 <button class="uk-modal-close-default" type="button" uk-close></button>
                                 <div class="uk-modal-header">
-                                    <h2 class="uk-h3">{{ 'Widgets' | trans }}</h2>
+                                    <v-title :title="'Widgets' | trans" />
                                 </div>
                                 <div class="uk-modal-body">
                                     <ul class="uk-child-width-1-4@m uk-child-width-1-2" uk-grid>
@@ -108,8 +108,7 @@
                         </div>
                     </div>
 
-                    <h3 class="uk-h2 uk-text-muted uk-text-center uk-margin-bottom">{{ 'No widgets found.' | trans }}</h3>
-
+                    <v-notfound :title="'No widgets found' | trans"></v-notfound>
                 </template>
 
                 <div class="uk-margin-bottom" :data-pos="pos.name" v-for="pos in filtered_positions" :key="pos.name">

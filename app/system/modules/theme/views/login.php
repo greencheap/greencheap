@@ -53,7 +53,7 @@
                             <input class="uk-width-expand uk-input uk-form-large" type="text" name="credentials[username]" value="<?= $this->escape($last_username) ?>" placeholder="<?= __("Username") ?>" autofocus>
                         </div>
                         <div class="uk-margin uk-inline uk-width-expand">
-                            <span class="uk-form-icon" uk-icon="icon:key"></span>
+                            <span class="uk-form-icon" uk-icon="icon:lock"></span>
                             <input class="uk-width-expand uk-input uk-form-large" type="password" name="credentials[password]" value="" placeholder="<?= __("Password") ?>">
                         </div>
                         <p class="uk-margin">

@@ -23,6 +23,9 @@ import InputImage from "./components/input-image.vue";
 import InputImageMeta from "./components/input-image-meta.vue";
 import InputVideo from "./components/input-video.vue";
 import { VInput } from "./components/validation.vue";
+import VTitle from "./components/v-title.vue";
+import VButton from "./components/v-button.vue";
+import VNotFound from "./components/v-notfound.vue";
 
 import CheckAll from "./directives/check-all";
 import Confirm from "./directives/confirm";
@@ -77,6 +80,9 @@ function Install(Vue) {
     Vue.component("v-pagination", VPagination);
     Vue.component("input-filter", InputFilter);
     Vue.component("v-input", VInput);
+    Vue.component("v-title", VTitle);
+    Vue.component("v-button", VButton);
+    Vue.component("v-notfound", VNotFound);
 
     Vue.use(InputDate);
     Vue.use(InputImage);

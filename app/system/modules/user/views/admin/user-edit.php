@@ -3,11 +3,9 @@
 <validation-observer tag="form" id="user-edit" class="uk-form-horizontal" ref="observer" @submit.prevent="submit" v-cloak>
 
     <div class="uk-margin uk-flex uk-flex-middle uk-flex-between uk-flex-wrap" >
-        <div >
-
-            <h2 class="uk-margin-remove" v-if="user.id">{{ 'Edit User' | trans }}</h2>
-            <h2 class="uk-margin-remove" v-else>{{ 'Add User' | trans }}</h2>
-
+        <div>
+            <v-title v-if="user.id" :title="'Edit User' | trans"></v-title>
+            <v-title v-else :title="'Add User' | trans"></v-title>
         </div>
         <div class="uk-margin">
 

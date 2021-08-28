@@ -5,10 +5,10 @@
 
         <div class="uk-panel">
             <ul class="uk-nav uk-nav-default pk-nav-large" uk-switcher="connect: #tab-content">
-                <li><a><span class="uk-margin-right" uk-icon="icon:server;ratio:1"></span><span class="uk-text-middle">{{ 'System' | trans }}</span></a></li>
-                <li><a><span class="uk-margin-right" uk-icon="icon:php;ratio:1"></span><span class="uk-text-middle">{{ 'PHP' | trans }}</span></a></li>
-                <li><a><span class="uk-margin-right" uk-icon="icon:database;ratio:1"></span><span class="uk-text-middle">{{ 'Database' | trans }}</span></a></li>
-                <li><a><span class="uk-margin-right" uk-icon="icon:lock;ratio:1"></span><span class="uk-text-middle">{{ 'Permissions' | trans }}</span></a></li>
+                <li><a><span class="uk-margin-right" uk-icon="icon:server"></span><span class="uk-text-middle">{{ 'System' | trans }}</span></a></li>
+                <li><a><span class="uk-margin-right" uk-icon="icon:php"></span><span class="uk-text-middle">{{ 'PHP' | trans }}</span></a></li>
+                <li><a><span class="uk-margin-right" uk-icon="icon:database"></span><span class="uk-text-middle">{{ 'Database' | trans }}</span></a></li>
+                <li><a><span class="uk-margin-right" uk-icon="icon:lock"></span><span class="uk-text-middle">{{ 'Permissions' | trans }}</span></a></li>
             </ul>
         </div>
 
@@ -17,7 +17,7 @@
 
         <ul id="tab-content" class="uk-switcher uk-margin">
             <li>
-                <h2>{{ 'System' | trans }}</h2>
+                <v-title :title="'System' | trans"></v-title>
                 <div class="uk-overflow-auto">
                     <table class="uk-table uk-table-hover">
                         <thead>
@@ -52,7 +52,7 @@
                 </div>
             </li>
             <li>
-                <h2>{{ 'PHP' | trans }}</h2>
+                <v-title :title="'PHP' | trans"></v-title>
                 <div class="uk-overflow-auto">
                     <table class="uk-table uk-table-hover">
                         <thead>
@@ -83,7 +83,7 @@
                 </div>
             </li>
             <li>
-                <h2>{{ 'Database' | trans }}</h2>
+                <v-title :title="'Database' | trans"></v-title>
                 <div class="uk-overflow-auto">
                     <table class="uk-table uk-table-hover">
                         <thead>
@@ -110,7 +110,7 @@
                 </div>
             </li>
             <li>
-                <h2>{{ 'Permission' | trans }}</h2>
+                <v-title :title="'Permission' | trans"></v-title>
                 <div class="uk-overflow-auto">
                     <table class="uk-table uk-table-hover">
                         <thead>

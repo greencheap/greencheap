@@ -32,7 +32,7 @@
                 <i uk-spinner="ratio:5"></i>
                 <span class="uk-text-muted uk-text-large uk-display-block uk-margin">{{'Please wait until the installation process is finished' | trans}}</span>
             </div>
-            
+
             <div class="uk-flex uk-flex-center">
                 <div class="uk-width-2xlarge">
                     <progress class="uk-progress" :value="progressbar" max="100"></progress>
@@ -43,12 +43,9 @@
             </div>
         </div>
     </div>
-    <div v-if="!hasUpdate && !finished" class="uk-flex uk-flex-center uk-flex-middle" uk-height-viewport="expand:true">
-        <div class="uk-text-center">
-            <h2 class="uk-text-muted">{{'There is no update you can install' | trans}}</h2>
-            <p class="uk-text-meta">{{'The GreenCheap version you are using is %version%' | trans({version: version})}}</p>
-        </div>
-    </div>
+    <v-notfound v-if="!hasUpdate && !finished" :title="'There is no update you can install' | trans">
+        <div>{{'The GreenCheap version you are using is %version%' | trans({version: version})}}</div>
+    </v-notfound>
     <div v-if="finished" class="uk-flex uk-flex-center uk-flex-middle" uk-height-viewport="expand:true">
         <div class="uk-text-center">
             <i uk-icon="icon:check;ratio:6" class="uk-text-primary"></i>

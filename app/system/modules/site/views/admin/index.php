@@ -1,4 +1,4 @@
-<?php $view->script('site-index', 'system/site:app/bundle/index.js', ['vue']) ?>
+<?php $view->script("site-index", "system/site:app/bundle/index.js", ["vue"]); ?>
 
 <form id="site" v-cloak>
 
@@ -23,7 +23,7 @@
             <div class="uk-margin uk-flex uk-flex-middle uk-flex-between uk-flex-wrap uk-grid-small" uk-grid>
                 <div class="uk-flex uk-flex-middle uk-flex-wrap" >
 
-                    <h2 class="uk-h3 uk-margin-remove">{{ menu.label }}</h2>
+                    <v-title :title="menu.label" />
 
                     <div class="uk-margin-left" v-show="selected.length">
                         <ul class="uk-iconnav">
@@ -78,8 +78,6 @@
                     :item="item"
                     v-if="!isMobile"
                     >
-
-                        <!-- <div class="pk-table-width-minimum pk-table-collapse uk-flex uk-flex-middle"><div class="uk-nestable-toggle" data-nestable-action="toggle"></div></div> -->
                         <div class="pk-table-width-minimum"><input class="uk-checkbox" type="checkbox" name="id" :value="item.id"></div>
                         <div class="pk-table-min-width-150">
                             <a :href="$url.route('admin/site/page/edit', { id: item.id })">{{ item.title }}</a>
@@ -106,7 +104,6 @@
                     :item="item"
                     v-else
                     >
-
                         <vue-nestable-handle :item="item" class="pk-table-width-minimum pk-table-collapse">
                             <span class="uk-icon uk-icon-button" style="background: transparent;">
                                 <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-svg="more-vertical"><circle cx="10" cy="3" r="2"></circle><circle cx="10" cy="10" r="2"></circle><circle cx="10" cy="17" r="2"></circle></svg>
@@ -137,16 +134,15 @@
 
             </div>
 
-            <h3 class="uk-h2 uk-text-muted uk-text-center" v-show="!treedata.length">{{ 'No pages found.' | trans }}</h3>
-
+            <v-notfound v-show="!treedata.length" :title="'No pages found' | trans"></v-notfound>
         </div>
     </div>
 
     <v-modal ref="modal" bg-close>
-    
+
         <validation-observer v-slot="{ invalid, passes }" slim>
         <div class="uk-form-stacked">
-        
+
             <div class="uk-modal-header">
                 <h2 class="uk-modal-title">{{ 'Add Menu' | trans }}</h2>
             </div>
@@ -172,10 +168,10 @@
                 <button class="uk-button uk-button-text uk-margin-right" type="button" @click.prevent="cancel" autofocus>{{ 'Cancel' | trans }}</button>
                 <button class="uk-button uk-button-primary" :disabled="invalid || !edit.label" @click.prevent="passes(()=>saveMenu(edit))">{{ 'Save' | trans }}</button>
             </div>
-            
+
         </div>
         </validation-observer>
-        
+
     </v-modal>
 
 </form>

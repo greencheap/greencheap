@@ -4,13 +4,9 @@
 
     <div class="uk-margin uk-flex uk-flex-middle uk-flex-between uk-flex-wrap" >
         <div class="uk-flex uk-flex-middle uk-flex-wrap" >
-
-            <h2 class="uk-h3 uk-margin-remove" v-if="!selected.length">{{ '{0} %count% Users|{1} %count% User|]1,Inf[ %count% Users' | transChoice(count, {count:count}) }}</h2>
-
+            <v-title v-if="!selected.length" :title="'{0} %count% Users|{1} %count% User|]1,Inf[ %count% Users' | transChoice(count, {count:count})"></v-title>
             <template v-else>
-
-                <h2 class="uk-h3 uk-margin-remove">{{ '{1} %count% User selected|]1,Inf[ %count% Users selected' | transChoice(selected.length, {count:selected.length}) }}</h2>
-
+                <v-title :title="'{1} %count% User selected|]1,Inf[ %count% Users selected' | transChoice(selected.length, {count:selected.length})"></v-title>
                 <div class="uk-margin-left">
                     <ul class="uk-iconnav">
                         <li><a uk-icon="icon:check;ratio:1" :title="'Activate' | trans" uk-tooltip="delay: 500" @click="status(1)"></a></li>
@@ -18,7 +14,6 @@
                         <li><a uk-icon="icon:trash;ratio:1" :title="'Delete' | trans" uk-tooltip="delay: 500" @click.prevent="remove" v-confirm="'Delete users?'"></a></li>
                     </ul>
                 </div>
-
             </template>
 
             <div class="uk-search uk-search-default pk-search">
@@ -81,7 +76,7 @@
         </table>
     </div>
 
-    <h3 class="uk-h2 uk-text-muted uk-text-center" v-show="users && !users.length">{{ 'No user found.' | trans }}</h3>
+    <v-notfound v-show="users && !users.length" :title="'No user found' | trans"></v-notfound>
 
     <v-pagination :pages="pages" v-model="config.page" v-show="pages > 1 || config.page > 0"></v-pagination>
 </div>

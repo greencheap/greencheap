@@ -1,13 +1,11 @@
-<?php $view->script('site-edit', 'system/site:app/bundle/edit.js', ['vue', 'editor', 'uikit']); ?>
+<?php $view->script("site-edit", "system/site:app/bundle/edit.js", ["vue", "editor", "uikit"]); ?>
 
 <validation-observer tag="form" id="site-edit" ref="observer" @submit.prevent="submit" v-cloak>
 
     <div class="uk-flex uk-flex-middle uk-flex-between uk-flex-wrap">
-        <div class="">
-
-            <h2 class="uk-margin-remove" v-if="node.id">{{ 'Edit %type%' | trans({type:type.label}) }}</h2>
-            <h2 class="uk-margin-remove" v-else>{{ 'Add %type%' | trans({type:type.label}) }}</h2>
-
+        <div>
+            <v-title v-if="node.id" :title="'Edit %type%' | trans({type:type.label})"></v-title>
+            <v-title v-else :title="'Add %type%' | trans({type:type.label})"></v-title>
         </div>
         <div class="uk-margin">
 
