@@ -2,7 +2,7 @@
     <div>
         <div class="uk-margin uk-flex uk-flex-middle uk-flex-between uk-flex-wrap">
             <div>
-                <v-title :title="'Maintenance' | trans" />
+                <v-title :title="'Maintenance' | trans"></v-title>
             </div>
             <div class="uk-margin-small">
                 <button class="uk-button uk-button-primary" type="submit">

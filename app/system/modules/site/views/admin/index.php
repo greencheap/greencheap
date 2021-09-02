@@ -23,7 +23,7 @@
             <div class="uk-margin uk-flex uk-flex-middle uk-flex-between uk-flex-wrap uk-grid-small" uk-grid>
                 <div class="uk-flex uk-flex-middle uk-flex-wrap" >
 
-                    <v-title :title="menu.label" />
+                    <v-title :title="menu.label"></v-title>
 
                     <div class="uk-margin-left" v-show="selected.length">
                         <ul class="uk-iconnav">

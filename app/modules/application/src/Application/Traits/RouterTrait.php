@@ -22,12 +22,13 @@ trait RouterTrait
 
     /**
      * @param int $code
-     * @param null $message
+     * @param $message
+     * @param array $headers
      * @return JsonResponse
      */
-    public static function jsonabort(int $code = 500, $message = null): JsonResponse
+    public static function jsonabort(int $code = 500, $message, array $headers = []): JsonResponse
     {
-        return new JsonResponse($message, $code);
+        return new JsonResponse($message, $code, $headers);
     }
 
     /**
