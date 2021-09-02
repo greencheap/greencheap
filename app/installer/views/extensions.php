@@ -11,7 +11,6 @@
             </div>
         </div>
         <div class="uk-flex uk-flex-right uk-flex-middle">
-            <a :href="$url.route('admin/system/marketplace')" class="uk-button uk-button-secondary uk-margin-small-right">{{ 'App Store' | trans }}</a>
             <package-upload :api="api" :packages="packages" type="extension"></package-upload>
         </div>
     </div>

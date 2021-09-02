@@ -90,6 +90,7 @@ return [
             "priority" => 10,
         ],
 
+        /**
         "appstore" => [
             "label" => "App Store",
             "layout" => "sidebar",
@@ -97,7 +98,7 @@ return [
             "url" => "@system/appstore",
             "active" => "@system/appstore*",
             "priority" => 120,
-        ],
+        ],*/
 
         "appstore: extensions" => [
             "label" => "Extensions",
