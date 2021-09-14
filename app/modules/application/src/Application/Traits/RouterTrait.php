@@ -26,7 +26,7 @@ trait RouterTrait
      * @param array $headers
      * @return JsonResponse
      */
-    public static function jsonabort(int $code = 500, $message, array $headers = []): JsonResponse
+    public static function jsonabort(int $code, $message, array $headers = []): JsonResponse
     {
         return new JsonResponse($message, $code, $headers);
     }
