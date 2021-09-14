@@ -4,14 +4,13 @@
 
     <div class="uk-margin uk-flex uk-flex-between uk-flex-wrap">
         <div class="uk-flex uk-flex-middle uk-flex-wrap" >
-            <h2 class="uk-h3 uk-margin-remove">{{ 'Extensions' | trans }}</h2>
+            <v-title :title="'Extensions' | trans" />
             <div class="uk-search uk-search-default pk-search">
                 <span uk-search-icon></span>
                 <input class="uk-search-input" type="search" v-model="search">
             </div>
         </div>
         <div class="uk-flex uk-flex-right uk-flex-middle">
-            <a :href="$url.route('admin/system/marketplace')" class="uk-button uk-button-secondary uk-margin-small-right">{{ 'App Store' | trans }}</a>
             <package-upload :api="api" :packages="packages" type="extension"></package-upload>
         </div>
     </div>
@@ -52,9 +51,9 @@
                     <td class="uk-text-right">
                         <div class="uk-invisible-hover">
                             <ul class="uk-iconnav">
-                                <li><a uk-icon="icon:info;ratio:1.3" :uk-tooltip="'View Details' | trans" @click.prevent="details(pkg)"></a></li>
-                                <li v-show="pkg.enabled && pkg.permissions"><a uk-icon="icon:lock;ratio:1.3" :uk-tooltip="'View Permissions' | trans" :href="$url.route('admin/user/permissions#{name}', {name:pkg.module})"></a></li>
-                                <li v-show="!pkg.enabled"><a uk-icon="icon:trash;ratio:1.3" :uk-tooltip="'Delete' | trans" @click="uninstall(pkg, packages)" v-confirm="'Uninstall extension?'"></a></li>
+                                <li><a uk-icon="icon:info" :uk-tooltip="'View Details' | trans" @click.prevent="details(pkg)"></a></li>
+                                <li v-show="pkg.enabled && pkg.permissions"><a uk-icon="icon:lock" :uk-tooltip="'View Permissions' | trans" :href="$url.route('admin/user/permissions#{name}', {name:pkg.module})"></a></li>
+                                <li v-show="!pkg.enabled"><a uk-icon="icon:trash" :uk-tooltip="'Delete' | trans" @click="uninstall(pkg, packages)" v-confirm="'Uninstall extension?'"></a></li>
                             </ul>
                         </div>
                     </td>
@@ -63,7 +62,7 @@
         </table>
     </div>
 
-    <h3 class="uk-h2 uk-text-muted uk-text-center" v-show="empty(packages)">{{ 'No extension found.' | trans }}</h3>
+    <v-notfound v-show="empty(packages)" :title="'No extension found' | trans"></v-notfound>
 
     <v-modal ref="details">
         <package-details :api="api" :package="package"></package-details>

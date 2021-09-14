@@ -69,18 +69,18 @@
 
                     <div>
                         <a class="uk-button uk-button-primary" href="#modal-widget-types" uk-toggle>{{ 'Add' | trans }}</a>
-                        <div id="modal-widget-types" class="uk-flex-top" uk-modal>
+                        <div id="modal-widget-types" class="uk-flex-top uk-modal-container" uk-modal>
                             <div class="uk-modal-dialog uk-margin-auto-vertical">
                                 <button class="uk-modal-close-default" type="button" uk-close></button>
                                 <div class="uk-modal-header">
-                                    <h2 class="uk-h3">{{ 'Widgets' | trans }}</h2>
+                                    <v-title :title="'Widgets' | trans" />
                                 </div>
                                 <div class="uk-modal-body">
-                                    <ul class="uk-child-width-1-4@m uk-child-width-1-2" uk-grid>
+                                    <ul class="uk-child-width-1-6@m uk-child-width-1-2" uk-grid>
                                         <li v-for="type in types" :key="type.name">
                                             <a :href="$url.route('admin/site/widget/edit', {type: type.name, position:(position ? position.name:'')})" class="tm-navbar-href">
-                                                <div class="tm-navbar-icon">
-                                                    <img :data-src="type.icon" width="100%" uk-img>
+                                                <div>
+                                                    <img :data-src="type.icon" width="35px" uk-img>
                                                 </div>
                                                 <span class="tm-navbar-item uk-text-truncate">{{ type.label || type.name | trans }}</span>
                                             </a>
@@ -108,8 +108,7 @@
                         </div>
                     </div>
 
-                    <h3 class="uk-h2 uk-text-muted uk-text-center uk-margin-bottom">{{ 'No widgets found.' | trans }}</h3>
-
+                    <v-notfound :title="'No widgets found' | trans"></v-notfound>
                 </template>
 
                 <div class="uk-margin-bottom" :data-pos="pos.name" v-for="pos in filtered_positions" :key="pos.name">

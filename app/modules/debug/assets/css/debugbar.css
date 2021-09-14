@@ -314,7 +314,9 @@
 }
 
 #pk-profiler .pf-navbar-nav > li:first-child > a {
-    padding: 0 15px;
+    display: flex;
+    align-content: center;
+    padding: 0px 15px;
 }
 
 #pk-profiler .pf-navbar-nav > li:hover > a,

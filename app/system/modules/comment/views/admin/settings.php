@@ -4,7 +4,7 @@
     <div class="uk-clearfix">
         <div class="uk-margin">
             <button type="submit" class="uk-align-right uk-button uk-button-primary">{{ 'Save' | trans }}</button>
-            <h1 class="tm-module-title">{{ 'Settings' | trans }}</h1>
+            <v-title :title="'Settings' | trans"></v-title>
         </div>
     </div>
 
@@ -30,7 +30,7 @@
             <input type="number" class="uk-input uk-form-width-small" min="1" disabled v-model.number="config.comments_per_page">
         </div>
     </div>
-    
+
     <div class="uk-margin">
         <label class="uk-form-label">{{ 'Others' | trans }}</label>
         <div class="uk-form-controls uk-form-controls-text">

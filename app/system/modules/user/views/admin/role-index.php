@@ -26,7 +26,7 @@
         </div>
         <div class="pk-width-content">
 
-            <h2 class="uk-h3">{{ current.name }}</h2>
+            <v-title :title="current.name"></v-title>
 
             <div class="uk-overflow-auto uk-margin-large" v-for="(group, key_group) in permissions" :key="key_group">
                 <table class="uk-table uk-table-hover uk-table-middle">
@@ -64,10 +64,10 @@
     </div>
 
     <v-modal ref="modal" bg-close>
-    
+
         <validation-observer v-slot="{ invalid, passes }">
         <div class="uk-form-stacked">
-        
+
             <div class="uk-modal-header">
                 <h2>{{ (role.id ? 'Edit Role':'Add Role') | trans }}</h2>
             </div>
@@ -85,10 +85,10 @@
                 <button class="uk-button uk-button-text uk-margin-right uk-modal-close" type="button" autofocus>{{ 'Cancel' | trans }}</button>
                 <button class="uk-button uk-button-primary" :disabled="invalid || !role.name" @click.prevent="passes(save)">{{ 'Save' | trans }}</button>
             </div>
-            
+
         </div>
         </validation-observer>
-        
+
     </v-modal>
 
 </div>

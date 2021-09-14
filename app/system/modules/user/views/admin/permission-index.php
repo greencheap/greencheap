@@ -2,7 +2,7 @@
 
 <div id="permissions" v-cloak>
 
-    <h2 class="uk-h3">{{ 'Permissions' | trans }}</h2>
+    <v-title :title="'Permissions' | trans"></v-title>
 
     <div :id="key_group" class="uk-overflow-auto uk-margin-large" v-for="(group, key_group) in permissions" :key="key_group">
         <table class="uk-table uk-table-hover uk-table-middle">

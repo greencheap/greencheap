@@ -1,6 +1,12 @@
 version: "3.9"
 
 services:
+    mysql:
+        image: mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: greencheap
+            MYSQL_DATABASE: greencheap
     postgres:
         image: postgres
         restart: always
@@ -11,6 +17,7 @@ services:
         image: greencheap/greencheap
         depends_on:
             - postgres
+            - mysql
         ports:
             - 8000:80
         restart: always

@@ -2,9 +2,7 @@
     <div>
         <div class="uk-margin uk-flex uk-flex-middle uk-flex-between uk-flex-wrap">
             <div>
-                <h2 class="uk-margin-remove">
-                    {{ "Misc" | trans }}
-                </h2>
+                <v-title :title="'Misc' | trans" />
             </div>
             <div class="uk-margin-small">
                 <button class="uk-button uk-button-primary" type="submit">

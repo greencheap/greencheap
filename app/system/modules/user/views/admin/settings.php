@@ -4,7 +4,7 @@
 
     <div class="uk-margin uk-flex uk-flex-middle uk-flex-between uk-flex-wrap" >
         <div>
-            <h2 class="uk-h3 uk-margin-remove">{{ 'Settings' | trans }}</h2>
+            <v-title :title="'Settings' | trans"></v-title>
         </div>
         <div class="uk-margin">
             <button class="uk-button uk-button-primary" @click.prevent="save">{{ 'Save' | trans }}</button>

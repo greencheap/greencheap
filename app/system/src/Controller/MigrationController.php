@@ -29,9 +29,9 @@ class MigrationController
     /**
      * @Request({"redirect": "string"})
      * @param null $redirect
-     * @return array
+     * @return mixed
      */
-    public function indexAction($redirect = null): array
+    public function indexAction($redirect = null): mixed
     {
         if (!$this->scripts->hasUpdates()) {
             return App::redirect($redirect ?: "@system");

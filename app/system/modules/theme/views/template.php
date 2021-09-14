@@ -16,7 +16,7 @@
             <div class="uk-container uk-visible@s" uk-navbar>
                 <div class="uk-navbar-left">
                     <div class="uk-navbar-item uk-inline">
-                        <a class="uk-navbar-toggle"><i uk-icon="icon:toggle-menu;ratio:1.5" class="uk-margin-medium-right"></i><span class="uk-text-lead uk-text-uppercase">{{ title | trans }}</span></a>
+                        <a class="uk-navbar-toggle"><i uk-icon="icon:menu;ratio:1.2" class="uk-margin-small-right"></i><span class="uk-text-lead uk-text-uppercase">{{ title | trans }}</span></a>
                         <div class="tm-drop" uk-drop="offset:-50;mode:click">
                             <div class="uk-card uk-card-body uk-card-default">
                                 <Navbar :navs="navs" />
@@ -26,10 +26,10 @@
                 </div>
                 <div class="uk-navbar-right">
                     <ul class="uk-navbar-item uk-grid">
-                        <li><a @click="onDarkMode" :uk-icon="`icon:${darkMode ? 'sun':'moon'};ratio:1.3`" :uk-tooltip="`${darkMode ? 'Light Mode':'Dark Mode'}` | trans"></a></li>
-                        <li><a href="https://greencheap.net/docs" uk-icon="icon:robot;ratio:1.3" target="_blank" :title="'Help'|trans" uk-tooltip></a></li>
-                        <li><a :href="$url('/')" uk-icon="icon:laptop;ratio:1.3" target="_blank" :title="'Visit Site'|trans" uk-tooltip></a></li>
-                        <li><a :href="$url('user/logout')" uk-icon="icon:sign-out;ratio:1.3" :title="'Logout'|trans" uk-tooltip></a></li>
+                        <li><a @click="onDarkMode" :uk-icon="`icon:${darkMode ? 'sun':'moon'};ratio:1`" :uk-tooltip="`${darkMode ? 'Light Mode':'Dark Mode'}` | trans"></a></li>
+                        <li><a href="https://greencheap.net/docs" uk-icon="icon:lifesaver;ratio:1" target="_blank" :title="'Help'|trans" uk-tooltip></a></li>
+                        <li><a :href="$url('/')" uk-icon="icon:laptop;ratio:1" target="_blank" :title="'Visit Site'|trans" uk-tooltip></a></li>
+                        <li><a :href="$url('user/logout')" uk-icon="icon:sign-out;ratio:1" :title="'Logout'|trans" uk-tooltip></a></li>
                         <li><a :href="$url('admin/user/edit' , {id:user.id})"><img :src="$url(user.avatar)" class="uk-border-circle" width="30px" height="30px"></a></li>
                     </ul>
                 </div>
@@ -37,7 +37,7 @@
 
             <div class="uk-container uk-hidden@s" uk-navbar>
                 <div class="uk-navbar-left">
-                    <a class="uk-navbar-toggle" href="#modal-mobile-menu" uk-toggle uk-icon="icon:toggle-menu;ratio:1.2"></a>
+                    <a class="uk-navbar-toggle" href="#modal-mobile-menu" uk-toggle uk-icon="icon:menu;ratio:1"></a>
                 </div>
                 <div class="uk-navbar-center">
                     <div class="uk-navbar-item">
@@ -62,11 +62,11 @@
         <div id="modal-mobile-menu" class="uk-modal-full" uk-modal>
             <div class="uk-modal-dialog uk-height-viewport uk-padding-small">
                 <ul class="tm-mobile-items">
-                    <li><a @click="onDarkMode" :uk-icon="`icon:${darkMode ? 'sun':'moon'};ratio:1.6`" :uk-tooltip="`${darkMode ? 'Light Mode':'Dark Mode'}` | trans"></a></li>
-                    <li><a href="https://greencheap.net/docs" uk-icon="icon:robot;ratio:1.6" target="_blank" :title="'Help'|trans" uk-tooltip></a></li>
-                    <li><a :href="$url('/')" uk-icon="icon:laptop;ratio:1.6" target="_blank" :title="'Visit Site'|trans" uk-tooltip></a></li>
-                    <li><a :href="$url('user/logout')" uk-icon="icon:sign-out;ratio:1.6" :title="'Logout'|trans" uk-tooltip></a></li>
-                    <li><a class="uk-modal-close-default" uk-icon="icon:close;ratio:1.6" :title="'Close'|trans" uk-tooltip></a></li>
+                    <li><a @click="onDarkMode" :uk-icon="`icon:${darkMode ? 'sun':'moon'};ratio:1`" :uk-tooltip="`${darkMode ? 'Light Mode':'Dark Mode'}` | trans"></a></li>
+                    <li><a href="https://greencheap.net/docs" uk-icon="icon:lifesaver;ratio:1" target="_blank" :title="'Help'|trans" uk-tooltip></a></li>
+                    <li><a :href="$url('/')" uk-icon="icon:laptop;ratio:1" target="_blank" :title="'Visit Site'|trans" uk-tooltip></a></li>
+                    <li><a :href="$url('user/logout')" uk-icon="icon:sign-out;ratio:1" :title="'Logout'|trans" uk-tooltip></a></li>
+                    <li><a class="uk-modal-close-default" uk-icon="icon:close;ratio:1" :title="'Close'|trans" uk-tooltip></a></li>
                 </ul>
                 <div v-if="subnav.length" class="uk-margin">
                     <h5 class="uk-text-bold uk-h6 uk-text-uppercase" style="letter-spacing: 2px;">{{'Sub Menus' | trans}}</h5>

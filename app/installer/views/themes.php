@@ -1,20 +1,16 @@
-<?php
-//$view->script('themes', 'installer:app/bundle/themes.js', ['vue', 'uikit-upload', 'editor']);
-?>
 <?php $view->script("themes", "installer:app/bundle/themes.js", ["vue", "editor"]); ?>
 
 <div id="themes" v-cloak>
 
     <div class="uk-margin uk-flex uk-flex-between uk-flex-wrap">
         <div class="uk-flex uk-flex-middle uk-flex-wrap">
-            <h2 class="uk-margin-remove">{{ 'Themes' | trans }}</h2>
+            <v-title :title="'Themes' | trans"/>
             <div class="uk-search uk-search-default pk-search">
                 <span uk-search-icon></span>
                 <input class="uk-search-input" type="search" v-model="search">
             </div>
         </div>
         <div class="uk-flex uk-flex-right uk-flex-middle">
-            <a :href="$url.route('admin/system/marketplace')" class="uk-button uk-button-secondary uk-margin-small-right">{{ 'App Store' | trans }}</a>
             <package-upload :api="api" :packages="packages" type="theme"></package-upload>
         </div>
     </div>
@@ -46,8 +42,8 @@
 
                 <div class="uk-position-top-right uk-position-small uk-hidden-hover pk-card-overlay" v-if="!pkg.enabled">
                     <ul class="uk-subnav pk-subnav-icon uk-margin-remove-bottom">
-                        <li><a uk-icon="icon:star;ratio:1.3" :uk-tooltip="'Enable' | trans" @click="enable(pkg)"></a></li>
-                        <li><a uk-icon="icon:trash;ratio:1.3" :uk-tooltip="'Delete' | trans" @click="uninstall(pkg, packages)" v-confirm="'Uninstall theme?'"></a></li>
+                        <li><a uk-icon="icon:star" :uk-tooltip="'Enable' | trans" @click="enable(pkg)"></a></li>
+                        <li><a uk-icon="icon:trash" :uk-tooltip="'Delete' | trans" @click="uninstall(pkg, packages)" v-confirm="'Uninstall theme?'"></a></li>
                     </ul>
                 </div>
 
@@ -55,7 +51,7 @@
         </div>
     </div>
 
-    <h3 class="uk-h2 uk-text-muted uk-text-center" v-show="!packages.length">{{ 'No theme found.' | trans }}</h3>
+    <v-notfound v-show="!packages.length" :title="'No theme found' | trans" ></v-notfound>
 
     <v-modal ref="details">
         <package-details :api="api" :package="package"></package-details>

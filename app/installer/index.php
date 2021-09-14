@@ -46,9 +46,9 @@ return [
             "name" => "@system/package",
             "controller" => "GreenCheap\Installer\Controller\PackageController",
         ],
-        "/system/marketplace" => [
-            "name" => "@system/marketplace",
-            "controller" => "GreenCheap\Installer\Controller\MarketplaceController",
+        "/system/appstore" => [
+            "name" => "@system/appstore",
+            "controller" => "GreenCheap\Installer\Controller\AppStoreController",
         ],
         "/system/update" => [
             "name" => "@system/update",
@@ -90,13 +90,30 @@ return [
             "priority" => 10,
         ],
 
-        "marketplace" => [
+        /**
+        "appstore" => [
             "label" => "App Store",
             "layout" => "sidebar",
-            "icon" => "installer:assets/marketplace.svg",
-            "url" => "@system/marketplace",
-            "active" => "@system/marketplace*",
+            "icon" => "system/theme:assets/system-app-icons/appstore.svg",
+            "url" => "@system/appstore",
+            "active" => "@system/appstore*",
             "priority" => 120,
+        ],*/
+
+        "appstore: extensions" => [
+            "label" => "Extensions",
+            "parent" => "appstore",
+            "url" => "@system/appstore",
+            "active" => "@system/appstore",
+            "priority" => 0,
+        ],
+
+        "appstore: themes" => [
+            "label" => "Themes",
+            "parent" => "appstore",
+            "url" => "@system/appstore",
+            "active" => "@system/appstore/themes",
+            "priority" => 5,
         ],
 
         "system: update" => [

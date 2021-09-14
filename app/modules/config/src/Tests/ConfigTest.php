@@ -4,8 +4,9 @@ namespace GreenCheap\Config\Tests;
 
 use GreenCheap\Config\Config;
 use GreenCheap\Config\Loader\PhpLoader;
+use PHPUnit\Framework\TestCase;
 
-class ConfigTest extends \PHPUnit_Framework_TestCase
+class ConfigTest extends TestCase
 {
     /**
      * @var Config
@@ -17,7 +18,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
      */
     protected $values;
 
-    public function setUp()
+    public function setUp(): void
     {
         $values = [
             "foo" => [

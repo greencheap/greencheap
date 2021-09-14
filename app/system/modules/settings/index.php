@@ -29,7 +29,7 @@ return [
         "system: system" => [
             "layout" => "sidebar",
             "label" => "System",
-            "icon" => "settings:icon.svg",
+            "icon" => "system/theme:assets/system-app-icons/system.svg",
             "access" => "system: access settings",
             "url" => "@system/settings",
             "priority" => 120,

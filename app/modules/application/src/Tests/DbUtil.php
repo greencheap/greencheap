@@ -24,8 +24,9 @@ trait DbUtil
      * 2) The database is dropped and recreated to ensure it's clean.
      *
      * @return Doctrine\DBAL\Connection The database connection instance.
+     * @throws \Doctrine\DBAL\Exception
      */
-    public function getConnection()
+    public function getConnection(): Doctrine\DBAL\Connection
     {
         if (isset($GLOBALS["db_type"], $GLOBALS["db_username"], $GLOBALS["db_password"], $GLOBALS["db_host"], $GLOBALS["db_name"], $GLOBALS["db_port"], $GLOBALS["tmpdb_type"], $GLOBALS["tmpdb_username"], $GLOBALS["tmpdb_password"], $GLOBALS["tmpdb_host"], $GLOBALS["tmpdb_name"], $GLOBALS["tmpdb_port"])) {
             $realDbParams = [
