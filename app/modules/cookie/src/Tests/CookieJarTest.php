@@ -3,9 +3,10 @@
 namespace GreenCheap\Cookie\Tests;
 
 use GreenCheap\Cookie\CookieJar;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Cookie;
 
-class CookieJarTest extends \PHPUnit_Framework_TestCase
+class CookieJarTest extends TestCase
 {
     /**
      * @var Cookie
@@ -17,7 +18,7 @@ class CookieJarTest extends \PHPUnit_Framework_TestCase
      */
     protected $cookieJar;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->cookieJar = new CookieJar();
     }

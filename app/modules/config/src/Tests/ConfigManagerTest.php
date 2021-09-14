@@ -4,8 +4,9 @@ namespace GreenCheap\Config\Tests;
 
 use Doctrine\Common\Cache\ArrayCache;
 use GreenCheap\Config\ConfigManager;
+use PHPUnit\Framework\TestCase;
 
-class ConfigManagerTest extends \PHPUnit_Framework_TestCase
+class ConfigManagerTest extends TestCase
 {
     public function testGet()
     {
